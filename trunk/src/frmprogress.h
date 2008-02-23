@@ -40,13 +40,13 @@ class GetThread : public NapiThread
 
 	public:
 		void run();
-		void setDebugMode(bool mode) { debugMode = mode; }
+		void setVerboseMode(bool mode) { verboseMode = mode; }
 
 		QStringList queue;
 		int napiSuccess, napiFail;
 
 	private:
-		bool debugMode;
+		bool verboseMode;
 };
 
 class frmProgress: public QWidget
@@ -73,7 +73,9 @@ class frmProgress: public QWidget
 		bool isBatchMode() { return batchMode; }
 		void setQuietMode(bool value) { quietMode = value; }
 		bool isQuietMode() { return quietMode; }
-		void setConsoleMode(bool value) { consoleMode = value; setQuietMode(value); getThread.setDebugMode(value); }
+		void setConsoleMode(bool value) {
+			consoleMode = value; setQuietMode(value); getThread.setVerboseMode(value);
+		}
 		bool download();
 
 	private:

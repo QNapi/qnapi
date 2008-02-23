@@ -120,7 +120,11 @@ void frmProgress::downloadFinished()
 			if(getThread.napiFail > 0)
 				msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
 						.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
-			QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+			
+			if(!batchMode)
+				trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg);
+			else
+				QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 		}
 
 		if(consoleMode)
@@ -139,13 +143,27 @@ void frmProgress::downloadFinished()
 		if(getThread.napiSuccess == 1)
 		{
 			QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
-			if(!quietMode) QMessageBox::information(0, tr("Pobrano napisy"), msg);
+			if(!quietMode)
+			{
+				if(!batchMode)
+					trayIcon->showMessage(tr("Pobrano napisy"), msg);
+				else
+					QMessageBox::information(0, tr("Pobrano napisy"), msg);
+			}
+
 			if(consoleMode) qDebug(qPrintable(msg));
 		}
 		else
 		{
 			QString msg = tr("Nie znaleziono napisów dla '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
-			if(!quietMode) QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
+			if(!quietMode)
+			{
+				if(!batchMode)
+					trayIcon->showMessage(tr("Nie znaleziono napisów"), msg);
+				else
+					QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
+			}
+
 			if(consoleMode) qDebug(qPrintable(msg));
 		}
 	}
@@ -289,36 +307,36 @@ void GetThread::run()
 
 	for(int i = 0; i < size; i++)
 	{
-		if(debugMode)
+		if(verboseMode)
 		{
 			qDebug(" * %s '%s'", qPrintable(tr("Pobieranie napisów dla pliku")),
 								qPrintable(QFileInfo(queue[i]).fileName()));
 		}
 
-		if(size > 1)
-		{
-			windowTitle = QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(i + 1).arg(size);
-			emit windowTitleChange(windowTitle);
-		}
+		windowTitle = (size > 1)
+						? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(i + 1).arg(size)
+						: QString(tr("QNapi - pobieranie napisów..."));
+
+		emit windowTitleChange(windowTitle);
 
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
-		if(debugMode) qDebug("   * %s...", qPrintable(tr("obliczanie sumy kontrolnej")));
+		if(verboseMode) qDebug("   * %s...", qPrintable(tr("obliczanie sumy kontrolnej")));
 
 		md5 = napiFileMd5Sum(queue[i], NAPI_10MB);
 		if(abort) return;
 
 		emit progressChange((int)ceil(step * i + step / 3));
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
-		if(debugMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
+		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
 		// pobieranie
 		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
 							GlobalConfig().nick(), GlobalConfig().pass()))
 		{
-			if(debugMode) qDebug("   ! %s", qPrintable(tr("nie znaleziono napisów")));
+			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie znaleziono napisów")));
 
 			if(abort) return;
 			++napiFail;
@@ -329,13 +347,13 @@ void GetThread::run()
 
 		emit progressChange((int)ceil(step * i + 2 * step / 3));
 		emit actionChange(tr("Dopasowywanie napisów..."));
-		if(debugMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
+		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
 		// dopasowywanie
 		if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
 								GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
 		{
-			if(debugMode) qDebug("   ! %s", qPrintable(tr("nie dało się dopasować napisów")));
+			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie dało się dopasować napisów")));
 			if(abort) return;
 			++napiFail;
 			continue;
@@ -349,7 +367,7 @@ void GetThread::run()
 		{
 			emit progressChange((int)ceil(step * i + 5 * step / 6));
 			emit actionChange(tr("Zmiana kodowania napisów..."));
-			if(debugMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
+			if(verboseMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
 
 			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
 			// zrodlowego uzywa kodowania wybranego przez uzytkownika

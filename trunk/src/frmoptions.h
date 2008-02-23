@@ -12,6 +12,8 @@
 #include <QMessageBox>
 #include <QList>
 #include <QTextCodec>
+#include <QDesktopWidget>
+
 #include "ui_frmoptions.h"
 #include "qnapiconfig.h"
 

@@ -20,6 +20,10 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
 
 	showAllEncodings();
+
+	// workaround dla compiza?
+	move((QApplication::desktop()->width() - width()) / 2, 
+		(QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmOptions::select7zPath()

@@ -24,6 +24,10 @@ frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&uploadThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&uploadThread, SIGNAL(checkingUserPass()), this, SLOT(checkingUserPass()));
 	connect(&uploadThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
+	
+	// workaround dla compiza?
+	move((QApplication::desktop()->width() - width()) / 2, 
+		(QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmUpload::closeEvent(QCloseEvent *event)

@@ -351,13 +351,13 @@ void GetThread::run()
 			emit actionChange(tr("Zmiana kodowania napisów..."));
 			if(debugMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
 
-			if (GlobalConfig().autoDetectEncoding())
-			{
-				napiConvertFile(QFileInfo(queue[i]).path() + "/" +
+			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
+			// zrodlowego uzywa kodowania wybranego przez uzytkownika
+			if (!GlobalConfig().autoDetectEncoding()
+				|| !napiConvertFile(QFileInfo(queue[i]).path() + "/" +
 								QFileInfo(queue[i]).completeBaseName() + ".txt",
-								GlobalConfig().encodingTo());
-			}
-			else
+								GlobalConfig().encodingTo())
+				)
 			{
 				napiConvertFile(QFileInfo(queue[i]).path() + "/" +
 								QFileInfo(queue[i]).completeBaseName() + ".txt",

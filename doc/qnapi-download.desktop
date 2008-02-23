@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Actions=QNapiDownload;
+Name=Pobierz napisy do filmu z QNapi
+GenericName=Pobierz napisy do filmu z QNapi
+Icon=/usr/share/icon/qnapi.png
+ServiceTypes=video/x-msvideo,video/x-ms-asf,video/mpeg,video/x-ms-wmv,video/mp4,video/quicktime,video/x-theora,video/x-matroska,video/3gpp,application/vnd.rn-realmedia,application/vnd.rn-realmedia-vbr
+Type=Application
+
+[Desktop Action QNapiDownload]
+Name=Pobierz napisy do filmu z QNapi
+Exec=qnapi %F

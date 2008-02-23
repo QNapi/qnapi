@@ -1,0 +1,11 @@
+[Desktop Entry]
+Exec=qnapi
+Name=QNapi
+Icon=qnapi.png
+Type=Application
+Categories=Application;Multimedia;AudioVideo;Utility;Qt;
+Comment=Program do pobierania napisów do filmów
+GenericName=Program do pobierania napisów do filmów
+Encoding=UTF-8
+Version=0.1.1
+Terminal=false

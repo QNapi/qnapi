@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/label</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/label</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <default>Pobierz napisy do filmu z QNapi</default>
+        <short>The label of the menu item</short>
+        <long>The label of the menu item that will appear in the Nautilus popup menu when the selection matches the appearance condition settings</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/tooltip</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/tooltip</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <default>Pobiera i dopasowuje napisy do filmu z bazy NAPI-PROJEKT</default>
+        <short>The tooltip of the menu item</short>
+        <long>The tooltip of the menu item that will appear in the Nautilus statusbar when the user points to the Nautilus popup menu item with his/her mouse</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/icon</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/icon</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>The icon of the menu item</short>
+        <long>The icon of the menu item that will appear next to the label in the Nautilus popup menu when the selection matches the appearance conditions settings</long>
+      </locale>
+      <default>/usr/share/icons/qnapi.png</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>The path of the command</short>
+        <long>The path of the command to start when the user select the menu item in the Nautilus popup menu</long>
+      </locale>
+      <default>qnapi</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/parameters</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/parameters</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>The parameters of the command</short>
+        <long>The parameters of the command to start when the user selects the menu item in the Nautilus popup menu.
+
+The parameters can contain some special tokens which are replaced by Nautilus information before starting the command:
+
+%d: base folder of the selected file(s)
+%f: the name of the selected file or the first one if many are selected
+%m: space-separated list of the basenames of the selected file(s)/folder(s)
+%M: space-separated list of the selected file(s)/folder(s), with their full paths
+%u: GnomeVFS URI
+%s: scheme of the GnomeVFS URI
+%h: hostname of the GnomeVFS URI
+%U: username of the :%s/GnomeVFS URI
+%%: a percent sign</long>
+      </locale>
+      <default>%M</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>The list of pattern to match the selected file(s)/folder(s)</short>
+        <long>A list of strings with joker '*' or '?' to match the name of the selected file(s)/folder(s). Each selected items must match at least one of the filename patterns for the action to appear</long>
+      </locale>
+      <default>[*.avi,*.asf,*.divx,*.dat,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>'true' if the filename patterns have to be case sensitive, 'false' otherwise</short>
+        <long>If you need to match a filename in a case-sensitive manner, set this key to 'true'. If you also want, for example '*.jpg' to match 'photo.JPG', set 'false'</long>
+      </locale>
+      <default>false</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/mimetypes</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/mimetypes</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>The list of patterns to match the mimetypes of the selected file(s)</short>
+        <long>A list of strings with joker '*' or '?' to match the mimetypes of the selected file(s). Each selected items must match at least one of the mimetype patterns for the action to appear</long>
+      </locale>
+      <default>[video/x-msvideo,video/x-ms-asf,video/mpeg,video/x-ms-wmv,video/mp4,video/quicktime,video/x-theora,video/x-matroska,video/3gpp,application/vnd.rn-realmedia,application/vnd.rn-realmedia-vbr]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isfile</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isfile</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>'true' if the selection can have files, 'false' otherwise</short>
+        <long>This setting is tied in with the 'isdir' setting. The valid combinations are:
+
+isfile=TRUE and isdir=FALSE: the selection may hold only files
+isfile=FALSE and isdir=TRUE: the selection may hold only folders
+isfile=TRUE and isdir=TRUE': the selection may hold both files and folders
+isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration will never appear)</long>
+      </locale>
+      <default>true</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isdir</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isdir</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>'true' if the selection can have folders, 'false' otherwise</short>
+        <long>This setting is tied in with the 'isfile' setting. The valid combinations are:
+
+isfile=TRUE and isdir=FALSE: the selection may hold only files
+isfile=FALSE and isdir=TRUE: the selection may hold only folders
+isfile=TRUE and isdir=TRUE': the selection may hold both files and folders
+isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration will never appear)</long>
+      </locale>
+      <default>false</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/accept-multiple-files</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/accept-multiple-files</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>'true' if the selection can have several items, 'false' otherwise</short>
+        <long>If you need one or more files or folders to be selected, set this key to 'true'. If you want just one file or folder, set 'false'</long>
+      </locale>
+      <default>true</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/schemes</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/schemes</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>The list of GnomeVFS schemes where the selected files should be located</short>
+        <long>Defines the list of valid GnomeVFS schemes to be matched against the selected items. The GnomeVFS scheme is the protocol used to access the files. The keyword to use is the one used in the GnomeVFS URI.
+
+Examples of GnomeVFS URI include: 
+file:///tmp/foo.txt
+sftp:///root@test.example.net/tmp/foo.txt
+
+The most common schemes are:
+
+'file': local files
+'sftp': files accessed via SSH
+'ftp': files accessed via FTP
+'smb': files accessed via Samba (Windows share)
+'dav': files accessed via WebDav
+
+All GnomeVFS schemes used by Nautilus can be used here.</long>
+      </locale>
+      <default>[file]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/version</key>
+      <applyto>/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/version</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>The version of the configuration format</short>
+        <long>The version of the configuration format that will be used to manage backward compatibility</long>
+      </locale>
+      <default>1.1</default>
+    </schema>
+  </schemalist>
+</gconfschemafile>

@@ -1,0 +1,116 @@
+QNapi
+=====
+
+Autor:			Krzemin <pkrzemin@o2.pl>
+Strona WWW:		http://krzemin.iglu.cz/qnapi
+
+Ten program rozprowadzany jest na licencji GNU General Public License.
+
+QNapi jest nieoficjalnym klonem programu NAPI-PROJEKT (http://napiprojekt.pl)
+napisanym w bibliotece Qt4 z myślą o użytkownikach Linuksa oraz innych
+systemów, pod które oryginalny NAPI-PROJEKT nie jest dostępny.
+
+
+Wymagania
+=========
+ * Biblioteka Qt w wersji conajmniej 4.3.0. Jeśli w Twoim systemie jest starsza
+   wersja, musisz ją zaktualizować lub własnoręcznie skompilować źródła, pobrane
+   ze strony http://trolltech.com/developer/downloads/qt/x11
+ * Program p7zip. Więcej informacji na stronie http://p7zip.sourceforge.net/
+
+
+Instalacja
+==========
+
+Aby zainstalować program, skorzystaj z pakietów dla swojej dystrybucji,
+które możesz znależć na stronie programu: http://krzemin.iglu.cz/qnapi
+
+Jeśli na stronie nie ma pakietów pod Twoją dystrybucję, możesz zainstalować
+program ze źródeł. Do tego będą potrzebne biblioteki Qt4 (libqt4-core,
+libqt4-gui, a do kompilacji także libqt4-dev) oraz program 7z (który
+znajdziesz w pakiecie p7zip-full).
+
+Ściągnij i rozpakuj archiwum .tar.gz ze źródłami programu:
+
+$ tar -zxvf qnapi-wersja.tar.gz
+
+Przejdź do katalogu ze źródłami:
+
+$ cd qnapi-wersja
+
+Aby skompilować program, wykonaj polecenie:
+
+$ make
+
+Jeśli komenda make zakończy się niepowodzeniem, przejdź do sekcji
+'Błędy kompilacji' w tym dokumencie, aby zobaczyć możliwe przyczyny
+i rozwiązania.
+
+Po prawidłowej kompilacji możesz zainstalować program:
+
+$ sudo make -f linux.mk install
+
+W tej chwili możesz uruchomić program poleceniem:
+
+$ qnapi
+
+Aby odinstalować program, wpisz:
+
+$ sudo make -f linux.mk uninstall
+
+
+Błędy kompilacji
+================
+
+Jeśli polecenie make wyrzuci błąd podobny do tego:
+
+"make: *** Brak reguł do zrobienia obiektu"
+
+Oznacza to, że trzeba ponownie wygenerowac plik Makefile.
+W tym celu wykonaj polecenie:
+
+$ qmake-qt4
+
+Lub, jesli polecenia nie ma w systemie:
+
+$ qmake
+
+Musisz jednak upewnić się, że dana wersja qmake przeznaczona jest dla
+Qt 4.x. Sprawdzić wersje qmake można poleceniem:
+
+$ qmake -version
+
+Po prawidłowym uruchomieniu programu qmake, nowy plik Makefile powinien zostać
+wygenerowany. Wtedy możesz przystąpić do kompilacji programu. (Szczegóły w
+sekcji 'Instalacja')
+
+
+Integracja z menedżerami plików
+===============================
+Jeśli chcesz zintegrować QNapi ze swoim menedżerem plików, tak aby po kliknięciu
+prawym przyciskiem myszy na plik z filmem w menu pojawiła się opcja
+"Pobierz napisy do filmu z QNapi", musisz skopiować plik qnapi-download.desktop
+do katalogu:
+ *  ~/.kde/share/apps/konqueror/servicemenus/
+ *  ~/.kde/share/apps/d3lphin/servicemenus/
+ *  ~/.kde/share/apps/dolphin/servicemenus/
+...w zalezności od używanego przez Ciebie menedżera plików.
+
+Aby zintegrować QNapi z Nautilusem, potrzebny bedzie zainstalowany pakiet
+nautilus-actions. Wystarczy skopiować plik qnapi-download.schemas do katalogu
+/usr/share/gconf/schemas/ i wykonać polecenie:
+
+$ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-download.schemas
+
+Jeśli to by nie zadziałało, można spróbować zaimportować plik qnapi-download.schemas
+narzędziem nautilus-actions-config.
+
+Pliki qnapi-download.desktop i qnapi-download.schemas możesz znaleźć w katalogu ze
+źródłami, w /usr/share/doc/qnapi (po zainstalowaniu programu) lub na stronie domowej
+programu: http://krzemin.iglu.cz/qnapi
+
+Kontakt
+=======
+
+Jeśli znajdziesz błąd, chcesz przygotować pakiet dla swojej dystrybucji,
+bądź masz inne uwagi/propozycje - napisz do mnie na pkrzemin@o2.pl

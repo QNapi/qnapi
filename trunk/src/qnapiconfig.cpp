@@ -40,19 +40,42 @@ QString QNapiConfig::version()
 
 QString QNapiConfig::p7zipPath()
 {
-#ifdef Q_WS_MAC
-	// Paczka binarna dla OS X przygotowana przez adrian5632 zawiera w sobie
-	// program 7z, jednak jesli uzytkownik bedzie chcial uzyc innej sciezki,
-	// to powinnismy ja uwzglednic
-	// thx adrian5632
+	// Odczytujemy z konfiguracji
+	QString p7z_path = settings->value("qnapi/7z_path", "").toString();
+	if(!p7z_path.isEmpty() && QFileInfo(p7z_path).isExecutable())
+		return p7z_path;
 
-	QString value_config = settings->value("qnapi/7z_path", "/usr/bin/7z").toString();
-	return QFileInfo(value_config).isExecutable()
-			? value_config
-			: QFileInfo(QApplication::applicationDirPath() + "/../Resources/7z").absoluteFilePath();
-#else
-	return settings->value("qnapi/7z_path", "/usr/bin/7z").toString();
+	// Przeszukiwanie sciezek systemowych
+	QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
+	QStringList paths = path.mid(5).split(":");
+	paths.removeAll("");
+
+	if(paths.size() == 0)
+		paths << "/usr/bin" << "/usr/local/bin";
+
+	QStringList binaries;
+	binaries << "7z" << "7za" << "7zr";
+
+	for(QStringList::iterator i = paths.begin(); i != paths.end(); i++)
+	{
+		for(QStringList::iterator j = binaries.begin(); j != binaries.end(); j++)
+		{
+			p7z_path = (*i) + "/" + (*j);
+			if(QFileInfo(p7z_path).isExecutable())
+				return p7z_path;
+		}
+	}
+
+#ifdef Q_WS_MAC
+// Pakiet binarny dla OS X, ktory przygotowal adrian5632 zawiera
+// program 7z w odpowiednim katalogu
+	p7z_path QFileInfo(QApplication::applicationDirPath() + "/../Resources/7z").absoluteFilePath();
+	if(QFileInfo(p7z_path).isExecutable())
+		return p7z_path;
 #endif
+
+	// Jesli wszystko inne zawiodlo...;)
+	return "7z";
 }
 
 void QNapiConfig::setP7zipPath(const QString & path)

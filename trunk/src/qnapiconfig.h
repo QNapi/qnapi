@@ -8,9 +8,12 @@
 
 #include <QSettings>
 #include <QString>
+#include <QStringList>
 #include <QFileInfo>
 #include <QApplication>
 #include <QDir>
+#include <QProcess>
+#include <QRegExp>
 #include "version.h"
 
 class QNapiConfig

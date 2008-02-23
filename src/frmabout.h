@@ -6,6 +6,8 @@
 #ifndef __FRMABOUT__H__
 #define __FRMABOUT__H__
 
+#include <QDesktopWidget>
+
 #include "ui_frmabout.h"
 #include "version.h"
 

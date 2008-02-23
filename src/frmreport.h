@@ -14,6 +14,7 @@
 #include <QStringList>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QDesktopWidget>
 
 #include "napi.h"
 #include "napithread.h"

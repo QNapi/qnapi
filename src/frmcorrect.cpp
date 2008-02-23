@@ -21,6 +21,10 @@ frmCorrect::frmCorrect(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pbPost, SIGNAL(clicked()), this, SLOT(pbPostClicked()));
 	connect(&postThread, SIGNAL(postFinished()), this, SLOT(postFinished()));
 	connect(&postThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
+
+	// workaround dla compiza?
+	move((QApplication::desktop()->width() - width()) / 2, 
+		(QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmCorrect::closeEvent(QCloseEvent *event)

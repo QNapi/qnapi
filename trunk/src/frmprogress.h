@@ -96,6 +96,7 @@ class frmProgress: public QWidget
 		
 	private slots:
 		void updatePreviousPath(const QString & path);
+		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 };
 
 #endif

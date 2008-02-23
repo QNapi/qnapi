@@ -1,0 +1,20 @@
+QNapi ChangeLog:
+================
+
+2008-02-19 v0.1.2:
+ * liczne usprawnienia w interfejsie użytkownika
+ * poprawiony błąd podczas wysyłania raportu o błędzie (thx badenov)
+ * dodano możliwość automatyczej detekcji kodowania znaków z pliku
+ * ulepszenia w obsłudze protokołu NAPI
+ * użycie stylu BrushedMetal pod Mac OS X (thx adrian5632)
+ * sporo innych, mniejszych poprawek
+
+2008-02-16 v0.1.1:
+ * lepsza integracja z Mac OS X
+ * w oknie do wysyłania poprawek można wybrać język napisów
+ * obsługa zmiany kodowania pobranych napisów
+ * integracja z Nautilusem
+ * zmiany kosmetyczne
+
+2008-02-14 v0.1:
+ * pierwsza udostępniona wersja programu

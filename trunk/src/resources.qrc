@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icon" >
+        <file>qnapi.png</file>
+        <file>qnapi_mono.png</file>
+        <file>qnapi_44x44.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,16 @@
+.TH "qnapi" 1
+.SH NAZWA
+qnapi \- program do pobierania napisow z bazy NAPI-PROJEKT.
+.SH SKLADNIA
+\fBqnapi\fP [opcje] [lista plikow]
+.SH OPIS
+\fBqnapi\fP potrafi pracowac w dwoch trybach: GUI oraz konsolowym. Podanie listy plikow (filmowych) zmusi program do pobrania napisow dla zadanych filmow.
+.SH OPCJE
+    -c, --console    pobieranie napisow z konsoli
+    -q, --quiet      pobiera napisy nie wypisujac zadnych komunikatow
+                     ani nie pokazujac zadnych okien
+    -h, --help       pokazuje pomoc programu
+.SH AUTOR
+Autorem programu jest Krzemin <pkrzemin@o2.pl>
+.SH BLEDY
+Wszelkie zauwazone bledy w programie mozna zlgaszac na adres pkrzemin@o2.pl

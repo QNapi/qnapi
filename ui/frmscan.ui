@@ -1,0 +1,315 @@
+<ui version="4.0" >
+ <class>frmScan</class>
+ <widget class="QDialog" name="frmScan" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>757</width>
+    <height>414</height>
+   </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>480</width>
+    <height>330</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>QNapi - skanowanie i dopasowywanie napisów</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../src/resources.qrc" >:/icon/qnapi.png</iconset>
+  </property>
+  <widget class="QWidget" name="gridLayout" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>734</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" >
+    <property name="leftMargin" >
+     <number>0</number>
+    </property>
+    <property name="topMargin" >
+     <number>0</number>
+    </property>
+    <property name="rightMargin" >
+     <number>0</number>
+    </property>
+    <property name="bottomMargin" >
+     <number>0</number>
+    </property>
+    <property name="horizontalSpacing" >
+     <number>0</number>
+    </property>
+    <item row="1" column="0" >
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QLineEdit" name="leDirectory" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbDirectorySelect" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbScan" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="text" >
+         <string>Skanuj</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" >
+     <widget class="QLabel" name="lbDirectory" >
+      <property name="text" >
+       <string>Wskaż katalog do przeszukania:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" >
+     <layout class="QHBoxLayout" >
+      <item>
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="QLabel" name="lbFound" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>Znalezione filmy:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="lwFound" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" >
+        <property name="leftMargin" >
+         <number>0</number>
+        </property>
+        <property name="rightMargin" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pbAddAll" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>>></string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbAdd" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>></string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbRemove" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>&lt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbRemoveAll" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>&lt;&lt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="QLabel" name="lbSelected" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>Wybrane filmy:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="lwSelected" />
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="6" column="0" >
+     <widget class="QLabel" name="lbAction" >
+      <property name="text" >
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0" >
+     <layout class="QHBoxLayout" >
+      <property name="leftMargin" >
+       <number>0</number>
+      </property>
+      <property name="topMargin" >
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QProgressBar" name="pbProgress" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="value" >
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbCancel" >
+        <property name="text" >
+         <string>Anuluj</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbGet" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="text" >
+         <string>Pobierz napisy</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0" >
+     <layout class="QHBoxLayout" >
+      <property name="topMargin" >
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lbFilter" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text" >
+         <string>Filtr rozszerzeń plików:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbFilter" >
+        <property name="editable" >
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text" >
+          <string>*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>*.*</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" />
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0" >
+     <layout class="QHBoxLayout" >
+      <property name="topMargin" >
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lbSkip" >
+        <property name="text" >
+         <string>Pomiń pliki zawierające w nazwie:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="leSkip" >
+        <property name="text" >
+         <string>PL dubbing</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="4" column="0" >
+     <widget class="QCheckBox" name="checkBox" >
+      <property name="text" >
+       <string>Pomiń pliki, do których istnieją juz napisy</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../src/resources.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>pbCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>frmScan</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>404</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>233</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

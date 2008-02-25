@@ -23,6 +23,7 @@
 #include "frmupload.h"
 #include "frmcorrect.h"
 #include "frmreport.h"
+#include "frmscan.h"
 
 #include "napi.h"
 #include "napithread.h"
@@ -61,6 +62,7 @@ class frmProgress: public QWidget
 
 	public slots:
 
+		void showScanDialog();
 		void showUploadDialog();
 		void showCorrectDialog();
 		void showReportDialog();
@@ -85,8 +87,8 @@ class frmProgress: public QWidget
 
 		QSystemTrayIcon *trayIcon;
 		QMenu *trayIconMenu, *napiSubMenu;
-		QAction *getAction, *addNewAction, *addCorrectedAction, *reportBadAction,
-				*optionsAction, *aboutAction, *quitAction;
+		QAction *getAction, *scanAction, *addNewAction, *addCorrectedAction,
+				*reportBadAction, *optionsAction, *aboutAction, *quitAction;
 
 		GetThread getThread;
 

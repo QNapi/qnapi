@@ -68,6 +68,7 @@ void frmProgress::showOpenDialog()
 	connect(&openDialog, SIGNAL(directoryEntered(const QString &)),
 			this, SLOT(updatePreviousPath(const QString &)));
 
+	// workaround dla compiza
 	openDialog.move((QApplication::desktop()->width() - width()) / 2, 
 					(QApplication::desktop()->height() - height()) / 2);
 

@@ -14,7 +14,8 @@ SOURCES += src/main.cpp \
  src/frmupload.cpp \
  src/frmcorrect.cpp \
  src/frmreport.cpp \
- src/qnapiconfig.cpp
+ src/qnapiconfig.cpp \
+ src/frmscan.cpp
 HEADERS += src/napi.h \
  src/frmprogress.h \
  src/synchttp.h \
@@ -27,12 +28,14 @@ HEADERS += src/napi.h \
  src/frmcorrect.h \
  src/frmreport.h \
  src/version.h \
- src/qnapiconfig.h
+ src/qnapiconfig.h \
+ src/frmscan.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
  ui/frmupload.ui \
  ui/frmcorrect.ui \
- ui/frmreport.ui
+ ui/frmreport.ui \
+ ui/frmscan.ui
 RESOURCES += src/resources.qrc
 QT += network gui core

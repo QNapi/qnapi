@@ -21,6 +21,7 @@
 #include "synchttp.h"
 #include "multipartdata.h"
 #include "movieinfo.h"
+#include "version.h"
 
 const QString napiZipPassword = "iBlm8NTigvru0Jr0";
 const QString napiDownloadUrlTpl= "http://www.napiprojekt.pl/unit_napisy/dl.php"

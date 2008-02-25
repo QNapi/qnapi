@@ -230,7 +230,8 @@ void ScanThread::run()
 	folders = movies = subtitles = 0;
 	fileList.clear();
 	searchFilters.clear();
-	searchFilters << "*.avi";
+	searchFilters << "*.avi" << "*.asf" << "*.divx" << "*.dat" << "*.mkv" << "*.mov" << "*.mp4"
+					<< "*.mpeg" << "*.mpg" << "*.ogm" << "*.rm" << "*.rmvb" << "*.wmv";
 
 	emit scanFinished(doScan(searchPath));
 }

@@ -69,7 +69,7 @@ QString QNapiConfig::p7zipPath()
 #ifdef Q_WS_MAC
 // Pakiet binarny dla OS X, ktory przygotowal adrian5632 zawiera
 // program 7z w odpowiednim katalogu
-	p7z_path QFileInfo(QApplication::applicationDirPath() + "/../Resources/7z").absoluteFilePath();
+	p7z_path = QFileInfo(QApplication::applicationDirPath() + "/../Resources/7z").absoluteFilePath();
 	if(QFileInfo(p7z_path).isExecutable())
 		return p7z_path;
 #endif

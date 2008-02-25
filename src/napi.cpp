@@ -257,7 +257,7 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 	header.setValue("Accept", "text/html, */*");
 	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
 	header.setValue("Connection", "keep-alive");
-	header.setValue("User-Agent", "QNapi 0.1");
+	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
 
 	SyncHTTP http;
 	http.setHost(url.host());
@@ -317,7 +317,7 @@ napiReportResult napiReportBad(const QString & movie_file, const QString & langu
 	header.setValue("Accept", "text/html, */*");
 	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
 	header.setValue("Connection", "keep-alive");
-	header.setValue("User-Agent", "QNapi 0.1");
+	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
 	
 	SyncHTTP http;
 	http.setHost(url.host());

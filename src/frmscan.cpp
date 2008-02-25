@@ -8,6 +8,10 @@
 frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
+
+	// workaround dla compiza?
+	move((QApplication::desktop()->width() - width()) / 2, 
+		(QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmScan::resizeEvent(QResizeEvent *resize)

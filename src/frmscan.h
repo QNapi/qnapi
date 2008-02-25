@@ -8,6 +8,7 @@
 
 #include "ui_frmscan.h"
 #include <QResizeEvent>
+#include <QDesktopWidget>
 
 class frmScan: public QDialog
 {
@@ -19,7 +20,6 @@ Q_OBJECT
 
 	private:
 		Ui::frmScan ui;
-
 
 	private slots:
 		void resizeEvent(QResizeEvent *event);

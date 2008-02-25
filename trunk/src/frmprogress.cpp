@@ -249,7 +249,7 @@ void frmProgress::createTrayIcon()
 	trayIcon->setContextMenu(trayIconMenu);
 
 #ifdef Q_WS_MAC
-	trayIcon->setIcon(QIcon(":/icon/qnapi_mono.png"));
+	trayIcon->setIcon(QIcon(":/icon/qnapi-22-mono.png"));
 #else
 	trayIcon->setIcon(QIcon(":/icon/qnapi.png"));
 #endif

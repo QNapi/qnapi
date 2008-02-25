@@ -124,10 +124,11 @@ void frmProgress::downloadFinished()
 			if(getThread.napiFail > 0)
 				msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
 						.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
-			
+#ifndef Q_WS_MAC
 			if(QSystemTrayIcon::supportsMessages() && !batchMode)
 				trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
 			else
+#endif
 				QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 		}
 
@@ -149,9 +150,11 @@ void frmProgress::downloadFinished()
 			QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
 			if(!quietMode)
 			{
+#ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
 					trayIcon->showMessage(tr("Pobrano napisy"), msg, QSystemTrayIcon::Information);
 				else
+#endif
 					QMessageBox::information(0, tr("Pobrano napisy"), msg);
 			}
 
@@ -162,9 +165,11 @@ void frmProgress::downloadFinished()
 			QString msg = tr("Nie znaleziono napisów dla '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
 			if(!quietMode)
 			{
+#ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
 					trayIcon->showMessage(tr("Nie znaleziono napisów"), msg, QSystemTrayIcon::Information);
 				else
+#endif
 					QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
 			}
 
@@ -311,8 +316,10 @@ void frmProgress::updatePreviousPath(const QString & path)
 
 void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+#ifndef Q_WS_MAC
 	if(reason == QSystemTrayIcon::Trigger)
 		showOpenDialog();
+#endif
 }
 
 void GetThread::run()

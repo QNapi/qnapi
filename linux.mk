@@ -18,7 +18,9 @@ install: all
 	$(INSTALL_FILE) doc/manpage $(MAN_PREFIX)/$(TARGET).1
 	$(COMPRESS) $(MAN_PREFIX)/$(TARGET).1
 	$(INSTALL_FILE) src/qnapi.png $(ICONS_PREFIX)/
-	$(INSTALL_FILE) src/qnapi_44x44.png $(ICONS_PREFIX)/
+	$(INSTALL_FILE) src/qnapi-48.png $(ICONS_PREFIX)/
+	$(INSTALL_FILE) src/qnapi-128.png $(ICONS_PREFIX)/
+	$(INSTALL_FILE) src/qnapi-512.png $(ICONS_PREFIX)/
 	$(INSTALL_FILE) doc/$(TARGET).desktop $(APPS_PREFIX)/
 
 uninstall:
@@ -26,5 +28,7 @@ uninstall:
 	$(DEL_FILE) -r $(DOC_PREFIX)
 	$(DEL_FILE) $(MAN_PREFIX)/$(TARGET).1.gz
 	$(DEL_FILE) $(ICONS_PREFIX)/qnapi.png
-	$(DEL_FILE) $(ICONS_PREFIX)/qnapi_44x44.png
+	$(DEL_FILE) $(ICONS_PREFIX)/qnapi-48.png
+	$(DEL_FILE) $(ICONS_PREFIX)/qnapi-128.png
+	$(DEL_FILE) $(ICONS_PREFIX)/qnapi-512.png
 	$(DEL_FILE) $(APPS_PREFIX)/$(TARGET).desktop

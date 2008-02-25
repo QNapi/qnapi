@@ -31,7 +31,7 @@
    <string>Zgłoś niepasujące napisy</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../src/resources.qrc" >:/icon/qnapi.png</iconset>
+   <iconset resource="../src/resources.qrc" >:/icon/qnapi-22-icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" colspan="2" >

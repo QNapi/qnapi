@@ -68,6 +68,9 @@ void frmProgress::showOpenDialog()
 	connect(&openDialog, SIGNAL(directoryEntered(const QString &)),
 			this, SLOT(updatePreviousPath(const QString &)));
 
+	openDialog.move((QApplication::desktop()->width() - width()) / 2, 
+					(QApplication::desktop()->height() - height()) / 2);
+
 	openDialog.setAttribute(Qt::WA_QuitOnClose, false);
 	openDialog.setWindowTitle(tr("Wybierz jeden lub więcej plików z filmami"));
 	openDialog.setFilter(tr("Filmy (*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
@@ -202,6 +205,9 @@ void frmProgress::createTrayIcon()
 	getAction = new QAction(tr("Pobierz"), this);
 	connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 
+	scanAction = new QAction(tr("Skanuj i dopasuj napisy"), this);
+	connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
+
 	addNewAction = new QAction(tr("Dodaj nowe"), this);
 	connect(addNewAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
 
@@ -223,6 +229,7 @@ void frmProgress::createTrayIcon()
 	napiSubMenu = new QMenu(this);
 	napiSubMenu->setTitle(tr("Napisy"));
 	napiSubMenu->addAction(getAction);
+	napiSubMenu->addAction(scanAction);
 	napiSubMenu->addSeparator();
 	napiSubMenu->addAction(addNewAction);
 	napiSubMenu->addAction(addCorrectedAction);
@@ -266,6 +273,13 @@ void frmProgress::showAbout()
 	frmAbout *about = new frmAbout(this);
 	about->exec();
 	delete about;
+}
+
+void frmProgress::showScanDialog()
+{
+	frmScan *scan = new frmScan(this);
+	scan->exec();
+	delete scan;
 }
 
 void frmProgress::showUploadDialog()

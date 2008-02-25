@@ -25,7 +25,7 @@ class ScanThread : public NapiThread
 	public:
 		void run();
 		void setSearchPath(const QString & path) { searchPath = path; }
-		
+
 		QStringList fileList;
 		unsigned int folders, movies, subtitles;
 
@@ -60,7 +60,7 @@ class UploadThread : public NapiThread
 
 class frmUpload: public QDialog
 {
-Q_OBJECT
+	Q_OBJECT
 	public:
 		frmUpload(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmUpload() {};

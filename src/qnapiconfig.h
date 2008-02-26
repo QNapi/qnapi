@@ -48,6 +48,12 @@ class QNapiConfig
 		void setShowAllEncodings(bool show);
 		QString previousDialogPath();
 		void setPreviousDialogPath(const QString & path);
+		QList<QVariant> scanFilters();
+		void setScanFilters(const QList<QVariant> & filters);
+		QString scanSkipFilters();
+		void setScanSkipFilters(const QString & filters);
+		bool scanSkipIfSubtitlesExists();
+		void setScanSkipIfSubtitlesExists(bool skip);
 
 	private:
 		QNapiConfig();

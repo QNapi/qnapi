@@ -193,6 +193,40 @@ void QNapiConfig::setPreviousDialogPath(const QString & path)
 	settings->setValue("qnapi/prev_dialog_path", path);
 }
 
+QList<QVariant> QNapiConfig::scanFilters()
+{
+	QList<QVariant> defaultScanFilters;
+	defaultScanFilters << "*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg"
+							" *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
+						
+	return settings->value("qnapi/scan_filters", defaultScanFilters).toList();
+}
+
+void QNapiConfig::setScanFilters(const QList<QVariant> & filters)
+{
+	settings->setValue("qnapi/scan_filters", filters);
+}
+
+QString QNapiConfig::scanSkipFilters()
+{
+	return settings->value("qnapi/scan_skip_filters", "PL dubbing").toString();
+}
+
+void QNapiConfig::setScanSkipFilters(const QString & filters)
+{
+	settings->setValue("qnapi/scan_skip_filters", filters);
+}
+
+bool QNapiConfig::scanSkipIfSubtitlesExists()
+{
+	return settings->value("qnapi/scan_skip_if_subtitles_exists", false).toBool();
+}
+
+void QNapiConfig::setScanSkipIfSubtitlesExists(bool skip)
+{
+	settings->setValue("qnapi/scan_skip_if_subtitles_exists", skip);
+}
+
 QNapiConfig & GlobalConfig()
 {
 	static QNapiConfig cfg;

@@ -225,6 +225,7 @@ void frmScan::pbRemoveAllClicked()
 void frmScan::checkPbGetEnabled()
 {
 	ui.pbGet->setEnabled(ui.lwSelected->count() > 0);
+	ui.pbProgress->setEnabled(ui.lwSelected->count() > 0);
 }
 
 void frmScan::pbGetClicked()
@@ -271,6 +272,7 @@ void frmScan::downloadFinished(bool interrupt)
 	ui.pbScan->setEnabled(true);
 	ui.pbGet->setText(tr("Pobierz napisy"));
 	ui.pbProgress->setValue(0);
+	
 
 	if(getThread.napiSuccess + getThread.napiFail > 0)
 	{

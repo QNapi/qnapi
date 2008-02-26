@@ -79,6 +79,7 @@ class frmProgress: public QWidget
 			consoleMode = value; setQuietMode(value); getThread.setVerboseMode(value);
 		}
 		bool download();
+		void downloadFile(QString fileName);
 
 	private:
 		void closeEvent(QCloseEvent *event);

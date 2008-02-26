@@ -47,8 +47,8 @@ class GetFilesThread : public NapiThread
 	Q_OBJECT
 	signals:
 		void fileNameChange(const QString & newfileName);
-		void actionChange(const QString & newAction);
 		void progressChange(int newValue);
+		void downloadFinished(bool interrupt);
 
 	public:
 		void run();
@@ -66,8 +66,11 @@ Q_OBJECT
 		~frmScan(){};
 
 	private:
+		void closeEvent(QCloseEvent *event);
+
 		Ui::frmScan ui;
 		ScanFilesThread scanThread;
+		GetFilesThread getThread;
 
 	private slots:
 		void resizeEvent(QResizeEvent *event);
@@ -84,8 +87,9 @@ Q_OBJECT
 		void pbRemoveClicked();
 		void pbRemoveAllClicked();
 		void checkPbGetEnabled();
-		
-		
+		void pbGetClicked();
+		void fileNameChange(const QString & fileName);
+		void downloadFinished(bool interrupt);
 };
 
 #endif

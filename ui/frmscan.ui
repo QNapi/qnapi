@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>757</width>
-    <height>414</height>
+    <width>733</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -26,8 +26,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>734</width>
-     <height>391</height>
+     <width>722</width>
+     <height>379</height>
     </rect>
    </property>
    <layout class="QGridLayout" >
@@ -99,8 +99,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="lwFound" >
+         <widget class="QDragListWidget" name="lwFound" >
           <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="dragEnabled" >
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode" >
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="selectionMode" >
+           <enum>QAbstractItemView::ExtendedSelection</enum>
+          </property>
+          <property name="uniformItemSizes" >
            <bool>false</bool>
           </property>
          </widget>
@@ -115,6 +127,22 @@
         <property name="rightMargin" >
          <number>0</number>
         </property>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QPushButton" name="pbAddAll" >
           <property name="enabled" >
@@ -170,7 +198,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="lwSelected" />
+         <widget class="QDragListWidget" name="lwSelected" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="dragEnabled" >
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode" >
+           <enum>QAbstractItemView::DragDrop</enum>
+          </property>
+          <property name="selectionMode" >
+           <enum>QAbstractItemView::ExtendedSelection</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -239,7 +280,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cbFilter" >
+       <widget class="QComboBox" name="cbFilters" >
         <property name="editable" >
          <bool>true</bool>
         </property>
@@ -273,7 +314,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="leSkip" >
+       <widget class="QLineEdit" name="leSkipFilters" >
         <property name="text" >
          <string>PL dubbing</string>
         </property>
@@ -282,7 +323,7 @@
      </layout>
     </item>
     <item row="4" column="0" >
-     <widget class="QCheckBox" name="checkBox" >
+     <widget class="QCheckBox" name="cbSkipIfSubtitlesExists" >
       <property name="text" >
        <string>Pomiń pliki, do których istnieją juz napisy</string>
       </property>
@@ -291,6 +332,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QDragListWidget</class>
+   <extends>QListWidget</extends>
+   <header>src/qdraglistwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../src/resources.qrc" />
  </resources>

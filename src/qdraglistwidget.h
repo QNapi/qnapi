@@ -26,7 +26,6 @@ class QDragListWidget : public QListWidget
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dropEvent(QDropEvent *event);
-		//virtual bool dropMimeData(int index, const QMimeData *data, Qt::DropAction action);
 		QStringList mimeTypes() const;
 		Qt::DropActions supportedDropActions () const;
 		void mouseMoveEvent(QMouseEvent *event);

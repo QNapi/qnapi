@@ -30,6 +30,17 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
 	connect(&getThread, SIGNAL(downloadFinished(bool)), this, SLOT(downloadFinished(bool)));
 
+	QList<QVariant> scanFilters = GlobalConfig().scanFilters();
+	ui.cbFilters->clear();
+
+	for(int i = 0; i < scanFilters.size(); i++)
+	{
+		ui.cbFilters->addItem(scanFilters[i].toString());
+	}
+
+	ui.leSkipFilters->setText(GlobalConfig().scanSkipFilters());
+	ui.cbSkipIfSubtitlesExists->setChecked(GlobalConfig().scanSkipIfSubtitlesExists());
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -37,6 +48,17 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 
 void frmScan::closeEvent(QCloseEvent *event)
 {
+	QList<QVariant> scanFilters;
+	for(int i = 0; i < ui.cbFilters->count(); i++)
+	{
+		scanFilters << ui.cbFilters->itemText(i);
+	}
+
+	GlobalConfig().setScanFilters(scanFilters);
+	GlobalConfig().setScanSkipFilters(ui.leSkipFilters->text());
+	GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
+	GlobalConfig().save();
+
 	if(scanThread.isRunning())
 	{
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać skanowanie katalogów?"),
@@ -154,6 +176,7 @@ void frmScan::scanFinished()
 
 void frmScan::enableControlWidgets(bool enable)
 {
+	ui.lbDirectory->setEnabled(enable);
 	ui.leDirectory->setEnabled(enable);
 	ui.pbDirectorySelect->setEnabled(enable);
 	ui.lbFilter->setEnabled(enable);
@@ -252,7 +275,7 @@ void frmScan::downloadFinished(bool interrupt)
 	if(getThread.napiSuccess + getThread.napiFail > 0)
 	{
 		ui.lbAction->setText(tr("Napisy pobrano."));
-		
+
 		QString msg;
 		if(getThread.napiSuccess > 0)
 			msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
@@ -263,7 +286,7 @@ void frmScan::downloadFinished(bool interrupt)
 					.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
 		QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 	}
-	
+
 	if(interrupt)
 		ui.lbAction->setText(tr("Przerwano."));
 }

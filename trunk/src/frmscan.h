@@ -13,6 +13,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QCloseEvent>
+#include <QVariant>
 
 #include "napithread.h"
 #include "napi.h"

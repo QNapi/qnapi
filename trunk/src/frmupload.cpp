@@ -12,7 +12,7 @@ frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	setAttribute(Qt::WA_MacBrushedMetal, true);
 #endif
 	setAttribute(Qt::WA_QuitOnClose, false);
-	
+
 	connect(ui.pbSelectDirectory, SIGNAL(clicked()), this, SLOT(selectDirectory()));
 	connect(ui.leSelectDirectory, SIGNAL(textChanged(QString)), this, SLOT(leSelectDirectoryChanged()));
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));

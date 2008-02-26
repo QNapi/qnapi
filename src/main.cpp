@@ -12,19 +12,22 @@
 #include "version.h"
 #include "napi.h"
 #include "qnapiconfig.h"
+#include "qnapiapp.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
+	QNapiApp app(argc, argv);
 
 	app.setApplicationName("QNapi");
 	app.setQuitOnLastWindowClosed(false);
 	QTextCodec::setCodecForTr (QTextCodec::codecForName ("UTF-8"));
 
 	frmProgress form(0, 0);
+
 	QStringList args = app.arguments();
 
-	args.removeAt(0);
+	if(args.size() > 0 )
+		args.removeAt(0);
 
 	// Przegladamy parametry i sprawdzamy w jakim trybie aplikacja jest odpalona
 	for(int i=0; i < args.size(); i++)
@@ -88,6 +91,9 @@ int main(int argc, char *argv[])
 		else
 			form.createTrayIcon();
 	}
+
+	if(!form.isBatchMode())
+		QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(downloadFile(QString)));
 
 	return app.exec();
 }

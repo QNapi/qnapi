@@ -61,16 +61,21 @@ bool frmProgress::download()
 	return true;
 }
 
+void frmProgress::downloadFile(QString fileName)
+{
+	QStringList list;
+	list << fileName;
+	enqueueFiles(list);
+	download();
+}
+
+
 void frmProgress::showOpenDialog()
 {
 	QStringList fileList;
 	QFileDialog openDialog;
 	connect(&openDialog, SIGNAL(directoryEntered(const QString &)),
 			this, SLOT(updatePreviousPath(const QString &)));
-
-	// workaround dla compiza
-	openDialog.move((QApplication::desktop()->width() - width()) / 2, 
-					(QApplication::desktop()->height() - height()) / 2);
 
 	openDialog.setAttribute(Qt::WA_QuitOnClose, false);
 	openDialog.setWindowTitle(tr("Wybierz jeden lub więcej plików z filmami"));
@@ -95,6 +100,10 @@ void frmProgress::showOpenDialog()
 		openDialog.setDirectory(GlobalConfig().previousDialogPath());
 	else
 		openDialog.setDirectory(QDir::currentPath());
+
+	// workaround dla compiza
+	openDialog.move((QApplication::desktop()->width() - openDialog.width()) / 2, 
+					(QApplication::desktop()->height() - openDialog.height()) / 2);
 
 	if(openDialog.exec())
 		fileList = openDialog.selectedFiles();

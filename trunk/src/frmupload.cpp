@@ -105,7 +105,7 @@ void frmUpload::pbScanClicked()
 		ui.lbSubtitlesCount->setText(tr("Napisów: <b>0</b>"));
 		ui.pbProgress->setEnabled(false);
 		ui.pbUpload->setEnabled(false);
-		
+
 		scanThread.setSearchPath(ui.leSelectDirectory->text());
 		scanThread.start();
 	}
@@ -115,7 +115,7 @@ void frmUpload::pbScanClicked()
 		ui.lbAction->setText(tr("Przerywanie skanowania..."));
 		ui.pbScan->setEnabled(false);
 		qApp->processEvents();
-		
+
 		scanThread.wait();
 		ui.pbScan->setEnabled(true);
 		scanFinished(false);
@@ -179,7 +179,7 @@ void frmUpload::pbUploadClicked()
 		uploadThread.wait();
 		
 		ui.pbUpload->setEnabled(true);
-		uploadFinished();
+		uploadFinished(true);
 	}
 }
 
@@ -208,15 +208,17 @@ void frmUpload::uploadFinished(bool interrupt)
 	ui.pbProgress->setValue(0);
 
 	if(!interrupt)
+	{
 		ui.lbAction->setText(tr("Napisy wysłano."));
-	else
-		ui.lbAction->setText(tr("Przerwano."));
-
-	QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
+		
+		QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
 				+ tr("W tym zupełnie nowych: %1\n").arg(uploadThread.added_new)
 				+ tr("Nie udało się wysłać: %1\n").arg(uploadThread.failed);
 
-	QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
+		QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
+	}
+	else
+		ui.lbAction->setText(tr("Przerwano."));
 }
 
 void frmUpload::invalidUserPass()

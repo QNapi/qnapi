@@ -220,7 +220,7 @@ void frmProgress::createTrayIcon()
 	getAction = new QAction(tr("Pobierz"), this);
 	connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 
-	scanAction = new QAction(tr("Skanuj i dopasuj napisy"), this);
+	scanAction = new QAction(tr("Skanuj katalogi i dopasuj napisy"), this);
 	connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
 
 	addNewAction = new QAction(tr("Dodaj nowe"), this);

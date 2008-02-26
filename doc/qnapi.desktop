@@ -1,7 +1,7 @@
 [Desktop Entry]
 Exec=qnapi
 Name=QNapi
-Icon=qnapi.png
+Icon=/usr/share/icons/qnapi-48.png
 Type=Application
 Categories=Application;Multimedia;AudioVideo;Utility;Qt;
 Comment=Program do pobierania napisów do filmów

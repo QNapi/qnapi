@@ -15,7 +15,9 @@ SOURCES += src/main.cpp \
  src/frmcorrect.cpp \
  src/frmreport.cpp \
  src/qnapiconfig.cpp \
- src/frmscan.cpp
+ src/frmscan.cpp \
+ src/qnapiapp.cpp \
+ src/qdraglistwidget.cpp
 HEADERS += src/napi.h \
  src/frmprogress.h \
  src/synchttp.h \
@@ -29,7 +31,9 @@ HEADERS += src/napi.h \
  src/frmreport.h \
  src/version.h \
  src/qnapiconfig.h \
- src/frmscan.h
+ src/frmscan.h \
+ src/qnapiapp.h \
+ src/qdraglistwidget.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

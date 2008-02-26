@@ -199,32 +199,32 @@ QList<QVariant> QNapiConfig::scanFilters()
 	defaultScanFilters << "*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg"
 							" *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
 						
-	return settings->value("qnapi/scan_filters", defaultScanFilters).toList();
+	return settings->value("scan/filters", defaultScanFilters).toList();
 }
 
 void QNapiConfig::setScanFilters(const QList<QVariant> & filters)
 {
-	settings->setValue("qnapi/scan_filters", filters);
+	settings->setValue("scan/filters", filters);
 }
 
 QString QNapiConfig::scanSkipFilters()
 {
-	return settings->value("qnapi/scan_skip_filters", "PL dubbing").toString();
+	return settings->value("scan/skip_filters", "PL dubbing").toString();
 }
 
 void QNapiConfig::setScanSkipFilters(const QString & filters)
 {
-	settings->setValue("qnapi/scan_skip_filters", filters);
+	settings->setValue("scan/skip_filters", filters);
 }
 
 bool QNapiConfig::scanSkipIfSubtitlesExists()
 {
-	return settings->value("qnapi/scan_skip_if_subtitles_exists", false).toBool();
+	return settings->value("scan/skip_if_subtitles_exists", false).toBool();
 }
 
 void QNapiConfig::setScanSkipIfSubtitlesExists(bool skip)
 {
-	settings->setValue("qnapi/scan_skip_if_subtitles_exists", skip);
+	settings->setValue("scan/skip_if_subtitles_exists", skip);
 }
 
 QNapiConfig & GlobalConfig()

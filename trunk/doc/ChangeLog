@@ -1,6 +1,22 @@
 QNapi ChangeLog:
 ================
 
+2008-02-?? v0.1.3:
+ * w przypadku, gdy automatyczna detekcja zawiedzie, używane jest
+   kodowanie źródłowe ustawione przez użytkownika
+ * ulepszenie automatycznej detekcji programu 7z
+ * rozwiązanie problemu z pozycją okienek dialogowych w compizie
+ * balonikowe notyfikacje w tray-u
+ * pokazywanie okna do otwierania plikow z filmami przy kliknieciu
+   LPM na ikone w tray-u
+ * odswiezona ikona programu
+ * skanowanie katalogów i dopasowywanie napisów do znalezionych filmów
+ * obsługa przeciągania plików na ikonę w doku pod Mac OS X
+ * inne usprawnienia lepiej integrujące program pod Mac OS X
+ * poprawki znalezionych błędów
+ + obsluga zakladania kont na serwerze NAPI
+ + konfigurowalny wybór stylu BrushedMetal na Mac OS X
+
 2008-02-19 v0.1.2:
  * liczne usprawnienia w interfejsie użytkownika
  * poprawiony błąd podczas wysyłania raportu o błędzie (thx badenov)

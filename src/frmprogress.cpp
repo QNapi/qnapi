@@ -93,7 +93,7 @@ void frmProgress::showOpenDialog()
 		urls.append(volumes);
 		openDialog.setSidebarUrls(urls);
 	}
-	openDialog.setAttribute(Qt::WA_MacBrushedMetal, true);
+	openDialog.setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 #endif
 
 	if (QFileInfo(GlobalConfig().previousDialogPath()).isDir())

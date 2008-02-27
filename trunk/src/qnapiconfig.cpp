@@ -183,6 +183,16 @@ void QNapiConfig::setShowAllEncodings(bool show)
 	settings->setValue("qnapi/show_all_encodings", show);
 }
 
+bool QNapiConfig::useBrushedMetal()
+{
+	return settings->value("qnapi/use_brushed_metal", true).toBool();
+}
+
+void QNapiConfig::setUseBrushedMetal(bool use)
+{
+	settings->setValue("qnapi/use_brushed_metal", use);
+}
+
 QString QNapiConfig::previousDialogPath()
 {
 	return settings->value("qnapi/prev_dialog_path", "").toString();	

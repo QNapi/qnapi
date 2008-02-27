@@ -46,6 +46,8 @@ class QNapiConfig
 		void setEncodingTo(const QString & encoding);
 		bool showAllEncodings();
 		void setShowAllEncodings(bool show);
+		bool useBrushedMetal();
+		void setUseBrushedMetal(bool use);
 		QString previousDialogPath();
 		void setPreviousDialogPath(const QString & path);
 		QList<QVariant> scanFilters();

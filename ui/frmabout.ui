@@ -1,30 +1,21 @@
 <ui version="4.0" >
  <class>frmAbout</class>
  <widget class="QDialog" name="frmAbout" >
+  <property name="windowModality" >
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>275</height>
+    <width>453</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="minimumSize" >
    <size>
-    <width>500</width>
-    <height>275</height>
-   </size>
-  </property>
-  <property name="maximumSize" >
-   <size>
-    <width>500</width>
-    <height>275</height>
-   </size>
-  </property>
-  <property name="baseSize" >
-   <size>
-    <width>500</width>
-    <height>275</height>
+    <width>400</width>
+    <height>300</height>
    </size>
   </property>
   <property name="windowTitle" >
@@ -33,114 +24,147 @@
   <property name="windowIcon" >
    <iconset resource="../src/resources.qrc" >:/icon/qnapi-22-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" >
-   <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="lbIcon" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string/>
-       </property>
-       <property name="pixmap" >
-        <pixmap resource="../src/resources.qrc" >:/icon/qnapi-48.png</pixmap>
-       </property>
-       <property name="scaledContents" >
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbTitle" >
-       <property name="font" >
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="midLineWidth" >
-        <number>-1</number>
-       </property>
-       <property name="text" >
-        <string/>
-       </property>
-       <property name="pixmap" >
-        <pixmap/>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="lbAbout" >
-     <property name="frameShape" >
-      <enum>QFrame::Panel</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="text" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+  <widget class="QWidget" name="horizontalLayout" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>452</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" >
+    <item>
+     <widget class="QLabel" name="lbIcon" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Maximum" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text" >
+       <string/>
+      </property>
+      <property name="pixmap" >
+       <pixmap resource="../src/resources.qrc" >:/icon/qnapi-48.png</pixmap>
+      </property>
+      <property name="alignment" >
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="margin" >
+       <number>15</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" >
+      <item>
+       <widget class="QLabel" name="lbTitle" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize" >
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font" >
+         <font>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text" >
+         <string>QNapi version</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="tbAbout" >
+        <property name="html" >
+         <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">QNapi jest nieoficjalnym klonem programu &lt;a href="http://www.napiprojekt.pl">&lt;span style=" text-decoration: underline; color:#0000ff;">NAPI-PROJEKT&lt;/span>&lt;/a>. Program rozprowadzany jest na licencji GNU General Public License.&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Autor&lt;/span>: Krzemin &amp;lt;&lt;a href="mailto:pkrzemin@o2.pl">&lt;span style=" text-decoration: underline; color:#0000ff;">pkrzemin@o2.pl&lt;/span>&lt;/a>&amp;gt;&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">WWW&lt;/span>: &lt;a href="http://www.krzemin.iglu.cz/qnapi">&lt;span style=" text-decoration: underline; color:#0000ff;">http://www.krzemin.iglu.cz/qnapi&lt;/span>&lt;/a>&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Podziękowania&lt;/span>:&lt;/p>
-&lt;ul style="-qt-list-indent: 1;">&lt;li style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">adrian5632 &amp;lt;&lt;a href="mailto:adrian5632@gmail.com">&lt;span style=" text-decoration: underline; color:#0000ff;">adrian5632@gmail.com&lt;/span>&lt;/a>&amp;gt; - liczne patche, wersja na Mac OS X&lt;/li>&lt;/ul>&lt;/body>&lt;/html></string>
-     </property>
-     <property name="alignment" >
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QPushButton" name="pbOK" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>Zamknij</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-  </layout>
+&lt;p style="-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="acceptRichText" >
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="topMargin" >
+         <number>0</number>
+        </property>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbClose" >
+          <property name="text" >
+           <string>Zamknij</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources>
   <include location="../src/resources.qrc" />
  </resources>
  <connections>
   <connection>
-   <sender>pbOK</sender>
+   <sender>pbClose</sender>
    <signal>clicked()</signal>
    <receiver>frmAbout</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>332</x>
-     <y>299</y>
+     <x>278</x>
+     <y>312</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>199</x>
-     <y>159</y>
+     <x>235</x>
+     <y>172</y>
     </hint>
    </hints>
   </connection>

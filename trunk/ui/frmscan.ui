@@ -19,7 +19,7 @@
    <string>QNapi - skanowanie katalogów i dopasowywanie napisów</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../src/resources.qrc" >:/icon/qnapi-22-icon.png</iconset>
+   <iconset resource="../src/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
   </property>
   <widget class="QWidget" name="gridLayout" >
    <property name="geometry" >

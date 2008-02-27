@@ -299,7 +299,7 @@
      </item>
     </layout>
    </item>
-   <item row="11" column="0" colspan="5" >
+   <item row="12" column="0" colspan="5" >
     <layout class="QHBoxLayout" >
      <item>
       <spacer>
@@ -330,7 +330,7 @@
      </item>
     </layout>
    </item>
-   <item row="10" column="0" colspan="5" >
+   <item row="11" column="0" colspan="5" >
     <spacer>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
@@ -350,6 +350,16 @@
      </property>
      <property name="text" >
       <string>Pokaż wszystkie dostępne kodowania znaków</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="5" >
+    <widget class="QCheckBox" name="cbUseBrushedMetal" >
+     <property name="text" >
+      <string>Używaj stylu BrushedMetal (Mac OS X)</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>

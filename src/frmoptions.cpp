@@ -8,9 +8,13 @@
 frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
+	
 #ifdef Q_WS_MAC
-	setAttribute(Qt::WA_MacBrushedMetal, true);
+	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
+#else
+	ui.cbUseBrushedMetal->setVisible(false);
 #endif
+
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
@@ -122,6 +126,7 @@ void frmOptions::writeConfig()
 	GlobalConfig().setEncodingFrom(ui.cbEncFrom->currentText());
 	GlobalConfig().setEncodingTo(ui.cbEncTo->currentText());
 	GlobalConfig().setShowAllEncodings(ui.cbShowAllEncodings->isChecked());
+	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 	GlobalConfig().save();
 }
 
@@ -139,6 +144,7 @@ void frmOptions::readConfig()
 	ui.cbEncFrom->setCurrentIndex(ui.cbEncFrom->findText(GlobalConfig().encodingFrom()));
 	ui.cbEncTo->setCurrentIndex(ui.cbEncTo->findText(GlobalConfig().encodingTo()));
 	ui.cbShowAllEncodings->setChecked(GlobalConfig().showAllEncodings());
+	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
 	changeEncodingClicked();
 	showAllEncodingsClicked();
 }

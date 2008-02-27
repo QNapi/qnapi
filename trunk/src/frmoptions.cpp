@@ -22,6 +22,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
+	connect(ui.cbUseBrushedMetal, SIGNAL(clicked()), this, SLOT(useBrushedMetalClicked()));
 
 	showAllEncodings();
 
@@ -111,6 +112,11 @@ void frmOptions::showAllEncodings()
 		ui.cbEncFrom->addItem(*i);
 		ui.cbEncTo->addItem(*i);
 	}
+}
+
+void frmOptions::useBrushedMetalClicked()
+{
+	setAttribute(Qt::WA_MacBrushedMetal, ui.cbUseBrushedMetal->isChecked());
 }
 
 void frmOptions::writeConfig()

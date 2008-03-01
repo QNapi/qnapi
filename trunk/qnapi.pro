@@ -43,3 +43,14 @@ FORMS += ui/frmprogress.ui \
  ui/frmscan.ui
 RESOURCES += src/resources.qrc
 QT += network gui core
+
+macx{
+#    QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
+    CONFIG+=x86 ppc
+    ICON = mac_os_x/qnapi.icns
+    QMAKE_INFO_PLIST = mac_os_x/Info_mac.plist
+    TARGET = QNapi
+#    7ZIP_BINARY.files = ./Mac/7z ./Mac/7z.so
+#    7ZIP_BINARY.path = Contents/Resources
+#    QMAKE_BUNDLE_DATA += 7ZIP_BINARY
+}

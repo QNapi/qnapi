@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rm</string>
+				<string>mpg</string>
+				<string>mpeg</string>
+				<string>mov</string>
+				<string>avi</string>
+				<string>rmvb</string>
+				<string>mkv</string>
+				<string>m4v</string>
+				<string>mp4</string>
+				<string>asf</string>
+				<string>divx</string>
+				<string>ogm</string>
+				<string>dat</string>
+				<string>wmv</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>@ICON@</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSUIElement</key>
+			<true/>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>@EXECUTABLE@</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Created by Qt/QMake</string>
+	<key>CFBundleIconFile</key>
+	<string>@ICON@</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>ttxt</string>
+	<key>LSUIElement</key>
+	<true/>
+</dict>
+</plist>

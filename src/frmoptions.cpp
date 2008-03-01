@@ -10,7 +10,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.setupUi(this);
 	
 #ifdef Q_WS_MAC
-	if ( QSysInfo::MacintoshVersion != QSysInfo::MV_10_5) //bo na Leopardzie nie ma juz stylu BM
+	if ( QSysInfo::MacintoshVersion == QSysInfo::MV_10_5) //bo na Leopardzie nie ma juz stylu BM
 	{
 		ui.cbUseBrushedMetal->setText("Używaj przyciemnionych okien (Mac OS X Leopard)");
 	}

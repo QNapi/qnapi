@@ -111,7 +111,7 @@ void frmScan::selectDirectory()
 {
 	QString propDir = QFileInfo(ui.leDirectory->text()).path();
 	QString dir = QFileDialog::getExistingDirectory(this, tr("Wskaż katalog do przeskanowania"),
-					QDir().exists(propDir) ? propDir  : QDir::home().path(),
+					QDir().exists(propDir) ? propDir  : GlobalConfig().previousDialogPath(),
 					QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if(!dir.isEmpty() && QDir().exists(dir))
 		ui.leDirectory->setText(dir);

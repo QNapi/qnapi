@@ -53,7 +53,7 @@ void frmCorrect::closeEvent(QCloseEvent *event)
 void frmCorrect::selectMovie()
 {
 	QString fileName = QFileDialog::getOpenFileName(this,
-							tr("Wskaż plik z filmem"), QDir::currentPath(),
+							tr("Wskaż plik z filmem"), GlobalConfig().previousDialogPath(),
 							tr("Filmy (*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg "
 								"*.ogm *.rm *.rmvb *.wmv);; Wszystkie pliki (*.*)"));
 
@@ -63,8 +63,12 @@ void frmCorrect::selectMovie()
 
 void frmCorrect::selectSubtitles()
 {
+	QString path = QFileInfo(ui.leMovieSelect->text()).path();
+	if(!QDir(path).exists())
+		path = GlobalConfig().previousDialogPath();
+	
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Wskaż plik z napisami"),
-													QDir::currentPath(),
+													path,
 													tr("Napisy (*.txt);; Wszystkie pliki (*.*)"));
 
 	if(!fileName.isEmpty() && QFile::exists(fileName))

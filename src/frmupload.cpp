@@ -77,7 +77,7 @@ void frmUpload::selectDirectory()
 {
 	QString propDir = QFileInfo(ui.leSelectDirectory->text()).path();
 	QString dir = QFileDialog::getExistingDirectory(this, tr("Wskaż katalog do skanowania"),
-					QDir().exists(propDir) ? propDir  : QDir::home().path(),
+					QDir().exists(propDir) ? propDir  : GlobalConfig().previousDialogPath(),
 					QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if(!dir.isEmpty() && QDir().exists(dir))
 		ui.leSelectDirectory->setText(dir);

@@ -53,7 +53,7 @@ void frmReport::closeEvent(QCloseEvent *event)
 void frmReport::selectMovie()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Wskaż plik z filmem"),
-													QDir::currentPath(),
+													GlobalConfig().previousDialogPath(),
 													tr("Filmy (*.avi *.asf *.divx *.mkv *.mp4"
 													" *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv);;"
 													"Wszystkie pliki (*.*)"));

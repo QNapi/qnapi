@@ -195,7 +195,8 @@ void QNapiConfig::setUseBrushedMetal(bool use)
 
 QString QNapiConfig::previousDialogPath()
 {
-	return settings->value("qnapi/prev_dialog_path", "").toString();	
+	QString path = settings->value("qnapi/prev_dialog_path", "").toString();
+	return (QDir(path).exists() ? path : QDir::homePath());
 }
 
 void QNapiConfig::setPreviousDialogPath(const QString & path)

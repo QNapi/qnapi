@@ -10,7 +10,15 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.setupUi(this);
 	
 #ifdef Q_WS_MAC
-	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
+	if ( QSysInfo::MacintoshVersion != QSysInfo::MV_10_5) //bo na Leopardzie nie ma juz stylu BM
+	{
+		ui.cbUseBrushedMetal->setVisible(true);
+		setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
+	}
+	else
+	{
+		ui.cbUseBrushedMetal->setVisible(false);
+	}
 #else
 	ui.cbUseBrushedMetal->setVisible(false);
 #endif

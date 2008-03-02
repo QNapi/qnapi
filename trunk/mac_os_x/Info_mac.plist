@@ -39,6 +39,6 @@
 	<key>CFBundleSignature</key>
 	<string>ttxt</string>
 	<key>LSUIElement</key>
-	<true/>
+	<string>1</string>
 </dict>
 </plist>

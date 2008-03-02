@@ -26,8 +26,6 @@
 			<string>@ICON@</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSUIElement</key>
-			<true/>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

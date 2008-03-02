@@ -325,7 +325,7 @@
     <item row="4" column="0" >
      <widget class="QCheckBox" name="cbSkipIfSubtitlesExists" >
       <property name="text" >
-       <string>Pomiń pliki, do których istnieją juz napisy</string>
+       <string>Podczas wyszukiwania pomijaj pliki, do których istnieją juz napisy</string>
       </property>
      </widget>
     </item>

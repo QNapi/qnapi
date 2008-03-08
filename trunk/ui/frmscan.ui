@@ -342,22 +342,5 @@
  <resources>
   <include location="../src/resources.qrc" />
  </resources>
- <connections>
-  <connection>
-   <sender>pbCancel</sender>
-   <signal>clicked()</signal>
-   <receiver>frmScan</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>404</x>
-     <y>255</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>233</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

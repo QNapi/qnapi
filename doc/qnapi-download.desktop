@@ -11,3 +11,4 @@ Type=Application
 [Desktop Action QNapiDownload]
 Name=Pobierz napisy do filmu z QNapi
 Exec=qnapi %F
+Icon=/usr/share/icons/qnapi-48.png

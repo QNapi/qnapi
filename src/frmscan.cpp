@@ -14,6 +14,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 #endif
 	setAttribute(Qt::WA_QuitOnClose, false);
 
+	connect(ui.pbCancel, SIGNAL(clicked()), this, SLOT(pbCancelClicked()));
 	connect(ui.pbDirectorySelect, SIGNAL(clicked()), this, SLOT(selectDirectory()));
 	connect(ui.leDirectory, SIGNAL(textChanged(QString)), this, SLOT(leDirectoryTextChanged()));
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));
@@ -59,6 +60,21 @@ void frmScan::closeEvent(QCloseEvent *event)
 	GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
 	GlobalConfig().save();
 
+	if(pbCancelClicked())
+		event->accept();
+	else
+		event->ignore();
+}
+
+void frmScan::resizeEvent(QResizeEvent *resize)
+{
+	int b = 10;
+	ui.gridLayout->setGeometry(QRect(b, b, resize->size().width() - b*2,
+								resize->size().height() - b*2));
+}
+
+bool frmScan::pbCancelClicked()
+{
 	if(scanThread.isRunning())
 	{
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać skanowanie katalogów?"),
@@ -68,13 +84,9 @@ void frmScan::closeEvent(QCloseEvent *event)
 			ui.lbAction->setText(tr("Kończenie zadań..."));
 			qApp->processEvents();
 			scanThread.wait();
-			event->accept();
+			return true;
 		}
-		else
-		{
-			event->ignore();
-		}
-		return;
+		return false;
 	}
 
 	if(getThread.isRunning())
@@ -87,24 +99,12 @@ void frmScan::closeEvent(QCloseEvent *event)
 			qApp->processEvents();
 			getThread.terminate();
 			getThread.wait();
-			event->accept();
 			downloadFinished(true);
+			return true;
 		}
-		else
-		{
-			event->ignore();
-		}
-		return;
+		return false;
 	}
-
-	event->accept();
-}
-
-void frmScan::resizeEvent(QResizeEvent *resize)
-{
-	int b = 10;
-	ui.gridLayout->setGeometry(QRect(b, b, resize->size().width() - b*2,
-								resize->size().height() - b*2));
+	return true;
 }
 
 void frmScan::selectDirectory()

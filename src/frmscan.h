@@ -76,6 +76,7 @@ Q_OBJECT
 	private slots:
 		void resizeEvent(QResizeEvent *event);
 
+		bool pbCancelClicked();
 		void selectDirectory();
 		void leDirectoryTextChanged();
 		void pbScanClicked();

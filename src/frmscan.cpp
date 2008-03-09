@@ -31,6 +31,9 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
 	connect(&getThread, SIGNAL(downloadFinished(bool)), this, SLOT(downloadFinished(bool)));
 
+	if(QFileInfo(GlobalConfig().lastScanDir()).isDir())
+		ui.leDirectory->setText(GlobalConfig().lastScanDir());
+
 	QList<QVariant> scanFilters = GlobalConfig().scanFilters();
 	ui.cbFilters->clear();
 
@@ -55,6 +58,7 @@ void frmScan::closeEvent(QCloseEvent *event)
 		scanFilters << ui.cbFilters->itemText(i);
 	}
 
+	GlobalConfig().setLastScanDir(ui.leDirectory->text());
 	GlobalConfig().setScanFilters(scanFilters);
 	GlobalConfig().setScanSkipFilters(ui.leSkipFilters->text());
 	GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
@@ -104,6 +108,8 @@ bool frmScan::pbCancelClicked()
 		}
 		return false;
 	}
+	
+	close();
 	return true;
 }
 

@@ -56,6 +56,8 @@ class QNapiConfig
 		void setScanSkipFilters(const QString & filters);
 		bool scanSkipIfSubtitlesExists();
 		void setScanSkipIfSubtitlesExists(bool skip);
+		QString lastScanDir();
+		void setLastScanDir(const QString & dir);
 
 	private:
 		QNapiConfig();

@@ -238,6 +238,17 @@ void QNapiConfig::setScanSkipIfSubtitlesExists(bool skip)
 	settings->setValue("scan/skip_if_subtitles_exists", skip);
 }
 
+QString QNapiConfig::lastScanDir()
+{
+	return settings->value("scan/last_scan_dir", "").toString();
+}
+
+void QNapiConfig::setLastScanDir(const QString & dir)
+{
+	settings->setValue("scan/last_scan_dir", dir);
+}
+
+
 QNapiConfig & GlobalConfig()
 {
 	static QNapiConfig cfg;

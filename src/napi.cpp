@@ -397,3 +397,15 @@ bool napiConvertFile(const QString & file, const QString & enc_to)
 
 	return napiConvertFile(file, enc_from, enc_to);
 }
+
+bool napiCheck7Zip()
+{
+	return QFileInfo(GlobalConfig().p7zipPath()).isExecutable();
+}
+
+bool napiCheckTmpPath()
+{
+	QFileInfo f(GlobalConfig().tmpPath());
+	return f.isDir() && f.isWritable();
+}
+

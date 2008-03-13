@@ -22,6 +22,7 @@
 #include "multipartdata.h"
 #include "movieinfo.h"
 #include "version.h"
+#include "qnapiconfig.h"
 
 const QString napiZipPassword = "iBlm8NTigvru0Jr0";
 const QString napiDownloadUrlTpl= "http://www.napiprojekt.pl/unit_napisy/dl.php"
@@ -69,5 +70,9 @@ napiReportResult napiReportBad(const QString & movie_file, const QString & langu
 
 bool napiConvertFile(const QString & file, const QString & enc_from, const QString & enc_to);
 bool napiConvertFile(const QString & file, const QString & enc_to);
+
+
+bool napiCheck7Zip();
+bool napiCheckTmpPath();
 
 #endif

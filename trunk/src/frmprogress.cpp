@@ -40,6 +40,26 @@ void frmProgress::enqueueFiles(const QStringList & fileList)
 
 bool frmProgress::download()
 {
+	if(!napiCheck7Zip())
+	{
+		if(!quietMode)
+			QMessageBox::warning(0, tr("Brak programu p7zip!"),
+				tr("Ścieżka do programu p7zip jest nieprawidłowa!"));
+		if(consoleMode)
+			qDebug("%s", qPrintable(tr("Ścieżka do programu p7zip jest nieprawidłowa!")));
+		return false;
+	}
+	
+	if(!napiCheckTmpPath())
+	{
+		if(!quietMode)
+			QMessageBox::warning(0, tr("Nieprawidłowy katalog tymczasowy!"),
+				tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia."));
+		if(consoleMode)
+			qDebug("%s", qPrintable(tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia.")));
+		return false;
+	}
+	
 	if(getThread.queue.isEmpty())
 	{
 		if(!quietMode)

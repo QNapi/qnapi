@@ -22,7 +22,9 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 
 	setAttribute(Qt::WA_QuitOnClose, false);
 
+	connect(ui.le7zPath, SIGNAL(textChanged(const QString &)), this, SLOT(le7zPathChanged()));
 	connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
+	connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
 	connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
@@ -36,6 +38,15 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 		(QApplication::desktop()->height() - height()) / 2);
 }
 
+void frmOptions::le7zPathChanged()
+{
+	ui.le7zPath->setStyleSheet(
+		QFileInfo(ui.le7zPath->text()).isExecutable()
+			? ""
+			: "color:red;"
+		);
+}
+
 void frmOptions::select7zPath()
 {
 	QString path7z = QFileDialog::getOpenFileName(this, tr("Wskaż ścieżkę do programu 7z"),
@@ -47,6 +58,16 @@ void frmOptions::select7zPath()
 					"odnaleźć programu 7z, spróbuj zainstalować pakiet p7zip-full."));
 		else
 			ui.le7zPath->setText(path7z);
+}
+
+void frmOptions::leTmpPathChanged()
+{
+	QFileInfo f(ui.leTmpPath->text());
+	ui.leTmpPath->setStyleSheet(
+		f.isDir() && f.isWritable()
+			? ""
+			: "color:red;"
+		);
 }
 
 void frmOptions::selectTmpPath()

@@ -29,7 +29,9 @@ Q_OBJECT
 		void readConfig();
 
 	private slots:
+		void le7zPathChanged();
 		void select7zPath();
+		void leTmpPathChanged();
 		void selectTmpPath();
 		void changeEncodingClicked();
 		void autoDetectEncodingClicked();

@@ -49,7 +49,7 @@ bool frmProgress::download()
 			qDebug("%s", qPrintable(tr("Ścieżka do programu p7zip jest nieprawidłowa!")));
 		return false;
 	}
-	
+
 	if(!napiCheckTmpPath())
 	{
 		if(!quietMode)
@@ -59,7 +59,7 @@ bool frmProgress::download()
 			qDebug("%s", qPrintable(tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia.")));
 		return false;
 	}
-	
+
 	if(getThread.queue.isEmpty())
 	{
 		if(!quietMode)
@@ -345,10 +345,11 @@ void frmProgress::updatePreviousPath(const QString & path)
 
 void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-#ifndef Q_WS_MAC
 	if(reason == QSystemTrayIcon::Trigger)
-		showOpenDialog();
+#ifndef Q_WS_MAC
+		showOpenDialog()
 #endif
+	;
 }
 
 void GetThread::run()

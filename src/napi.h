@@ -31,6 +31,7 @@ const QString napiCheckUserUrlTpl = "http://www.napiprojekt.pl/users_check.php?n
 const QString napiUploadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/upload.php"
 				"?m_length=%1&m_resolution=%2x%3&m_fps=%4&m_hash=%5&m_filesize=%6";
 const QString napiReportBadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/zlenapisyadd.php";
+const QString napiCreateUserUrlTpl = "http://www.napiprojekt.pl/users_add.php";
 const unsigned long NAPI_10MB = 10485760;
 
 enum napiUploadResult
@@ -71,6 +72,8 @@ napiReportResult napiReportBad(const QString & movie_file, const QString & langu
 bool napiConvertFile(const QString & file, const QString & enc_from, const QString & enc_to);
 bool napiConvertFile(const QString & file, const QString & enc_to);
 
+bool napiCreateUser(const QString & nick, const QString & pass, const QString & email,
+					QString * response);
 
 bool napiCheck7Zip();
 bool napiCheckTmpPath();

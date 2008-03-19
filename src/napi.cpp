@@ -134,7 +134,7 @@ bool napiCheckUser(const QString & nick, const QString & pass)
 {
 	SyncHTTP http;
 	QString urlTxt = napiCheckUserUrlTpl.arg(nick).arg(pass);
-	
+
 	QUrl url(urlTxt);
 	http.setHost(url.host());
 	http.syncGet(url.path() + "?" + url.encodedQuery());
@@ -152,23 +152,23 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 {
 	if(!QFile::exists(movie_file) || !QFile::exists(subtitles_file))
 		return NAPI_FAIL;
-	
+
 	MovieInfo movieInfo(movie_file);
 	if(movieInfo.isErr)
 		return NAPI_FAIL;
-	
+
 	unsigned long movie_size = QFileInfo(movie_file).size();
 	QString movie_md5 = napiFileMd5Sum(movie_file, NAPI_10MB);
 	QString subtitles_md5 = napiFileMd5Sum(subtitles_file, NAPI_10MB);
-	
+
 	QString newSubtitlesName = tmp_path + "/" + movie_md5 + ".txt";
 	if(QFile::exists(newSubtitlesName)) QFile::remove(newSubtitlesName);
 	if(!QFile::copy(subtitles_file, newSubtitlesName))
 		return NAPI_FAIL;
-	
+
 	QString zipFileName = QFileInfo(newSubtitlesName).path() + "/"
 							+ QFileInfo(newSubtitlesName).completeBaseName() + ".zip";
-	
+
 	QStringList args;
 	args << "a" << "-y" << zipFileName << ("-p"+napiZipPassword) << newSubtitlesName;
 
@@ -177,39 +177,39 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 
 	if(!p7zip.waitForFinished())
 		return NAPI_FAIL;
-	
+
 	QFile::remove(newSubtitlesName);
-	
+
 	if(!QFile::exists(zipFileName))
 		return NAPI_FAIL;
-	
+
 	// Przygotowujemy dane do zapytania POST
 	MultipartData postData;
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"kmt\"");
 	postData.addData(comment);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"poprawka\"");
 	postData.addData(QString(correct ? "true" : "false"));
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"v\"");
 	postData.addData(QString("other"));
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"l\"");
 	postData.addData(language);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"t\"");
 	postData.addData(napiFDigest(movie_md5));
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"m_filename\"");
 	postData.addData(QFileInfo(movie_file).fileName());
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"nick\"");
 	postData.addData(nick);
@@ -217,20 +217,20 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"pass\"");
 	postData.addData(pass);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"s_hash\"");
 	postData.addData(subtitles_md5);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"MAX_FILE_SIZE\"");
 	postData.addData(QString("512000"));
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"plik\"; filename=\"" +
 		QFileInfo(zipFileName).fileName() + "\"");
 	postData.addContentType("subtitles/zip");
-	
+
 	QFile fZip(zipFileName);
 	if(!fZip.open(QIODevice::ReadOnly))
 		return NAPI_FAIL;
@@ -238,21 +238,21 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 	postData.addData(fZip.readAll());
 	fZip.close();
 	QFile::remove(zipFileName);
-	
+
 	postData.addEndingBoundary();
-	
+
 	QByteArray data = postData.requestStream();
-	
+
 	QString movie_fps = QString::number((int)ceil(movieInfo.fps * 100));
 	movie_fps.insert(2, ',');
-	
+
 	QString urlTxt = napiUploadUrlTpl.arg(movieInfo.time).arg(movieInfo.width).arg(movieInfo.height)
 						.arg(movie_fps).arg(movie_md5).arg(movie_size);
 
 	QUrl url(urlTxt);
-	
+
 	QHttpRequestHeader header("POST", url.path() + "?" + url.encodedQuery());
-	
+
 	header.setValue("Host", url.host());
 	header.setValue("Accept", "text/html, */*");
 	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
@@ -263,7 +263,7 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 	http.setHost(url.host());
 	if(!http.syncRequest(header, data))
 		return NAPI_FAIL;
-	
+
 	QString response = http.readAll();
 
 	if(response.indexOf("NPc0") == 0)
@@ -280,52 +280,52 @@ napiReportResult napiReportBad(const QString & movie_file, const QString & langu
 {
 	QString subtitles_file = QFileInfo(movie_file).path() + "/"
 								+ QFileInfo(movie_file).completeBaseName() + ".txt";
-	
+
 	if(!QFile::exists(subtitles_file))
 		return NAPI_NO_SUBTITLES;
-	
+
 	MultipartData postData;
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"nick\"");
 	postData.addData(nick);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"pass\"");
 	postData.addData(pass);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"l\"");
 	postData.addData(language);
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"md5\"");
 	postData.addData(napiFileMd5Sum(movie_file, NAPI_10MB));
-	
+
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"kmt\"");
 	postData.addData(comment);
 	postData.addEndingBoundary();
-	
+
 	QByteArray data = postData.requestStream();
-	
+
 	QUrl url(napiReportBadUrlTpl);
-	
+
 	QHttpRequestHeader header("POST", url.path());
-	
+
 	header.setValue("Host", url.host());
 	header.setValue("Accept", "text/html, */*");
 	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
 	header.setValue("Connection", "keep-alive");
 	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
-	
+
 	SyncHTTP http;
 	http.setHost(url.host());
 	if(!http.syncRequest(header, data))
 		return NAPI_NOT_REPORTED;
-	
+
 	*response = QTextCodec::codecForName("windows-1250")->toUnicode(http.readAll());
-	
+
 	return NAPI_REPORTED;
 }
 
@@ -355,6 +355,8 @@ bool napiConvertFile(const QString & file, const QString & enc_from, const QStri
 	return true;
 }
 
+// Robi to samo co powyzsza funkcja, z tym ze stara sie automatycznie wykryc kodowanie
+// zrodlowe konwertowanego pliku
 bool napiConvertFile(const QString & file, const QString & enc_to)
 {
 	QString enc_from;
@@ -398,14 +400,65 @@ bool napiConvertFile(const QString & file, const QString & enc_to)
 	return napiConvertFile(file, enc_from, enc_to);
 }
 
+// Zakladanie kont uzytkownikow na serwerze napi
+bool napiCreateUser(const QString & nick, const QString & pass, const QString & email,
+					QString * response)
+{
+	MultipartData postData;
+
+	postData.addBoundary();
+	postData.addContentDisposition("name=\"login\"");
+	postData.addData(nick);
+
+	postData.addBoundary();
+	postData.addContentDisposition("name=\"haslo\"");
+	postData.addData(pass);
+
+	postData.addBoundary();
+	postData.addContentDisposition("name=\"mail\"");
+	postData.addData(email);
+
+	postData.addBoundary();
+	postData.addContentDisposition("name=\"z_programu\"");
+	postData.addData(QString("true"));
+
+	postData.addEndingBoundary();
+
+	QByteArray data = postData.requestStream();
+
+	QUrl url(napiCreateUserUrlTpl);
+
+	QHttpRequestHeader header("POST", url.path());
+
+	header.setValue("Host", url.host());
+	header.setValue("Accept", "text/html, */*");
+	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
+	header.setValue("Connection", "keep-alive");
+	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
+
+	SyncHTTP http;
+	http.setHost(url.host());
+	if(!http.syncRequest(header, data))
+		return false;
+
+	QByteArray buffer = http.readAll();
+	if(buffer.indexOf("NPc0") == 0)
+		*response = QObject::tr("Konto założone");
+	else
+		*response = QTextCodec::codecForName("windows-1250")->toUnicode(buffer);
+
+	return true;
+}
+
+// Sprawdza poprawnosc sciezki do 7zipa (z konfiguracji)
 bool napiCheck7Zip()
 {
 	return QFileInfo(GlobalConfig().p7zipPath()).isExecutable();
 }
 
+// Sprawdza poprawnosc sciezki do katalogu tymczasowego (z konfiguracji)
 bool napiCheckTmpPath()
 {
 	QFileInfo f(GlobalConfig().tmpPath());
 	return f.isDir() && f.isWritable();
 }
-

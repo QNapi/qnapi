@@ -12,10 +12,10 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f
 	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 #endif
 	setAttribute(Qt::WA_QuitOnClose, false);
-	
+
 	connect(ui.pbCreate, SIGNAL(clicked()), this, SLOT(pbCreateClicked()));
 	connect(ui.pbCancel, SIGNAL(clicked()), this, SLOT(pbCancelClicked()));
-	
+
 	connect(ui.leLogin, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(ui.lePass, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(ui.leRepeatPass, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
@@ -46,7 +46,7 @@ void frmCreateUser::closeEvent(QCloseEvent *event)
 			return;
 		}
 	}
-	
+
 	event->accept();
 }
 
@@ -64,12 +64,15 @@ void frmCreateUser::checkCreateEnable()
 	e &= !ui.lePass->text().isEmpty();
 	e &= !ui.leRepeatPass->text().isEmpty();
 	e &= !ui.leMail->text().isEmpty();
+	e &= (ui.lePass->text().length() >= 5);
 	e &= (ui.lePass->text() == ui.leRepeatPass->text());
 	ui.pbCreate->setEnabled(e);
-	
-	if(ui.lePass->text() != ui.leRepeatPass->text())
+
+	if (!ui.lePass->text().isEmpty() && (ui.lePass->text().length() < 5))
+		ui.lbStatus->setText(tr("Hasło musi mieć conajmniej 5 znaków!"));
+	else if(ui.lePass->text() != ui.leRepeatPass->text())
 		ui.lbStatus->setText(tr("Wpisane hasła różnią się od siebie!"));
-	else
+	else 
 		ui.lbStatus->setText(tr("Wpisz dane potrzebne do założenia konta"));
 	if(e)
 		ui.lbStatus->setText(tr("Teraz możesz założyć konto na serwerze NAPI-PROJEKT"));
@@ -77,7 +80,30 @@ void frmCreateUser::checkCreateEnable()
 
 void frmCreateUser::pbCreateClicked()
 {
-	
+	if(!createThread.isRunning())
+	{
+		ui.pbCreate->setText(tr("Przerwij"));
+		ui.lbStatus->setText(tr("Zakładanie konta na serwerze NAPI..."));
+		ui.leLogin->setEnabled(false);
+		ui.lePass->setEnabled(false);
+		ui.leRepeatPass->setEnabled(false);
+		ui.leMail->setEnabled(false);
+
+		createThread.setUserParams(ui.leLogin->text(), ui.lePass->text(), ui.leMail->text());
+		createThread.start();
+	}
+	else
+	{
+		ui.pbCreate->setEnabled(false);
+		ui.lbStatus->setText(tr("Anulowanie operacji..."));
+		qApp->processEvents();
+		createThread.terminate();
+		createThread.wait();
+
+		creatingFinished(false);
+		ui.pbCreate->setEnabled(true);
+		ui.lbStatus->setText(tr("Przerwano zakładanie konta"));
+	}
 }
 
 void frmCreateUser::pbCancelClicked()
@@ -90,12 +116,40 @@ void frmCreateUser::pbCancelClicked()
 
 void frmCreateUser::creatingFinished(bool result)
 {
-	
+	ui.lbStatus->setText(result
+							? tr("Operacja zakończona")
+							: tr("Zakładanie konta nie powiodło się"));
+	ui.pbCreate->setText(tr("Załóż konto"));
+	ui.leLogin->setEnabled(true);
+	ui.lePass->setEnabled(true);
+	ui.leRepeatPass->setEnabled(true);
+	ui.leMail->setEnabled(true);
 }
 
 void frmCreateUser::serverMessage(QString msg)
 {
-	
+	QRegExp extract("<A HREF=\"index.php3\\?msg=(.*)\">", Qt::CaseInsensitive);
+	if(extract.indexIn(msg) > -1)
+		msg = extract.cap(1).replace("%20", " ");
+
+	if((msg.indexOf("NPc0") == 0) || (msg.indexOf("Konto zostalo zalozone!") == 0))
+	{
+		msg = tr("Konto na serwerze NAPI zostało założone!");
+		QMessageBox::information(this, tr("Konto założone"), msg);
+
+		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz uaktualnić ustawienia w programie?"),
+			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
+		{
+			GlobalConfig().setNick(ui.leLogin->text());
+			GlobalConfig().setPass(ui.lePass->text());
+			GlobalConfig().save();
+		}
+	}
+	else
+	{
+		msg = tr("Odpowiedź serwera: ") + tr(qPrintable(msg));
+		QMessageBox::information(this, tr("Operacja zakończona"), msg);
+	}
 }
 
 void CreateThread::run()

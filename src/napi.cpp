@@ -425,7 +425,7 @@ bool napiCreateUser(const QString & nick, const QString & pass, const QString & 
 	postData.addEndingBoundary();
 
 	QByteArray data = postData.requestStream();
-
+qDebug(data);
 	QUrl url(napiCreateUserUrlTpl);
 
 	QHttpRequestHeader header("POST", url.path());
@@ -441,12 +441,8 @@ bool napiCreateUser(const QString & nick, const QString & pass, const QString & 
 	if(!http.syncRequest(header, data))
 		return false;
 
-	QByteArray buffer = http.readAll();
-	if(buffer.indexOf("NPc0") == 0)
-		*response = QObject::tr("Konto założone");
-	else
-		*response = QTextCodec::codecForName("windows-1250")->toUnicode(buffer);
-
+	*response = QTextCodec::codecForName("windows-1250")->toUnicode(http.readAll());
+qDebug("odpowiedz:\n\n%s\n", qPrintable(*response));
 	return true;
 }
 

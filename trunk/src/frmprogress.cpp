@@ -255,6 +255,9 @@ void frmProgress::createTrayIcon()
 	optionsAction = new QAction(tr("Opcje"), this);
 	connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
 
+	createUserAction = new QAction(tr("Załóż konto"), this);
+	connect(createUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
+
 	aboutAction = new QAction(tr("O programie"), this);
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
 
@@ -275,6 +278,7 @@ void frmProgress::createTrayIcon()
 	trayIconMenu->addMenu(napiSubMenu);
 	trayIconMenu->addSeparator();
 	trayIconMenu->addAction(optionsAction);
+	trayIconMenu->addAction(createUserAction);
 	trayIconMenu->addAction(aboutAction);
 	trayIconMenu->addSeparator();
 	trayIconMenu->addAction(quitAction);
@@ -301,6 +305,13 @@ void frmProgress::showOptions()
 	if(options->exec() == QDialog::Accepted)
 		options->writeConfig();
 	delete options;
+}
+
+void frmProgress::showCreateUser()
+{
+	frmCreateUser *createUser = new frmCreateUser(this);
+	createUser->exec();
+	delete createUser;
 }
 
 void frmProgress::showAbout()

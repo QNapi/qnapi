@@ -24,6 +24,7 @@
 #include "frmcorrect.h"
 #include "frmreport.h"
 #include "frmscan.h"
+#include "frmcreateuser.h"
 
 #include "napi.h"
 #include "napithread.h"
@@ -67,6 +68,7 @@ class frmProgress: public QWidget
 		void showCorrectDialog();
 		void showReportDialog();
 		void showOptions();
+		void showCreateUser();
 		void showAbout();
 		void downloadFinished();
 		void showOpenDialog();
@@ -89,7 +91,8 @@ class frmProgress: public QWidget
 		QSystemTrayIcon *trayIcon;
 		QMenu *trayIconMenu, *napiSubMenu;
 		QAction *getAction, *scanAction, *addNewAction, *addCorrectedAction,
-				*reportBadAction, *optionsAction, *aboutAction, *quitAction;
+				*reportBadAction, *optionsAction, *createUserAction,
+				*aboutAction, *quitAction;
 
 		GetThread getThread;
 

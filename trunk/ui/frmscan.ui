@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
+    <width>764</width>
     <height>414</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
      <x>10</x>
      <y>10</y>
      <width>744</width>
-     <height>392</height>
+     <height>403</height>
     </rect>
    </property>
    <layout class="QGridLayout" >
@@ -120,6 +120,22 @@
        </layout>
       </item>
       <item>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType" >
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>4</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <layout class="QVBoxLayout" >
         <property name="leftMargin" >
          <number>0</number>
@@ -184,6 +200,22 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType" >
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>4</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <layout class="QVBoxLayout" >

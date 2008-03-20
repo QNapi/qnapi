@@ -425,7 +425,7 @@ bool napiCreateUser(const QString & nick, const QString & pass, const QString & 
 	postData.addEndingBoundary();
 
 	QByteArray data = postData.requestStream();
-qDebug(data);
+
 	QUrl url(napiCreateUserUrlTpl);
 
 	QHttpRequestHeader header("POST", url.path());
@@ -442,7 +442,7 @@ qDebug(data);
 		return false;
 
 	*response = QTextCodec::codecForName("windows-1250")->toUnicode(http.readAll());
-qDebug("odpowiedz:\n\n%s\n", qPrintable(*response));
+
 	return true;
 }
 

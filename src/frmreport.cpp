@@ -92,7 +92,7 @@ void frmReport::pbReportClicked()
 		ui.leProblem->setEnabled(false);
 		ui.pbReport->setText(tr("Zatrzymaj"));
 		ui.lbAction->setText(tr("Wysyłanie raportu do serwera NAPI..."));
-		
+
 		reportThread.setReportParams(ui.leMovieSelect->text(),
 									(ui.cbLanguage->currentIndex() == 0) ? "PL" : "ENG",
 									(ui.cbProblem->currentIndex() < 4
@@ -173,6 +173,6 @@ void ReportThread::run()
 	if(taskResult == NAPI_REPORTED)
 		emit serverMessage(*response);
 	delete response;
-	
+
 	emit reportFinished();
 }

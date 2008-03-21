@@ -54,7 +54,7 @@ class GetFilesThread : public NapiThread
 	public:
 		void run();
 
-		QStringList queue;
+		QStringList queue, gotList;
 		int napiSuccess, napiFail;
 };
 

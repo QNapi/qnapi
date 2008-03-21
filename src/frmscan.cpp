@@ -284,13 +284,21 @@ void frmScan::downloadFinished(bool interrupt)
 	{
 		ui.lbAction->setText(tr("Napisy pobrano."));
 
+		QString fileList;
+		for(int i = 0; i < getThread.gotList.size(); i++)
+		{
+			fileList += " * ";
+			fileList += QFileInfo(getThread.gotList[i]).fileName();
+			fileList += "\n";
+		}
+
 		QString msg;
 		if(getThread.napiSuccess > 0)
-			msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
+			msg += tr("Dopasowano napisy dla %1 %2:\n%3").arg(getThread.napiSuccess)
 					.arg(tr((getThread.napiSuccess == 1) ? "pliku" : "plików"))
-					.arg((getThread.napiFail > 0) ? "\n" : "");
+					.arg(fileList);
 		if(getThread.napiFail > 0)
-			msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
+			msg += tr("\nNie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
 					.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
 		QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 	}
@@ -361,6 +369,7 @@ bool ScanFilesThread::doScan(const QString & path)
 void GetFilesThread::run()
 {
 	abort = false;
+	gotList.clear();
 	int size = queue.size();
 
 	if(size <= 0) return;
@@ -408,6 +417,7 @@ void GetFilesThread::run()
 		if(abort) return;
 
 		++napiSuccess;
+		gotList << queue[i];
 
 		if(GlobalConfig().changeEncoding())
 		{

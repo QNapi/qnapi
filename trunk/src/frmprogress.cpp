@@ -26,16 +26,18 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 	connect(&getThread, SIGNAL(finished()), this, SLOT(downloadFinished()));
 }
 
+void frmProgress::enqueueFile(const QString & file)
+{
+	if(QFile::exists(file))
+		getThread.queue += file;
+}
+
 void frmProgress::enqueueFiles(const QStringList & fileList)
 {
-	QStringList taskFileList;
 	for(int i = 0; i < fileList.size(); i++)
 	{
-		if(QFile::exists(fileList.at(i)))
-			taskFileList += fileList.at(i);
+		enqueueFile(fileList.at(i));
 	}
-
-	getThread.queue = taskFileList;
 }
 
 bool frmProgress::download()
@@ -89,6 +91,14 @@ void frmProgress::downloadFile(QString fileName)
 	download();
 }
 
+void frmProgress::receiveRequest(QString request)
+{
+	qDebug("Odbieramy request: %s", qPrintable(request));
+	enqueueFile(request);
+	if(!getThread.isRunning())
+		download();
+	raise();
+}
 
 void frmProgress::showOpenDialog()
 {
@@ -207,6 +217,8 @@ void frmProgress::downloadFinished()
 	}
 
 	if(batchMode) qApp->quit();
+
+	getThread.queue.clear();
 }
 
 void frmProgress::closeEvent(QCloseEvent *event)
@@ -365,11 +377,9 @@ void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void GetThread::run()
 {
-	int size = queue.size();
+	if(queue.size() <= 0) return;
 
-	if(size <= 0) return;
-
-	float step = 100.0f / size;
+	float step;
 	QString windowTitle, md5;
 	napiSuccess = napiFail = 0;
 
@@ -377,16 +387,18 @@ void GetThread::run()
 
 	emit progressChange(0);
 
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < queue.size(); i++)
 	{
+		step = 100.0f / queue.size();
+		
 		if(verboseMode)
 		{
 			qDebug(" * %s '%s'", qPrintable(tr("Pobieranie napisów dla pliku")),
 								qPrintable(QFileInfo(queue[i]).fileName()));
 		}
 
-		windowTitle = (size > 1)
-						? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(i + 1).arg(size)
+		windowTitle = (queue.size() > 1)
+						? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(i + 1).arg(queue.size())
 						: QString(tr("QNapi - pobieranie napisów..."));
 
 		emit windowTitleChange(windowTitle);

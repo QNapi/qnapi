@@ -11,11 +11,16 @@
 #include <QEvent>
 #include <QFileOpenEvent>
 
-class QNapiApp : public QApplication
+#include "qcumber/qsingleapplication.h"
+
+class QNapiApp : public QSingleApplication//QApplication
 {
 	Q_OBJECT
 	public:
-		QNapiApp(int argc, char **argv) : QApplication(argc, argv) { }
+		QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv)//QApplication(argc, argv)
+		{
+			setInstanciationPolicy(QSingleApplication::ForwardArguments);
+		}
 
 	signals:
 		void downloadFile(const QString & fileName);

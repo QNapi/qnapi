@@ -6,7 +6,7 @@ DOC_PREFIX=$(PREFIX)/share/doc/$(TARGET)
 MAN_PREFIX=$(PREFIX)/share/man/man1
 ICONS_PREFIX=$(PREFIX)/share/icons
 APPS_PREFIX=$(PREFIX)/share/applications
-DOCS=doc/ChangeLog doc/README doc/qnapi-download.desktop doc/qnapi-download.schemas
+DOCS=doc/ChangeLog doc/README doc/qnapi-download.desktop doc/qnapi-download.schemas doc/LICENSE
 
 install: all
 	strip $(TARGET)

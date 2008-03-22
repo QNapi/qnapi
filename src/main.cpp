@@ -22,12 +22,25 @@ int main(int argc, char *argv[])
 	app.setQuitOnLastWindowClosed(false);
 	QTextCodec::setCodecForTr (QTextCodec::codecForName ("UTF-8"));
 
-	frmProgress form(0, 0);
+	
 
 	QStringList args = app.arguments();
 
 	if(args.size() > 0 )
 		args.removeAt(0);
+
+	if(!app.isInstanceAllowed())
+	{
+		for(int i = 0; i < args.size(); i++)
+		{
+			qDebug("Wysylamy arg: %s", qPrintable(args[i]));
+			app.sendRequest(args[i]);
+		}
+		return 1;
+	}
+
+	frmProgress form(0, 0);
+	form.connect(&app, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
 
 	// Przegladamy parametry i sprawdzamy w jakim trybie aplikacja jest odpalona
 	for(int i=0; i < args.size(); i++)

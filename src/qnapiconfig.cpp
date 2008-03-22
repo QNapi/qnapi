@@ -74,6 +74,14 @@ QString QNapiConfig::p7zipPath()
 		return p7z_path;
 #endif
 
+#ifdef Q_WS_WIN
+// Pod systemem Windows program 7za.exe musi byc w tym samym katalogu,
+// co qnapi.exe
+	p7z_path = QFileInfo(QApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();
+	if(QFileInfo(p7z_path).isExecutable())
+		return p7z_path;
+#endif
+
 	// Jesli wszystko inne zawiodlo...;)
 	return "7z";
 }

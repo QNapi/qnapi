@@ -72,6 +72,7 @@ class frmProgress: public QWidget
 		void showAbout();
 		void downloadFinished();
 		void showOpenDialog();
+		void enqueueFile(const QString &file);
 		void enqueueFiles(const QStringList &fileList);
 		void setBatchMode(bool value) { batchMode = value; }
 		bool isBatchMode() { return batchMode; }
@@ -82,6 +83,7 @@ class frmProgress: public QWidget
 		}
 		bool download();
 		void downloadFile(QString fileName);
+		void receiveRequest(QString request);
 
 	private:
 		void closeEvent(QCloseEvent *event);

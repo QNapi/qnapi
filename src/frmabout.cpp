@@ -41,4 +41,3 @@ const QString thanksText = tr(
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
 }
-

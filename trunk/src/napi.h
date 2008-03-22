@@ -24,6 +24,10 @@
 #include "version.h"
 #include "qnapiconfig.h"
 
+#ifdef Q_WS_WIN // for SetFileAttributes
+#include <windows.h>
+#endif
+
 const QString napiZipPassword = "iBlm8NTigvru0Jr0";
 const QString napiDownloadUrlTpl= "http://www.napiprojekt.pl/unit_napisy/dl.php"
 				"?l=%1&f=%2&t=%3&v=other&kolejka=false&napios=Linux&nick=%4&pass=%5";

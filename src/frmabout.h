@@ -21,7 +21,6 @@ Q_OBJECT
 		~frmAbout() {};
 	private:
 		Ui::frmAbout ui;
-		void resizeEvent(QResizeEvent *resize);
 };
 
 #endif

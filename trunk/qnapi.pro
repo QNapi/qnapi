@@ -57,3 +57,6 @@ macx {
 	QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
 
+win32 {
+    RC_FILE = win32/qnapi.rc
+}

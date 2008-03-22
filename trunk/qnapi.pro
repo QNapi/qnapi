@@ -46,6 +46,12 @@ FORMS += ui/frmprogress.ui \
  ui/frmcreateuser.ui
 RESOURCES += src/resources.qrc
 QT += network gui core
+
+UI_DIR = tmp
+MOC_DIR = tmp
+RCC_DIR = tmp
+OBJECTS_DIR = tmp
+
 macx {
  QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc

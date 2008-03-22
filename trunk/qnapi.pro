@@ -18,7 +18,12 @@ SOURCES += src/main.cpp \
  src/qnapiapp.cpp \
  src/qdraglistwidget.cpp \
  src/movieinfo.cpp \
- src/multipartdata.cpp
+ src/multipartdata.cpp \
+ src/qcumber/qinterprocesschannel.cpp \
+ src/qcumber/qmanagedrequest.cpp \
+ src/qcumber/qmanagedsocket.cpp \
+ src/qcumber/qsingleapplication.cpp
+
 HEADERS += src/napi.h \
  src/frmprogress.h \
  src/frmabout.h \
@@ -35,7 +40,14 @@ HEADERS += src/napi.h \
  src/movieinfo.h \
  src/multipartdata.h \
  src/napithread.h \
- src/synchttp.h
+ src/synchttp.h \
+ src/qcumber/qinterprocesschannel.h \
+ src/qcumber/qmanagedrequest.h \
+ src/qcumber/qmanagedsocket.h \
+ src/qcumber/qsingleapplication.h \
+ src/qcumber/qcumber.h
+
+
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

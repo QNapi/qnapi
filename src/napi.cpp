@@ -126,6 +126,11 @@ bool napiMatchSubtitles(const QString & md5sum, const QString & zip_file, const 
 	bool r = QFile::copy(subtitleFile, newName);
 	QFile::remove(subtitleFile);
 	QFile::remove(zip_file);
+
+	#ifdef Q_WS_WIN
+	SetFileAttributes(newName.toLocal8Bit().constData(), FILE_ATTRIBUTE_NORMAL);
+	#endif
+
 	return r;
 }
 

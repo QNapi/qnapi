@@ -123,22 +123,36 @@ bool napiMatchSubtitles(const QString & md5sum, const QString & zip_file, const 
 		QFile::remove(newName);
 	}
 
-	bool r = QFile::copy(subtitleFile, newName);
+	bool r;
+
+	#ifdef Q_QS_WIN
+	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
+		QFile f(newName);
+		if(!f.open(QIODevice::WriteOnly))
+		{
+			r = false;
+		}
+		else
+		{
+			QFile f2(subtitleFile);
+			if(!f2.open(QIODevice::ReadOnly))
+			{
+				r = false;
+			}
+			else
+			{
+				r = f.write(f2.readAll()) > 0;
+				f2.close();
+			}
+			f.close();
+		}
+	#else
+	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
+		r = QFile::copy(subtitleFile, newName);
+	#endif
+
 	QFile::remove(subtitleFile);
 	QFile::remove(zip_file);
-
-	#ifdef Q_WS_WIN
-	// Pod windowsem usuwamy atrybut ukryty
-	DWORD attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
-	attr |= ~FILE_ATTRIBUTE_HIDDEN;
-	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
-	attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
-	attr |= ~FILE_ATTRIBUTE_READONLY;
-	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
-	attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
-	attr |= ~FILE_ATTRIBUTE_SYSTEM;
-	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
-	#endif
 
 	return r;
 }
@@ -184,7 +198,7 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 							+ QFileInfo(newSubtitlesName).completeBaseName() + ".zip";
 
 	QStringList args;
-	args << "a" << "-y" << zipFileName << ("-p"+napiZipPassword) << newSubtitlesName;
+	args << "a" << "-l" << "-y" << zipFileName << ("-p"+napiZipPassword) << newSubtitlesName;
 
 	QProcess p7zip;
 	p7zip.start(p7zip_path, args);

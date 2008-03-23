@@ -17,6 +17,8 @@
 #include "ui_frmoptions.h"
 #include "qnapiconfig.h"
 
+#include "frmcreateuser.h"
+
 class frmOptions: public QDialog
 {
 Q_OBJECT
@@ -33,6 +35,7 @@ Q_OBJECT
 		void select7zPath();
 		void leTmpPathChanged();
 		void selectTmpPath();
+		void pbRegisterClicked();
 		void changeEncodingClicked();
 		void autoDetectEncodingClicked();
 		void showAllEncodingsClicked();

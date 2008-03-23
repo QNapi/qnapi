@@ -68,7 +68,7 @@ macx {
  QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc
  ICON =  macx/qnapi.icns
- QMAKE_INFO_PLIST =  macx/Info_mac.plist
+ QMAKE_INFO_PLIST =  macx/Info.plist
  TARGET =  QNapi
 #7ZIP_BINARY.files = macx/7z macx/7z.so
 #7ZIP_BINARY.path = Contents/Resources

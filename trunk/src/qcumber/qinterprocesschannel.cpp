@@ -1,3 +1,17 @@
+/****************************************************************************
+**
+** Copyright (C) 2006-2008 fullmetalcoder <fullmetalcoder@hotmail.fr>
+**
+** This file is part of the Edyuk project <http://edyuk.org>
+** 
+** This file may be used under the terms of the GNU General Public License
+** version 2 as published by the Free Software Foundation and appearing in the
+** file GPL.txt included in the packaging of this file.
+**
+** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+**
+****************************************************************************/
 
 #include "qinterprocesschannel.h"
 
@@ -251,9 +265,9 @@ void QInterProcessChannel::init()
 			pSocket->connectToHost(m_addr, m_port);
 			ok = pSocket->waitForConnected();
 			
-			if ( ok ) ok &= pSocket->write("--check");
-			if ( ok ) ok &= pSocket->waitForBytesWritten();
-			if ( ok ) ok &= pSocket->waitForReadyRead();
+			if ( ok ) ok &= (bool)pSocket->write("--check");
+			if ( ok ) ok &= (bool)pSocket->waitForBytesWritten();
+			if ( ok ) ok &= (bool)pSocket->waitForReadyRead();
 			if ( ok ) ok &= (pSocket->readAll() == "[ALIVE]");
 			
 		} else {

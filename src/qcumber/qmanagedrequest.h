@@ -1,9 +1,12 @@
 /****************************************************************************
 **
-** 	Created using Edyuk IDE 0.8.0
+** Copyright (C) 2006-2008 fullmetalcoder <fullmetalcoder@hotmail.fr>
 **
-** File : qmanagedrequest.h
-** Date : Sat Feb 3 13:53:27 2007
+** This file is part of the Edyuk project <http://edyuk.org>
+** 
+** This file may be used under the terms of the GNU General Public License
+** version 2 as published by the Free Software Foundation and appearing in the
+** file GPL.txt included in the packaging of this file.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.

@@ -16,13 +16,11 @@
 
 int main(int argc, char *argv[])
 {
+	QApplication::setApplicationName("QNapi");
 	QNapiApp app(argc, argv);
 
-	app.setApplicationName("QNapi");
 	app.setQuitOnLastWindowClosed(false);
-	QTextCodec::setCodecForTr (QTextCodec::codecForName ("UTF-8"));
-
-	
+	QTextCodec::setCodecForTr(QTextCodec::codecForName ("UTF-8"));
 
 	QStringList args = app.arguments();
 
@@ -33,7 +31,6 @@ int main(int argc, char *argv[])
 	{
 		for(int i = 0; i < args.size(); i++)
 		{
-			qDebug("Wysylamy arg: %s", qPrintable(args[i]));
 			app.sendRequest(args[i]);
 		}
 		return 1;
@@ -43,6 +40,7 @@ int main(int argc, char *argv[])
 	form.connect(&app, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
 
 	// Przegladamy parametry i sprawdzamy w jakim trybie aplikacja jest odpalona
+	#ifndef Q_WS_WIN // pod Windowsem i tak nie zadziala ;/
 	for(int i=0; i < args.size(); i++)
 	{
 		if((args[i] == "--help") || (args[i] == "-h"))
@@ -51,7 +49,7 @@ int main(int argc, char *argv[])
 			qDebug("QNapi jest wolnym odpowiednikiem programu NAPI-PROJEKT.");
 			qDebug("Program rozprowadzany jest na licencji GNU General Public License.\n");
 			qDebug("Użycie programu: %s [opcje] [lista plików]",
-				qPrintable(QFileInfo(app.arguments()[0]).fileName()));
+					qPrintable(QFileInfo(app.arguments()[0]).fileName()));
 			qDebug("Dostępne opcje:");
 			qDebug("    -c, --console    pobieranie napisów z konsoli");
 			qDebug("    -q, --quiet      pobiera napisy nie wypisując żadnych komunikatów");
@@ -73,6 +71,7 @@ int main(int argc, char *argv[])
 			continue;
 		}
 	}
+	#endif
 
 	// Jesli podano parametry, to znaczy ze sa to nazwy plikow, ktorym
 	// QNapi powinien dopasowac napisy

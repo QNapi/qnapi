@@ -13,15 +13,15 @@
 #ifndef _QCUMBER_H_
 #define _QCUMBER_H_
 
-#ifdef _QCUMBER_BUILD_
-	#if (defined(QT_DLL) || defined(QT_SHARED)) && !defined(QT_PLUGIN)
-		#define QCUMBER_EXPORT Q_DECL_EXPORT
-	#else
+//#ifdef _QCUMBER_BUILD_
+	//#if (defined(QT_DLL) || defined(QT_SHARED)) && !defined(QT_PLUGIN)
+		//#define QCUMBER_EXPORT Q_DECL_EXPORT
+	//#else
 		#define QCUMBER_EXPORT
-	#endif
-#else
-		#define QCUMBER_EXPORT Q_DECL_IMPORT
-#endif
+	//#endif
+//#else
+		//#define QCUMBER_EXPORT Q_DECL_IMPORT
+//#endif
 
 #include <QEvent>
 

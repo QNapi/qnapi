@@ -144,6 +144,10 @@ void frmCreateUser::serverMessage(QString msg)
 			GlobalConfig().setPass(ui.lePass->text());
 			GlobalConfig().save();
 		}
+
+		if(createThread.isRunning())
+			createThread.wait();
+		close();
 	}
 	else
 	{

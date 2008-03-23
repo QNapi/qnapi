@@ -35,10 +35,9 @@ class GetThread : public NapiThread
 	Q_OBJECT
 
 	signals:
-		void windowTitleChange(const QString & newTitle);
 		void fileNameChange(const QString & newfileName);
 		void actionChange(const QString & newAction);
-		void progressChange(int newValue);
+		void progressChange(int current, int all, float stageProgress);
 
 	public:
 		void run();
@@ -70,6 +69,7 @@ class frmProgress: public QWidget
 		void showOptions();
 		void showCreateUser();
 		void showAbout();
+		void updateProgress(int current, int all, float stageProgress);
 		void downloadFinished();
 		void showOpenDialog();
 		void enqueueFile(const QString &file);

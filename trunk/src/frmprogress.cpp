@@ -19,17 +19,23 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 	setQuietMode(false);
 	setConsoleMode(false);
 
-	connect(&getThread, SIGNAL(windowTitleChange(const QString &)), this, SLOT(setWindowTitle(const QString &)));
-	connect(&getThread, SIGNAL(fileNameChange(const QString &)), ui.lbFileName, SLOT(setText(const QString &)));
-	connect(&getThread, SIGNAL(actionChange(const QString &)), ui.lbAction, SLOT(setText(const QString &)));
-	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
-	connect(&getThread, SIGNAL(finished()), this, SLOT(downloadFinished()));
+	connect(&getThread, SIGNAL(fileNameChange(const QString &)),
+			ui.lbFileName, SLOT(setText(const QString &)));
+	connect(&getThread, SIGNAL(actionChange(const QString &)),
+			ui.lbAction, SLOT(setText(const QString &)));
+	connect(&getThread, SIGNAL(progressChange(int, int, float)),
+			this, SLOT(updateProgress(int, int, float)));
+	connect(&getThread, SIGNAL(finished()),
+			this, SLOT(downloadFinished()));
 }
 
 void frmProgress::enqueueFile(const QString & file)
 {
 	if(QFile::exists(file))
+	{
 		getThread.queue += file;
+		updateProgress(-1, getThread.queue.size(), -1);
+	}
 }
 
 void frmProgress::enqueueFiles(const QStringList & fileList)
@@ -38,6 +44,24 @@ void frmProgress::enqueueFiles(const QStringList & fileList)
 	{
 		enqueueFile(fileList.at(i));
 	}
+}
+
+void frmProgress::updateProgress(int current, int all, float stageProgress)
+{
+	static int lastCurrent, lastAll;
+	static float lastStageProgress;
+
+	if(current >= 0) lastCurrent = current;
+	if(all >= 0) lastAll = all;
+	if(stageProgress >= 0) lastStageProgress = stageProgress;
+
+	QString windowTitle = (lastAll > 1)
+							? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(lastCurrent + 1).arg(lastAll)
+							: QString(tr("QNapi - pobieranie napisów..."));
+	setWindowTitle(windowTitle);
+
+	ui.pbProgress->setMaximum(lastAll * 100);
+	ui.pbProgress->setValue(lastCurrent * 100 + (int)(lastStageProgress * 100));
 }
 
 bool frmProgress::download()
@@ -372,40 +396,32 @@ void GetThread::run()
 {
 	if(queue.size() <= 0) return;
 
-	float step;
 	QString windowTitle, md5;
 	napiSuccess = napiFail = 0;
 
 	QString tmpZip =  GlobalConfig().tmpPath() + "/QNapi.napisy.7z";
 
-	emit progressChange(0);
+	emit progressChange(0, queue.size(), 0.0f);
 
 	for(int i = 0; i < queue.size(); i++)
 	{
-		step = 100.0f / queue.size();
-		
 		if(verboseMode)
 		{
 			qDebug(" * %s '%s'", qPrintable(tr("Pobieranie napisów dla pliku")),
 								qPrintable(QFileInfo(queue[i]).fileName()));
 		}
 
-		windowTitle = (queue.size() > 1)
-						? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(i + 1).arg(queue.size())
-						: QString(tr("QNapi - pobieranie napisów..."));
-
-		emit windowTitleChange(windowTitle);
-
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
+		emit progressChange(i, queue.size(), 0.33f);
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("obliczanie sumy kontrolnej")));
 
 		md5 = napiFileMd5Sum(queue[i], NAPI_10MB);
 		if(abort) return;
 
-		emit progressChange((int)ceil(step * i + step / 3));
+		emit progressChange(i, queue.size(), 0.5f); //(int)ceil(step * i + step / 3));
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
@@ -422,7 +438,7 @@ void GetThread::run()
 
 		if(abort) return;
 
-		emit progressChange((int)ceil(step * i + 2 * step / 3));
+		emit progressChange(i, queue.size(), 0.7f);//(int)ceil(step * i + 2 * step / 3));
 		emit actionChange(tr("Dopasowywanie napisów..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
@@ -442,7 +458,7 @@ void GetThread::run()
 
 		if(GlobalConfig().changeEncoding())
 		{
-			emit progressChange((int)ceil(step * i + 5 * step / 6));
+			emit progressChange(i, queue.size(), 0.85);//(int)ceil(step * i + 5 * step / 6));
 			emit actionChange(tr("Zmiana kodowania napisów..."));
 			if(verboseMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
 
@@ -462,8 +478,8 @@ void GetThread::run()
 			if(abort) return;
 		}
 
-		emit progressChange((int)ceil(step * (i + 1)));
+		emit progressChange(i, queue.size(), 1);//(int)ceil(step * (i + 1)));
 	}
 
-	emit progressChange(100);
+	emit progressChange(queue.size() - 1, queue.size(), 1);
 }

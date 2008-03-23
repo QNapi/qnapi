@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 	}
 
 	if(!form.isBatchMode())
-		QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(downloadFile(QString)));
+		QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(receiveRequest(QString)));
 
 	return app.exec();
 }

@@ -26,6 +26,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
 	connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
 	connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
+	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
@@ -79,6 +80,14 @@ void frmOptions::selectTmpPath()
 									QFileDialog::ShowDirsOnly| QFileDialog::DontResolveSymlinks);
 	if(!tmpDir.isEmpty())
 		ui.leTmpPath->setText(QFileInfo(tmpDir).path());
+}
+
+void frmOptions::pbRegisterClicked()
+{
+	frmCreateUser *createUser = new frmCreateUser();
+	createUser->exec();
+	readConfig();
+	delete createUser;
 }
 
 void frmOptions::changeEncodingClicked()

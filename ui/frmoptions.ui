@@ -5,17 +5,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
+    <width>552</width>
     <height>400</height>
    </rect>
   </property>
   <property name="minimumSize" >
-   <size>
-    <width>490</width>
-    <height>400</height>
-   </size>
-  </property>
-  <property name="maximumSize" >
    <size>
     <width>490</width>
     <height>400</height>
@@ -101,7 +95,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2" colspan="2" >
+   <item row="2" column="2" >
     <widget class="QLineEdit" name="leNick" >
      <property name="text" >
       <string/>
@@ -115,7 +109,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="2" colspan="2" >
+   <item row="3" column="2" >
     <widget class="QLineEdit" name="lePass" >
      <property name="text" >
       <string/>
@@ -132,7 +126,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="2" colspan="2" >
+   <item row="4" column="2" >
     <widget class="QComboBox" name="cbLang" >
      <item>
       <property name="text" >
@@ -157,19 +151,6 @@
     <widget class="QCheckBox" name="cbChangeEncoding" >
      <property name="text" >
       <string>Zmień kodowanie znaków w pobranych napisach</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbAutoDetectEncoding" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-     <property name="text" >
-      <string>Próbuj automatycznie wykrywać kodowanie źródłowe</string>
-     </property>
-     <property name="checked" >
-      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -360,6 +341,26 @@
      </property>
      <property name="checked" >
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3" colspan="2" >
+    <widget class="QPushButton" name="pbRegister" >
+     <property name="text" >
+      <string>Załóż konto</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="5" >
+    <widget class="QCheckBox" name="cbAutoDetectEncoding" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="text" >
+      <string>Próbuj automatycznie wykrywać kodowanie źródłowe</string>
+     </property>
+     <property name="checked" >
+      <bool>false</bool>
      </property>
     </widget>
    </item>

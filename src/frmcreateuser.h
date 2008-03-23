@@ -15,7 +15,7 @@
 #include "napithread.h"
 #include "qnapiconfig.h"
 
-class CreateThread : public NapiThread
+class CreateUserThread : public NapiThread
 {
 Q_OBJECT
 	public:
@@ -49,7 +49,7 @@ Q_OBJECT
 
 		Ui::frmCreateUser ui;
 
-		CreateThread createThread;
+		CreateUserThread createUserThread;
 
 	private slots:
 		void resizeEvent(QResizeEvent *event);

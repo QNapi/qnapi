@@ -20,8 +20,8 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f
 	connect(ui.lePass, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(ui.leRepeatPass, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(ui.leMail, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
-	connect(&createThread, SIGNAL(creatingFinished(bool)), this, SLOT(creatingFinished(bool)));
-	connect(&createThread, SIGNAL(serverMessage(QString)), this, SLOT(serverMessage(QString)));
+	connect(&createUserThread, SIGNAL(creatingFinished(bool)), this, SLOT(creatingFinished(bool)));
+	connect(&createUserThread, SIGNAL(serverMessage(QString)), this, SLOT(serverMessage(QString)));
 
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
@@ -30,15 +30,15 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f
 
 void frmCreateUser::closeEvent(QCloseEvent *event)
 {
-	if(createThread.isRunning())
+	if(createUserThread.isRunning())
 	{
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać zakładanie konta?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
 			ui.pbCreate->setEnabled(false);
 			qApp->processEvents();
-			createThread.terminate();
-			createThread.wait();
+			createUserThread.terminate();
+			createUserThread.wait();
 		}
 		else
 		{
@@ -80,7 +80,7 @@ void frmCreateUser::checkCreateEnable()
 
 void frmCreateUser::pbCreateClicked()
 {
-	if(!createThread.isRunning())
+	if(!createUserThread.isRunning())
 	{
 		ui.pbCreate->setText(tr("Przerwij"));
 		ui.lbStatus->setText(tr("Zakładanie konta na serwerze NAPI..."));
@@ -89,16 +89,16 @@ void frmCreateUser::pbCreateClicked()
 		ui.leRepeatPass->setEnabled(false);
 		ui.leMail->setEnabled(false);
 
-		createThread.setUserParams(ui.leLogin->text(), ui.lePass->text(), ui.leMail->text());
-		createThread.start();
+		createUserThread.setUserParams(ui.leLogin->text(), ui.lePass->text(), ui.leMail->text());
+		createUserThread.start();
 	}
 	else
 	{
 		ui.pbCreate->setEnabled(false);
 		ui.lbStatus->setText(tr("Anulowanie operacji..."));
 		qApp->processEvents();
-		createThread.terminate();
-		createThread.wait();
+		createUserThread.terminate();
+		createUserThread.wait();
 
 		creatingFinished(false);
 		ui.pbCreate->setEnabled(true);
@@ -108,7 +108,7 @@ void frmCreateUser::pbCreateClicked()
 
 void frmCreateUser::pbCancelClicked()
 {
-	if(createThread.isRunning())
+	if(createUserThread.isRunning())
 		pbCreateClicked();
 	else
 		close();
@@ -145,8 +145,8 @@ void frmCreateUser::serverMessage(QString msg)
 			GlobalConfig().save();
 		}
 
-		if(createThread.isRunning())
-			createThread.wait();
+		if(createUserThread.isRunning())
+			createUserThread.wait();
 		close();
 	}
 	else
@@ -156,7 +156,7 @@ void frmCreateUser::serverMessage(QString msg)
 	}
 }
 
-void CreateThread::run()
+void CreateUserThread::run()
 {
 	QString *response = new QString();
 	bool r;

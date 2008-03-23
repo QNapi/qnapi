@@ -368,7 +368,7 @@
   <customwidget>
    <class>QDragListWidget</class>
    <extends>QListWidget</extends>
-   <header>src/qdraglistwidget.h</header>
+   <header>../src/qdraglistwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>

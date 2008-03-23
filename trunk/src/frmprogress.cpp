@@ -143,7 +143,10 @@ void frmProgress::downloadFinished()
 {
 	hide();
 
-	if(getThread.queue.size() > 1)
+	int size = getThread.queue.size();
+	getThread.queue.clear();
+
+	if(size > 1)
 	{
 		if(!quietMode)
 		{
@@ -209,8 +212,6 @@ void frmProgress::downloadFinished()
 	}
 
 	if(batchMode) qApp->quit();
-
-	getThread.queue.clear();
 }
 
 void frmProgress::closeEvent(QCloseEvent *event)

@@ -128,7 +128,16 @@ bool napiMatchSubtitles(const QString & md5sum, const QString & zip_file, const 
 	QFile::remove(zip_file);
 
 	#ifdef Q_WS_WIN
-	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), FILE_ATTRIBUTE_NORMAL);
+	// Pod windowsem usuwamy atrybut ukryty
+	DWORD attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
+	attr |= ~FILE_ATTRIBUTE_HIDDEN;
+	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
+	attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
+	attr |= ~FILE_ATTRIBUTE_READONLY;
+	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
+	attr = GetFileAttributesW((const WCHAR*)newName.toUtf8().constData());
+	attr |= ~FILE_ATTRIBUTE_SYSTEM;
+	SetFileAttributesW((const WCHAR*)newName.toUtf8().constData(), attr);
 	#endif
 
 	return r;

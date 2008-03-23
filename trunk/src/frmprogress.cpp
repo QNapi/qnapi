@@ -83,14 +83,6 @@ bool frmProgress::download()
 	return true;
 }
 
-void frmProgress::downloadFile(QString fileName)
-{
-	QStringList list;
-	list << fileName;
-	enqueueFiles(list);
-	download();
-}
-
 void frmProgress::receiveRequest(QString request)
 {
 	qDebug("Odbieramy request: %s", qPrintable(request));

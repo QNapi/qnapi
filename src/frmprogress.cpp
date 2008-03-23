@@ -143,10 +143,10 @@ void frmProgress::downloadFinished()
 {
 	hide();
 
-	int size = getThread.queue.size();
+	QStringList oldQueue = getThread.queue;
 	getThread.queue.clear();
 
-	if(size > 1)
+	if(oldQueue.size() > 1)
 	{
 		if(!quietMode)
 		{
@@ -181,7 +181,7 @@ void frmProgress::downloadFinished()
 	{
 		if(getThread.napiSuccess == 1)
 		{
-			QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
+			QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(oldQueue[0]).fileName());
 			if(!quietMode)
 			{
 #ifndef Q_WS_MAC
@@ -196,7 +196,7 @@ void frmProgress::downloadFinished()
 		}
 		else
 		{
-			QString msg = tr("Nie znaleziono napisów dla '%1'.").arg(QFileInfo(getThread.queue[0]).fileName());
+			QString msg = tr("Nie znaleziono napisów dla '%1'.").arg(QFileInfo(oldQueue[0]).fileName());
 			if(!quietMode)
 			{
 #ifndef Q_WS_MAC

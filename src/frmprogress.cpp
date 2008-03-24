@@ -187,7 +187,7 @@ void frmProgress::showOpenDialog()
 		qApp->quit();
 }
 
-void frmProgress::downloadFinished(bool show_summary)
+void frmProgress::downloadFinished()
 {
 	hide();
 
@@ -247,7 +247,7 @@ void frmProgress::downloadFinished(bool show_summary)
 			}
 			else
 			{
-				QString msg = tr("Nie znaleziono napisów dla '%1'.").arg(QFileInfo(oldQueue[0]).fileName());
+				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(oldQueue[0]).fileName());
 				if(!quietMode)
 			{
 #ifndef Q_WS_MAC
@@ -468,6 +468,7 @@ void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void GetThread::run()
 {
+	abort = false;
 	if(queue.size() <= 0) return;
 
 	QString windowTitle, md5;

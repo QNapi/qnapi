@@ -70,7 +70,7 @@ class frmProgress: public QWidget
 		void showCreateUser();
 		void showAbout();
 		void updateProgress(int current, int all, float stageProgress);
-		void downloadFinished(bool show_summary = true);
+		void downloadFinished();
 		void showOpenDialog();
 		void enqueueFile(const QString &file);
 		void enqueueFiles(const QStringList &fileList);

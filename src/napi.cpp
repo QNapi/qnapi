@@ -125,7 +125,7 @@ bool napiMatchSubtitles(const QString & md5sum, const QString & zip_file, const 
 
 	bool r;
 
-	#ifdef Q_QS_WIN
+	#ifdef Q_WS_WIN
 	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
 		QFile f(newName), f2(subtitleFile);
 		if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))

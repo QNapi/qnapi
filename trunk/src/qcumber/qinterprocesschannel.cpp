@@ -32,6 +32,8 @@
 #include <QTcpServer>
 #include <QApplication>
 
+#define WAIT_TIMEOUT 5000
+
 /*!
 	\class QInterProcessChannel
 	
@@ -121,9 +123,9 @@ void QInterProcessChannel::sendMessage(const QByteArray& msg)
 		
 		QTcpSocket *pSocket = new QTcpSocket(this);
 		pSocket->connectToHost(m_addr, m_port);
-		pSocket->waitForConnected();
+		pSocket->waitForConnected(WAIT_TIMEOUT);
 		pSocket->write(msg);
-		pSocket->waitForBytesWritten();
+		pSocket->waitForBytesWritten(WAIT_TIMEOUT);
 		
 	} else {
 		//qWarning("Empty messages are not carried out...");
@@ -210,7 +212,7 @@ void QInterProcessChannel::check()
 		return;
 	}
 	
-	pSocket->waitForConnected();
+	pSocket->waitForConnected(WAIT_TIMEOUT);
 	
 	if ( pSocket->error() != -1 )
 	{
@@ -263,11 +265,11 @@ void QInterProcessChannel::init()
 		if ( !m_addr.isNull() && m_port )
 		{
 			pSocket->connectToHost(m_addr, m_port);
-			ok = pSocket->waitForConnected();
+			ok = pSocket->waitForConnected(WAIT_TIMEOUT);
 			
 			if ( ok ) ok &= (bool)pSocket->write("--check");
-			if ( ok ) ok &= (bool)pSocket->waitForBytesWritten();
-			if ( ok ) ok &= (bool)pSocket->waitForReadyRead();
+			if ( ok ) ok &= (bool)pSocket->waitForBytesWritten(WAIT_TIMEOUT);
+			if ( ok ) ok &= (bool)pSocket->waitForReadyRead(WAIT_TIMEOUT);
 			if ( ok ) ok &= (pSocket->readAll() == "[ALIVE]");
 			
 		} else {

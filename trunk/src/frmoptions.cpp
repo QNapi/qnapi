@@ -4,6 +4,7 @@
  */
 
 #include "frmoptions.h"
+#include "frmprogress.h"
 
 frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 {
@@ -84,10 +85,12 @@ void frmOptions::selectTmpPath()
 
 void frmOptions::pbRegisterClicked()
 {
-	frmCreateUser *createUser = new frmCreateUser();
-	createUser->exec();
-	readConfig();
-	delete createUser;
+	frmProgress *main = dynamic_cast<frmProgress*>(parent());
+	if(main) 
+	{
+		main->showCreateUser();
+		readConfig();
+	}
 }
 
 void frmOptions::changeEncodingClicked()

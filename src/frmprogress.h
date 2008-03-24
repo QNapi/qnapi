@@ -70,7 +70,7 @@ class frmProgress: public QWidget
 		void showCreateUser();
 		void showAbout();
 		void updateProgress(int current, int all, float stageProgress);
-		void downloadFinished();
+		void downloadFinished(bool show_summary = true);
 		void showOpenDialog();
 		void enqueueFile(const QString &file);
 		void enqueueFiles(const QStringList &fileList);
@@ -95,12 +95,24 @@ class frmProgress: public QWidget
 				*reportBadAction, *optionsAction, *createUserAction,
 				*aboutAction, *quitAction;
 
+		QFileDialog *openDialog;
+		frmOptions *options;
+		frmCreateUser *createUser;
+		frmAbout *about;
+		frmScan *scan;
+		frmUpload *upload;
+		frmCorrect *correct;
+		frmReport *report;
+
 		GetThread getThread;
 
 		bool batchMode;
 		bool quietMode;
 		bool consoleMode;
-		
+
+		bool showSummary;
+		QMutex mutex;
+
 	private slots:
 		void updatePreviousPath(const QString & path);
 		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);

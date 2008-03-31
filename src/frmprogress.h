@@ -29,6 +29,7 @@
 #include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiapp.h"
 
 class GetThread : public NapiThread
 {
@@ -83,6 +84,7 @@ class frmProgress: public QWidget
 		}
 		bool download();
 		void receiveRequest(QString request);
+		void quit();
 
 	private:
 		void closeEvent(QCloseEvent *event);

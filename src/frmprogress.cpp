@@ -40,11 +40,17 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 
 void frmProgress::enqueueFile(const QString & file)
 {
+	//qDebug(":enqueueFile:: %s", qPrintable(file));
+	static QMutex locker;
+	locker.lock();
 	if(QFile::exists(file))
 	{
-		getThread.queue += file;
+		//int sizeold = getThread.queue.size();
+		getThread.queue << file;
+		//qDebug(":enqueueFile:: oldsize was: %d, now is: %d", sizeold, getThread.queue.size());
 		updateProgress(-1, getThread.queue.size(), -1);
 	}
+	locker.unlock();
 }
 
 void frmProgress::enqueueFiles(const QStringList & fileList)
@@ -60,6 +66,9 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
 	static int lastCurrent, lastAll;
 	static float lastStageProgress;
 
+	static QMutex mutex;
+	mutex.lock();
+
 	if(current >= 0) lastCurrent = current;
 	if(all >= 0) lastAll = all;
 	if(stageProgress >= 0) lastStageProgress = stageProgress;
@@ -71,6 +80,8 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
 
 	ui.pbProgress->setMaximum(lastAll * 100);
 	ui.pbProgress->setValue(lastCurrent * 100 + (int)(lastStageProgress * 100));
+	
+	mutex.unlock();
 }
 
 bool frmProgress::download()
@@ -120,11 +131,12 @@ bool frmProgress::download()
 
 void frmProgress::receiveRequest(QString request)
 {
-	qDebug("Odbieramy request: %s", qPrintable(request));
+	//qDebug(":receiveRequest:: Odbieramy request: %s", qPrintable(request));
 	enqueueFile(request);
 	if(!getThread.isRunning())
 		download();
 	raise();
+	activateWindow();
 }
 
 void frmProgress::showOpenDialog()
@@ -263,15 +275,22 @@ void frmProgress::downloadFinished()
 		}
 	}
 	mutex.unlock();
-	if(batchMode) qApp->quit();
+	if(batchMode)
+		qApp->quit();
 }
 
 void frmProgress::closeEvent(QCloseEvent *event)
 {
-	if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać pobieranie napisów?"),
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
+	if(getThread.isRunning())
 	{
-		if(getThread.isRunning())
+		if( QMessageBox::question(this, tr("QNapi"),
+				tr("Czy chcesz przerwać pobieranie napisów?"),
+				QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes )
+		{
+			event->ignore();
+			return;
+		}
+		else
 		{
 			mutex.lock();
 			showSummary = false;
@@ -283,11 +302,8 @@ void frmProgress::closeEvent(QCloseEvent *event)
 			getThread.terminate();
 			getThread.wait();
 		}
-
-		event->accept();
 	}
-	else
-		event->ignore();
+	event->accept();
 }
 
 void frmProgress::createTrayIcon()
@@ -317,7 +333,7 @@ void frmProgress::createTrayIcon()
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
 
 	quitAction = new QAction(tr("Zakończ"), this);
-	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+	connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 
 	napiSubMenu = new QMenu(this);
 	napiSubMenu->setTitle(tr("Napisy"));
@@ -466,6 +482,12 @@ void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 	;
 }
 
+void frmProgress::quit()
+{
+	if(isVisible() && !close()) return;
+	qApp->quit();
+}
+
 void GetThread::run()
 {
 	abort = false;
@@ -496,7 +518,7 @@ void GetThread::run()
 		md5 = napiFileMd5Sum(queue[i], NAPI_10MB);
 		if(abort) return;
 
-		emit progressChange(i, queue.size(), 0.5f); //(int)ceil(step * i + step / 3));
+		emit progressChange(i, queue.size(), 0.5f);
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
@@ -513,7 +535,7 @@ void GetThread::run()
 
 		if(abort) return;
 
-		emit progressChange(i, queue.size(), 0.7f);//(int)ceil(step * i + 2 * step / 3));
+		emit progressChange(i, queue.size(), 0.7f);
 		emit actionChange(tr("Dopasowywanie napisów..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
@@ -533,7 +555,7 @@ void GetThread::run()
 
 		if(GlobalConfig().changeEncoding())
 		{
-			emit progressChange(i, queue.size(), 0.85);//(int)ceil(step * i + 5 * step / 6));
+			emit progressChange(i, queue.size(), 0.85);
 			emit actionChange(tr("Zmiana kodowania napisów..."));
 			if(verboseMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
 
@@ -553,7 +575,7 @@ void GetThread::run()
 			if(abort) return;
 		}
 
-		emit progressChange(i, queue.size(), 1);//(int)ceil(step * (i + 1)));
+		emit progressChange(i, queue.size(), 1);
 	}
 
 	emit progressChange(queue.size() - 1, queue.size(), 1);

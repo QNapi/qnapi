@@ -19,11 +19,9 @@ SOURCES += src/main.cpp \
  src/qdraglistwidget.cpp \
  src/movieinfo.cpp \
  src/multipartdata.cpp \
- src/qcumber/qinterprocesschannel.cpp \
  src/qcumber/qmanagedrequest.cpp \
  src/qcumber/qmanagedsocket.cpp \
  src/qcumber/qsingleapplication.cpp
-
 HEADERS += src/napi.h \
  src/frmprogress.h \
  src/frmabout.h \
@@ -41,13 +39,10 @@ HEADERS += src/napi.h \
  src/multipartdata.h \
  src/napithread.h \
  src/synchttp.h \
- src/qcumber/qinterprocesschannel.h \
  src/qcumber/qmanagedrequest.h \
  src/qcumber/qmanagedsocket.h \
  src/qcumber/qsingleapplication.h \
  src/qcumber/qcumber.h
-
-
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -58,14 +53,12 @@ FORMS += ui/frmprogress.ui \
  ui/frmcreateuser.ui
 RESOURCES += src/resources.qrc
 QT += network gui core
-
 UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
-
 macx {
- QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
+ QMAKE_MAC_SDK =  /Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc
  ICON =  macx/qnapi.icns
  QMAKE_INFO_PLIST =  macx/Info.plist
@@ -74,7 +67,12 @@ macx {
 #7ZIP_BINARY.path = Contents/Resources
 #QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
-
 win32 {
- RC_FILE = win32/qnapi.rc
+ RC_FILE =  win32/qnapi.rc
+ SOURCES +=  src/qcumber/qinterprocesschannel_win32.cpp
+ HEADERS +=  src/qcumber/qinterprocesschannel_win32.h
+}
+!win32 {
+ SOURCES +=  src/qcumber/qinterprocesschannel.cpp
+ HEADERS +=  src/qcumber/qinterprocesschannel.h
 }

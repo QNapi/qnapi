@@ -13,14 +13,11 @@
 
 #include "qcumber/qsingleapplication.h"
 
-class QNapiApp : public QSingleApplication//QApplication
+class QNapiApp : public QSingleApplication
 {
 	Q_OBJECT
 	public:
-		QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv)//QApplication(argc, argv)
-		{
-			setInstanciationPolicy(QSingleApplication::ForwardArguments);
-		}
+		QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv) {}
 
 	signals:
 		void downloadFile(const QString & fileName);

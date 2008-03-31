@@ -54,14 +54,12 @@ void QDragListWidget::dropEvent(QDropEvent *event)
 	QList<QUrl> urlList;
 	QListWidgetItem *item;
 	QFileInfo info;
-	QString fName;
 
 	urlList = event->mimeData()->urls();
 
 	foreach(QUrl url, urlList)
 	{
-		fName = url.toLocalFile();
-		info.setFile( fName );
+		info.setFile(url.toString());
 		if(!info.exists() || !info.isFile()) continue;
 		item = new QListWidgetItem(info.absoluteFilePath());
 		addItem(item);
@@ -121,7 +119,7 @@ void QDragListWidget::mouseMoveEvent(QMouseEvent *event)
 		list << QUrl((*i)->text());
 	}
 
-	mimeData->setUrls(list); 
+	mimeData->setUrls(list);
 	drag->setMimeData(mimeData);
 	drag->start(Qt::CopyAction | Qt::MoveAction);
 }

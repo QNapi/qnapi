@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	QNapiApp app(argc, argv);
 
 	app.setQuitOnLastWindowClosed(false);
-	QTextCodec::setCodecForTr(QTextCodec::codecForName ("UTF-8"));
+	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QStringList args = app.arguments();
 
@@ -29,11 +29,9 @@ int main(int argc, char *argv[])
 
 	if(!app.isInstanceAllowed())
 	{
-		for(int i = 0; i < args.size(); i++)
-		{
-			app.sendRequest(args[i]);
-		}
-		return 1;
+		app.sendRequest(args);
+		//system("pause");
+		return 0;
 	}
 
 	frmProgress form(0, 0);

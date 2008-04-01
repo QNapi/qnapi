@@ -62,6 +62,14 @@ class frmProgress: public QWidget
 
 	public slots:
 
+		void receiveRequest(QString request);
+		void enqueueFile(const QString &file);
+		void enqueueFiles(const QStringList &fileList);
+		bool download();
+		void updateProgress(int current, int all, float stageProgress);
+		void downloadFinished();
+
+		void showOpenDialog();
 		void showScanDialog();
 		void showUploadDialog();
 		void showCorrectDialog();
@@ -69,11 +77,8 @@ class frmProgress: public QWidget
 		void showOptions();
 		void showCreateUser();
 		void showAbout();
-		void updateProgress(int current, int all, float stageProgress);
-		void downloadFinished();
-		void showOpenDialog();
-		void enqueueFile(const QString &file);
-		void enqueueFiles(const QStringList &fileList);
+		void quit();
+
 		void setBatchMode(bool value) { batchMode = value; }
 		bool isBatchMode() { return batchMode; }
 		void setQuietMode(bool value) { quietMode = value; }
@@ -81,12 +86,11 @@ class frmProgress: public QWidget
 		void setConsoleMode(bool value) {
 			consoleMode = value; setQuietMode(value); getThread.setVerboseMode(value);
 		}
-		bool download();
-		void receiveRequest(QString request);
-		void quit();
 
 	private:
 		void closeEvent(QCloseEvent *event);
+		void dragEnterEvent(QDragEnterEvent *event);
+		void dropEvent(QDropEvent *event);
 
 		Ui::frmProgress ui;
 

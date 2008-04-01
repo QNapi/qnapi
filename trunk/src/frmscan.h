@@ -74,8 +74,6 @@ Q_OBJECT
 		GetFilesThread getThread;
 
 	private slots:
-		void resizeEvent(QResizeEvent *event);
-
 		bool pbCancelClicked();
 		void selectDirectory();
 		void leDirectoryTextChanged();

@@ -70,13 +70,6 @@ void frmScan::closeEvent(QCloseEvent *event)
 		event->ignore();
 }
 
-void frmScan::resizeEvent(QResizeEvent *resize)
-{
-	int b = 10;
-	ui.gridLayout->setGeometry(QRect(b, b, resize->size().width() - b*2,
-								resize->size().height() - b*2));
-}
-
 bool frmScan::pbCancelClicked()
 {
 	if(scanThread.isRunning())

@@ -11,20 +11,8 @@
   </property>
   <property name="minimumSize" >
    <size>
-    <width>500</width>
-    <height>255</height>
-   </size>
-  </property>
-  <property name="maximumSize" >
-   <size>
-    <width>500</width>
-    <height>255</height>
-   </size>
-  </property>
-  <property name="baseSize" >
-   <size>
-    <width>500</width>
-    <height>255</height>
+    <width>450</width>
+    <height>230</height>
    </size>
   </property>
   <property name="windowTitle" >

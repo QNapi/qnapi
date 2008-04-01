@@ -1,9 +1,6 @@
 <ui version="4.0" >
  <class>frmUpload</class>
  <widget class="QDialog" name="frmUpload" >
-  <property name="windowModality" >
-   <enum>Qt::NonModal</enum>
-  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -13,18 +10,6 @@
    </rect>
   </property>
   <property name="minimumSize" >
-   <size>
-    <width>540</width>
-    <height>185</height>
-   </size>
-  </property>
-  <property name="maximumSize" >
-   <size>
-    <width>540</width>
-    <height>185</height>
-   </size>
-  </property>
-  <property name="baseSize" >
    <size>
     <width>540</width>
     <height>185</height>

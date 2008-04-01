@@ -29,7 +29,6 @@
 #include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
-#include "qnapiapp.h"
 
 class GetThread : public NapiThread
 {

@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
 	form.connect(&app, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
 
 	// Przegladamy parametry i sprawdzamy w jakim trybie aplikacja jest odpalona
-	#ifndef Q_WS_WIN // pod Windowsem i tak nie zadziala ;/
 	for(int i=0; i < args.size(); i++)
 	{
 		if((args[i] == "--help") || (args[i] == "-h"))
@@ -70,7 +69,6 @@ int main(int argc, char *argv[])
 			continue;
 		}
 	}
-	#endif
 
 	// Jesli podano parametry, to znaczy ze sa to nazwy plikow, ktorym
 	// QNapi powinien dopasowac napisy

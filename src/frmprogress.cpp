@@ -179,7 +179,6 @@ bool frmProgress::download()
 	return true;
 }
 
-
 void frmProgress::updateProgress(int current, int all, float stageProgress)
 {
 	static int lastCurrent, lastAll;
@@ -286,10 +285,12 @@ void frmProgress::downloadFinished()
 void frmProgress::showOpenDialog()
 {
 	QStringList fileList;
+	
 	if(!openDialog)
 	{
-		openDialog = new QFileDialog();
-	
+		if(!(openDialog = new QFileDialog(this)))
+			return;
+
 		connect(openDialog, SIGNAL(directoryEntered(const QString &)),
 				this, SLOT(updatePreviousPath(const QString &)));
 
@@ -311,11 +312,12 @@ void frmProgress::showOpenDialog()
 			}
 			openDialog->setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 		#endif
-	
+
 		if (QFileInfo(GlobalConfig().previousDialogPath()).isDir())
 			openDialog->setDirectory(GlobalConfig().previousDialogPath());
 		else
 			openDialog->setDirectory(QDir::currentPath());
+
 	}
 
 	if(openDialog->isVisible())

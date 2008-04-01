@@ -472,7 +472,10 @@ void frmProgress::closeEvent(QCloseEvent *event)
 void frmProgress::dragEnterEvent(QDragEnterEvent *event)
 {
 	//qDebug("::dragEnterEvent: %s", qPrintable(event->mimeData()->text()));
-	event->acceptProposedAction();
+	QUrl url(event->mimeData()->urls().at(0));
+	QFileInfo fi(url.toLocalFile());
+	if(fi.exists() && fi.isFile())
+		event->acceptProposedAction();
 }
 
 void frmProgress::dropEvent(QDropEvent *event)

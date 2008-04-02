@@ -83,10 +83,11 @@ QStringList QManagedRequest::splitArguments(const QString& s)
 			
 			do
 			{
+				arg += " ";
 				arg += l.at(i);
 			} while ( !arg.endsWith("\"") && (++i < l.count()) );
 			
-			arg.remove(0, 1);
+			arg.remove(0, 2);
 			
 			if ( arg.endsWith("\"") )
 				arg.chop(1);

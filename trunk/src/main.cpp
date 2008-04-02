@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 	if(!app.isInstanceAllowed())
 	{
 		for(int i = 0; i < args.size(); i++)
-			app.sendRequest(args[i]);
+			if(QFileInfo(args[i]).isFile())
+				app.sendRequest(args[i]);
 		//system("pause");
 		return 0;
 	}

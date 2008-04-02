@@ -103,15 +103,17 @@ void QInterProcessChannel::sendMessage(const QByteArray& msg)
 {
 	if(msg.count())
 	{
-		//qDebug("::sendMessage(%d): %s", GetCurrentProcessId(), msg.constData());
+		// a lot of simultaneous clients cause that pipe sometimes omits
+		// some of these clients despite results of writing functions are ok ;/
+		// workaround: reserve mutex, wait 100ms before every write operation
 		
-		// workaround: reserve mutex and wait 100ms
 		HANDLE mutex = CreateMutexA(NULL, FALSE, qPrintable(blockerMutexStr));
 		WaitForSingleObject(mutex, INFINITE);
 		Sleep(100);
 		
 		HANDLE hPipe;
 		
+		// loop to get pipe's handle
 		for(;;)
 		{
 			hPipe = CreateFileA( 
@@ -124,26 +126,19 @@ void QInterProcessChannel::sendMessage(const QByteArray& msg)
 						NULL);
 			
 			if(hPipe != INVALID_HANDLE_VALUE)
-			{
-				//qDebug("::sendMessage(%d): uchwyt niepoprawny, czyli OK :D", GetCurrentProcessId());
 				break;
-			}
 			
 			if(GetLastError() != ERROR_PIPE_BUSY)
 			{
-				//qDebug("::sendMessage(%d): inny blad przy uchwytywaniu rurki! GetLastError()=%d", GetCurrentProcessId(), GetLastError());
 				ReleaseMutex(mutex);
 				return;
 			}
 			
-			//qDebug("::sendMessage(%d): czekamy max 1s", GetCurrentProcessId());
-			if(!WaitNamedPipeA(qPrintable(pipeName), 1000))
-			{
-				//qDebug("::sendMessage(%d): timeout 1s przerkoczony!!!", GetCurrentProcessId());
-				//return;
-			}
-			//qDebug("::sendMessage(%d): doczekalismy sie na rurke", GetCurrentProcessId());
+			// wait max 1s and retry
+			WaitNamedPipeA(qPrintable(pipeName), 1000);
 		}
+		
+		// ok, now we have pipe's handle, we can prepare buffers and write to the pipe
 		
 		char buffer[bufferSize];
 		strncpy(buffer, msg.constData(), bufferSize);
@@ -159,12 +154,10 @@ void QInterProcessChannel::sendMessage(const QByteArray& msg)
 		
 		if (!writeSuccess)
 		{
-			//qDebug("::sendMessage(%d): WriteFile failed", GetCurrentProcessId());
 			ReleaseMutex(mutex);
 			return;
 		}
 		
-		//qDebug("::sendMessage(%d): ihaaa! zapisano %d bajtów do rurki :)", GetCurrentProcessId(), bytesWritten);
 		CloseHandle(hPipe);
 		ReleaseMutex(mutex);
 	} else {
@@ -177,11 +170,9 @@ void QInterProcessChannel::sendMessage(const QByteArray& msg)
 */
 void QInterProcessChannel::close()
 {
-	//qDebug("QInterProcessChannel::close(%d)", GetCurrentProcessId());
-
 	if(serverMode)
 	{
-		//qDebug("QInterProcessChannel::close(%d) serverMode, sending QUIT", GetCurrentProcessId());
+		// if we want to quit pipe server thread, we have to send --quit message
 		sendMessage(QString("--quit"));
 	}
 }
@@ -191,8 +182,6 @@ void QInterProcessChannel::close()
 */
 void QInterProcessChannel::run()
 {
-	//qDebug("thread: run");
-
 	if(!serverMode) return;
 	
 	HANDLE hPipe;
@@ -200,6 +189,7 @@ void QInterProcessChannel::run()
 	bool connected, readSuccess;
 	DWORD bytesRead;
 	
+	// thread loop
 	for(;;)
 	{
 		hPipe = CreateNamedPipeA(
@@ -212,20 +202,14 @@ void QInterProcessChannel::run()
 					0,
 					NULL);
 		
-		//qDebug("thread: hPipe=%d, pipeName=%s", hPipe, qPrintable(pipeName));
-		
 		if(hPipe == INVALID_HANDLE_VALUE)
-		{
-			//qDebug("thread: CreateNamedPipe failed. continuing");
 			break;
-		}
 		
 		connected = ConnectNamedPipe(hPipe, NULL) ?
 						TRUE : (GetLastError() == ERROR_PIPE_CONNECTED);
 		
 		if(!connected)
 		{
-			//qDebug("thread: pipe not connected!!!");
 			CloseHandle(hPipe);
 			continue;
 		}
@@ -238,19 +222,16 @@ void QInterProcessChannel::run()
 						NULL);
 		buffer[bufferSize - 1] = 0;
 		
-		//qDebug("thread: readSuccess=%d bytesRead=%d", readSuccess, bytesRead);
-		
 		if(!readSuccess || !bytesRead)
 		{
 			CloseHandle(hPipe);
 			continue;
 		}
 		
-		//qDebug("thread: buffer=%s", buffer);
-		
 		QStringList argv = QManagedRequest::splitArguments(QString(buffer));
 		const QString cmd = argv.at(0);
 		
+		// if server instance is going to suspend thread...
 		if ( cmd == "--quit" ) {
 			CloseHandle(hPipe);
 			break;
@@ -263,8 +244,6 @@ void QInterProcessChannel::run()
 		
 		CloseHandle(hPipe);
 	}
-	
-	//qDebug("thread: end of run");
 }
 
 /*!
@@ -275,10 +254,10 @@ void QInterProcessChannel::init()
 	//while(isRunning())
 	//	quit();
 	
+	// create global mutex to check single instance
 	CreateMutexA(NULL, FALSE, qPrintable(globalMutexStr));
 	serverMode = !(GetLastError() == ERROR_ALREADY_EXISTS);
 	
-	//qDebug("init: pid=%d, serverMode = %d", GetCurrentProcessId(), serverMode);
-	
+	// start listening thread in single instance mode
 	if(serverMode) start();
 }

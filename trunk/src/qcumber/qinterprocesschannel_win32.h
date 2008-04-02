@@ -15,14 +15,13 @@
 
 #include "qcumber.h"
 #include "qmanagedrequest.h"
-#include <windows.h>
-#include <cstdlib>
 
 #include <QThread>
 #include <QString>
 #include <QByteArray>
 #include <QApplication>
-#include <QMutex>
+
+#include <windows.h>
 
 /*!
 	\file qinterprocesschannel.h
@@ -30,6 +29,7 @@
 	\brief Definition of the QInterProcessChannel class.
 */
 
+// buffer size for input/output pipes
 static const int bufferSize = 2048;
 
 class QCUMBER_EXPORT QInterProcessChannel : public QThread

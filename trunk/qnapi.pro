@@ -78,7 +78,7 @@ bin.path = $${INSTALL_PREFIX}/bin
 bin.files = $${TARGET}
 
 doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
-doc.files = doc/ChangeLog doc/README doc/LICENSE doc/qnapi-download.desktop doc/qnapi-download.schemas
+doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE doc/qnapi-download.desktop doc/qnapi-download.schemas
 
 man.path = $${INSTALL_PREFIX}/share/man/man1
 man.files = doc/$${TARGET}.1.gz

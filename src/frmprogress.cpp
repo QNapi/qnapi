@@ -306,7 +306,7 @@ void frmProgress::showOpenDialog()
 			QUrl volumes = QUrl::fromLocalFile("/Volumes");
 			if ( (&volumes) && QDir().exists("/Volumes") && (!openDialog->sidebarUrls().contains(volumes)) )
 			{
-				QList<QUrl> urls = openDialog.sidebarUrls();
+				QList<QUrl> urls = openDialog->sidebarUrls();
 				urls.append(volumes);
 				openDialog->setSidebarUrls(urls);
 			}

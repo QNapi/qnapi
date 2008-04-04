@@ -50,13 +50,15 @@ FORMS += ui/frmprogress.ui \
  ui/frmcorrect.ui \
  ui/frmreport.ui \
  ui/frmscan.ui \
- ui/frmcreateuser.ui
+ ui/frmcreateuser.ui \
+ ui/frmsummary.ui
 RESOURCES += src/resources.qrc
 QT += network gui core
 UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
+
 macx {
  QMAKE_MAC_SDK =  /Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc
@@ -67,6 +69,29 @@ macx {
 #7ZIP_BINARY.path = Contents/Resources
 #QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
+
+unix {
+# install stuff
+INSTALL_PREFIX = /usr
+
+bin.path = $${INSTALL_PREFIX}/bin
+bin.files = $${TARGET}
+
+doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
+doc.files = doc/ChangeLog doc/README doc/LICENSE doc/qnapi-download.desktop doc/qnapi-download.schemas
+
+man.path = $${INSTALL_PREFIX}/share/man/man1
+man.files = doc/$${TARGET}.1.gz
+
+icons.path = $${INSTALL_PREFIX}/share/icons
+icons.files = src/qnapi.png src/qnapi-48.png src/qnapi-128.png src/qnapi-512.png
+
+desktop.path = $${INSTALL_PREFIX}/share/applications
+desktop.files = doc/$${TARGET}.desktop
+
+INSTALLS = bin doc man icons desktop 
+}
+
 win32 {
  RC_FILE =  win32/qnapi.rc
  SOURCES +=  src/qcumber/qinterprocesschannel_win32.cpp

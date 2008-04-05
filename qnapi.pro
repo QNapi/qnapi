@@ -74,8 +74,7 @@ unix {
 # install stuff
 INSTALL_PREFIX = /usr
 
-bin.path = $${INSTALL_PREFIX}/bin
-bin.files = $${TARGET}
+target.path = $${INSTALL_PREFIX}/bin
 
 doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
 doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE doc/qnapi-download.desktop doc/qnapi-download.schemas
@@ -89,7 +88,7 @@ icons.files = src/qnapi.png src/qnapi-48.png src/qnapi-128.png src/qnapi-512.png
 desktop.path = $${INSTALL_PREFIX}/share/applications
 desktop.files = doc/$${TARGET}.desktop
 
-INSTALLS = bin doc man icons desktop 
+INSTALLS = target doc man icons desktop 
 }
 
 win32 {

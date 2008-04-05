@@ -10,7 +10,8 @@ QNapi ChangeLog:
  * liczne usprawnienia w interfejsie użytkownika
  * pobieranie wielu plikow naraz po przeciagnieciu ich na ikone programu (Mac OS X)
  * obsługa drag-n-drop na okno pobierania (na razie nie dziala pod Mac OS X)
- * automatyczna (na razie eksperymentalna) integracja z KDE (Dolphin, Konqueror) i Nautilusem
+ * automatyczna (na razie eksperymentalna) integracja z KDE (Dolphin, Konqueror)
+ * prostsza instalacja/deinstalacja programu przy kompilacji ze zrodel
  + ?
 
 2008-03-01 v0.1.3:

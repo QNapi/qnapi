@@ -42,4 +42,3 @@ void frmSummary::setFailedCount(unsigned int failed)
 								.arg(tr((failed > 1) ? "plików" : "pliku")));
 	}
 }
-

@@ -19,6 +19,8 @@
 #include "napi.h"
 #include "qnapiconfig.h"
 
+#include "frmsummary.h"
+
 class ScanFilesThread : public NapiThread
 {
 	Q_OBJECT

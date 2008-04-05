@@ -14,6 +14,7 @@ SOURCES += src/main.cpp \
  src/frmreport.cpp \
  src/frmscan.cpp \
  src/frmcreateuser.cpp \
+ src/frmsummary.cpp \
  src/qnapiconfig.cpp \
  src/qnapiapp.cpp \
  src/qdraglistwidget.cpp \
@@ -31,6 +32,7 @@ HEADERS += src/napi.h \
  src/frmreport.h \
  src/frmscan.h \
  src/frmcreateuser.h \
+ src/frmsummary.h \
  src/version.h \
  src/qnapiconfig.h \
  src/qnapiapp.h \
@@ -52,7 +54,7 @@ FORMS += ui/frmprogress.ui \
  ui/frmscan.ui \
  ui/frmcreateuser.ui \
  ui/frmsummary.ui
-RESOURCES += src/resources.qrc
+RESOURCES += res/resources.qrc
 QT += network gui core
 UI_DIR = tmp
 MOC_DIR = tmp
@@ -83,7 +85,7 @@ man.path = $${INSTALL_PREFIX}/share/man/man1
 man.files = doc/$${TARGET}.1.gz
 
 icons.path = $${INSTALL_PREFIX}/share/icons
-icons.files = src/qnapi.png src/qnapi-48.png src/qnapi-128.png src/qnapi-512.png
+icons.files = res/qnapi.png res/qnapi-48.png res/qnapi-128.png res/qnapi-512.png
 
 desktop.path = $${INSTALL_PREFIX}/share/applications
 desktop.files = doc/$${TARGET}.desktop

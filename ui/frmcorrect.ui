@@ -19,7 +19,7 @@
    <string>Wyślij poprawione napisy</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../src/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
    <item>

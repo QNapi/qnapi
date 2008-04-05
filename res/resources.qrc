@@ -5,4 +5,7 @@
         <file>qnapi-48.png</file>
         <file>qnapi.png</file>
     </qresource>
+	<qresource prefix="/ui" >
+		<file>icon_accept.png</file>
+	</qresource>
 </RCC>

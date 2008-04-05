@@ -25,6 +25,7 @@
 #include "frmreport.h"
 #include "frmscan.h"
 #include "frmcreateuser.h"
+#include "frmsummary.h"
 
 #include "napi.h"
 #include "napithread.h"
@@ -43,7 +44,7 @@ class GetThread : public NapiThread
 		void run();
 		void setVerboseMode(bool mode) { verboseMode = mode; }
 
-		QStringList queue;
+		QStringList queue, gotList;
 		int napiSuccess, napiFail;
 
 	private:

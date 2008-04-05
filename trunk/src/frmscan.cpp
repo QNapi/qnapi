@@ -277,23 +277,19 @@ void frmScan::downloadFinished(bool interrupt)
 	{
 		ui.lbAction->setText(tr("Napisy pobrano."));
 
-		QString fileList;
-		for(int i = 0; i < getThread.gotList.size(); i++)
-		{
-			fileList += " * ";
-			fileList += QFileInfo(getThread.gotList[i]).fileName();
-			fileList += "\n";
-		}
-
-		QString msg;
 		if(getThread.napiSuccess > 0)
-			msg += tr("Dopasowano napisy dla %1 %2:\n%3").arg(getThread.napiSuccess)
-					.arg(tr((getThread.napiSuccess == 1) ? "pliku" : "plików"))
-					.arg(fileList);
-		if(getThread.napiFail > 0)
-			msg += tr("\nNie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
-					.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
-		QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+		{
+			frmSummary summary;
+			summary.setFileList(getThread.gotList);
+			summary.setFailedCount(getThread.napiFail);
+			summary.exec();
+		}
+		else
+		{
+			QString msg = tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
+							.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
+			QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+		}
 	}
 
 	if(interrupt)

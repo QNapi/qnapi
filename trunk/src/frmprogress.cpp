@@ -103,7 +103,6 @@ void frmProgress::createTrayIcon()
 
 void frmProgress::receiveRequest(QString request)
 {
-	//qDebug(":receiveRequest:: Odbieramy request: %s", qPrintable(request));
 	enqueueFile(request);
 	if(!getThread.isRunning())
 		download();
@@ -113,14 +112,11 @@ void frmProgress::receiveRequest(QString request)
 
 void frmProgress::enqueueFile(const QString & file)
 {
-	//qDebug(":enqueueFile:: %s", qPrintable(file));
 	static QMutex locker;
 	locker.lock();
 	if(QFile::exists(file))
 	{
-		//int sizeold = getThread.queue.size();
 		getThread.queue << file;
-		//qDebug(":enqueueFile:: oldsize was: %d, now is: %d", sizeold, getThread.queue.size());
 		updateProgress(-1, getThread.queue.size(), -1);
 	}
 	locker.unlock();
@@ -206,30 +202,57 @@ void frmProgress::downloadFinished()
 {
 	hide();
 
-	QStringList oldQueue = getThread.queue;
+	QStringList queue = getThread.queue;
 	getThread.queue.clear();
 
 	mutex.lock();
 	if(showSummary)
 	{
-		if(oldQueue.size() > 1)
+		if(queue.size() > 1)
 		{
 			if(!quietMode)
 			{
-				QString msg;
-				if(getThread.napiSuccess > 0)
-					msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
-							.arg(tr((getThread.napiSuccess > 1) ? "plików" : "pliku"))
-							.arg((getThread.napiFail > 0) ? "\n" : "");
-				if(getThread.napiFail > 0)
-					msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
-							.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
-#ifndef Q_WS_MAC
-				if(QSystemTrayIcon::supportsMessages() && !batchMode)
-					trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
-				else
+				bool mac = 
+#ifdef Q_WS_MAC
+				true;
+#else
+				false;
 #endif
-					QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+
+				if(mac || batchMode)
+				{
+					if(getThread.napiSuccess > 0)
+					{
+						frmSummary summary;
+						summary.setFileList(getThread.gotList);
+						summary.setFailedCount(getThread.napiFail);
+						summary.exec();
+					}
+					else
+					{
+						QString msg = tr("Nie udało się dopasować napisów dla %1 %2!")
+										.arg(getThread.napiFail)
+										.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
+						QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+					}
+				}
+				else
+				{
+					QString msg;
+					if(getThread.napiSuccess > 0)
+						msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
+								.arg(tr((getThread.napiSuccess > 1) ? "plików" : "pliku"))
+								.arg((getThread.napiFail > 0) ? "\n" : "");
+					if(getThread.napiFail > 0)
+						msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
+								.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
+#ifndef Q_WS_MAC
+					if(QSystemTrayIcon::supportsMessages() && !batchMode)
+						trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
+					else
+#endif
+						QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+				}
 			}
 
 			if(consoleMode)
@@ -247,7 +270,7 @@ void frmProgress::downloadFinished()
 		{
 			if(getThread.napiSuccess == 1)
 			{
-				QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(oldQueue[0]).fileName());
+				QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(queue[0]).fileName());
 				if(!quietMode)
 				{
 #ifndef Q_WS_MAC
@@ -262,7 +285,7 @@ void frmProgress::downloadFinished()
 			}
 			else
 			{
-				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(oldQueue[0]).fileName());
+				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(queue[0]).fileName());
 				if(!quietMode)
 			{
 #ifndef Q_WS_MAC
@@ -473,7 +496,6 @@ void frmProgress::closeEvent(QCloseEvent *event)
 
 void frmProgress::dragEnterEvent(QDragEnterEvent *event)
 {
-	//qDebug("::dragEnterEvent: %s", qPrintable(event->mimeData()->text()));
 	QUrl url(event->mimeData()->urls().at(0));
 	QFileInfo fi(url.toLocalFile());
 	if(fi.exists() && fi.isFile())
@@ -489,7 +511,6 @@ void frmProgress::dropEvent(QDropEvent *event)
 
 	foreach(QUrl url, urlList)
 	{
-		//qDebug("::dropEvent: urls.size=%d %s", urlList.size(), qPrintable(url.toLocalFile()));
 		info.setFile(url.toLocalFile());
 		if(!info.exists() || !info.isFile()) continue;
 		enqueueFile(url.toLocalFile());
@@ -523,6 +544,7 @@ void GetThread::run()
 
 	QString windowTitle, md5;
 	napiSuccess = napiFail = 0;
+	gotList.clear();
 
 	QString tmpZip =  GlobalConfig().tmpPath() + "/QNapi.napisy.7z";
 
@@ -580,6 +602,7 @@ void GetThread::run()
 		if(abort) return;
 
 		++napiSuccess;
+		gotList << queue[i];
 
 		if(GlobalConfig().changeEncoding())
 		{

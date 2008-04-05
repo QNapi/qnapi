@@ -1,6 +1,18 @@
 QNapi ChangeLog:
 ================
 
+2008-04-?? v0.1.4:
+ * rejestracja nowych użytkownikow za pomoca programu
+ * port na systemy Windows
+ * sprawdzanie poprawnosci ustawien p7zip oraz katalogu tymczasowego
+ * bardziej rozbudowane podsumowanie pobierania plików w niektórych przypadkach
+ * w danej chwili może być uruchomiona tylko jedna instancja programu
+ * liczne usprawnienia w interfejsie użytkownika
+ * pobieranie wielu plikow naraz po przeciagnieciu ich na ikone programu (Mac OS X)
+ * obsługa drag-n-drop na okno pobierania (na razie nie dziala pod Mac OS X)
+ * automatyczna (na razie eksperymentalna) integracja z KDE (Dolphin, Konqueror) i Nautilusem
+ + ?
+
 2008-03-01 v0.1.3:
  * skanowanie katalogów i dopasowywanie napisów do znalezionych filmów
  * rozwiązanie problemu z pozycją okienek dialogowych pod compizem

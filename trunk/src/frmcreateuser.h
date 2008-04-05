@@ -8,8 +8,8 @@
 #include "ui_frmcreateuser.h"
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <QResizeEvent>
 #include <QDesktopWidget>
+#include <QRegExp>
 
 #include "napi.h"
 #include "napithread.h"
@@ -46,14 +46,13 @@ Q_OBJECT
 
 	private:
 		void closeEvent(QCloseEvent *event);
+		bool validEmail(const QString & email);
 
 		Ui::frmCreateUser ui;
 
 		CreateUserThread createUserThread;
 
 	private slots:
-		void resizeEvent(QResizeEvent *event);
-
 		void checkCreateEnable();
 		void pbCreateClicked();
 		void pbCancelClicked();

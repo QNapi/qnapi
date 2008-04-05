@@ -50,11 +50,9 @@ void frmCreateUser::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
-void frmCreateUser::resizeEvent(QResizeEvent *resize)
+bool frmCreateUser::validEmail(const QString & email)
 {
-	int b = 5;
-	ui.gridLayout->setGeometry(QRect(b, b, resize->size().width() - b*2,
-								resize->size().height() - b*2));
+	return QRegExp("^(.+)@(.+)\\.(.+)$").exactMatch(email);
 }
 
 void frmCreateUser::checkCreateEnable()
@@ -64,6 +62,7 @@ void frmCreateUser::checkCreateEnable()
 	e &= !ui.lePass->text().isEmpty();
 	e &= !ui.leRepeatPass->text().isEmpty();
 	e &= !ui.leMail->text().isEmpty();
+	e &= validEmail(ui.leMail->text());
 	e &= (ui.lePass->text().length() >= 5);
 	e &= (ui.lePass->text() == ui.leRepeatPass->text());
 	ui.pbCreate->setEnabled(e);
@@ -72,6 +71,8 @@ void frmCreateUser::checkCreateEnable()
 		ui.lbStatus->setText(tr("Hasło musi mieć conajmniej 5 znaków!"));
 	else if(ui.lePass->text() != ui.leRepeatPass->text())
 		ui.lbStatus->setText(tr("Wpisane hasła różnią się od siebie!"));
+	else if(!ui.leMail->text().isEmpty() && !validEmail(ui.leMail->text()))
+		ui.lbStatus->setText(tr("Wpisz poprawny adres e-mail."));
 	else 
 		ui.lbStatus->setText(tr("Wpisz dane potrzebne do założenia konta"));
 	if(e)

@@ -84,13 +84,22 @@ doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE doc/qnapi-down
 man.path = $${INSTALL_PREFIX}/share/man/man1
 man.files = doc/$${TARGET}.1.gz
 
-icons.path = $${INSTALL_PREFIX}/share/icons
+icons.path = /usr/share/icons
 icons.files = res/qnapi.png res/qnapi-48.png res/qnapi-128.png res/qnapi-512.png
 
-desktop.path = $${INSTALL_PREFIX}/share/applications
+desktop.path = /usr/share/applications
 desktop.files = doc/$${TARGET}.desktop
 
-INSTALLS = target doc man icons desktop 
+dolphin_integration.path = /usr/share/apps/dolphin/servicemenus
+dolphin_integration.files = doc/$${TARGET}-download.desktop
+
+d3lphin_integration.path = /usr/share/apps/d3lphin/servicemenus
+d3lphin_integration.files = doc/$${TARGET}-download.desktop
+
+konqueror_integration.path = /usr/share/apps/konqueror/servicemenus
+konqueror_integration.files = doc/$${TARGET}-download.desktop
+
+INSTALLS = target doc man icons desktop dolphin_integration d3lphin_integration konqueror_integration
 }
 
 win32 {

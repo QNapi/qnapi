@@ -156,6 +156,7 @@ void frmOptions::showAllEncodings()
 void frmOptions::useBrushedMetalClicked()
 {
 	setAttribute(Qt::WA_MacBrushedMetal, ui.cbUseBrushedMetal->isChecked());
+	parentWidget()->setAttribute(Qt::WA_MacBrushedMetal, ui.cbUseBrushedMetal->isChecked());
 }
 
 void frmOptions::writeConfig()

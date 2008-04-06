@@ -15,6 +15,12 @@
     <height>100</height>
    </size>
   </property>
+  <property name="maximumSize" >
+   <size>
+    <width>800</width>
+    <height>140</height>
+   </size>
+  </property>
   <property name="acceptDrops" >
    <bool>true</bool>
   </property>

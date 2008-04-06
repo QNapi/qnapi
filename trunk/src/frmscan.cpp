@@ -80,6 +80,7 @@ bool frmScan::pbCancelClicked()
 			scanThread.requestAbort();
 			ui.lbAction->setText(tr("Kończenie zadań..."));
 			qApp->processEvents();
+			scanThread.terminate();
 			scanThread.wait();
 			return true;
 		}

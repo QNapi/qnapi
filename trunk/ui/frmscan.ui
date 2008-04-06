@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>414</height>
+    <width>800</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -347,7 +347,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../src/resources.qrc" />
+  <include location="../res/resources.qrc" />
  </resources>
  <connections/>
 </ui>

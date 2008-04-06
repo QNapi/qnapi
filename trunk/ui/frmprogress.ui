@@ -5,17 +5,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>100</height>
+    <width>600</width>
+    <height>120</height>
    </rect>
   </property>
   <property name="minimumSize" >
-   <size>
-    <width>580</width>
-    <height>100</height>
-   </size>
-  </property>
-  <property name="maximumSize" >
    <size>
     <width>580</width>
     <height>100</height>
@@ -88,31 +82,13 @@
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QProgressBar" name="pbProgress" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="value" >
-        <number>0</number>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignHCenter</set>
-       </property>
-       <property name="textVisible" >
-        <bool>true</bool>
+        <number>24</number>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pbCancel" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="text" >
         <string>Anuluj</string>
        </property>
@@ -123,7 +99,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../src/resources.qrc" />
+  <include location="../res/resources.qrc" />
  </resources>
  <connections>
   <connection>
@@ -133,12 +109,12 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>534</x>
-     <y>79</y>
+     <x>554</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>289</x>
-     <y>49</y>
+     <x>299</x>
+     <y>59</y>
     </hint>
    </hints>
   </connection>

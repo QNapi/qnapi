@@ -91,7 +91,8 @@ przez Ciebie programu.
 KDE (Dolphin/Konqueror)
 -----------------------
 UWAGA: od wersji 0.1.4 QNapi powinien automatyczni integrowac sie z programami Dolphin
-oraz Konqueror.
+oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie dzialac, mozesz
+skorzystac z drugiego sposobu:
 
 Będzie potrzebny plik qnapi-download.dekstop, który możesz znaleźć w katalogu
 /usr/share/doc/qnapi lub na stronie domowej programu (http://krzemin.iglu.cz/qnapi).

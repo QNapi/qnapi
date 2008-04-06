@@ -10,6 +10,8 @@
 #include <QListWidget>
 #include <QFileInfo>
 
+#include "qnapiconfig.h"
+
 #include "ui_frmsummary.h"
 
 class frmSummary: public QDialog

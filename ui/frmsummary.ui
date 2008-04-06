@@ -8,9 +8,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>526</width>
-    <height>237</height>
+    <width>662</width>
+    <height>260</height>
    </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>360</width>
+    <height>160</height>
+   </size>
   </property>
   <property name="windowTitle" >
    <string>Rezultat dopasowania napisów</string>

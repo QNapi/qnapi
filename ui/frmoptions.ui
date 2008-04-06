@@ -361,7 +361,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../src/resources.qrc" />
+  <include location="../res/resources.qrc" />
  </resources>
  <connections>
   <connection>

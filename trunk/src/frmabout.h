@@ -7,7 +7,6 @@
 #define __FRMABOUT__H__
 
 #include <QDesktopWidget>
-#include <QResizeEvent>
 
 #include "ui_frmabout.h"
 #include "version.h"

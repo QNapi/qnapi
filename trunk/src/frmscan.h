@@ -7,7 +7,6 @@
 #define __FRMSCAN__H__
 
 #include "ui_frmscan.h"
-#include <QResizeEvent>
 #include <QDesktopWidget>
 #include <QFileInfo>
 #include <QFileDialog>

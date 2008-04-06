@@ -7,7 +7,6 @@
 #define __FRMSUMMARY__H__
 
 #include <QDesktopWidget>
-#include <QResizeEvent>
 #include <QListWidget>
 #include <QFileInfo>
 

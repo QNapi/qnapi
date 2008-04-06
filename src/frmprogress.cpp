@@ -162,7 +162,7 @@ bool frmProgress::download()
 		return false;
 	}
 
-	if(!quietMode)
+	if(!quietMode && !isVisible())
 	{
 		move((QApplication::desktop()->width() - width()) / 2, 
 			(QApplication::desktop()->height() - height()) / 2);

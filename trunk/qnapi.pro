@@ -99,7 +99,11 @@ d3lphin_integration.files = doc/$${TARGET}-download.desktop
 konqueror_integration.path = /usr/share/apps/konqueror/servicemenus
 konqueror_integration.files = doc/$${TARGET}-download.desktop
 
-INSTALLS = target doc man icons desktop dolphin_integration d3lphin_integration konqueror_integration
+kde4_integration.path = /usr/lib/kde4/share/kde4/services/ServiceMenus
+kde4_integration.files = doc/$${TARGET}-download.desktop
+
+INSTALLS = target doc man icons desktop dolphin_integration \
+			d3lphin_integration konqueror_integration kde4_integration
 }
 
 win32 {

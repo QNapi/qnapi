@@ -55,12 +55,14 @@ void frmOptions::select7zPath()
 	QString path7z = QFileDialog::getOpenFileName(this, tr("Wskaż ścieżkę do programu 7z"),
 													QFileInfo(ui.le7zPath->text()).path());
 	if(!path7z.isEmpty())
+	{
 		if(!QFileInfo(path7z).isExecutable())
 			QMessageBox::warning(this, tr("Niepoprawna ścieżka"),
 				tr("Wskazana przez Ciebie ścieżka do programu 7z jest niepoprawna. Jeśli nie możesz "
 					"odnaleźć programu 7z, spróbuj zainstalować pakiet p7zip-full."));
 		else
 			ui.le7zPath->setText(path7z);
+	}
 }
 
 void frmOptions::leTmpPathChanged()

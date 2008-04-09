@@ -90,7 +90,7 @@ przez Ciebie programu.
 
 KDE (Dolphin/Konqueror)
 -----------------------
-UWAGA: od wersji 0.1.4 QNapi powinien automatyczni integrowac sie z programami Dolphin
+UWAGA: od wersji 0.1.4 QNapi powinien automatycznie integrowac sie z programami Dolphin
 oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie dzialac, mozesz
 skorzystac z drugiego sposobu:
 

@@ -10,6 +10,7 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 **
 ****************************************************************************/
+
 #ifndef _QINTER_PROCESS_CHANNEL_H_
 #define _QINTER_PROCESS_CHANNEL_H_
 

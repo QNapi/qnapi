@@ -36,8 +36,8 @@ const QString aboutText = tr(
 "oryginalny klient NAPI nie jest dostępny.</p><p></p><p><b>Ten program rozprowadzany "
 "jest na licencji GNU General Public License.</b></p><p></p><p><b>Autor</b>: "
 "Krzemin &lt;<a href=\"mailto:pkrzemin@o2.pl?subject=QNapi\">pkrzemin@o2.pl</a>&gt;"
-"</p><p><b>WWW</b>: <a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a>"
-"</p></body></html>");
+"</p><p><b>Prawa autorskie:</b> Copyright (C) 2008 Krzemin</p><p><b>WWW</b>: "
+"<a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a></p></body></html>");
 const QString thanksText = tr(
 "<html><body><p>Podziękowania należą się wszystkim osobom, które aktywnie wsparły rozwój "
 "QNapi, a w szczególności:<ul><li>adrian5632 &lt;<a href=\"mailto:adrian5632@gmail.com\">"

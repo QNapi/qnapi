@@ -79,7 +79,7 @@ INSTALL_PREFIX = /usr
 target.path = $${INSTALL_PREFIX}/bin
 
 doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
-doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE doc/qnapi-download.desktop doc/qnapi-download.schemas
+doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE.pl doc/LICENSE doc/COPYRIGHT doc/qnapi-download.desktop doc/qnapi-download.schemas
 
 man.path = $${INSTALL_PREFIX}/share/man/man1
 man.files = doc/$${TARGET}.1.gz

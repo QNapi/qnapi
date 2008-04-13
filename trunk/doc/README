@@ -1,149 +1,133 @@
 QNapi
 =====
 
-Autor:			Krzemin <pkrzemin@o2.pl>
-Strona WWW:		http://krzemin.iglu.cz/qnapi
+Author:			Krzemin <pkrzemin@o2.pl>
+WWW home page:	http://krzemin.iglu.cz/qnapi
 
-Ten program rozprowadzany jest na licencji GNU General Public License.
+This program is distributed under the terms of GNU General Pulic License;
+either version 2 or (at your opinion) any later version.
 
-QNapi jest nieoficjalnym klonem programu NAPI-PROJEKT (http://napiprojekt.pl)
-napisanym w bibliotece Qt4 z myślą o użytkownikach Linuksa oraz innych
-systemów, pod które oryginalny NAPI-PROJEKT nie jest dostępny.
-
-
-Wymagania
-=========
- * Biblioteka Qt w wersji conajmniej 4.3.0. Jeśli w Twoim systemie jest starsza
-   wersja, musisz ją zaktualizować lub własnoręcznie skompilować źródła, pobrane
-   ze strony http://trolltech.com/developer/downloads/qt/x11
- * Program p7zip. Więcej informacji na stronie http://p7zip.sourceforge.net/
+QNapi is unofficial clone of NAPT-PROJEKT program (http://napiprojekt.pl)
+written using Qt4. It's focused to be functional on GNU/Linux and other
+Unix-like systems, for which NAPI-PROJEKT is not available. Since 0.1.4
+version it has also Windows port. For more information visit project's
+website.
 
 
-Instalacja
-==========
+Requirements
+============
+ * Qt version 4.3.0, or higher.
+ * p7zip. More info about this program can be found here:
+   http://p7zip.sourceforge.net/
 
-Aby zainstalować program, skorzystaj z pakietów dla swojej dystrybucji,
-które możesz znależć na stronie programu: http://krzemin.iglu.cz/qnapi
 
-Jeśli na stronie nie ma pakietów pod Twoją dystrybucję, możesz zainstalować
-program ze źródeł. Do tego będą potrzebne biblioteki Qt4 (libqt4-core,
-libqt4-gui, a do kompilacji także libqt4-dev) oraz program 7z (który
-znajdziesz w pakiecie p7zip-full).
+Installation
+===========
 
-Ściągnij i rozpakuj archiwum .tar.gz ze źródłami programu:
+First check if there's a package of QNapi for your distribution:
+http://krzemin.iglu.cz/qnapi
 
-$ tar -zxvf qnapi-wersja.tar.gz
+If there's no package for your distro, you'll have to compile QNapi from
+source. To do this you'll need Qt4 libraries and 7z, which you can find in
+p7zip-full (see http://p7zip.sourceforge.net/ for more details).
 
-Przejdź do katalogu ze źródłami:
+First off, fetch and unpack the tarball:
+$ tar -zxvf qnapi-XXX.tar.gz
 
-$ cd qnapi-wersja
-
-Aby skompilować program, wykonaj po kolei polecenia:
-
+where XXX is a version of QNapi. Then enter the directory and build makefiles:
+$ cd qnapi-XXX
 $ qmake
-(lub qmake-qt4, jeśli masz zainstalowane również Qt3)
 
+If you also have Qt3 installed, please type qmake-qt4 instead of qmake (which may be
+a symlink to qmake-qt3). Now build the program:
 $ make
 
-Jeśli komenda make zakończy się niepowodzeniem, przejdź do sekcji
-'Błędy kompilacji' w tym dokumencie, aby zobaczyć możliwe przyczyny
-i rozwiązania.
-
-Po prawidłowej kompilacji możesz zainstalować program:
-
+If compilation fails, go to "Compilation Errors" section to look for possible
+reasons and solutions. If everything went fine, install QNapi:
 $ sudo make install
 
-W tej chwili możesz uruchomić program poleceniem:
-
+Now you can run the program with the following command:
 $ qnapi
 
-Aby odinstalować program, wpisz:
-
+If you will later want to uninstall QNapi, type the following command from
+QNapi's source directory:
 $ sudo make uninstall
 
 
-Błędy kompilacji
-================
+Compilation Errors
+==================
 
-Jeśli polecenie make wyrzuci błąd podobny do tego:
+If make command throws an error similar to the following:
 
-"make: *** Brak reguł do zrobienia obiektu"
+"make: *** No rules to make object"
 
-Oznacza to, że trzeba ponownie wygenerowac plik Makefile.
-W tym celu wykonaj polecenie:
-
-$ qmake
-(lub qmake-qt4, jesli masz zainstalowane takze Qt3)
-
-Po prawidłowym uruchomieniu programu qmake, nowy plik Makefile powinien zostać
-wygenerowany. Wtedy możesz przystąpić do kompilacji programu. (Szczegóły w
-sekcji 'Instalacja')
+It means that Makefile has to be regenerated. To do so run qmake/qmake-qt4
+again. Afterwards, if qmake did not throw any error, try to build the program
+one more time (see 'Installation' section above).
 
 
-Integracja z menedżerami plików
-===============================
+Integration with window managers
+================================
 
-Jeśli chcesz zintegrować QNapi ze swoim menedżerem plików, aby po kliknięciu
-prawym przyciskiem myszy na plik z filmem, w menu pojawiła się opcja "Pobierz
-napisy do filmu z QNapi", wykonaj poniższe instrukcje, adekwatne do uzywanego
-przez Ciebie programu.
+If you want to integrate QNapi with your window manager, follow instruction
+presented below for your WM.
 
 KDE (Dolphin/Konqueror)
 -----------------------
-UWAGA: od wersji 0.1.4 QNapi powinien automatycznie integrowac sie z programami Dolphin
-oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie dzialac, mozesz
-skorzystac z drugiego sposobu:
+WARNING: Since version 0.1.4 QNapi should automatically integrate with Dolphin
+and Konqueror. However it does not integrate, to the following:
 
-Będzie potrzebny plik qnapi-download.dekstop, który możesz znaleźć w katalogu
-/usr/share/doc/qnapi lub na stronie domowej programu (http://krzemin.iglu.cz/qnapi).
+You'll need qnapi-download.dekstop, which you can get from /usr/share/doc/qnapi
+or from http://krzemin.iglu.cz/qnapi
 
-Należy skopiować ów plik do katalogów:
- *  ~/.kde/share/apps/konqueror/servicemenus/
- *  ~/.kde/share/apps/d3lphin/servicemenus/
- *  ~/.kde/share/apps/dolphin/servicemenus/
+Copy it to the following directories:
+ * ~/.kde/share/apps/konqueror/servicemenus/
+ * ~/.kde/share/apps/d3lphin/servicemenus/
+ * ~/.kde/share/apps/dolphin/servicemenus/
 
-Lub globalnie (wymaga uprawnień administratora):
- *  /usr/share/apps/konqueror/servicemenus/
- *  /usr/share/apps/d3lphin/servicemenus/
- *  /usr/share/apps/dolphin/servicemenus/
+Or globally (needs superuser priviledges):
+ * /usr/share/apps/konqueror/servicemenus/
+ * /usr/share/apps/d3lphin/servicemenus/
+ * /usr/share/apps/dolphin/servicemenus/
+
 
 Nautilus
 --------
-Aby zintegrować QNapi z Nautilusem, potrzebny bedzie zainstalowany pakiet
-nautilus-actions oraz plik qnapi-download.schemas, który znajdziesz w katalogu
-/usr/share/doc/qnapi lub na stronie domowej programu (http://krzemin.iglu.cz/qnapi).
 
-Wystarczy skopiować plik qnapi-download.schemas do katalogu /usr/share/gconf/schemas/
-i wykonać polecenie:
+To integrate QNapi with Nautilus, you need to install nautilus-actions package
+and qnapi-download.schemas file, which can be found in /usr/share/doc/qnapi or
+on QNapi's home page (http://krzemin.iglu.cz/qnapi).
+You only need to copy it to /usr/share/gconf/schemas/ and execute following
+command:
 
 $ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-download.schemas
 
-Jeśli to by nie zadziałało, można spróbować zaimportować plik qnapi-download.schemas
-narzędziem nautilus-actions-config.
+If this does not help, you can also try to import file qnapi-download.schemas
+using nautilus-actions-config tool.
 
 Thunar
 ------
-Integracja z Thunarem wymaga uruchomienia programu i wybrania opcji
-Edycja -> Konfiguruj akcje...
 
-Na zakładce "Podstawowe" należy ustawić:
+Integration with Tunar requires to run the program choose
+"Edit" -> "Configure custom actions". In the dialog box press a "plus"
+button. New "Create Action" dialog will appear. In this dialog on "Basic"
+tab set:
+Name: "Fetch subtitles with QNapi"
+Description: (whatever)
+Command: qnapi %F
 
-Nazwa: "Pobierz napisy do filmu z QNapi"
-Opis: (dowolny)
-Polecenie: qnapi %F
-
-Można wybrać ikonę z pliku graficznego (np. /usr/share/icons/qnapi-48.png).
-Na zakładce "Warunki pokazywania" należy zaznaczyć tylko "Filmy wideo".
-Potem OK i gotowe.
+You can choose icon from a file (e. g. /usr/share/icons/qnapi-48.png).
+On the "Appearance Conditions" tab you only have to check "Video Files".
+Then clink OK and it's done.
 
 
-Raportowanie błędów
-====================
-Wszelkie znalezione błędy można raportować za pomocą bugtrackera na sourceforge.net:
+Bugs Reporting
+===============
+Any bugs found may be reported using sourceforge bugtracker:
 http://sourceforge.net/tracker/?group_id=218384&atid=1043757
 
-Kontakt
+Contact
 =======
 
-Jeśli chcesz przygotować pakiet dla swojej dystrybucji bądź masz inne
-uwagi/propozycje - napisz do mnie na pkrzemin@o2.pl
+If you want to send a package for your distro, or have any suggestions or
+notices, write me at pkrzemin@o2.pl

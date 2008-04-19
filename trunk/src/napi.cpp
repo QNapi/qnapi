@@ -266,10 +266,10 @@ napiUploadResult napiUploadSubtitles(const QString & movie_file, const QString &
 		return NAPI_FAIL;
 
 	postData.addData(fZip.readAll());
+	postData.addEndingBoundary();
+
 	fZip.close();
 	QFile::remove(zipFileName);
-
-	postData.addEndingBoundary();
 
 	QByteArray data = postData.requestStream();
 

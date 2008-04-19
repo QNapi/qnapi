@@ -67,7 +67,7 @@ QByteArray & MultipartData::requestStream()
 			case requestElement::ET_BOUNDARY:
 				buffer += QString("--") + boundary + endl;
 			break;
-			
+
 			case requestElement::ET_ENDING_BOUNDARY:
 				buffer += endl + QString("--") + boundary + QString("--") + endl;
 			break;

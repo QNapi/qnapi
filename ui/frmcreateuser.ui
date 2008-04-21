@@ -99,6 +99,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>leLogin</tabstop>
+  <tabstop>lePass</tabstop>
+  <tabstop>leRepeatPass</tabstop>
+  <tabstop>leMail</tabstop>
+  <tabstop>pbCreate</tabstop>
+  <tabstop>pbCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
  </resources>

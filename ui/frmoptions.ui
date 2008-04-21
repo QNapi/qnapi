@@ -360,6 +360,25 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le7zPath</tabstop>
+  <tabstop>pb7zPathSelect</tabstop>
+  <tabstop>leTmpPath</tabstop>
+  <tabstop>pbTmpPathSelect</tabstop>
+  <tabstop>leNick</tabstop>
+  <tabstop>lePass</tabstop>
+  <tabstop>pbRegister</tabstop>
+  <tabstop>cbLang</tabstop>
+  <tabstop>cbNoBackup</tabstop>
+  <tabstop>cbChangeEncoding</tabstop>
+  <tabstop>cbAutoDetectEncoding</tabstop>
+  <tabstop>cbEncFrom</tabstop>
+  <tabstop>cbEncTo</tabstop>
+  <tabstop>cbShowAllEncodings</tabstop>
+  <tabstop>cbUseBrushedMetal</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbSave</tabstop>
+ </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
  </resources>

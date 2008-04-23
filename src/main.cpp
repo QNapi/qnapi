@@ -19,7 +19,6 @@
 #include <QTextCodec>
 #include "frmprogress.h"
 #include "version.h"
-#include "napi.h"
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
 

@@ -5,7 +5,6 @@ CONFIG += warn_on \
  release
 TEMPLATE = app
 SOURCES += src/main.cpp \
- src/napi.cpp \
  src/frmprogress.cpp \
  src/frmabout.cpp \
  src/frmoptions.cpp \
@@ -22,9 +21,10 @@ SOURCES += src/main.cpp \
  src/multipartdata.cpp \
  src/qcumber/qmanagedrequest.cpp \
  src/qcumber/qmanagedsocket.cpp \
- src/qcumber/qsingleapplication.cpp
-HEADERS += src/napi.h \
- src/frmprogress.h \
+ src/qcumber/qsingleapplication.cpp \
+ src/qnapiabstractengine.cpp \
+ src/qnapiprojektengine.cpp
+HEADERS +=  src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
  src/frmupload.h \
@@ -44,7 +44,9 @@ HEADERS += src/napi.h \
  src/qcumber/qmanagedrequest.h \
  src/qcumber/qmanagedsocket.h \
  src/qcumber/qsingleapplication.h \
- src/qcumber/qcumber.h
+ src/qcumber/qcumber.h \
+ src/qnapiabstractengine.h \
+ src/qnapiprojektengine.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -60,7 +62,6 @@ UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
-
 macx {
  QMAKE_MAC_SDK =  /Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc
@@ -71,41 +72,41 @@ macx {
 #7ZIP_BINARY.path = Contents/Resources
 #QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
-
 unix {
-# install stuff
-INSTALL_PREFIX = /usr
-
-target.path = $${INSTALL_PREFIX}/bin
-
-doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
-doc.files = doc/ChangeLog doc/changelog.gz doc/README doc/LICENSE doc/COPYRIGHT doc/qnapi-download.desktop doc/qnapi-download.schemas
-
-man.path = $${INSTALL_PREFIX}/share/man/man1
-man.files = doc/$${TARGET}.1.gz
-
-icons.path = /usr/share/icons
-icons.files = res/qnapi.png res/qnapi-48.png res/qnapi-128.png res/qnapi-512.png
-
-desktop.path = /usr/share/applications
-desktop.files = doc/$${TARGET}.desktop
-
-dolphin_integration.path = /usr/share/apps/dolphin/servicemenus
-dolphin_integration.files = doc/$${TARGET}-download.desktop
-
-d3lphin_integration.path = /usr/share/apps/d3lphin/servicemenus
-d3lphin_integration.files = doc/$${TARGET}-download.desktop
-
-konqueror_integration.path = /usr/share/apps/konqueror/servicemenus
-konqueror_integration.files = doc/$${TARGET}-download.desktop
-
-kde4_integration.path = /usr/lib/kde4/share/kde4/services/ServiceMenus
-kde4_integration.files = doc/$${TARGET}-download.desktop
-
-INSTALLS = target doc man icons desktop dolphin_integration \
-			d3lphin_integration konqueror_integration kde4_integration
+ INSTALL_PREFIX =  /usr
+ target.path =  $${INSTALL_PREFIX}/bin
+ doc.path =  $${INSTALL_PREFIX}/share/doc/$${TARGET}
+ doc.files =  doc/ChangeLog \
+  doc/changelog.gz \
+  doc/README \
+  doc/LICENSE \
+  doc/COPYRIGHT \
+  doc/qnapi-download.desktop \
+  doc/qnapi-download.schemas
+ man.path =  $${INSTALL_PREFIX}/share/man/man1
+ man.files =  doc/$${TARGET}.1.gz
+ icons.path =  /usr/share/icons
+ icons.files =  res/qnapi.png  res/qnapi-48.png  res/qnapi-128.png  res/qnapi-512.png
+ desktop.path =  /usr/share/applications
+ desktop.files =  doc/$${TARGET}.desktop
+ dolphin_integration.path =  /usr/share/apps/dolphin/servicemenus
+ dolphin_integration.files =  doc/$${TARGET}-download.desktop
+ d3lphin_integration.path =  /usr/share/apps/d3lphin/servicemenus
+ d3lphin_integration.files =  doc/$${TARGET}-download.desktop
+ konqueror_integration.path =  /usr/share/apps/konqueror/servicemenus
+ konqueror_integration.files =  doc/$${TARGET}-download.desktop
+ kde4_integration.path =  /usr/lib/kde4/share/kde4/services/ServiceMenus
+ kde4_integration.files =  doc/$${TARGET}-download.desktop
+ INSTALLS =  target \
+  doc \
+  man \
+  icons \
+  desktop \
+  dolphin_integration \
+  d3lphin_integration \
+  konqueror_integration \
+  kde4_integration
 }
-
 win32 {
  RC_FILE =  win32/qnapi.rc
  SOURCES +=  src/qcumber/qinterprocesschannel_win32.cpp

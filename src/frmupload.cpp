@@ -292,32 +292,34 @@ void UploadThread::run()
 
 	emit checkingUserPass();
 
-	if(!napiCheckUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
 		emit uploadFinished(true);
 		return;
 	}
-	
+
 	int size = movieList.size();
-	
+	QNapiProjektEngine *napi;
+
 	for(int i = 0; i < size; i++)
 	{
 		QFileInfo fi(movieList[i]);
-		
+		napi = new QNapiProjektEngine(movieList[i], fi.path() + "/" + fi.completeBaseName() + ".txt");
+		if(!napi) continue;
+
 		emit fileNameChange(fi.fileName());
 		emit progressChange(i * 100 / size);
 		
-		switch( napiUploadSubtitles(movieList[i], fi.path() + "/" + fi.completeBaseName() + ".txt",
-									GlobalConfig().language(), GlobalConfig().nick(),
-									GlobalConfig().pass(), false, "", GlobalConfig().tmpPath(),
-									GlobalConfig().p7zipPath()) )
+		switch( napi->uploadSubtitles(GlobalConfig().language(), GlobalConfig().nick(),
+										GlobalConfig().pass(), false ) )
 		{
-			case NAPI_ADDED_NEW: ++added_new; break;
-			case NAPI_FAIL: ++failed; break;
+			case QNapiProjektEngine::NAPI_ADDED_NEW: ++added_new; break;
+			case QNapiProjektEngine::NAPI_FAIL: ++failed; break;
 			default: ++added_ok; break;
 		}
-		
+
+		delete napi;
 		if(abort) break;
 	}
 	

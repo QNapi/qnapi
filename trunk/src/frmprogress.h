@@ -36,9 +36,10 @@
 #include "frmcreateuser.h"
 #include "frmsummary.h"
 
-#include "napi.h"
+//#include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 class GetThread : public NapiThread
 {

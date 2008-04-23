@@ -141,7 +141,7 @@ void frmProgress::enqueueFiles(const QStringList & fileList)
 
 bool frmProgress::download()
 {
-	if(!napiCheck7Zip())
+	if(!QNapiAbstractEngine::checkP7ZipPath())
 	{
 		if(!quietMode)
 			QMessageBox::warning(0, tr("Brak programu p7zip!"),
@@ -151,7 +151,7 @@ bool frmProgress::download()
 		return false;
 	}
 
-	if(!napiCheckTmpPath())
+	if(!QNapiAbstractEngine::checkTmpPath())
 	{
 		if(!quietMode)
 			QMessageBox::warning(0, tr("Nieprawidłowy katalog tymczasowy!"),
@@ -555,12 +555,15 @@ void GetThread::run()
 	napiSuccess = napiFail = 0;
 	gotList.clear();
 
-	QString tmpZip =  GlobalConfig().tmpPath() + "/QNapi.napisy.7z";
+	QNapiProjektEngine *napi;
 
 	emit progressChange(0, queue.size(), 0.0f);
 
 	for(int i = 0; i < queue.size(); i++)
 	{
+		napi = new QNapiProjektEngine(queue[i]);
+		if(!napi) continue;
+
 		if(verboseMode)
 		{
 			qDebug(" * %s '%s'", qPrintable(tr("Pobieranie napisów dla pliku")),
@@ -574,41 +577,66 @@ void GetThread::run()
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("obliczanie sumy kontrolnej")));
 
-		md5 = napiFileMd5Sum(queue[i], NAPI_10MB);
-		if(abort) return;
+		napi->checksum();
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
 
 		emit progressChange(i, queue.size(), 0.5f);
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
 		// pobieranie
-		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
-							GlobalConfig().nick(), GlobalConfig().pass()))
+//		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
+//							GlobalConfig().nick(), GlobalConfig().pass()))
+		if(!napi->tryDownload())
 		{
 			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie znaleziono napisów")));
 
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
+
 			++napiFail;
 			continue;
 		}
 
-		if(abort) return;
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
+
 
 		emit progressChange(i, queue.size(), 0.7f);
 		emit actionChange(tr("Dopasowywanie napisów..."));
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
 		// dopasowywanie
-		if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
-								GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
+		//if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
+		//						GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
+		if(!napi->tryMatch())
 		{
 			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie dało się dopasować napisów")));
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
+
 			++napiFail;
 			continue;
 		}
 
-		if(abort) return;
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
 
 		++napiSuccess;
 		gotList << queue[i];
@@ -622,20 +650,22 @@ void GetThread::run()
 			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
 			// zrodlowego uzywa kodowania wybranego przez uzytkownika
 			if (!GlobalConfig().autoDetectEncoding()
-				|| !napiConvertFile(QFileInfo(queue[i]).path() + "/" +
-								QFileInfo(queue[i]).completeBaseName() + ".txt",
-								GlobalConfig().encodingTo())
-				)
+				|| !napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingTo()))
 			{
-				napiConvertFile(QFileInfo(queue[i]).path() + "/" +
-								QFileInfo(queue[i]).completeBaseName() + ".txt",
-								GlobalConfig().encodingFrom(), GlobalConfig().encodingTo());
+				napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingFrom(),
+																GlobalConfig().encodingTo());
 			}
 
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
 		}
 
 		emit progressChange(i, queue.size(), 1);
+
+		delete napi;
 	}
 
 	emit progressChange(queue.size() - 1, queue.size(), 1);

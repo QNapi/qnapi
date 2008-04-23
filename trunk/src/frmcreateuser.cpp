@@ -171,7 +171,7 @@ void CreateUserThread::run()
 {
 	QString *response = new QString();
 	bool r;
-	if((r = napiCreateUser(nick, pass, mail, response)))
+	if((r = QNapiProjektEngine::createUser(nick, pass, mail, response)))
 		emit serverMessage(*response);
 
 	delete response;

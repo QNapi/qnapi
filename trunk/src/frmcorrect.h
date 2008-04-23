@@ -25,9 +25,10 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-#include "napi.h"
+//#include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 class PostThread : public NapiThread
 {
@@ -43,7 +44,7 @@ class PostThread : public NapiThread
 			language = lang;
 		}
 
-		napiUploadResult taskResult;
+		QNapiProjektEngine::UploadResult taskResult;
 
 	signals:
 		void postFinished();

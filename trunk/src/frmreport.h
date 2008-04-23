@@ -25,9 +25,10 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-#include "napi.h"
+//#include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 class ReportThread : public NapiThread
 {
@@ -42,7 +43,7 @@ Q_OBJECT
 			comment = comment_txt;
 		}
 
-		napiReportResult taskResult;
+		QNapiProjektEngine::ReportResult taskResult;
 
 	signals:
 		void reportFinished();

@@ -23,9 +23,10 @@
 #include <QCloseEvent>
 #include <QVariant>
 
+//#include "napi.h"
 #include "napithread.h"
-#include "napi.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 #include "frmsummary.h"
 

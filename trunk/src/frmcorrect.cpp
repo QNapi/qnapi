@@ -144,7 +144,7 @@ void frmCorrect::postFinished(bool interrupted)
 	{
 		switch(postThread.taskResult)
 		{
-			case NAPI_FAIL: ui.lbAction->setText(tr("Błąd podczas wysyłania poprawki.")); break;
+			case QNapiProjektEngine::NAPI_FAIL: ui.lbAction->setText(tr("Błąd podczas wysyłania poprawki.")); break;
 			default: ui.lbAction->setText(tr("Poprawka wysłana."));
 		}
 	}
@@ -157,16 +157,21 @@ void frmCorrect::invalidUserPass()
 
 void PostThread::run()
 {
-	if(!napiCheckUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
 		emit postFinished();
 		return;
 	}
 
-	taskResult = napiUploadSubtitles(movie, subtitles, language, GlobalConfig().nick(),
-										GlobalConfig().pass(), true, comment,
-										GlobalConfig().tmpPath(), GlobalConfig().p7zipPath());
+	QNapiProjektEngine *napi;
+
+	if((napi = new QNapiProjektEngine(movie, subtitles)))
+	{
+		taskResult = napi->uploadSubtitles(language, GlobalConfig().nick(),
+											GlobalConfig().pass(), true, comment);
+		delete napi;
+	}
 
 	emit postFinished();
 }

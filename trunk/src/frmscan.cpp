@@ -377,43 +377,66 @@ void GetFilesThread::run()
 	QString windowTitle, md5;
 	napiSuccess = napiFail = 0;
 
-	QString tmpZip =  GlobalConfig().tmpPath() + "/QNapi.napisy.7z";
+	QNapiProjektEngine *napi;
 
 	emit progressChange(0);
 
 	for(int i = 0; i < size; i++)
 	{
+		napi = new QNapiProjektEngine(queue[i]);
+		if(!napi) continue;
+
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
-		md5 = napiFileMd5Sum(queue[i], NAPI_10MB);
-		if(abort) return;
+		napi->checksum();
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
 
 		emit progressChange((int)ceil(step * i + step / 3));
 
 		// pobieranie
-		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
-							GlobalConfig().nick(), GlobalConfig().pass()))
+//		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
+//							GlobalConfig().nick(), GlobalConfig().pass()))
+		if(!napi->tryDownload())
 		{
 			if(abort) return;
 			++napiFail;
 			continue;
 		}
 
-		if(abort) return;
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
 
 		emit progressChange((int)ceil(step * i + 2 * step / 3));
 
 		// dopasowywanie
-		if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
-								GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
+//		if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
+//								GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
+		if(!napi->tryMatch())
 		{
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
+
 			++napiFail;
 			continue;
 		}
 
-		if(abort) return;
+		if(abort)
+		{
+			delete napi;
+			return;
+		}
+
 
 		++napiSuccess;
 		gotList << queue[i];
@@ -425,20 +448,21 @@ void GetFilesThread::run()
 			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
 			// zrodlowego uzywa kodowania wybranego przez uzytkownika
 			if (!GlobalConfig().autoDetectEncoding()
-				|| !napiConvertFile(QFileInfo(queue[i]).path() + "/" +
-								QFileInfo(queue[i]).completeBaseName() + ".txt",
-								GlobalConfig().encodingTo())
-				)
+				|| !napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingTo()))
 			{
-				napiConvertFile(QFileInfo(queue[i]).path() + "/" +
-								QFileInfo(queue[i]).completeBaseName() + ".txt",
-								GlobalConfig().encodingFrom(), GlobalConfig().encodingTo());
+				napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingFrom(),
+												GlobalConfig().encodingTo());
 			}
 
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
 		}
 
 		emit progressChange((int)ceil(step * (i + 1)));
+		delete napi;
 	}
 
 	emit progressChange(100);

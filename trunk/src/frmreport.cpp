@@ -141,10 +141,10 @@ void frmReport::reportFinished(bool interrupted)
 	{
 		switch(reportThread.taskResult)
 		{
-			case NAPI_NO_SUBTITLES:
+			case QNapiProjektEngine::NAPI_NO_SUBTITLES:
 				ui.lbAction->setText(tr("Brak napisów dla wskazanego pliku."));
 			break;
-			case NAPI_NOT_REPORTED:
+			case QNapiProjektEngine::NAPI_NOT_REPORTED:
 				ui.lbAction->setText(tr("Błąd podczas wysyłania raportu."));
 			break;
 			default: ui.lbAction->setText(tr("Raport wysłany."));
@@ -169,19 +169,27 @@ void frmReport::invalidUserPass()
 
 void ReportThread::run()
 {
-	if(!napiCheckUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
 		emit reportFinished();
 		return;
 	}
 
+	QNapiProjektEngine *napi;
+	if(!(napi = new QNapiProjektEngine(movie)))
+	{
+		emit reportFinished();
+		return;
+	}
+
 	QString *response = new QString();
-	taskResult = napiReportBad(movie, language, GlobalConfig().nick(),
+	taskResult = napi->reportBad(language, GlobalConfig().nick(),
 								GlobalConfig().pass(), comment, response);
-	if(taskResult == NAPI_REPORTED)
+	if(taskResult == QNapiProjektEngine::NAPI_REPORTED)
 		emit serverMessage(*response);
 	delete response;
+	delete napi;
 
 	emit reportFinished();
 }

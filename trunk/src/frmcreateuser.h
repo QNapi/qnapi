@@ -21,9 +21,10 @@
 #include <QDesktopWidget>
 #include <QRegExp>
 
-#include "napi.h"
+//#include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 class CreateUserThread : public NapiThread
 {
@@ -37,7 +38,7 @@ Q_OBJECT
 			mail = u_mail;
 		}
 
-		napiReportResult taskResult;
+		QNapiProjektEngine::ReportResult taskResult;
 
 	signals:
 		void creatingFinished(bool result);

@@ -24,9 +24,10 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-#include "napi.h"
+//#include "napi.h"
 #include "napithread.h"
 #include "qnapiconfig.h"
+#include "qnapiprojektengine.h"
 
 class ScanThread : public NapiThread
 {

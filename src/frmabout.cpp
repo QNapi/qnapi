@@ -45,8 +45,8 @@ const QString thanksText = tr(
 const QString supportText = tr(
 "<html><body><p>QNapi zaoszczędził Ci sporo pracy wysiłku przy szukaniu napisów do filmów? "
 "Uwaszasz, że to dobry program i powinien się dalej rozwijać? Chciałbyś/aś wesprzeć rozwój programu?</p>"
-"<p>Oprócz promowania go wśród znajomych, na forach internetowych, blogach itp. możesz również "
-"rozważyć wsparcie autora drobną sumką, przelewając ją na konto:</p>"
+"<p>Oprócz promowania go wśród znajomych, na forach internetowych, blogach itp., możesz również "
+"rozważyć wsparcie finansowe projektu, dokonując przelewu na podany niżej nr konta:</p>"
 "<p>73 1020 3974 0000 5202 0098 8774</p>"
 "<p>Będę wdzięczny nawet za najmniejsze wpłaty ;)</p>"
 );

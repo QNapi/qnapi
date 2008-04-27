@@ -161,7 +161,7 @@ void QNapiProjektEngine::cleanup()
 bool QNapiProjektEngine::createUser(const QString & nick, const QString & pass,
 									const QString & email, QString * response)
 {
-	MultipartData postData;
+	QMultipartHttpRequest postData;
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"login\"");
@@ -257,7 +257,7 @@ QNapiProjektEngine::UploadResult
 		return NAPI_FAIL;
 
 	// Przygotowujemy dane do zapytania POST
-	MultipartData postData;
+	QMultipartHttpRequest postData;
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"kmt\"");
@@ -357,7 +357,7 @@ QNapiProjektEngine::ReportResult
 	if(!QFile::exists(subtitlesPath))
 		return NAPI_NO_SUBTITLES;
 
-	MultipartData postData;
+	QMultipartHttpRequest postData;
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"nick\"");

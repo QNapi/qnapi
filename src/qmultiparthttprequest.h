@@ -12,14 +12,14 @@
 **
 *****************************************************************************/
 
-#ifndef __MULTIPARTDATA__H__
-#define __MULTIPARTDATA__H__
+#ifndef __QMULTIPARTHTTPREQUEST__H__
+#define __QMULTIPARTHTTPREQUEST__H__
 
 #include <QString>
 #include <QVector>
 #include <QTime>
 
-class MultipartData
+class QMultipartHttpRequest
 {
 	public:
 		void addBoundary();

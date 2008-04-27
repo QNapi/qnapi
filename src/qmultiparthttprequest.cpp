@@ -12,39 +12,39 @@
 **
 *****************************************************************************/
 
-#include "multipartdata.h"
+#include "qmultiparthttprequest.h"
 
-void MultipartData::addBoundary()
+void QMultipartHttpRequest::addBoundary()
 {
 	addElement(requestElement::ET_BOUNDARY);
 }
 
-void MultipartData::addEndingBoundary()
+void QMultipartHttpRequest::addEndingBoundary()
 {
 	addElement(requestElement::ET_ENDING_BOUNDARY);
 }
 
-void MultipartData::addContentDisposition(const QString & contentDisposition)
+void QMultipartHttpRequest::addContentDisposition(const QString & contentDisposition)
 {
 	addElement(requestElement::ET_CONTENT_DISPOSITION, contentDisposition.toAscii());
 }
 
-void MultipartData::addContentType(const QString & contentType)
+void QMultipartHttpRequest::addContentType(const QString & contentType)
 {
 	addElement(requestElement::ET_CONTENT_TYPE, contentType.toAscii());
 }
 
-void MultipartData::addData(const QByteArray & data)
+void QMultipartHttpRequest::addData(const QByteArray & data)
 {
 	addElement(requestElement::ET_DATA, data);
 }
 
-void MultipartData::addData(const QString & data)
+void QMultipartHttpRequest::addData(const QString & data)
 {
 	addElement(requestElement::ET_DATA, data.toAscii());
 }
 
-QByteArray & MultipartData::requestStream()
+QByteArray & QMultipartHttpRequest::requestStream()
 {
 	generateBoundary();
 
@@ -81,12 +81,12 @@ QByteArray & MultipartData::requestStream()
 	return buffer;
 }
 
-QString & MultipartData::boundaryTxt()
+QString & QMultipartHttpRequest::boundaryTxt()
 {
 	return boundary;
 }
 
-void MultipartData::generateBoundary()
+void QMultipartHttpRequest::generateBoundary()
 {
 	bool binarySafe;
 	QVector<requestElement>::iterator el;
@@ -110,7 +110,7 @@ void MultipartData::generateBoundary()
 	} while (!binarySafe);
 }
 
-void MultipartData::addElement(requestElement::elementType type, const QByteArray & data)
+void QMultipartHttpRequest::addElement(requestElement::elementType type, const QByteArray & data)
 {
 	requestElement el;
 	el.type = type;

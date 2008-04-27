@@ -602,6 +602,7 @@ void GetThread::run()
 			}
 
 			++napiFail;
+			delete napi;
 			continue;
 		}
 
@@ -629,6 +630,7 @@ void GetThread::run()
 			}
 
 			++napiFail;
+			delete napi;
 			continue;
 		}
 
@@ -641,26 +643,12 @@ void GetThread::run()
 		++napiSuccess;
 		gotList << queue[i];
 
-		if(GlobalConfig().changeEncoding())
+		if(GlobalConfig().ppEnabled())
 		{
 			emit progressChange(i, queue.size(), 0.85);
-			emit actionChange(tr("Zmiana kodowania napisów..."));
-			if(verboseMode) qDebug("   * %s...", qPrintable(tr("zmiana kodowania")));
-
-			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
-			// zrodlowego uzywa kodowania wybranego przez uzytkownika
-			if (!GlobalConfig().autoDetectEncoding()
-				|| !napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingTo()))
-			{
-				napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingFrom(),
-																GlobalConfig().encodingTo());
-			}
-
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
+			emit actionChange(tr("Post-przetwarzanie napisów..."));
+			
+			napi->doPostProcessing();
 		}
 
 		emit progressChange(i, queue.size(), 1);

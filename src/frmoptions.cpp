@@ -20,14 +20,20 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.setupUi(this);
 
 #ifdef Q_WS_MAC
-	if ( QSysInfo::MacintoshVersion == QSysInfo::MV_10_5) //bo na Leopardzie nie ma juz stylu BM
+	if ( QSysInfo::MacintoshVersion == QSysInfo::MV_10_5) // bo na Leopardzie nie ma juz stylu BM
 	{
 		ui.cbUseBrushedMetal->setText(tr("Używaj przyciemnionych okien (Mac OS X Leopard)"));
 	}
 
 	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 #else
-	ui.cbUseBrushedMetal->setVisible(false);
+	ui.cbUseBrushedMetal->hide();
+#endif
+
+#ifdef Q_WS_WIN
+	// Pod Windowsami chowamy kontrolki odpowiadajace za zmiane uprawnien - i tak sie nie przydadza
+	ui.cbChangePermissions->hide();
+	ui.lePermissions->hide();
 #endif
 
 	setAttribute(Qt::WA_QuitOnClose, false);
@@ -178,30 +184,46 @@ void frmOptions::writeConfig()
 	GlobalConfig().setPass(ui.lePass->text());
 	GlobalConfig().setLanguage((ui.cbLang->currentIndex() == 0) ? "PL" : "ENG");
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
-	GlobalConfig().setChangeEncoding(ui.cbChangeEncoding->isChecked());
-	GlobalConfig().setAutoDetectEncoding(ui.cbAutoDetectEncoding->isChecked());
-	GlobalConfig().setEncodingFrom(ui.cbEncFrom->currentText());
-	GlobalConfig().setEncodingTo(ui.cbEncTo->currentText());
-	GlobalConfig().setShowAllEncodings(ui.cbShowAllEncodings->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
+
+	GlobalConfig().setPpEnabled(ui.gbPpEnable->isChecked());
+	GlobalConfig().setPpChangeEncoding(ui.cbChangeEncoding->isChecked());
+	GlobalConfig().setPpAutoDetectEncoding(ui.cbAutoDetectEncoding->isChecked());
+	GlobalConfig().setPpEncodingFrom(ui.cbEncFrom->currentText());
+	GlobalConfig().setPpEncodingTo(ui.cbEncTo->currentText());
+	GlobalConfig().setPpShowAllEncodings(ui.cbShowAllEncodings->isChecked());
+	GlobalConfig().setPpRemoveLines(ui.cbRemoveLines->isChecked());
+	GlobalConfig().setPpRemoveWords(ui.teRemoveWords->toPlainText().split("\n"));
+	GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
+	GlobalConfig().setPpPermissions(ui.lePermissions->text());
+
 	GlobalConfig().save();
 }
 
 void frmOptions::readConfig()
 {
 	GlobalConfig().reload();
+
 	ui.le7zPath->setText(GlobalConfig().p7zipPath());
 	ui.leTmpPath->setText(GlobalConfig().tmpPath());
 	ui.leNick->setText(GlobalConfig().nick());
 	ui.lePass->setText(GlobalConfig().pass());
 	ui.cbLang->setCurrentIndex((GlobalConfig().language() == "PL") ? 0 : 1);
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
-	ui.cbChangeEncoding->setChecked(GlobalConfig().changeEncoding());
-	ui.cbAutoDetectEncoding->setChecked(GlobalConfig().autoDetectEncoding());
-	ui.cbEncFrom->setCurrentIndex(ui.cbEncFrom->findText(GlobalConfig().encodingFrom()));
-	ui.cbEncTo->setCurrentIndex(ui.cbEncTo->findText(GlobalConfig().encodingTo()));
-	ui.cbShowAllEncodings->setChecked(GlobalConfig().showAllEncodings());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
+
+	ui.cbChangeEncoding->setChecked(GlobalConfig().ppChangeEncoding());
+	ui.cbAutoDetectEncoding->setChecked(GlobalConfig().ppAutoDetectEncoding());
+	ui.cbEncFrom->setCurrentIndex(ui.cbEncFrom->findText(GlobalConfig().ppEncodingFrom()));
+	ui.cbEncTo->setCurrentIndex(ui.cbEncTo->findText(GlobalConfig().ppEncodingTo()));
+	ui.cbShowAllEncodings->setChecked(GlobalConfig().ppShowAllEncodings());
+	ui.cbRemoveLines->setChecked(GlobalConfig().ppRemoveLines());
+	ui.teRemoveWords->setText(GlobalConfig().ppRemoveWords().join("\n"));
+	ui.cbChangePermissions->setChecked(GlobalConfig().ppChangePermissions());
+	ui.lePermissions->setText(GlobalConfig().ppPermissions());
+
 	changeEncodingClicked();
 	showAllEncodingsClicked();
+
+	ui.gbPpEnable->setChecked(GlobalConfig().ppEnabled());
 }

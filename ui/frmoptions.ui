@@ -5,15 +5,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>550</width>
     <height>400</height>
    </rect>
-  </property>
-  <property name="minimumSize" >
-   <size>
-    <width>490</width>
-    <height>400</height>
-   </size>
   </property>
   <property name="windowTitle" >
    <string>QNapi - opcje programu</string>
@@ -21,260 +15,406 @@
   <property name="windowIcon" >
    <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" colspan="2" >
-    <widget class="QLabel" name="lb7zPath" >
-     <property name="text" >
-      <string>Ścieżka do programu 7z:</string>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QTabWidget" name="tabPostProcessing" >
+     <property name="currentIndex" >
+      <number>1</number>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="2" colspan="2" >
-    <widget class="QLineEdit" name="le7zPath" >
-     <property name="text" >
-      <string>/usr/bin/7z</string>
-     </property>
-     <property name="cursorPosition" >
-      <number>0</number>
-     </property>
-     <property name="readOnly" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4" >
-    <widget class="QPushButton" name="pb7zPathSelect" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text" >
-      <string>...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2" >
-    <widget class="QLabel" name="lbTmpPath" >
-     <property name="text" >
-      <string>Ścieżka do katalogu tymczasowego:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" colspan="2" >
-    <widget class="QLineEdit" name="leTmpPath" >
-     <property name="text" >
-      <string>/tmp</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4" >
-    <widget class="QPushButton" name="pbTmpPathSelect" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text" >
-      <string>...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2" >
-    <widget class="QLabel" name="lbNick" >
-     <property name="text" >
-      <string>Nazwa użytkownika:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2" >
-    <widget class="QLineEdit" name="leNick" >
-     <property name="text" >
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2" >
-    <widget class="QLabel" name="lbPass" >
-     <property name="text" >
-      <string>Hasło:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2" >
-    <widget class="QLineEdit" name="lePass" >
-     <property name="text" >
-      <string/>
-     </property>
-     <property name="echoMode" >
-      <enum>QLineEdit::Password</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2" >
-    <widget class="QLabel" name="lbLang" >
-     <property name="text" >
-      <string>Preferowany jezyk napisów:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="2" >
-    <widget class="QComboBox" name="cbLang" >
-     <item>
-      <property name="text" >
-       <string>Polski</string>
-      </property>
-     </item>
-     <item>
-      <property name="text" >
-       <string>Angielski</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbNoBackup" >
-     <property name="text" >
-      <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbChangeEncoding" >
-     <property name="text" >
-      <string>Zmień kodowanie znaków w pobranych napisach</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="5" >
-    <layout class="QHBoxLayout" >
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>30</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbConvertFrom" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>Z:</string>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbEncFrom" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text" >
-         <string>Windows-1250</string>
-        </property>
+     <widget class="QWidget" name="tabGeneral" >
+      <attribute name="title" >
+       <string>Główne</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="lb7zPath" >
+         <property name="text" >
+          <string>Ścieżka do programu 7z:</string>
+         </property>
+        </widget>
        </item>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>25</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="lbConvert" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
-        <string>Na:</string>
-       </property>
-       <property name="alignment" >
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="cbEncTo" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <item>
-        <property name="text" >
-         <string>UTF-8</string>
-        </property>
+       <item row="0" column="1" colspan="2" >
+        <widget class="QLineEdit" name="le7zPath" >
+         <property name="text" >
+          <string>/usr/bin/7z</string>
+         </property>
+         <property name="cursorPosition" >
+          <number>0</number>
+         </property>
+         <property name="readOnly" >
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>25</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+       <item row="0" column="3" >
+        <widget class="QPushButton" name="pb7zPathSelect" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="lbTmpPath" >
+         <property name="text" >
+          <string>Ścieżka do katalogu tymczasowego:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2" >
+        <widget class="QLineEdit" name="leTmpPath" >
+         <property name="text" >
+          <string>/tmp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" >
+        <widget class="QPushButton" name="pbTmpPathSelect" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="lbNick" >
+         <property name="text" >
+          <string>Nazwa użytkownika:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QLineEdit" name="leNick" >
+         <property name="text" >
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" colspan="2" >
+        <widget class="QPushButton" name="pbRegister" >
+         <property name="text" >
+          <string>Załóż konto</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QLabel" name="lbPass" >
+         <property name="text" >
+          <string>Hasło:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="QLineEdit" name="lePass" >
+         <property name="text" >
+          <string/>
+         </property>
+         <property name="echoMode" >
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QLabel" name="lbLang" >
+         <property name="text" >
+          <string>Preferowany jezyk napisów:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="QComboBox" name="cbLang" >
+         <item>
+          <property name="text" >
+           <string>Polski</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Angielski</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="4" >
+        <widget class="QCheckBox" name="cbNoBackup" >
+         <property name="text" >
+          <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="4" >
+        <widget class="QCheckBox" name="cbUseBrushedMetal" >
+         <property name="text" >
+          <string>Używaj stylu BrushedMetal (Mac OS X)</string>
+         </property>
+         <property name="checked" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Post-przetwarzanie</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QGroupBox" name="gbPpEnable" >
+         <property name="title" >
+          <string>Włącz post-przetwarzanie pobranych napisów</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>true</bool>
+         </property>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QCheckBox" name="cbChangeEncoding" >
+            <property name="text" >
+             <string>Zmień kodowanie znaków w pobranych napisach</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbAutoDetectEncoding" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="text" >
+             <string>Próbuj automatycznie wykrywać kodowanie źródłowe</string>
+            </property>
+            <property name="checked" >
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType" >
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>30</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lbConvertFrom" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Z:</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbEncFrom" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text" >
+                <string>Windows-1250</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType" >
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="lbConvert" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text" >
+               <string>Na:</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbEncTo" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text" >
+                <string>UTF-8</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType" >
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbShowAllEncodings" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="text" >
+             <string>Pokaż wszystkie dostępne kodowania znaków</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbRemoveLines" >
+            <property name="text" >
+             <string>Usuń z pliku z napisami linie, które zawierają następujące słowa:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="teRemoveWords" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="html" >
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">movie info&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;">synchro&lt;/p>&lt;/body>&lt;/html></string>
+            </property>
+            <property name="acceptRichText" >
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="topMargin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="cbChangePermissions" >
+              <property name="text" >
+               <string>Zmień uprawnienia do pliku z napisami na: </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lePermissions" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="inputMask" >
+               <string>0999; </string>
+              </property>
+              <property name="text" >
+               <string>0644</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>130</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
-   <item row="12" column="0" colspan="5" >
+   <item>
     <layout class="QHBoxLayout" >
      <item>
       <spacer>
@@ -305,80 +445,8 @@
      </item>
     </layout>
    </item>
-   <item row="11" column="0" colspan="5" >
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>20</width>
-       <height>30</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="9" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbShowAllEncodings" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-     <property name="text" >
-      <string>Pokaż wszystkie dostępne kodowania znaków</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbUseBrushedMetal" >
-     <property name="text" >
-      <string>Używaj stylu BrushedMetal (Mac OS X)</string>
-     </property>
-     <property name="checked" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3" colspan="2" >
-    <widget class="QPushButton" name="pbRegister" >
-     <property name="text" >
-      <string>Załóż konto</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="5" >
-    <widget class="QCheckBox" name="cbAutoDetectEncoding" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-     <property name="text" >
-      <string>Próbuj automatycznie wykrywać kodowanie źródłowe</string>
-     </property>
-     <property name="checked" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>le7zPath</tabstop>
-  <tabstop>pb7zPathSelect</tabstop>
-  <tabstop>leTmpPath</tabstop>
-  <tabstop>pbTmpPathSelect</tabstop>
-  <tabstop>leNick</tabstop>
-  <tabstop>lePass</tabstop>
-  <tabstop>pbRegister</tabstop>
-  <tabstop>cbLang</tabstop>
-  <tabstop>cbNoBackup</tabstop>
-  <tabstop>cbChangeEncoding</tabstop>
-  <tabstop>cbAutoDetectEncoding</tabstop>
-  <tabstop>cbEncFrom</tabstop>
-  <tabstop>cbEncTo</tabstop>
-  <tabstop>cbShowAllEncodings</tabstop>
-  <tabstop>cbUseBrushedMetal</tabstop>
-  <tabstop>pbCancel</tabstop>
-  <tabstop>pbSave</tabstop>
- </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
  </resources>
@@ -390,12 +458,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>442</x>
-     <y>327</y>
+     <x>544</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>244</x>
-     <y>173</y>
+     <x>327</x>
+     <y>211</y>
     </hint>
    </hints>
   </connection>
@@ -406,12 +474,44 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>355</x>
-     <y>327</y>
+     <x>455</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>244</x>
-     <y>173</y>
+     <x>327</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbRemoveLines</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>teRemoveWords</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>128</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>129</x>
+     <y>251</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbChangePermissions</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lePermissions</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>284</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>358</x>
+     <y>327</y>
     </hint>
    </hints>
   </connection>

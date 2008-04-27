@@ -146,6 +146,8 @@ bool QNapiProjektEngine::tryMatch()
 	r = QFile::copy(subtitleFile, newName);
 	#endif
 
+	subtitlesPath = newName;
+
 	QFile::remove(subtitleFile);
 	QFile::remove(tmpFile);
 

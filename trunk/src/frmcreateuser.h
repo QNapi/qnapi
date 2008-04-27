@@ -22,11 +22,11 @@
 #include <QRegExp>
 
 //#include "napi.h"
-#include "napithread.h"
+#include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
 
-class CreateUserThread : public NapiThread
+class CreateUserThread : public QNapiThread
 {
 Q_OBJECT
 	public:

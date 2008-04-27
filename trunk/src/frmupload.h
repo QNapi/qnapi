@@ -25,11 +25,11 @@
 #include <QDesktopWidget>
 
 //#include "napi.h"
-#include "napithread.h"
+#include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
 
-class ScanThread : public NapiThread
+class ScanThread : public QNapiThread
 {
 	Q_OBJECT
 	public:
@@ -49,7 +49,7 @@ class ScanThread : public NapiThread
 		QStringList searchFilters;
 };
 
-class UploadThread : public NapiThread
+class UploadThread : public QNapiThread
 {
 	Q_OBJECT
 	public:

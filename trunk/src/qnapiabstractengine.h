@@ -50,9 +50,16 @@ public:
 
 	static bool checkP7ZipPath();
 	static bool checkTmpPath();
+	static bool ppEnabled();
+
+	void doPostProcessing();
+
+	QString ppDetectEncoding(const QString & fileName, int testBufferSize = 10240);
 	bool ppChangeSubtitlesEncoding(const QString & from, const QString & to);
 	bool ppChangeSubtitlesEncoding(const QString & to);
+	bool ppRemoveLinesContainingWords(const QStringList & wordList);
 	bool ppChangeSubtitlesPermissions(QFile::Permissions permissions);
+	
 };
 
 #endif

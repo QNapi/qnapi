@@ -14,6 +14,8 @@
 
 #include "qnapiabstractengine.h"
 
+#include <QFlags>
+
 // Sprawdza poprawnosc sciezki do 7zipa (z konfiguracji)
 bool QNapiAbstractEngine::checkP7ZipPath()
 {
@@ -51,12 +53,32 @@ void QNapiAbstractEngine::doPostProcessing()
 
 #ifndef Q_WS_WI
 	// Zmiana uprawnien do pliku
-	QString txtPerm = GlobalConfig().ppPermissions();
-	bool validPermissions;
-	int intPerm = txtPerm.toInt(&validPermissions, 8);
-	if(validPermissions)
+	if(GlobalConfig().ppChangePermissions())
 	{
-		ppChangeSubtitlesPermissions(QFlag(intPerm));
+		QString txtPerm = GlobalConfig().ppPermissions();
+		bool validPermissions;
+		int intPerm = txtPerm.toInt(&validPermissions);
+		if(validPermissions)
+		{
+			int octPerm = QString(QString::number(intPerm, 8)).toInt();
+		
+			/// TODO: opracowac poprawny sposob konwersji uprawnien
+		
+			qDebug("txtPerm = %s", qPrintable(txtPerm));
+			qDebug("intPerm = %d", intPerm);
+			qDebug("octPerm = %d", octPerm);
+			
+			QFile::Permissions fl;
+			fl |= QFile::ReadOther;
+			fl |= QFile::ReadGroup;
+			fl |= QFile::ReadUser;
+			fl |= QFile::ExeUser;
+			
+			qDebug("fl = %d", (int)fl);
+			
+			
+			ppChangeSubtitlesPermissions(QFile::Permissions(octPerm));
+		}
 	}
 #endif
 
@@ -133,6 +155,9 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const 
 // kodowania zrodlowego
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 {
+	if(!QFileInfo(subtitlesPath).exists())
+		return false;
+
 	QString from = ppDetectEncoding(subtitlesPath);
 
 	if(from.isEmpty())
@@ -141,10 +166,12 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 	return ppChangeSubtitlesEncoding(from, to);
 }
 
-
 // Usuwanie linii zawierajacych podane slowa z pliku z napisami
 bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordList)
 {
+	if(!QFileInfo(subtitlesPath).exists())
+		return false;
+
 	QString fromCodec = ppDetectEncoding(subtitlesPath);
 
 	if(fromCodec.isEmpty())
@@ -154,16 +181,25 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordL
 	if(!f.open(QIODevice::ReadOnly))
 		return false;
 
-	QTextStream in(&f), out;
-	in.setCodec(qPrintable(fromCodec));
-	QString line;
+	QList<QByteArray> lines = f.readAll().split('\n');
+	QList<QByteArray> out;
 
-	while(!((line = in.readLine()).isNull()))
+	foreach(QByteArray line, lines)
 	{
+		int i;
+		while((i = line.indexOf('\r')) >= 0)
+			line.remove(i, 1);
+
+		QTextStream ts(line);
+		ts.setCodec(qPrintable(fromCodec));
+		QString encLine = ts.readAll();
+
+		if(encLine.isEmpty()) continue;
+
 		bool found = false;
 		foreach(QString word, wordList)
 		{
-			if(line.indexOf(word, Qt::CaseInsensitive) >= 0)
+			if(encLine.contains(word, Qt::CaseInsensitive))
 			{
 				found = true;
 				break;
@@ -172,12 +208,20 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordL
 
 		if(found) continue;
 
-		out << line << "\r\n";
+		out << line;
 	}
 
 	f.close();
 
-	// TODO!!!
+	if(!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		return false;
+
+	foreach(QByteArray line, out)
+	{
+		f.write(line);
+		f.write("\r\n", 2);
+	}
+	f.close();
 
 	return true;
 }
@@ -185,5 +229,8 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordL
 // Zmienia uprawnienia do pliku z napisami
 bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permissions)
 {
+	if(!QFileInfo(subtitlesPath).exists())
+		return false;
+
 	return QFile::setPermissions(subtitlesPath, permissions);
 }

@@ -24,13 +24,13 @@
 #include <QVariant>
 
 //#include "napi.h"
-#include "napithread.h"
+#include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
 
 #include "frmsummary.h"
 
-class ScanFilesThread : public NapiThread
+class ScanFilesThread : public QNapiThread
 {
 	Q_OBJECT
 	public:
@@ -54,7 +54,7 @@ class ScanFilesThread : public NapiThread
 		bool skipIfSubtitlesExists;
 };
 
-class GetFilesThread : public NapiThread
+class GetFilesThread : public QNapiThread
 {
 	Q_OBJECT
 	signals:

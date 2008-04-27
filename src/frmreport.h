@@ -26,11 +26,11 @@
 #include <QDesktopWidget>
 
 //#include "napi.h"
-#include "napithread.h"
+#include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
 
-class ReportThread : public NapiThread
+class ReportThread : public QNapiThread
 {
 Q_OBJECT
 	public:

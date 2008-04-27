@@ -35,11 +35,11 @@ HEADERS +=  src/frmprogress.h \
  src/frmsummary.h \
  src/version.h \
  src/qnapiconfig.h \
+ src/qnapithread.h \
  src/qnapiapp.h \
  src/qdraglistwidget.h \
  src/movieinfo.h \
  src/qmultiparthttprequest.h \
- src/napithread.h \
  src/synchttp.h \
  src/qcumber/qmanagedrequest.h \
  src/qcumber/qmanagedsocket.h \

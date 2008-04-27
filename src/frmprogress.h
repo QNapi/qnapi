@@ -37,11 +37,11 @@
 #include "frmsummary.h"
 
 //#include "napi.h"
-#include "napithread.h"
+#include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
 
-class GetThread : public NapiThread
+class GetThread : public QNapiThread
 {
 	Q_OBJECT
 

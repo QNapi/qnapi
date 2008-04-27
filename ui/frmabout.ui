@@ -96,6 +96,20 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="tabSupport" >
+        <attribute name="title" >
+         <string>Wsparcie</string>
+        </attribute>
+        <layout class="QVBoxLayout" >
+         <item>
+          <widget class="QTextBrowser" name="tbSupport" >
+           <property name="openExternalLinks" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
        <widget class="QWidget" name="tabLicense" >
         <attribute name="title" >
          <string>Licencja</string>

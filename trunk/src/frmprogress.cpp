@@ -589,8 +589,6 @@ void GetThread::run()
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
 		// pobieranie
-//		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
-//							GlobalConfig().nick(), GlobalConfig().pass()))
 		if(!napi->tryDownload())
 		{
 			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie znaleziono napisów")));
@@ -618,8 +616,6 @@ void GetThread::run()
 		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
 		// dopasowywanie
-		//if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
-		//						GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
 		if(!napi->tryMatch())
 		{
 			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie dało się dopasować napisów")));

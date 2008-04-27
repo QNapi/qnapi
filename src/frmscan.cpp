@@ -401,8 +401,13 @@ void GetFilesThread::run()
 		// pobieranie
 		if(!napi->tryDownload())
 		{
-			if(abort) return;
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
 			++napiFail;
+			delete napi;
 			continue;
 		}
 
@@ -424,6 +429,7 @@ void GetFilesThread::run()
 			}
 
 			++napiFail;
+			delete napi;
 			continue;
 		}
 

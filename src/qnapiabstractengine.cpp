@@ -27,6 +27,82 @@ bool QNapiAbstractEngine::checkTmpPath()
 	return f.isDir() && f.isWritable();
 }
 
+// Dokonuje post-przetwarzania pliku z napisami (na podstawie konfiguracji)
+void QNapiAbstractEngine::doPostProcessing()
+{
+	// Usuwanie linii z plikow z napisami
+	if(GlobalConfig().ppRemoveLines())
+	{
+		ppRemoveLinesContainingWords(GlobalConfig().ppRemoveWords());
+	}
+
+	// Zmiana kodowania pobranych napisow
+	if(GlobalConfig().ppChangeEncoding())
+	{
+		// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
+		// zrodlowego uzywa kodowania wybranego przez uzytkownika
+		if (!GlobalConfig().ppAutoDetectEncoding()
+			|| !ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingTo()))
+		{
+			ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingFrom(),
+										GlobalConfig().ppEncodingTo());
+		}
+	}
+
+#ifndef Q_WS_WI
+	// Zmiana uprawnien do pliku
+	QString txtPerm = GlobalConfig().ppPermissions();
+	bool validPermissions;
+	int intPerm = txtPerm.toInt(&validPermissions, 8);
+	if(validPermissions)
+	{
+		ppChangeSubtitlesPermissions(QFlag(intPerm));
+	}
+#endif
+
+}
+
+QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int testBufferSize)
+{
+	QString from;
+	QStringList codecs;
+
+	// Tylko takie kodowania obsługuja polskie litery
+	codecs << "windows-1250" << "windows-1257" << "ISO-8859-2"
+			<< "ISO-8859-13" << "ISO-8859-16" << "UTF-8";
+
+	QFile f(fileName);
+	if(!f.open(QIODevice::ReadOnly))
+		return "";
+
+	QByteArray testData = (testBufferSize > 0) ? f.read(testBufferSize) : f.readAll();
+
+	f.close();
+
+	foreach(QString codec, codecs)
+	{
+		QTextStream ts(testData);
+		ts.setCodec(qPrintable(codec));
+		QString encodedData = ts.readAll();
+		QStringList chars = QString::fromUtf8("ą/ś/ż/ć/ń/ł/ó/ę").split("/");
+
+		int i;
+		for (i = 0; i < chars.count(); i++)
+		{
+			if(!encodedData.contains(chars[i], Qt::CaseInsensitive))
+				break;
+		}
+
+		if(i == chars.count())
+		{
+			from = codec;
+			break;
+		}
+	}
+
+	return from;
+}
+
 // Konwertuje napisy z jednego kodowania na inne
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const QString & to)
 {
@@ -57,45 +133,53 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const 
 // kodowania zrodlowego
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 {
-	QString from;
-	QStringList codecs;
-	// Tylko takie kodowania obsługuja polskie litery
-	codecs << "windows-1250" << "windows-1257" << "ISO-8859-2"
-			<< "ISO-8859-13" << "ISO-8859-16" << "UTF-8";
-
-	QFile f(subtitlesPath);
-	if(!f.open(QIODevice::ReadOnly))
-		return false;
-
-	QByteArray testData = f.read(10000);
-
-	f.close();
-
-	foreach(QString codec, codecs)
-	{
-		QTextStream ts(testData);
-		ts.setCodec(qPrintable(codec));
-		QString encodedData = ts.readAll();
-		QStringList chars = QString::fromUtf8("ą/ś/ż/ć/ń/ł/ó/ę").split("/");
-
-		int i;
-		for (i = 0; i < chars.count(); i++)
-		{
-			if(!encodedData.contains(chars[i], Qt::CaseInsensitive))
-				break;
-		}
-
-		if(i == chars.count())
-		{
-			from = codec;
-			break;
-		}
-	}
+	QString from = ppDetectEncoding(subtitlesPath);
 
 	if(from.isEmpty())
 		return false;
 
 	return ppChangeSubtitlesEncoding(from, to);
+}
+
+
+// Usuwanie linii zawierajacych podane slowa z pliku z napisami
+bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordList)
+{
+	QString fromCodec = ppDetectEncoding(subtitlesPath);
+
+	if(fromCodec.isEmpty())
+		fromCodec = GlobalConfig().ppEncodingFrom();
+
+	QFile f(subtitlesPath);
+	if(!f.open(QIODevice::ReadOnly))
+		return false;
+
+	QTextStream in(&f), out;
+	in.setCodec(qPrintable(fromCodec));
+	QString line;
+
+	while(!((line = in.readLine()).isNull()))
+	{
+		bool found = false;
+		foreach(QString word, wordList)
+		{
+			if(line.indexOf(word, Qt::CaseInsensitive) >= 0)
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if(found) continue;
+
+		out << line << "\r\n";
+	}
+
+	f.close();
+
+	// TODO!!!
+
+	return true;
 }
 
 // Zmienia uprawnienia do pliku z napisami

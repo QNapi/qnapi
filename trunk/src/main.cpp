@@ -21,14 +21,26 @@
 #include "version.h"
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
+#include "qnapicli.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication::setApplicationName("QNapi");
+	// Workarond: potrzebne, aby QEventLoop nie krzyczal, ze mu brakuje obiektu aplikacji ;)
+	QCoreApplication *a = new QCoreApplication(argc, argv);
+	
+	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+
+	QNapiCli cliApp(argc, argv);
+	if(cliApp.analyze())
+		return cliApp.exec();
+
+	// Kasujemy tymczasowy obiekt aplikacji
+	if(a) delete a;
+	
 	QNapiApp app(argc, argv);
+	QNapiApp::setApplicationName("QNapi");
 
 	app.setQuitOnLastWindowClosed(false);
-	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QStringList args = app.arguments();
 
@@ -40,7 +52,6 @@ int main(int argc, char *argv[])
 		for(int i = 0; i < args.size(); i++)
 			if(QFileInfo(args[i]).isFile())
 				app.sendRequest(args[i]);
-		//system("pause");
 		return 0;
 	}
 

@@ -18,7 +18,7 @@ SOURCES += src/main.cpp \
  src/qnapiapp.cpp \
  src/qdraglistwidget.cpp \
  src/movieinfo.cpp \
- src/multipartdata.cpp \
+ src/qmultiparthttprequest.cpp \
  src/qcumber/qmanagedrequest.cpp \
  src/qcumber/qmanagedsocket.cpp \
  src/qcumber/qsingleapplication.cpp \
@@ -38,7 +38,7 @@ HEADERS +=  src/frmprogress.h \
  src/qnapiapp.h \
  src/qdraglistwidget.h \
  src/movieinfo.h \
- src/multipartdata.h \
+ src/qmultiparthttprequest.h \
  src/napithread.h \
  src/synchttp.h \
  src/qcumber/qmanagedrequest.h \

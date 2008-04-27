@@ -22,7 +22,7 @@
 #include <QTextStream>
 
 #include "qnapiconfig.h"
-#include "multipartdata.h"
+#include "qmultiparthttprequest.h"
 
 class QNapiAbstractEngine
 {

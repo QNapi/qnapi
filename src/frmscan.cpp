@@ -43,12 +43,12 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	if(QFileInfo(GlobalConfig().lastScanDir()).isDir())
 		ui.leDirectory->setText(GlobalConfig().lastScanDir());
 
-	QList<QVariant> scanFilters = GlobalConfig().scanFilters();
+	QList<QString> scanFilters = GlobalConfig().scanFilters();
 	ui.cbFilters->clear();
 
 	for(int i = 0; i < scanFilters.size(); i++)
 	{
-		ui.cbFilters->addItem(scanFilters[i].toString());
+		ui.cbFilters->addItem(scanFilters[i]);
 	}
 
 	ui.leSkipFilters->setText(GlobalConfig().scanSkipFilters());
@@ -61,7 +61,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 
 void frmScan::closeEvent(QCloseEvent *event)
 {
-	QList<QVariant> scanFilters;
+	QList<QString> scanFilters;
 	for(int i = 0; i < ui.cbFilters->count(); i++)
 	{
 		scanFilters << ui.cbFilters->itemText(i);
@@ -399,8 +399,6 @@ void GetFilesThread::run()
 		emit progressChange((int)ceil(step * i + step / 3));
 
 		// pobieranie
-//		if(!napiDownload(md5, tmpZip, GlobalConfig().language(),
-//							GlobalConfig().nick(), GlobalConfig().pass()))
 		if(!napi->tryDownload())
 		{
 			if(abort) return;
@@ -417,8 +415,6 @@ void GetFilesThread::run()
 		emit progressChange((int)ceil(step * i + 2 * step / 3));
 
 		// dopasowywanie
-//		if(!napiMatchSubtitles(md5, tmpZip, queue[i], GlobalConfig().noBackup(),
-//								GlobalConfig().tmpPath(), GlobalConfig().p7zipPath()))
 		if(!napi->tryMatch())
 		{
 			if(abort)
@@ -437,28 +433,13 @@ void GetFilesThread::run()
 			return;
 		}
 
-
 		++napiSuccess;
 		gotList << queue[i];
 
-		if(GlobalConfig().changeEncoding())
+		if(GlobalConfig().ppEnabled())
 		{
 			emit progressChange((int)ceil(step * i + 5 * step / 6));
-
-			// Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
-			// zrodlowego uzywa kodowania wybranego przez uzytkownika
-			if (!GlobalConfig().autoDetectEncoding()
-				|| !napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingTo()))
-			{
-				napi->ppChangeSubtitlesEncoding(GlobalConfig().encodingFrom(),
-												GlobalConfig().encodingTo());
-			}
-
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
+			napi->doPostProcessing();
 		}
 
 		emit progressChange((int)ceil(step * (i + 1)));

@@ -150,55 +150,6 @@ void QNapiConfig::setNoBackup(bool noBackup)
 	settings->setValue("qnapi/no_backup", noBackup);
 }
 
-bool QNapiConfig::changeEncoding()
-{
-	return settings->value("qnapi/change_encoding", false).toBool();
-}
-
-void QNapiConfig::setChangeEncoding(bool change)
-{
-	settings->setValue("qnapi/change_encoding", change);
-}
-
-bool QNapiConfig::autoDetectEncoding()
-{
-	return settings->value("qnapi/auto_detect_encoding", false).toBool();
-}
-
-void QNapiConfig::setAutoDetectEncoding(bool change)
-{
-	settings->setValue("qnapi/auto_detect_encoding", change);
-}
-
-QString QNapiConfig::encodingFrom()
-{
-	return settings->value("qnapi/enc_from", "windows-1250").toString();
-}
-
-void QNapiConfig::setEncodingFrom(const QString & encoding)
-{
-	settings->setValue("qnapi/enc_from", encoding);
-}
-
-QString QNapiConfig::encodingTo()
-{
-	return settings->value("qnapi/enc_to", "UTF-8").toString();
-}
-
-void QNapiConfig::setEncodingTo(const QString & encoding)
-{
-	settings->setValue("qnapi/enc_to", encoding);
-}
-
-bool QNapiConfig::showAllEncodings()
-{
-	return settings->value("qnapi/show_all_encodings", false).toBool();
-}
-
-void QNapiConfig::setShowAllEncodings(bool show)
-{
-	settings->setValue("qnapi/show_all_encodings", show);
-}
 
 bool QNapiConfig::useBrushedMetal()
 {
@@ -208,6 +159,109 @@ bool QNapiConfig::useBrushedMetal()
 void QNapiConfig::setUseBrushedMetal(bool use)
 {
 	settings->setValue("qnapi/use_brushed_metal", use);
+}
+
+bool QNapiConfig::ppEnabled()
+{
+	return settings->value("qnapi/post_processing", false).toBool();
+}
+
+void QNapiConfig::setPpEnabled(bool enable)
+{
+	settings->setValue("qnapi/post_processing", enable);
+}
+
+bool QNapiConfig::ppChangeEncoding()
+{
+	return settings->value("qnapi/change_encoding", false).toBool();
+}
+
+void QNapiConfig::setPpChangeEncoding(bool change)
+{
+	settings->setValue("qnapi/change_encoding", change);
+}
+
+bool QNapiConfig::ppAutoDetectEncoding()
+{
+	return settings->value("qnapi/auto_detect_encoding", false).toBool();
+}
+
+void QNapiConfig::setPpAutoDetectEncoding(bool change)
+{
+	settings->setValue("qnapi/auto_detect_encoding", change);
+}
+
+QString QNapiConfig::ppEncodingFrom()
+{
+	return settings->value("qnapi/enc_from", "windows-1250").toString();
+}
+
+void QNapiConfig::setPpEncodingFrom(const QString & encoding)
+{
+	settings->setValue("qnapi/enc_from", encoding);
+}
+
+QString QNapiConfig::ppEncodingTo()
+{
+	return settings->value("qnapi/enc_to", "UTF-8").toString();
+}
+
+void QNapiConfig::setPpEncodingTo(const QString & encoding)
+{
+	settings->setValue("qnapi/enc_to", encoding);
+}
+
+bool QNapiConfig::ppShowAllEncodings()
+{
+	return settings->value("qnapi/show_all_encodings", false).toBool();
+}
+
+void QNapiConfig::setPpShowAllEncodings(bool show)
+{
+	settings->setValue("qnapi/show_all_encodings", show);
+}
+
+bool QNapiConfig::ppRemoveLines()
+{
+	return settings->value("qnapi/remove_lines", false).toBool();
+}
+
+void QNapiConfig::setPpRemoveLines(bool remove)
+{
+	settings->setValue("qnapi/remove_lines", remove);
+}
+
+QStringList QNapiConfig::ppRemoveWords()
+{
+	QStringList defaultRemoveWords;
+	defaultRemoveWords << "movie info" << "synchro ";
+						
+	return settings->value("qnapi/remove_words", defaultRemoveWords).toStringList();
+}
+
+void QNapiConfig::setPpRemoveWords(const QStringList & words)
+{
+	settings->setValue("qnapi/remove_words", words);
+}
+
+bool QNapiConfig::ppChangePermissions()
+{
+	return settings->value("qnapi/change_permissions", false).toBool();
+}
+
+void QNapiConfig::setPpChangePermissions(bool change)
+{
+	settings->setValue("qnapi/change_permissions", change);
+}
+
+QString QNapiConfig::ppPermissions()
+{
+	return settings->value("qnapi/permissions", "0644").toString();
+}
+
+void QNapiConfig::setPpPermissions(const QString & permissions)
+{
+	settings->setValue("qnapi/permissions", permissions);
 }
 
 QString QNapiConfig::previousDialogPath()
@@ -221,16 +275,16 @@ void QNapiConfig::setPreviousDialogPath(const QString & path)
 	settings->setValue("qnapi/prev_dialog_path", path);
 }
 
-QList<QVariant> QNapiConfig::scanFilters()
+QStringList QNapiConfig::scanFilters()
 {
-	QList<QVariant> defaultScanFilters;
+	QStringList defaultScanFilters;
 	defaultScanFilters << "*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg"
 							" *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
 						
-	return settings->value("scan/filters", defaultScanFilters).toList();
+	return settings->value("scan/filters", defaultScanFilters).toStringList();
 }
 
-void QNapiConfig::setScanFilters(const QList<QVariant> & filters)
+void QNapiConfig::setScanFilters(const QStringList & filters)
 {
 	settings->setValue("scan/filters", filters);
 }

@@ -33,38 +33,70 @@ class QNapiConfig
 
 		bool firstRun();
 		QString version();
+
 		QString p7zipPath();
 		void setP7zipPath(const QString & path);
+
 		QString tmpPath();
 		void setTmpPath(const QString & path);
+
 		QString nick();
 		void setNick(const QString & nick);
+
 		QString pass();
 		void setPass(const QString & pass);
+
 		QString language();
 		void setLanguage(const QString & language);
+
 		bool noBackup();
 		void setNoBackup(bool noBackup);
-		bool changeEncoding();
-		void setChangeEncoding(bool change);
-		bool autoDetectEncoding();
-		void setAutoDetectEncoding(bool change);
-		QString encodingFrom();
-		void setEncodingFrom(const QString & encoding);
-		QString encodingTo();
-		void setEncodingTo(const QString & encoding);
-		bool showAllEncodings();
-		void setShowAllEncodings(bool show);
+
 		bool useBrushedMetal();
 		void setUseBrushedMetal(bool use);
+
+		bool ppEnabled();
+		void setPpEnabled(bool enable);
+
+		bool ppChangeEncoding();
+		void setPpChangeEncoding(bool change);
+
+		bool ppAutoDetectEncoding();
+		void setPpAutoDetectEncoding(bool change);
+
+		QString ppEncodingFrom();
+		void setPpEncodingFrom(const QString & encoding);
+
+		QString ppEncodingTo();
+		void setPpEncodingTo(const QString & encoding);
+
+		bool ppShowAllEncodings();
+		void setPpShowAllEncodings(bool show);
+
+		bool ppRemoveLines();
+		void setPpRemoveLines(bool remove);
+
+		QStringList ppRemoveWords();
+		void setPpRemoveWords(const QStringList & words);
+
+		bool ppChangePermissions();
+		void setPpChangePermissions(bool change);
+
+		QString ppPermissions();
+		void setPpPermissions(const QString & permissions);
+
 		QString previousDialogPath();
 		void setPreviousDialogPath(const QString & path);
-		QList<QVariant> scanFilters();
-		void setScanFilters(const QList<QVariant> & filters);
+
+		QStringList scanFilters();
+		void setScanFilters(const QStringList & filters);
+
 		QString scanSkipFilters();
 		void setScanSkipFilters(const QString & filters);
+
 		bool scanSkipIfSubtitlesExists();
 		void setScanSkipIfSubtitlesExists(bool skip);
+
 		QString lastScanDir();
 		void setLastScanDir(const QString & dir);
 

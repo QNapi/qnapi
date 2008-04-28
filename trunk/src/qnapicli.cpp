@@ -69,7 +69,7 @@ int QNapiCli::exec()
 		napi = new QNapiProjektEngine(movie);
 		if(!napi) continue;
 
-		printCli(QString(QString("\n * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
+		printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
 
 		printCli(QString(QString("   obliczanie sumy kontrolnej...")));
 		napi->checksum();

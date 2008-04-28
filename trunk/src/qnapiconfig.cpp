@@ -256,7 +256,7 @@ void QNapiConfig::setPpChangePermissions(bool change)
 
 QString QNapiConfig::ppPermissions()
 {
-	return settings->value("qnapi/permissions", "0644").toString();
+	return settings->value("qnapi/permissions", "644").toString();
 }
 
 void QNapiConfig::setPpPermissions(const QString & permissions)

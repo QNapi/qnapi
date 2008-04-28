@@ -385,10 +385,10 @@ p, li { white-space: pre-wrap; }
                </sizepolicy>
               </property>
               <property name="inputMask" >
-               <string>0999; </string>
+               <string>999; </string>
               </property>
               <property name="text" >
-               <string>0644</string>
+               <string>644</string>
               </property>
              </widget>
             </item>

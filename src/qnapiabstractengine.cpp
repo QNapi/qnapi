@@ -55,33 +55,19 @@ void QNapiAbstractEngine::doPostProcessing()
 	// Zmiana uprawnien do pliku
 	if(GlobalConfig().ppChangePermissions())
 	{
-		QString txtPerm = GlobalConfig().ppPermissions();
 		bool validPermissions;
-		int intPerm = txtPerm.toInt(&validPermissions);
+		int permInt = GlobalConfig().ppPermissions().toInt(&validPermissions, 8);
+
 		if(validPermissions)
 		{
-			int octPerm = QString(QString::number(intPerm, 8)).toInt();
-		
-			/// TODO: opracowac poprawny sposob konwersji uprawnien
-		
-			qDebug("txtPerm = %s", qPrintable(txtPerm));
-			qDebug("intPerm = %d", intPerm);
-			qDebug("octPerm = %d", octPerm);
-			
-			QFile::Permissions fl;
-			fl |= QFile::ReadOther;
-			fl |= QFile::ReadGroup;
-			fl |= QFile::ReadUser;
-			fl |= QFile::ExeUser;
-			
-			qDebug("fl = %d", (int)fl);
-			
-			
-			ppChangeSubtitlesPermissions(QFile::Permissions(octPerm));
+			int perm = 0;
+			perm |= (permInt & 0700) << 2;
+			perm |= (permInt & 0070) << 1;
+			perm |= (permInt & 0007);
+			ppChangeSubtitlesPermissions(QFile::Permissions(perm));
 		}
 	}
 #endif
-
 }
 
 QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int testBufferSize)

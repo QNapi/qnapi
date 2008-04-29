@@ -47,6 +47,16 @@ int main(int argc, char *argv[])
 	if(args.size() > 0 )
 		args.removeAt(0);
 
+	//Jesli uruchomiono aplikacje poprzez alt+f2 w KDE3 i przeciagnieto plik
+	//to trzeba usunac 'file://' dodane przez okno uruchamiania
+	for (int i = 0; i < args.size(); i++)
+	{
+		if(args[i].startsWith("file:///"))
+		{
+			args[i] = args[i].remove(0, 7);
+		}
+	}
+
 	if(!app.isInstanceAllowed())
 	{
 		for(int i = 0; i < args.size(); i++)

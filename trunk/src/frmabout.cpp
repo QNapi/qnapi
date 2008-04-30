@@ -43,11 +43,15 @@ const QString thanksText = tr(
 "dystrybucji:</p><p>obi_gl, Jakub Schmidtke, Jan Stępień, Łukasz Jagiełło</p><p>"
 "...oraz wszystkim tym, o których zapomniałem ;)</p></body></html>");
 const QString supportText = tr(
-"<html><body><p>QNapi zaoszczędził Ci sporo pracy wysiłku przy szukaniu napisów do filmów? "
+"<html><body><p>QNapi zaoszczędził Ci sporo wysiłku przy szukaniu napisów do filmów? "
 "Uwaszasz, że to dobry program i powinien się dalej rozwijać? Chciałbyś/aś wesprzeć rozwój programu?</p>"
-"<p>Oprócz promowania go wśród znajomych, na forach internetowych, blogach itp., możesz również "
-"rozważyć wsparcie finansowe projektu, dokonując przelewu na podany niżej nr konta:</p>"
+"<p><b>Ty również możesz pomóc w rozwoju programu!</b></p>"
+"<p>Oprócz promowania go wśród znajomych, na forach internetowych, blogach itp., rozważ drobne wsparcie "
+"finansowe autora projektu, motywując go do dalszych prac nad programem, poprzez dokonanie przelewu na podany niżej nr konta:</p>"
 "<p>73 1020 3974 0000 5202 0098 8774</p>"
+"<p>lub za pośrednictwem serwisu PayPal:</p>"
+"<p><a href=\"http://www.qt-apps.org/content/donate.php?content=76259\">"
+"http://www.qt-apps.org/content/donate.php?content=76259</a></p>"
 "<p>Będę wdzięczny nawet za najmniejsze wpłaty ;)</p>"
 );
 

@@ -52,7 +52,7 @@ QString QNapiProjektEngine::checksum(const QString & filename, bool limit10M)
 
 	for(int i = 0; i < 16; i++)
 	{
-		sprintf(next, "%.2x", (unsigned char)b[i]);
+		snprintf(next, 3, "%.2x", (unsigned char)b[i]);
 		out += next;
 	}
 	
@@ -427,7 +427,7 @@ QString QNapiProjektEngine::napiFDigest(const QString & input)
 		t = a + (int)(strtol(tmp, NULL, 16));
 		v = (int)(strtol(input.mid(t, 2).toLocal8Bit(), NULL, 16));
 
-		sprintf(tmp, "%x", (v * m) % 0x10);
+		snprintf(tmp, 2, "%x", (v * m) % 0x10);
 		b += tmp;
 	}
 

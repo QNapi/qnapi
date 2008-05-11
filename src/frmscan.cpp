@@ -282,16 +282,20 @@ void frmScan::downloadFinished(bool interrupt)
 	ui.pbGet->setText(tr("Pobierz napisy"));
 	ui.pbProgress->setValue(0);
 	
-
-	if(getThread.napiSuccess + getThread.napiFail > 0)
+	if(!getThread.criticalMessage.isEmpty())
+	{
+		ui.lbAction->setText(getThread.criticalMessage);
+		QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
+	}
+	else if(getThread.napiSuccess + getThread.napiFail > 0)
 	{
 		ui.lbAction->setText(tr("Napisy pobrano."));
 
 		if(getThread.napiSuccess > 0)
 		{
 			frmSummary summary;
-			summary.setFileList(getThread.gotList);
-			summary.setFailedCount(getThread.napiFail);
+			summary.setSuccessList(getThread.gotList);
+			summary.setFailedList(getThread.failedList);
 			summary.exec();
 		}
 		else
@@ -368,7 +372,9 @@ bool ScanFilesThread::doScan(const QString & path)
 void GetFilesThread::run()
 {
 	abort = false;
+	criticalMessage.clear();
 	gotList.clear();
+	failedList.clear();
 	int size = queue.size();
 
 	if(size <= 0) return;
@@ -389,6 +395,13 @@ void GetFilesThread::run()
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
+		if(!napi->checkWritePermissions())
+		{
+			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
+			delete napi;
+			break;
+		}
+
 		napi->checksum();
 		if(abort)
 		{
@@ -407,6 +420,7 @@ void GetFilesThread::run()
 				return;
 			}
 			++napiFail;
+			failedList << queue[i];
 			delete napi;
 			continue;
 		}
@@ -429,6 +443,7 @@ void GetFilesThread::run()
 			}
 
 			++napiFail;
+			failedList << queue[i];
 			delete napi;
 			continue;
 		}

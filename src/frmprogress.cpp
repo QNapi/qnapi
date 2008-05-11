@@ -206,7 +206,11 @@ void frmProgress::downloadFinished()
 	mutex.lock();
 	if(showSummary)
 	{
-		if(queue.size() > 1)
+		if(!getThread.criticalMessage.isEmpty())
+		{
+			QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
+		}
+		else if(queue.size() > 1)
 		{
 			bool mac = 
 #ifdef Q_WS_MAC
@@ -220,8 +224,8 @@ void frmProgress::downloadFinished()
 				if(getThread.napiSuccess > 0)
 				{
 					frmSummary summary;
-					summary.setFileList(getThread.gotList);
-					summary.setFailedCount(getThread.napiFail);
+					summary.setSuccessList(getThread.gotList);
+					summary.setFailedList(getThread.failedList);
 					summary.exec();
 				}
 				else
@@ -514,11 +518,13 @@ void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 void GetThread::run()
 {
 	abort = false;
+	criticalMessage.clear();
 	if(queue.size() <= 0) return;
 
 	QString windowTitle, md5;
 	napiSuccess = napiFail = 0;
 	gotList.clear();
+	failedList.clear();
 
 	QNapiProjektEngine *napi;
 
@@ -532,7 +538,17 @@ void GetThread::run()
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
-		emit progressChange(i, queue.size(), 0.33f);
+		emit progressChange(i, queue.size(), 0.1);
+		emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
+
+		if(!napi->checkWritePermissions())
+		{
+			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
+			delete napi;
+			break;
+		}
+
+		emit progressChange(i, queue.size(), 0.3);
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 
 		napi->checksum();
@@ -555,6 +571,7 @@ void GetThread::run()
 			}
 
 			++napiFail;
+			failedList << queue[i];
 			delete napi;
 			continue;
 		}
@@ -564,7 +581,6 @@ void GetThread::run()
 			delete napi;
 			return;
 		}
-
 
 		emit progressChange(i, queue.size(), 0.7f);
 		emit actionChange(tr("Dopasowywanie napisów..."));
@@ -579,6 +595,7 @@ void GetThread::run()
 			}
 
 			++napiFail;
+			failedList << queue[i];
 			delete napi;
 			continue;
 		}
@@ -594,7 +611,7 @@ void GetThread::run()
 
 		if(GlobalConfig().ppEnabled())
 		{
-			emit progressChange(i, queue.size(), 0.85);
+			emit progressChange(i, queue.size(), 0.9);
 			emit actionChange(tr("Post-przetwarzanie napisów..."));
 			
 			napi->doPostProcessing();

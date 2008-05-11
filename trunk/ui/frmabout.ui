@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>394</height>
+    <width>666</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -19,7 +19,8 @@
    <string>QNapi - informacje o programie</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
   <layout class="QHBoxLayout" >
    <item>
@@ -65,10 +66,21 @@
      </item>
      <item>
       <widget class="QTabWidget" name="tabWidget" >
+       <property name="enabled" >
+        <bool>true</bool>
+       </property>
        <property name="currentIndex" >
         <number>0</number>
        </property>
        <widget class="QWidget" name="tabAbout" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>562</width>
+          <height>282</height>
+         </rect>
+        </property>
         <attribute name="title" >
          <string>O programie</string>
         </attribute>
@@ -83,6 +95,14 @@
         </layout>
        </widget>
        <widget class="QWidget" name="tabThanks" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>530</width>
+          <height>276</height>
+         </rect>
+        </property>
         <attribute name="title" >
          <string>Podziękowania</string>
         </attribute>
@@ -97,6 +117,14 @@
         </layout>
        </widget>
        <widget class="QWidget" name="tabSupport" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>530</width>
+          <height>276</height>
+         </rect>
+        </property>
         <attribute name="title" >
          <string>Wsparcie</string>
         </attribute>
@@ -111,6 +139,14 @@
         </layout>
        </widget>
        <widget class="QWidget" name="tabLicense" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>530</width>
+          <height>276</height>
+         </rect>
+        </property>
         <attribute name="title" >
          <string>Licencja</string>
         </attribute>
@@ -118,7 +154,8 @@
          <item>
           <widget class="QTextBrowser" name="textBrowser" >
            <property name="html" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">GNU GENERAL PUBLIC LICENSE&lt;/p>
@@ -260,7 +297,7 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>40</width>
            <height>20</height>
@@ -280,7 +317,7 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>40</width>
            <height>20</height>

@@ -48,12 +48,6 @@
        </item>
        <item row="0" column="3" >
         <widget class="QPushButton" name="pb7zPathSelect" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="text" >
           <string>...</string>
          </property>
@@ -75,12 +69,6 @@
        </item>
        <item row="1" column="3" >
         <widget class="QPushButton" name="pbTmpPathSelect" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="text" >
           <string>...</string>
          </property>

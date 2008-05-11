@@ -52,13 +52,9 @@ class GetThread : public QNapiThread
 
 	public:
 		void run();
-		void setVerboseMode(bool mode) { verboseMode = mode; }
 
 		QStringList queue, gotList;
 		int napiSuccess, napiFail;
-
-	private:
-		bool verboseMode;
 };
 
 class frmProgress: public QWidget
@@ -92,11 +88,6 @@ class frmProgress: public QWidget
 
 		void setBatchMode(bool value) { batchMode = value; }
 		bool isBatchMode() { return batchMode; }
-		void setQuietMode(bool value) { quietMode = value; }
-		bool isQuietMode() { return quietMode; }
-		void setConsoleMode(bool value) {
-			consoleMode = value; setQuietMode(value); getThread.setVerboseMode(value);
-		}
 
 	private:
 		void closeEvent(QCloseEvent *event);
@@ -123,8 +114,6 @@ class frmProgress: public QWidget
 		GetThread getThread;
 
 		bool batchMode;
-		bool quietMode;
-		bool consoleMode;
 
 		bool showSummary;
 		QMutex mutex;

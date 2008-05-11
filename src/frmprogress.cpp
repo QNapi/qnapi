@@ -34,8 +34,6 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	setBatchMode(false);
-	setQuietMode(false);
-	setConsoleMode(false);
 
 	connect(&getThread, SIGNAL(fileNameChange(const QString &)),
 			ui.lbFileName, SLOT(setText(const QString &)));
@@ -143,35 +141,26 @@ bool frmProgress::download()
 {
 	if(!QNapiAbstractEngine::checkP7ZipPath())
 	{
-		if(!quietMode)
-			QMessageBox::warning(0, tr("Brak programu p7zip!"),
-				tr("Ścieżka do programu p7zip jest nieprawidłowa!"));
-		if(consoleMode)
-			qDebug("%s", qPrintable(tr("Ścieżka do programu p7zip jest nieprawidłowa!")));
+		QMessageBox::warning(0, tr("Brak programu p7zip!"),
+								tr("Ścieżka do programu p7zip jest nieprawidłowa!"));
 		return false;
 	}
 
 	if(!QNapiAbstractEngine::checkTmpPath())
 	{
-		if(!quietMode)
-			QMessageBox::warning(0, tr("Nieprawidłowy katalog tymczasowy!"),
-				tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia."));
-		if(consoleMode)
-			qDebug("%s", qPrintable(tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia.")));
+		QMessageBox::warning(0, tr("Nieprawidłowy katalog tymczasowy!"),
+								tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia."));
 		return false;
 	}
 
 	if(getThread.queue.isEmpty())
 	{
-		if(!quietMode)
-			QMessageBox::warning(0, tr("Brak plików!"),
-				tr("Nie wskazano filmów do pobrania napisów!"));
-		if(consoleMode)
-			qDebug("%s", qPrintable(tr("Nie wskazano filmów do pobrania napisów!")));
+		QMessageBox::warning(0, tr("Brak plików!"),
+								tr("Nie wskazano filmów do pobrania napisów!"));
 		return false;
 	}
 
-	if(!quietMode && !isVisible())
+	if(!isVisible())
 	{
 		move((QApplication::desktop()->width() - width()) / 2, 
 			(QApplication::desktop()->height() - height()) / 2);
@@ -219,60 +208,46 @@ void frmProgress::downloadFinished()
 	{
 		if(queue.size() > 1)
 		{
-			if(!quietMode)
-			{
-				bool mac = 
+			bool mac = 
 #ifdef Q_WS_MAC
 				true;
 #else
 				false;
 #endif
 
-				if(mac || batchMode)
+			if(mac || batchMode)
+			{
+				if(getThread.napiSuccess > 0)
 				{
-					if(getThread.napiSuccess > 0)
-					{
-						frmSummary summary;
-						summary.setFileList(getThread.gotList);
-						summary.setFailedCount(getThread.napiFail);
-						summary.exec();
-					}
-					else
-					{
-						QString msg = tr("Nie udało się dopasować napisów dla %1 %2!")
-										.arg(getThread.napiFail)
-										.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
-						QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
-					}
+					frmSummary summary;
+					summary.setFileList(getThread.gotList);
+					summary.setFailedCount(getThread.napiFail);
+					summary.exec();
 				}
 				else
 				{
-					QString msg;
-					if(getThread.napiSuccess > 0)
-						msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
-								.arg(tr((getThread.napiSuccess > 1) ? "plików" : "pliku"))
-								.arg((getThread.napiFail > 0) ? "\n" : "");
-					if(getThread.napiFail > 0)
-						msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
-								.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
-#ifndef Q_WS_MAC
-					if(QSystemTrayIcon::supportsMessages() && !batchMode)
-						trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
-					else
-#endif
-						QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
+					QString msg = tr("Nie udało się dopasować napisów dla %1 %2!")
+									.arg(getThread.napiFail)
+									.arg(tr((getThread.napiFail == 1) ? "pliku" : "plików"));
+					QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 				}
 			}
-
-			if(consoleMode)
+			else
 			{
-				qDebug(qPrintable(tr("\n * Podsumowanie:")));
+				QString msg;
 				if(getThread.napiSuccess > 0)
-					qDebug("   * %s", qPrintable(tr("Dopasowano napisy dla %1 %2.").arg(getThread.napiSuccess)
-													.arg(tr((getThread.napiSuccess > 1) ? "plików" : "pliku"))));
+					msg += tr("Dopasowano napisy dla %1 %2.%3").arg(getThread.napiSuccess)
+							.arg(tr((getThread.napiSuccess > 1) ? "plików" : "pliku"))
+							.arg((getThread.napiFail > 0) ? "\n" : "");
 				if(getThread.napiFail > 0)
-					qDebug("   * %s", qPrintable(tr("Nie znaleziono napisów dla %1 %2!").arg(getThread.napiFail)
-													.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"))));
+					msg += tr("Nie udało się dopasować napisów dla %1 %2!").arg(getThread.napiFail)
+							.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
+#ifndef Q_WS_MAC
+				if(QSystemTrayIcon::supportsMessages() && !batchMode)
+					trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
+				else
+#endif
+					QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 			}
 		}
 		else
@@ -280,32 +255,22 @@ void frmProgress::downloadFinished()
 			if(getThread.napiSuccess == 1)
 			{
 				QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(queue[0]).fileName());
-				if(!quietMode)
-				{
 #ifndef Q_WS_MAC
-					if(QSystemTrayIcon::supportsMessages() && !batchMode)
-						trayIcon->showMessage(tr("Pobrano napisy"), msg, QSystemTrayIcon::Information);
-					else
+				if(QSystemTrayIcon::supportsMessages() && !batchMode)
+					trayIcon->showMessage(tr("Pobrano napisy"), msg, QSystemTrayIcon::Information);
+				else
 #endif
-						QMessageBox::information(0, tr("Pobrano napisy"), msg);
-				}
-
-				if(consoleMode) qDebug(qPrintable(msg));
+					QMessageBox::information(0, tr("Pobrano napisy"), msg);
 			}
 			else
 			{
 				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(queue[0]).fileName());
-				if(!quietMode)
-			{
 #ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
 					trayIcon->showMessage(tr("Nie znaleziono napisów"), msg, QSystemTrayIcon::Information);
 				else
 #endif
 						QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
-				}
-	
-				if(consoleMode) qDebug(qPrintable(msg));
 			}
 		}
 	}
@@ -564,18 +529,11 @@ void GetThread::run()
 		napi = new QNapiProjektEngine(queue[i]);
 		if(!napi) continue;
 
-		if(verboseMode)
-		{
-			qDebug(" * %s '%s'", qPrintable(tr("Pobieranie napisów dla pliku")),
-								qPrintable(QFileInfo(queue[i]).fileName()));
-		}
-
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
 		emit progressChange(i, queue.size(), 0.33f);
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
-		if(verboseMode) qDebug("   * %s...", qPrintable(tr("obliczanie sumy kontrolnej")));
 
 		napi->checksum();
 		if(abort)
@@ -586,13 +544,10 @@ void GetThread::run()
 
 		emit progressChange(i, queue.size(), 0.5f);
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
-		if(verboseMode) qDebug("   * %s...", qPrintable(tr("pobieranie napisów z serwera")));
 
 		// pobieranie
 		if(!napi->tryDownload())
 		{
-			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie znaleziono napisów")));
-
 			if(abort)
 			{
 				delete napi;
@@ -613,12 +568,10 @@ void GetThread::run()
 
 		emit progressChange(i, queue.size(), 0.7f);
 		emit actionChange(tr("Dopasowywanie napisów..."));
-		if(verboseMode) qDebug("   * %s...", qPrintable(tr("dopasowywanie napisów")));
 
 		// dopasowywanie
 		if(!napi->tryMatch())
 		{
-			if(verboseMode) qDebug("   ! %s", qPrintable(tr("nie dało się dopasować napisów")));
 			if(abort)
 			{
 				delete napi;

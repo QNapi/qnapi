@@ -61,12 +61,25 @@ class GetFilesThread : public QNapiThread
 		void fileNameChange(const QString & newfileName);
 		void progressChange(int newValue);
 		void downloadFinished(bool interrupt);
+		void criticalError(const QString & message);
+
+	private slots:
+		void setCriticalMessage(const QString & msg)
+		{
+			criticalMessage = msg;
+		}
 
 	public:
+		GetFilesThread()
+		{
+			connect(this, SIGNAL(criticalError(const QString &)),
+					this, SLOT(setCriticalMessage(const QString &)));
+		}
 		void run();
 
-		QStringList queue, gotList;
+		QStringList queue, gotList, failedList;
 		int napiSuccess, napiFail;
+		QString criticalMessage;
 };
 
 class frmScan: public QDialog

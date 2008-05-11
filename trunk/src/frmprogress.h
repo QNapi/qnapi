@@ -49,12 +49,25 @@ class GetThread : public QNapiThread
 		void fileNameChange(const QString & newfileName);
 		void actionChange(const QString & newAction);
 		void progressChange(int current, int all, float stageProgress);
+		void criticalError(const QString & message);
+
+	private slots:
+		void setCriticalMessage(const QString & msg)
+		{
+			criticalMessage = msg;
+		}
 
 	public:
+		GetThread()
+		{
+			connect(this, SIGNAL(criticalError(const QString &)),
+					this, SLOT(setCriticalMessage(const QString &)));
+		}
 		void run();
 
-		QStringList queue, gotList;
+		QStringList queue, gotList, failedList;
 		int napiSuccess, napiFail;
+		QString criticalMessage;
 };
 
 class frmProgress: public QWidget

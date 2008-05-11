@@ -29,6 +29,12 @@ bool QNapiAbstractEngine::checkTmpPath()
 	return f.isDir() && f.isWritable();
 }
 
+// Sprawdza uprawnienia zapisu do katalogu docelowego (katalogu z filmem)
+bool QNapiAbstractEngine::checkWritePermissions()
+{
+	return QFileInfo(QFileInfo(moviePath).path()).isWritable();
+}
+
 // Dokonuje post-przetwarzania pliku z napisami (na podstawie konfiguracji)
 void QNapiAbstractEngine::doPostProcessing()
 {

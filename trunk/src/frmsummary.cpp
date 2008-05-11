@@ -28,26 +28,41 @@ frmSummary::frmSummary(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 		(QApplication::desktop()->height() - height()) / 2);
 }
 
-void frmSummary::setFileList(const QStringList & list)
+void frmSummary::setSuccessList(const QStringList & list)
 {
-	ui.lwFiles->clear();
+	if(list.isEmpty())
+	{
+		ui.tabSuccess->hide();
+		return;
+	}
+
+	ui.lwSuccess->clear();
 	foreach(QString item, list)
 	{
-		ui.lwFiles->addItem(new QListWidgetItem(QIcon(":/ui/icon_accept.png"),
+		ui.lwSuccess->addItem(new QListWidgetItem(QIcon(":/ui/icon_accept.png"),
 												QFileInfo(item).fileName()));
 	}
-	ui.lwFiles->sortItems();
+	ui.lwSuccess->sortItems();
+	ui.tabWidget->setTabText(0, tr("Dopasowano napisy dla %1 %2")
+								.arg(list.size()).arg(tr(list.size() > 1 ? "plików" : "pliku")));
 }
 
-void frmSummary::setFailedCount(unsigned int failed)
+void frmSummary::setFailedList(const QStringList & list)
 {
-	if(failed == 0)
+	if(list.isEmpty())
 	{
-		ui.lbFailed->hide();
+		ui.tabFail->hide();
+		return;
 	}
-	else
+
+	ui.lwFail->clear();
+	foreach(QString item, list)
 	{
-		ui.lbFailed->setText(tr("Nie udało się dopasować napisów dla %1 %2!").arg(failed)
-								.arg(tr((failed > 1) ? "plików" : "pliku")));
+		ui.lwFail->addItem(new QListWidgetItem(QIcon(":/ui/icon_cancel.png"),
+												QFileInfo(item).fileName()));
 	}
+	ui.lwFail->sortItems();
+
+	ui.tabWidget->setTabText(1, tr("Nie udało się dopasować napisów dla %1 %2")
+								.arg(list.size()).arg(tr(list.size() > 1 ? "plików" : "pliku")));
 }

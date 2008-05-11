@@ -8,75 +8,62 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>260</height>
+    <width>610</width>
+    <height>290</height>
    </rect>
   </property>
-  <property name="minimumSize" >
-   <size>
-    <width>360</width>
-    <height>160</height>
-   </size>
-  </property>
   <property name="windowTitle" >
-   <string>Rezultat dopasowania napisów</string>
+   <string>QNapi - rezultat dopasowania napisów</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout_3" >
    <item>
-    <widget class="QLabel" name="label" >
-     <property name="text" >
-      <string>Pobrano i dopasowano napisy dla następujących plików:</string>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="tabPosition" >
+      <enum>QTabWidget::North</enum>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QListWidget" name="lwFiles" />
-   </item>
-   <item>
-    <widget class="QLabel" name="lbFailed" >
-     <property name="palette" >
-      <palette>
-       <active>
-        <colorrole role="WindowText" >
-         <brush brushstyle="SolidPattern" >
-          <color alpha="255" >
-           <red>255</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </active>
-       <inactive>
-        <colorrole role="WindowText" >
-         <brush brushstyle="SolidPattern" >
-          <color alpha="255" >
-           <red>255</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </inactive>
-       <disabled>
-        <colorrole role="WindowText" >
-         <brush brushstyle="SolidPattern" >
-          <color alpha="255" >
-           <red>146</red>
-           <green>145</green>
-           <blue>144</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </disabled>
-      </palette>
+     <property name="currentIndex" >
+      <number>0</number>
      </property>
-     <property name="text" >
-      <string>Nie udało się dopasować napisów dla 0 plików.</string>
-     </property>
+     <widget class="QWidget" name="tabSuccess" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>590</width>
+        <height>206</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Pobrano napisy dla</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout" >
+       <item>
+        <widget class="QListWidget" name="lwSuccess" />
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabFail" >
+      <property name="geometry" >
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>590</width>
+        <height>206</height>
+       </rect>
+      </property>
+      <attribute name="title" >
+       <string>Nie udało się pobrać napisów</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
+       <item>
+        <widget class="QListWidget" name="lwFail" />
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -89,7 +76,7 @@
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>40</width>
          <height>20</height>
@@ -115,7 +102,7 @@
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>40</width>
          <height>20</height>
@@ -138,12 +125,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>178</x>
-     <y>216</y>
+     <x>348</x>
+     <y>308</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>178</x>
-     <y>118</y>
+     <x>348</x>
+     <y>164</y>
     </hint>
    </hints>
   </connection>

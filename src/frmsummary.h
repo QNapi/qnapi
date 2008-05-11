@@ -30,8 +30,8 @@ Q_OBJECT
 		frmSummary(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmSummary() {};
 
-		void setFileList(const QStringList & list);
-		void setFailedCount(unsigned int failed);
+		void setSuccessList(const QStringList & list);
+		void setFailedList(const QStringList & list);
 
 	private:
 		Ui::frmSummary ui;

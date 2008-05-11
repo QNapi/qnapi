@@ -47,15 +47,16 @@ int main(int argc, char *argv[])
 	if(args.size() > 0 )
 		args.removeAt(0);
 
-	//Jesli uruchomiono aplikacje poprzez alt+f2 w KDE3 i przeciagnieto plik
-	//to trzeba usunac 'file://' dodane przez okno uruchamiania
+	// Jesli uruchomiono aplikacje poprzez alt+f2 w KDE3 i przeciagnieto plik
+	// to trzeba usunac 'file://' dodane przez okno uruchamiania
 	for (int i = 0; i < args.size(); i++)
 	{
-		if(args[i].startsWith("file:///"))
+		if(args[i].startsWith("file://"))
 		{
 			args[i] = args[i].remove(0, 7);
 		}
 	}
+	// thx adrian5632
 
 	if(!app.isInstanceAllowed())
 	{
@@ -79,19 +80,31 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
-	if(!QSystemTrayIcon::isSystemTrayAvailable())
+	// Jesli podano parametry, ustawiamy tzw. batch mode
+	if(args.size() > 0)
 	{
+		form.enqueueFiles(args);
 		form.setBatchMode(true);
-		form.showOpenDialog();
-	}
-	else
-	{
-		form.createTrayIcon();
+		if(!form.download()) return 1;
 	}
 
+	// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u
+	// badz pokazac okno wyboru plikow z filmami
 	if(!form.isBatchMode())
-		QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(receiveRequest(QString)));
-
+	{
+		// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
+		if(!QSystemTrayIcon::isSystemTrayAvailable())
+		{
+			form.setBatchMode(true);
+			form.showOpenDialog();
+		}
+		else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
+		{
+			form.createTrayIcon();
+		}
+	}
+	
+	QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(receiveRequest(QString)));
+	
 	return app.exec();
 }

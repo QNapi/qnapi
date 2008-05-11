@@ -62,12 +62,32 @@ int QNapiCli::exec()
 		return 1;
 	}
 
+
+	if(!QNapiAbstractEngine::checkP7ZipPath())
+	{
+		printCli("Sciezka do programu p7zip jest nieprawidlowa!");
+		return 2;
+	}
+
+	if(!QNapiAbstractEngine::checkTmpPath())
+	{
+		printCli("Nie można pisac do katalogu tymczasowego! Sprawdz swoje ustawienia.");
+		return 3;
+	}
+
 	QNapiProjektEngine *napi;
 
 	foreach(QString movie, movieList)
 	{
 		napi = new QNapiProjektEngine(movie);
 		if(!napi) continue;
+
+		if(!napi->checkWritePermissions())
+		{
+			printCli(QString("Brak uprawnien zapisu do katalogu '%1'").arg(QFileInfo(movie).path()));
+			delete napi;
+			continue;
+		}
 
 		printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
 

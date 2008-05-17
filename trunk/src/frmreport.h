@@ -17,7 +17,6 @@
 
 #include "ui_frmreport.h"
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QFile>
 #include <QDir>
 #include <QStringList>
@@ -25,10 +24,10 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-//#include "napi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
+#include "qnapiopendialog.h"
 
 class ReportThread : public QNapiThread
 {

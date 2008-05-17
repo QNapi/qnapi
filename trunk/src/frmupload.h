@@ -17,17 +17,16 @@
 
 #include "ui_frmupload.h"
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QDir>
 #include <QStringList>
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-//#include "napi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
+#include "qnapiopendialog.h"
 
 class ScanThread : public QNapiThread
 {

@@ -34,7 +34,10 @@ frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&uploadThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&uploadThread, SIGNAL(checkingUserPass()), this, SLOT(checkingUserPass()));
 	connect(&uploadThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
-	
+
+	if(QFileInfo(GlobalConfig().previousDialogPath()).isDir())
+		ui.leSelectDirectory->setText(GlobalConfig().previousDialogPath());
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -84,10 +87,15 @@ void frmUpload::closeEvent(QCloseEvent *event)
 
 void frmUpload::selectDirectory()
 {
-	QString propDir = QFileInfo(ui.leSelectDirectory->text()).path();
-	QString dir = QFileDialog::getExistingDirectory(this, tr("Wskaż katalog do skanowania"),
-					QDir().exists(propDir) ? propDir  : GlobalConfig().previousDialogPath(),
-					QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	QString dir = QFileInfo(ui.leSelectDirectory->text()).path();
+	dir = QDir().exists(dir) ? dir : GlobalConfig().previousDialogPath();
+
+	QNapiOpenDialog openDialog(this, tr("Wskaż katalog do skanowania"),
+								dir, QNapiOpenDialog::None);
+
+	if(openDialog.selectDirectory())
+		dir = openDialog.selectedFiles().first();
+
 	if(!dir.isEmpty() && QDir().exists(dir))
 		ui.leSelectDirectory->setText(dir);
 }

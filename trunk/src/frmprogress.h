@@ -22,10 +22,8 @@
 #include <QFile>
 #include <QDir>
 #include <QMenu>
-#include <QFileDialog>
 #include <QCloseEvent>
 #include <QDesktopWidget>
-#include <QUrl>
 
 #include "frmabout.h"
 #include "frmoptions.h"
@@ -36,10 +34,10 @@
 #include "frmcreateuser.h"
 #include "frmsummary.h"
 
-//#include "napi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
+#include "qnapiopendialog.h"
 
 class GetThread : public QNapiThread
 {
@@ -115,7 +113,7 @@ class frmProgress: public QWidget
 				*reportBadAction, *optionsAction, *createUserAction,
 				*aboutAction, *quitAction;
 
-		QFileDialog *openDialog;
+		QNapiOpenDialog *openDialog;
 		frmOptions *options;
 		frmCreateUser *createUser;
 		frmAbout *about;
@@ -132,7 +130,6 @@ class frmProgress: public QWidget
 		QMutex mutex;
 
 	private slots:
-		void updatePreviousPath(const QString & path);
 		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 };
 

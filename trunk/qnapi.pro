@@ -24,7 +24,8 @@ SOURCES += src/main.cpp \
  src/qcumber/qsingleapplication.cpp \
  src/qnapiabstractengine.cpp \
  src/qnapiprojektengine.cpp \
- src/qnapicli.cpp
+ src/qnapicli.cpp \
+ src/qnapiopendialog.cpp
 HEADERS += src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
@@ -48,7 +49,8 @@ HEADERS += src/frmprogress.h \
  src/qcumber/qcumber.h \
  src/qnapiabstractengine.h \
  src/qnapiprojektengine.h \
- src/qnapicli.h
+ src/qnapicli.h \
+ src/qnapiopendialog.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -88,7 +90,7 @@ unix {
  man.path =  $${INSTALL_PREFIX}/share/man/man1
  man.files =  doc/$${TARGET}.1.gz
  icons.path =  /usr/share/icons
- icons.files =  res/qnapi.png res/qnapi-48.png res/qnapi-128.png res/qnapi-512.png
+ icons.files =  res/qnapi.png  res/qnapi-48.png  res/qnapi-128.png  res/qnapi-512.png
  desktop.path =  /usr/share/applications
  desktop.files =  doc/$${TARGET}.desktop
  dolphin_integration.path =  /usr/share/apps/dolphin/servicemenus

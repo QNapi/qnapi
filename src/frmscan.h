@@ -18,15 +18,14 @@
 #include "ui_frmscan.h"
 #include <QDesktopWidget>
 #include <QFileInfo>
-#include <QFileDialog>
 #include <QDir>
 #include <QCloseEvent>
 #include <QVariant>
 
-//#include "napi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
+#include "qnapiopendialog.h"
 
 #include "frmsummary.h"
 

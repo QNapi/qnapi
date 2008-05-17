@@ -118,10 +118,15 @@ bool frmScan::pbCancelClicked()
 
 void frmScan::selectDirectory()
 {
-	QString propDir = QFileInfo(ui.leDirectory->text()).path();
-	QString dir = QFileDialog::getExistingDirectory(this, tr("Wskaż katalog do przeskanowania"),
-					QDir().exists(propDir) ? propDir  : GlobalConfig().previousDialogPath(),
-					QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	QString dir = QFileInfo(ui.leDirectory->text()).path();
+	dir = QDir().exists(dir) ? dir : GlobalConfig().lastScanDir();
+
+	QNapiOpenDialog openDialog(this, tr("Wskaż katalog do skanowania"),
+								dir, QNapiOpenDialog::None);
+
+	if(openDialog.selectDirectory())
+		dir = openDialog.selectedFiles().first();
+
 	if(!dir.isEmpty() && QDir().exists(dir))
 		ui.leDirectory->setText(dir);
 }

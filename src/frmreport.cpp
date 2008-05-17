@@ -61,11 +61,15 @@ void frmReport::closeEvent(QCloseEvent *event)
 
 void frmReport::selectMovie()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Wskaż plik z filmem"),
-													GlobalConfig().previousDialogPath(),
-													tr("Filmy (*.avi *.asf *.divx *.mkv *.mp4"
-													" *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv);;"
-													"Wszystkie pliki (*.*)"));
+	QString fileName;
+	QNapiOpenDialog openDialog(this, tr("Wskaż plik z filmem"),
+								GlobalConfig().previousDialogPath(), QNapiOpenDialog::Movies);
+
+	if(openDialog.selectFile())
+	{
+		fileName = openDialog.selectedFiles().first();
+		GlobalConfig().setPreviousDialogPath(openDialog.directory().path());
+	}
 
 	if(!fileName.isEmpty() && QFile::exists(fileName))
 		ui.leMovieSelect->setText(fileName);

@@ -16,7 +16,6 @@
 #define __FRMCORRECT__H__
 
 #include "ui_frmcorrect.h"
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>
@@ -25,10 +24,10 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-//#include "napi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
 #include "qnapiprojektengine.h"
+#include "qnapiopendialog.h"
 
 class PostThread : public QNapiThread
 {

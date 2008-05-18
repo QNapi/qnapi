@@ -69,18 +69,14 @@ class frmProgress: public QWidget
 		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmProgress(){};
 
-		
-
 	public slots:
 
-		void receiveRequest(QString request);
+		void receiveRequest(const QString & request);
 		void enqueueFile(const QString &file);
 		void enqueueFiles(const QStringList &fileList);
 		bool download();
 		void updateProgress(int current, int all, float stageProgress);
 		void downloadFinished();
-
-		
 
 		void setBatchMode(bool value) { batchMode = value; }
 		bool isBatchMode() { return batchMode; }
@@ -91,7 +87,6 @@ class frmProgress: public QWidget
 		void dropEvent(QDropEvent *event);
 
 		Ui::frmProgress ui;
-
 
 		GetThread getThread;
 

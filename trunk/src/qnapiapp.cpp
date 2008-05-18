@@ -27,7 +27,9 @@ QNapiApp::QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv)
 	report = 0;
 
 	progress = new frmProgress();
+	if(!progress) quit();
 	progress->connect(this, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
+	progress->connect(this, SIGNAL(downloadFile(const QString &)), SLOT(receiveRequest(const QString &)));
 }
 
 QNapiApp::~QNapiApp()

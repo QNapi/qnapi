@@ -42,7 +42,7 @@ const QString napiCreateUserUrlTpl = "http://www.napiprojekt.pl/users_add.php";
 class QNapiProjektEngine : public QNapiAbstractEngine
 {
 public:
-	
+
 	enum UploadResult
 	{
 		NAPI_ADDED_NEW, NAPI_OK, NAPI_FAIL, NAPI_UNKNOWN

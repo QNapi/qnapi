@@ -19,20 +19,76 @@
 #include <QString>
 #include <QEvent>
 #include <QFileOpenEvent>
+#include <QMenu>
+#include <QAction>
+#include <QSystemTrayIcon>
 
 #include "qcumber/qsingleapplication.h"
+
+#include "frmprogress.h"
+#include "frmabout.h"
+#include "frmoptions.h"
+#include "frmupload.h"
+#include "frmcorrect.h"
+#include "frmreport.h"
+#include "frmscan.h"
+#include "frmcreateuser.h"
+#include "frmsummary.h"
+
+#include "qnapiconfig.h"
+#include "qnapiopendialog.h"
+
 
 class QNapiApp : public QSingleApplication
 {
 	Q_OBJECT
 	public:
-		QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv) {}
+		QNapiApp(int argc, char **argv);
+		~QNapiApp();
+
+		void createTrayIcon();
+		void showTrayMessage(QString title, QString msg);
+		frmProgress *progress;
+
+	public slots:
+
+		void showOpenDialog();
+		void showScanDialog();
+		void showUploadDialog();
+		void showCorrectDialog();
+		void showReportDialog();
+		void showOptions();
+		void showCreateUser();
+		void showAbout();
+		void tryQuit();
 
 	signals:
 		void downloadFile(const QString & fileName);
 
 	private:
+
 		bool event(QEvent *ev);
+
+		QSystemTrayIcon *trayIcon;
+		QMenu *trayIconMenu, *napiSubMenu;
+		QAction *getAction, *scanAction, *addNewAction, *addCorrectedAction,
+				*reportBadAction, *optionsAction, *createUserAction,
+				*aboutAction, *quitAction;
+
+		QNapiOpenDialog *openDialog;
+		
+		frmOptions *options;
+		frmCreateUser *createUser;
+		frmAbout *about;
+		frmScan *scan;
+		frmUpload *upload;
+		frmCorrect *correct;
+		frmReport *report;
+
+	private slots:
+
+		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
 };
 
 #endif

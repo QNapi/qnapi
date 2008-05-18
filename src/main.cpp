@@ -17,7 +17,6 @@
 #include <QSystemTrayIcon>
 #include <QStringList>
 #include <QTextCodec>
-#include "frmprogress.h"
 #include "version.h"
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
@@ -25,9 +24,9 @@
 
 int main(int argc, char *argv[])
 {
-	// Workarond: potrzebne, aby QEventLoop nie krzyczal, ze mu brakuje obiektu aplikacji ;)
+	// Workarond: potrzebne, aby QEventLoop nie krzyczal, ze mu brakuje obiektu aplikacji
 	QCoreApplication *a = new QCoreApplication(argc, argv);
-	
+
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QNapiCli cliApp(argc, argv);
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
 
 	// Kasujemy tymczasowy obiekt aplikacji
 	if(a) delete a;
-	
+
 	QNapiApp app(argc, argv);
 	QNapiApp::setApplicationName("QNapi");
 
@@ -52,9 +51,7 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < args.size(); i++)
 	{
 		if(args[i].startsWith("file://"))
-		{
 			args[i] = args[i].remove(0, 7);
-		}
 	}
 	// thx adrian5632
 
@@ -66,9 +63,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	frmProgress form(0, 0);
-	form.connect(&app, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
-
 	if(GlobalConfig().firstRun())
 	{
 		if(QMessageBox::question(0, QObject::tr("Pierwsze uruchomienie"),
@@ -76,35 +70,35 @@ int main(int argc, char *argv[])
 				"teraz skonfigurować?"), QMessageBox::Yes | QMessageBox::No )
 			== QMessageBox::Yes )
 		{
-			form.showOptions();
+			app.showOptions();
 		}
 	}
 
 	// Jesli podano parametry, ustawiamy tzw. batch mode
 	if(args.size() > 0)
 	{
-		form.enqueueFiles(args);
-		form.setBatchMode(true);
-		if(!form.download()) return 1;
+		app.progress->enqueueFiles(args);
+		app.progress->setBatchMode(true);
+		if(!app.progress->download()) return 1;
 	}
 
 	// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u
 	// badz pokazac okno wyboru plikow z filmami
-	if(!form.isBatchMode())
+	if(!app.progress->isBatchMode())
 	{
 		// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
 		if(!QSystemTrayIcon::isSystemTrayAvailable())
 		{
-			form.setBatchMode(true);
-			form.showOpenDialog();
+			app.progress->setBatchMode(true);
+			app.showOpenDialog();
 		}
 		else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
 		{
-			form.createTrayIcon();
+			app.createTrayIcon();
 		}
 	}
-	
-	QObject::connect(&app, SIGNAL(downloadFile(QString)), &form, SLOT(receiveRequest(QString)));
-	
+
+	QObject::connect(&app, SIGNAL(downloadFile(QString)), app.progress, SLOT(receiveRequest(QString)));
+
 	return app.exec();
 }

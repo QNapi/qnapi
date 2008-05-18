@@ -98,7 +98,5 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	QObject::connect(&app, SIGNAL(downloadFile(QString)), app.progress, SLOT(receiveRequest(QString)));
-
 	return app.exec();
 }

@@ -245,7 +245,8 @@ QNapiProjektEngine::UploadResult
 							+ QFileInfo(newSubtitlesName).completeBaseName() + ".zip";
 
 	QStringList args;
-	args << "a" << "-l" << "-y" << zipFileName << ("-p"+napiZipPassword) << newSubtitlesName;
+	args << "a" << "-l" << "-t7z" << "-bd" << "-y" << zipFileName
+			<< (QString("-p")+napiZipPassword) << newSubtitlesName;
 
 	QProcess p7zip;
 	p7zip.start(p7zipPath, args);

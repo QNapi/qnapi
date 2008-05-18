@@ -37,9 +37,7 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 			this, SLOT(downloadFinished()));
 }
 
-
-
-void frmProgress::receiveRequest(QString request)
+void frmProgress::receiveRequest(const QString & request)
 {
 	enqueueFile(request);
 	if(!getThread.isRunning())

@@ -21,17 +21,10 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>
-#include <QMenu>
 #include <QCloseEvent>
 #include <QDesktopWidget>
+#include <QMutex>
 
-#include "frmabout.h"
-#include "frmoptions.h"
-#include "frmupload.h"
-#include "frmcorrect.h"
-#include "frmreport.h"
-#include "frmscan.h"
-#include "frmcreateuser.h"
 #include "frmsummary.h"
 
 #include "qnapithread.h"
@@ -76,7 +69,7 @@ class frmProgress: public QWidget
 		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmProgress(){};
 
-		void createTrayIcon();
+		
 
 	public slots:
 
@@ -87,15 +80,7 @@ class frmProgress: public QWidget
 		void updateProgress(int current, int all, float stageProgress);
 		void downloadFinished();
 
-		void showOpenDialog();
-		void showScanDialog();
-		void showUploadDialog();
-		void showCorrectDialog();
-		void showReportDialog();
-		void showOptions();
-		void showCreateUser();
-		void showAbout();
-		void quit();
+		
 
 		void setBatchMode(bool value) { batchMode = value; }
 		bool isBatchMode() { return batchMode; }
@@ -107,20 +92,6 @@ class frmProgress: public QWidget
 
 		Ui::frmProgress ui;
 
-		QSystemTrayIcon *trayIcon;
-		QMenu *trayIconMenu, *napiSubMenu;
-		QAction *getAction, *scanAction, *addNewAction, *addCorrectedAction,
-				*reportBadAction, *optionsAction, *createUserAction,
-				*aboutAction, *quitAction;
-
-		QNapiOpenDialog *openDialog;
-		frmOptions *options;
-		frmCreateUser *createUser;
-		frmAbout *about;
-		frmScan *scan;
-		frmUpload *upload;
-		frmCorrect *correct;
-		frmReport *report;
 
 		GetThread getThread;
 
@@ -129,8 +100,6 @@ class frmProgress: public QWidget
 		bool showSummary;
 		QMutex mutex;
 
-	private slots:
-		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 };
 
 #endif

@@ -13,7 +13,7 @@
 *****************************************************************************/
 
 #include "frmoptions.h"
-#include "frmprogress.h"
+#include "qnapiapp.h"
 
 frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 {
@@ -102,12 +102,8 @@ void frmOptions::selectTmpPath()
 
 void frmOptions::pbRegisterClicked()
 {
-	frmProgress *main = dynamic_cast<frmProgress*>(parent());
-	if(main) 
-	{
-		main->showCreateUser();
-		readConfig();
-	}
+	((QNapiApp*)qApp)->showCreateUser();
+	readConfig();
 }
 
 void frmOptions::changeEncodingClicked()

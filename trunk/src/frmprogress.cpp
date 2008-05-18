@@ -13,19 +13,11 @@
 *****************************************************************************/
 
 #include "frmprogress.h"
+#include "qnapiapp.h"
 
 frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 {
 	ui.setupUi(this);
-
-	openDialog = 0;
-	options = 0;
-	createUser = 0;
-	about = 0;
-	scan = 0;
-	upload = 0;
-	correct = 0;
-	report = 0;
 
 #ifdef Q_WS_MAC
 	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
@@ -45,68 +37,7 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 			this, SLOT(downloadFinished()));
 }
 
-void frmProgress::createTrayIcon()
-{
-	getAction = new QAction(tr("Pobierz"), this);
-	connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 
-	scanAction = new QAction(tr("Skanuj katalogi i dopasuj napisy"), this);
-	connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
-
-	addNewAction = new QAction(tr("Dodaj nowe"), this);
-	connect(addNewAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
-
-	addCorrectedAction = new QAction(tr("Dodaj poprawione"), this);
-	connect(addCorrectedAction, SIGNAL(triggered()), this, SLOT(showCorrectDialog()));
-
-	reportBadAction = new QAction(tr("Zgłoś niepasujące"), this);
-	connect(reportBadAction, SIGNAL(triggered()), this, SLOT(showReportDialog()));
-
-	optionsAction = new QAction(tr("Opcje"), this);
-	connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
-
-	createUserAction = new QAction(tr("Załóż konto"), this);
-	connect(createUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
-
-	aboutAction = new QAction(tr("O programie"), this);
-	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
-
-	quitAction = new QAction(tr("Zakończ"), this);
-	connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
-
-	napiSubMenu = new QMenu(this);
-	napiSubMenu->setTitle(tr("Napisy"));
-	napiSubMenu->addAction(getAction);
-	napiSubMenu->addAction(scanAction);
-	napiSubMenu->addSeparator();
-	napiSubMenu->addAction(addNewAction);
-	napiSubMenu->addAction(addCorrectedAction);
-	napiSubMenu->addSeparator();
-	napiSubMenu->addAction(reportBadAction);
-
-	trayIconMenu = new QMenu(this);
-	trayIconMenu->addMenu(napiSubMenu);
-	trayIconMenu->addSeparator();
-	trayIconMenu->addAction(optionsAction);
-	trayIconMenu->addAction(createUserAction);
-	trayIconMenu->addAction(aboutAction);
-	trayIconMenu->addSeparator();
-	trayIconMenu->addAction(quitAction);
-
-	trayIcon = new QSystemTrayIcon(this);
-	trayIcon->setContextMenu(trayIconMenu);
-
-#ifdef Q_WS_MAC
-	trayIcon->setIcon(QIcon(":/icon/qnapi-22-mono.png"));
-#else
-	trayIcon->setIcon(QIcon(":/icon/qnapi.png"));
-#endif
-
-	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-			this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-
-	trayIcon->show();
-}
 
 void frmProgress::receiveRequest(QString request)
 {
@@ -248,7 +179,7 @@ void frmProgress::downloadFinished()
 							.arg(tr((getThread.napiFail > 1) ? "plików" : "pliku"));
 #ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
-					trayIcon->showMessage(tr("Zakończono pobieranie napisów"), msg, QSystemTrayIcon::Information);
+					((QNapiApp*)qApp)->showTrayMessage(tr("Zakończono pobieranie napisów"), msg);
 				else
 #endif
 					QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
@@ -261,7 +192,7 @@ void frmProgress::downloadFinished()
 				QString msg = tr("Pobrano napisy dla pliku '%1'.").arg(QFileInfo(queue[0]).fileName());
 #ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
-					trayIcon->showMessage(tr("Pobrano napisy"), msg, QSystemTrayIcon::Information);
+					((QNapiApp*)qApp)->showTrayMessage(tr("Pobrano napisy"), msg);
 				else
 #endif
 					QMessageBox::information(0, tr("Pobrano napisy"), msg);
@@ -271,147 +202,16 @@ void frmProgress::downloadFinished()
 				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(queue[0]).fileName());
 #ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
-					trayIcon->showMessage(tr("Nie znaleziono napisów"), msg, QSystemTrayIcon::Information);
+					((QNapiApp*)qApp)->showTrayMessage(tr("Nie znaleziono napisów"), msg);
 				else
 #endif
-						QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
+					QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
 			}
 		}
 	}
 	mutex.unlock();
 	if(batchMode)
 		qApp->quit();
-}
-
-void frmProgress::showOpenDialog()
-{
-	QStringList fileList;
-
-	if(!openDialog)
-	{
-		if( !(openDialog = new QNapiOpenDialog(this,
-								tr("Wybierz jeden lub więcej plików z filmami"),
-								GlobalConfig().previousDialogPath(),
-								QNapiOpenDialog::Movies))
-		)
-			return;
-	}
-
-	if(openDialog->selectFiles())
-	{
-		fileList = openDialog->selectedFiles();
-		GlobalConfig().setPreviousDialogPath(openDialog->directory().path());
-	}
-
-	delete openDialog;
-	openDialog = 0;
-
-	if(!fileList.isEmpty())
-	{
-		enqueueFiles(fileList);
-		download();
-	}
-	else if(batchMode)
-		qApp->quit();
-}
-
-void frmProgress::showScanDialog()
-{
-	if(!scan) scan = new frmScan(this);
-	if(scan->isVisible())
-	{
-		scan->raise();
-		return;
-	}
-	scan->exec();
-	delete scan;
-	scan = 0;
-}
-
-void frmProgress::showUploadDialog()
-{
-	if(!upload) upload = new frmUpload(this);
-	if(upload->isVisible())
-	{
-		upload->raise();
-		return;
-	}
-	upload->exec();
-	delete upload;
-	upload = 0;
-}
-
-void frmProgress::showCorrectDialog()
-{
-	if(!correct) correct = new frmCorrect(this);
-	if(correct->isVisible())
-	{
-		correct->raise();
-		return;
-	}
-	correct->exec();
-	delete correct;
-	correct = 0;
-}
-
-void frmProgress::showReportDialog()
-{
-	if(!report) report = new frmReport(this);
-	if(report->isVisible())
-	{
-		report->raise();
-		return;
-	}
-	report->exec();
-	delete report;
-	report = 0;
-}
-
-void frmProgress::showOptions()
-{
-	if(!options)
-	{
-		options = new frmOptions(this);
-		options->readConfig();
-	}
-
-	if(options->isVisible())
-	{
-		options->raise();
-		return;
-	}
-
-	if(options->exec() == QDialog::Accepted)
-		options->writeConfig();
-
-	delete options;
-	options = 0;
-}
-
-void frmProgress::showCreateUser()
-{
-	if(!createUser) createUser = new frmCreateUser(this);
-	if(createUser->isVisible())
-	{
-		createUser->raise();
-		return;
-	}
-	createUser->exec();
-	delete createUser;
-	createUser = 0;
-}
-
-void frmProgress::showAbout()
-{
-	if(!about) about = new frmAbout(this);
-	if(about->isVisible())
-	{
-		about->raise();
-		return;
-	}
-	about->exec();
-	delete about;
-	about = 0;
 }
 
 void frmProgress::closeEvent(QCloseEvent *event)
@@ -462,21 +262,6 @@ void frmProgress::dropEvent(QDropEvent *event)
 		if(!info.exists() || !info.isFile()) continue;
 		enqueueFile(url.toLocalFile());
 	}
-}
-
-void frmProgress::quit()
-{
-	if(isVisible() && !close()) return;
-	qApp->quit();
-}
-
-void frmProgress::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
-{
-	if(reason == QSystemTrayIcon::Trigger)
-#ifndef Q_WS_MAC
-		showOpenDialog()
-#endif
-	;
 }
 
 void GetThread::run()

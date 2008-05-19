@@ -23,8 +23,8 @@
 /*!
 	\brief Constructor
 */
-QSingleApplication::QSingleApplication(int& argc, char **argv)
- : QApplication(argc, argv)
+QSingleApplication::QSingleApplication(int& argc, char **argv, bool useGui)
+ : QApplication(argc, argv, useGui)
 {
 	pChannel = new QInterProcessChannel(this);
 	

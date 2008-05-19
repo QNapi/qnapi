@@ -46,7 +46,7 @@ class QCUMBER_EXPORT QSingleApplication : public QApplication
 			Signals
 		};
 		
-		QSingleApplication(int& argc, char **argv);
+		QSingleApplication(int& argc, char **argv, bool useGui);
 		virtual ~QSingleApplication();
 		
 		bool isInstanceAllowed() const;

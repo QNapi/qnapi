@@ -229,8 +229,6 @@ QNapiProjektEngine::UploadResult
 		return NAPI_FAIL;
 
 	MovieInfo movieInfo(moviePath);
-	if(movieInfo.isErr)
-		return NAPI_FAIL;
 
 	unsigned long movie_size = QFileInfo(moviePath).size();
 	QString movie_md5 = checksum(moviePath);
@@ -328,8 +326,18 @@ QNapiProjektEngine::UploadResult
 	QString movie_fps = QString::number((int)ceil(movieInfo.fps * 100));
 	movie_fps.insert(2, ',');
 
-	QString urlTxt = napiUploadUrlTpl.arg(movieInfo.time).arg(movieInfo.width).arg(movieInfo.height)
-						.arg(movie_fps).arg(movie_md5).arg(movie_size);
+	QString urlTxt;
+	
+	if(movieInfo.isErr)
+	{
+		urlTxt = napiUploadUrlSimpleTpl.arg(movie_md5).arg(movie_size);
+	}
+	else
+	{
+		urlTxt = napiUploadUrlTpl.arg(movieInfo.time).arg(movieInfo.width)
+									.arg(movieInfo.height).arg(movie_fps)
+									.arg(movie_md5).arg(movie_size);
+	}
 
 	QUrl url(urlTxt);
 

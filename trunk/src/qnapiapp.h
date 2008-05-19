@@ -43,12 +43,13 @@ class QNapiApp : public QSingleApplication
 {
 	Q_OBJECT
 	public:
-		QNapiApp(int argc, char **argv);
+		QNapiApp(int & argc, char **argv, bool useGui);
 		~QNapiApp();
 
 		void createTrayIcon();
 		void showTrayMessage(QString title, QString msg);
-		frmProgress *progress;
+
+		frmProgress * progress();
 
 	public slots:
 
@@ -77,6 +78,7 @@ class QNapiApp : public QSingleApplication
 
 		QNapiOpenDialog *openDialog;
 		
+		frmProgress *f_progress;
 		frmOptions *options;
 		frmCreateUser *createUser;
 		frmAbout *about;

@@ -58,10 +58,9 @@ int QNapiCli::exec()
 
 	if(movieList.empty())
 	{
-		printCli("Nie podano plikow z napisami!");
+		printCli("Nie podano sciezki do pliku z filmem!");
 		return 1;
 	}
-
 
 	if(!QNapiAbstractEngine::checkP7ZipPath())
 	{

@@ -14,10 +14,10 @@
 
 #include "qnapiapp.h"
 
-QNapiApp::QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv)
+QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(argc, argv, useGui)
 {
 	openDialog = 0;
-	progress = 0;
+	f_progress = 0;
 	options = 0;
 	createUser = 0;
 	about = 0;
@@ -25,16 +25,25 @@ QNapiApp::QNapiApp(int argc, char **argv) : QSingleApplication(argc, argv)
 	upload = 0;
 	correct = 0;
 	report = 0;
-
-	progress = new frmProgress();
-	if(!progress) quit();
-	progress->connect(this, SIGNAL(request(QString)), SLOT(receiveRequest(QString)));
-	progress->connect(this, SIGNAL(downloadFile(const QString &)), SLOT(receiveRequest(const QString &)));
 }
 
 QNapiApp::~QNapiApp()
 {
-	if(progress) delete progress;
+	if(f_progress) delete f_progress;
+}
+
+frmProgress * QNapiApp::progress()
+{
+	if(!f_progress)
+	{
+		f_progress = new frmProgress();
+		if(!f_progress) abort();
+		connect(this, SIGNAL(request(QString)),
+				f_progress, SLOT(receiveRequest(QString)));
+		connect(this, SIGNAL(downloadFile(const QString &)),
+				f_progress, SLOT(receiveRequest(const QString &)));
+	}
+	return f_progress;
 }
 
 void QNapiApp::createTrayIcon()
@@ -130,10 +139,10 @@ void QNapiApp::showOpenDialog()
 
 	if(!fileList.isEmpty())
 	{
-		progress->enqueueFiles(fileList);
-		progress->download();
+		progress()->enqueueFiles(fileList);
+		progress()->download();
 	}
-	else if(progress->isBatchMode())
+	else if(progress()->isBatchMode())
 		quit();
 }
 
@@ -239,7 +248,7 @@ void QNapiApp::showAbout()
 
 void QNapiApp::tryQuit()
 {
-	if(progress->isVisible() && !progress->close()) return;
+	if(progress()->isVisible() && !progress()->close()) return;
 	quit();
 }
 

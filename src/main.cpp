@@ -27,16 +27,14 @@ int main(int argc, char **argv)
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 	QStringList args;
-	for(int i = 0; i < argc; i++)
+	for(int i = 1; i < argc; i++)
 	{
 		QString p = argv[i];
 		if(p.startsWith("file://"))
 			p = p.remove(0, 7);
-		args << p;
+		if(QFileInfo(p).isFile())
+			args << p;
 	}
-
-	if(args.size() > 0 )
-		args.removeAt(0);
 
 	QNapiCli cliApp(argc, argv);
 	bool useGui = !cliApp.analyze();
@@ -52,8 +50,7 @@ int main(int argc, char **argv)
 	if(!app.isInstanceAllowed())
 	{
 		for(int i = 0; i < args.size(); i++)
-			if(QFileInfo(args[i]).isFile())
-				app.sendRequest(args[i]);
+			app.sendRequest(args[i]);
 		return 0;
 	}
 

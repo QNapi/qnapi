@@ -36,6 +36,8 @@ const QString napiDownloadUrlTpl= "http://www.napiprojekt.pl/unit_napisy/dl.php"
 const QString napiCheckUserUrlTpl = "http://www.napiprojekt.pl/users_check.php?nick=%1&pswd=%2";
 const QString napiUploadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/upload.php"
 				"?m_length=%1&m_resolution=%2x%3&m_fps=%4&m_hash=%5&m_filesize=%6";
+const QString napiUploadUrlSimpleTpl = "http://www.napiprojekt.pl/unit_napisy/upload.php"
+				"?m_hash=%5&m_filesize=%6";
 const QString napiReportBadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/zlenapisyadd.php";
 const QString napiCreateUserUrlTpl = "http://www.napiprojekt.pl/users_add.php";
 

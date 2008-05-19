@@ -148,7 +148,7 @@ void frmCorrect::postFinished(bool interrupted)
 	ui.pbSubtitlesSelect->setEnabled(true);
 	ui.teComment->setEnabled(true);
 	ui.pbPost->setText(tr("Wyślij"));
-	
+
 	if(interrupted)
 	{
 		ui.lbAction->setText(tr("Przerwano wysyłanie poprawki."));

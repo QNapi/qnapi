@@ -41,7 +41,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 	
 #ifdef Q_WS_MAC
 	sideUrls << "/Volumes";
-	openDialog->setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
+	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 #endif
 
 	sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")

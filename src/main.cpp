@@ -22,38 +22,32 @@
 #include "qnapiapp.h"
 #include "qnapicli.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-	// Workarond: potrzebne, aby QEventLoop nie krzyczal, ze mu brakuje obiektu aplikacji
-	QCoreApplication *a = new QCoreApplication(argc, argv);
-
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-	QNapiCli cliApp(argc, argv);
-	if(cliApp.analyze())
-		return cliApp.exec();
-
-	// Kasujemy tymczasowy obiekt aplikacji
-	if(a) delete a;
-
-	QNapiApp app(argc, argv);
-	QNapiApp::setApplicationName("QNapi");
-
-	app.setQuitOnLastWindowClosed(false);
-
-	QStringList args = app.arguments();
+	QStringList args;
+	for(int i = 0; i < argc; i++)
+	{
+		QString p = argv[i];
+		if(p.startsWith("file://"))
+			p = p.remove(0, 7);
+		args << p;
+	}
 
 	if(args.size() > 0 )
 		args.removeAt(0);
 
-	// Jesli uruchomiono aplikacje poprzez alt+f2 w KDE3 i przeciagnieto plik
-	// to trzeba usunac 'file://' dodane przez okno uruchamiania
-	for (int i = 0; i < args.size(); i++)
-	{
-		if(args[i].startsWith("file://"))
-			args[i] = args[i].remove(0, 7);
-	}
-	// thx adrian5632
+	QNapiCli cliApp(argc, argv);
+	bool useGui = !cliApp.analyze();
+
+	QNapiApp app(argc, argv, useGui);
+	QNapiApp::setApplicationName("QNapi");
+
+	if(!useGui)
+		return cliApp.exec();
+
+	app.setQuitOnLastWindowClosed(false);
 
 	if(!app.isInstanceAllowed())
 	{
@@ -77,19 +71,19 @@ int main(int argc, char *argv[])
 	// Jesli podano parametry, ustawiamy tzw. batch mode
 	if(args.size() > 0)
 	{
-		app.progress->enqueueFiles(args);
-		app.progress->setBatchMode(true);
-		if(!app.progress->download()) return 1;
+		app.progress()->enqueueFiles(args);
+		app.progress()->setBatchMode(true);
+		if(!app.progress()->download()) return 1;
 	}
 
 	// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u
 	// badz pokazac okno wyboru plikow z filmami
-	if(!app.progress->isBatchMode())
+	if(!app.progress()->isBatchMode())
 	{
 		// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
 		if(!QSystemTrayIcon::isSystemTrayAvailable())
 		{
-			app.progress->setBatchMode(true);
+			app.progress()->setBatchMode(true);
 			app.showOpenDialog();
 		}
 		else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja

@@ -113,7 +113,8 @@ unix {
   dolphin_integration \
   d3lphin_integration \
   konqueror_integration \
-  kde4_integration
+  kde4_integration \
+  gnome_integration
 }
 win32 {
  RC_FILE =  win32/qnapi.rc

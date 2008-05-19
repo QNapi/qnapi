@@ -42,6 +42,11 @@ bool QNapiCli::analyze()
 		}
 	}
 
+#ifdef Q_WS_X11
+	if((getenv("DISPLAY") == 0) && (mode == CM_UNSET))
+		mode = CM_CONSOLE;
+#endif
+
 	return (mode == CM_CONSOLE) || (mode == CM_QUIET);
 }
 

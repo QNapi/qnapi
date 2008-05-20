@@ -92,8 +92,8 @@ przez Ciebie programu.
 
 KDE (Dolphin/Konqueror)
 -----------------------
-UWAGA: od wersji 0.1.4 QNapi powinien automatycznie integrowac sie z programami Dolphin
-oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie dzialac, mozesz
+UWAGA: Od wersji 0.1.4 QNapi powinien automatycznie integrować się z programami Dolphin
+oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie działać, możesz
 skorzystac z drugiego sposobu:
 
 Będzie potrzebny plik qnapi-download.dekstop, który możesz znaleźć w katalogu
@@ -109,11 +109,29 @@ Lub globalnie (wymaga uprawnień administratora):
  *  /usr/share/apps/d3lphin/servicemenus/
  *  /usr/share/apps/dolphin/servicemenus/
 
+Dla KDE4:
+
+* ~/.kde4/share/kde4/services/ServiceMenus/
+
+Globalnie dla KDE4:
+ * /usr/lib/kde4/share/kde4/services/ServiceMenus/
+
+Powyższe katalogi mogą być nieco inne w Twojej dystrybucji, w zależności od tego, gdzie
+zostało zainstalowane KDE.
+
 Nautilus
 --------
-Aby zintegrować QNapi z Nautilusem, potrzebny bedzie zainstalowany pakiet
-nautilus-actions oraz plik qnapi-download.schemas, który znajdziesz w katalogu
-/usr/share/doc/qnapi lub na stronie domowej programu (http://krzemin.iglu.cz/qnapi).
+UWAGA: Od wersji 0.1.5 QNapi powinien automatycznie integrować sie z Nautilusem po
+zainstalowaniu pakietu qnapi-gnome, wlaściwego dla Twojej dystrybucji oraz po
+ponownym uruchomieniu systemu (lub przeładowaniu demona gconfd).
+
+Jeśli automatyczna integracja nie zadziała, bądź nie chcesz (nie możesz) zainstalować
+dodatkowego pakietu, możesz skorzystać z alternatywnego spososbu na integrację QNapi
+z Nautilusem:
+
+Potrzebny bedzie zainstalowany pakiet nautilus-actions oraz plik qnapi-download.schemas,
+który znajdziesz w katalogu /usr/share/doc/qnapi lub na stronie domowej programu
+(http://krzemin.iglu.cz/qnapi).
 
 Wystarczy skopiować plik qnapi-download.schemas do katalogu /usr/share/gconf/schemas/
 i wykonać polecenie:

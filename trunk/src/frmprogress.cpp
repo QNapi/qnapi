@@ -97,6 +97,8 @@ bool frmProgress::download()
 	}
 
 	showSummary = true;
+	closeRequested = false;
+	ui.pbCancel->setEnabled(true);
 
 	getThread.start();
 	return true;
@@ -207,6 +209,10 @@ void frmProgress::downloadFinished()
 			}
 		}
 	}
+
+	if(closeRequested)
+		close();
+
 	mutex.unlock();
 	if(batchMode)
 		qApp->quit();
@@ -227,16 +233,20 @@ void frmProgress::closeEvent(QCloseEvent *event)
 		{
 			mutex.lock();
 			showSummary = false;
-			mutex.unlock();
 			getThread.requestAbort();
 			ui.lbAction->setText(tr("Kończenie zadań..."));
 			ui.lbFileName->setText("...");
+			ui.pbCancel->setEnabled(false);
 			qApp->processEvents();
-			getThread.terminate();
-			getThread.wait();
+			closeRequested = true;
+			mutex.unlock();
+			event->ignore();
 		}
 	}
-	event->accept();
+	else
+	{
+		event->accept();
+	}
 }
 
 void frmProgress::dragEnterEvent(QDragEnterEvent *event)
@@ -360,7 +370,7 @@ void GetThread::run()
 		{
 			emit progressChange(i, queue.size(), 0.9);
 			emit actionChange(tr("Post-przetwarzanie napisów..."));
-			
+
 			napi->doPostProcessing();
 		}
 

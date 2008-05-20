@@ -55,6 +55,7 @@ class UploadThread : public QNapiThread
 		void run();
 		void setMovieList(const QStringList & list) { movieList = list; }
 		unsigned int added_new, added_ok, failed;
+		bool invalidUP;
 
 	signals:
 		void progressChange(int progress);

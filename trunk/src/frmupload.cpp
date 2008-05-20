@@ -211,17 +211,21 @@ void frmUpload::uploadFinished()
 	ui.pbUpload->setText(tr("Wyślij napisy do serwera"));
 	ui.pbProgress->setValue(0);
 
-	ui.lbAction->setText(tr("Zakończono wysyłanie napisów."));
-	
-	QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
-			+ tr("W tym zupełnie nowych: %1\n").arg(uploadThread.added_new)
-			+ tr("Nie udało się wysłać: %1\n").arg(uploadThread.failed);
+	if(!uploadThread.invalidUP)
+	{
+		ui.lbAction->setText(tr("Zakończono wysyłanie napisów."));
 
-	QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
+		QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
+				+ tr("W tym zupełnie nowych: %1\n").arg(uploadThread.added_new)
+				+ tr("Nie udało się wysłać: %1\n").arg(uploadThread.failed);
+
+		QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
+	}
 }
 
 void frmUpload::invalidUserPass()
 {
+	ui.lbAction->setText(tr("Nazwa użytkownika lub hasło jest niepoprawne."));
 	QMessageBox::information(this, tr("Błąd!"), QString(tr("Nazwa użytkownika lub hasło jest niepoprawne.")));
 }
 
@@ -278,11 +282,13 @@ void UploadThread::run()
 {
 	added_new = added_ok = failed = 0;
 	abort = false;
+	invalidUP = false;
 
 	emit checkingUserPass();
 
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
+		invalidUP = true;
 		emit invalidUserPass();
 		return;
 	}

@@ -57,7 +57,6 @@ class UploadThread : public QNapiThread
 		unsigned int added_new, added_ok, failed;
 
 	signals:
-		void uploadFinished(bool interrupt = false);
 		void progressChange(int progress);
 		void fileNameChange(const QString & filename);
 		void checkingUserPass();
@@ -91,7 +90,7 @@ class frmUpload: public QDialog
 		void pbUploadClicked();
 		void fileNameChange(const QString & filename);
 		void checkingUserPass();
-		void uploadFinished(bool interrupt = false);
+		void uploadFinished();
 		void invalidUserPass();
 };
 

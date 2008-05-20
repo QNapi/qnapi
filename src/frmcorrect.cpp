@@ -165,7 +165,7 @@ void PostThread::run()
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
-		emit postFinished();
+		emit postFinished(true);
 		return;
 	}
 

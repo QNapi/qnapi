@@ -177,7 +177,7 @@ void ReportThread::run()
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
-		emit reportFinished();
+		emit reportFinished(true);
 		return;
 	}
 
@@ -190,7 +190,7 @@ void ReportThread::run()
 	QNapiProjektEngine *napi;
 	if(!(napi = new QNapiProjektEngine(movie)))
 	{
-		emit reportFinished();
+		emit reportFinished(true);
 		return;
 	}
 

@@ -38,7 +38,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pbGet, SIGNAL(clicked()), this, SLOT(pbGetClicked()));
 	connect(&getThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
-	connect(&getThread, SIGNAL(downloadFinished(bool)), this, SLOT(downloadFinished(bool)));
+	connect(&getThread, SIGNAL(finished()), this, SLOT(downloadFinished()));
 
 	if(QFileInfo(GlobalConfig().lastScanDir()).isDir())
 		ui.leDirectory->setText(GlobalConfig().lastScanDir());
@@ -77,6 +77,7 @@ void frmScan::closeEvent(QCloseEvent *event)
 		event->accept();
 	else
 		event->ignore();
+	closeRequested = true;
 }
 
 bool frmScan::pbCancelClicked()
@@ -89,7 +90,6 @@ bool frmScan::pbCancelClicked()
 			scanThread.requestAbort();
 			ui.lbAction->setText(tr("Kończenie zadań..."));
 			qApp->processEvents();
-			scanThread.terminate();
 			scanThread.wait();
 			return true;
 		}
@@ -101,17 +101,11 @@ bool frmScan::pbCancelClicked()
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać pobieranie napisów?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			getThread.requestAbort();
-			ui.lbAction->setText(tr("Kończenie zadań..."));
-			qApp->processEvents();
-			getThread.terminate();
-			getThread.wait();
-			downloadFinished(true);
-			return true;
+			pbGetClicked();
 		}
 		return false;
 	}
-	
+
 	close();
 	return true;
 }
@@ -166,7 +160,6 @@ void frmScan::pbScanClicked()
 		ui.lbAction->setText(tr("Przerywanie skanowania..."));
 		ui.pbScan->setEnabled(false);
 		qApp->processEvents();
-
 		scanThread.wait();
 		ui.pbScan->setEnabled(true);
 		scanFinished();
@@ -246,6 +239,7 @@ void frmScan::pbGetClicked()
 {
 	if(!getThread.isRunning())
 	{
+		closeRequested = false;
 		enableControlWidgets(false);
 		enableFilesWidgets(false);
 		ui.pbScan->setEnabled(false);
@@ -265,11 +259,6 @@ void frmScan::pbGetClicked()
 		ui.lbAction->setText(tr("Przerywanie pobierania..."));
 		ui.pbGet->setEnabled(false);
 		qApp->processEvents();
-
-		getThread.terminate();
-		getThread.wait();
-
-		downloadFinished(true);
 	}
 }
 
@@ -278,7 +267,7 @@ void frmScan::fileNameChange(const QString & fileName)
 	ui.lbAction->setText(tr("Pobieranie napisów dla <b>%1</b>...").arg(fileName));
 }
 
-void frmScan::downloadFinished(bool interrupt)
+void frmScan::downloadFinished()
 {
 	enableControlWidgets(true);
 	enableFilesWidgets(true);
@@ -310,16 +299,17 @@ void frmScan::downloadFinished(bool interrupt)
 			QMessageBox::information(0, tr("Zakończono pobieranie napisów"), msg);
 		}
 	}
+	else
+		ui.lbAction->setText(tr("Zakończono."));
 
-	if(interrupt)
-		ui.lbAction->setText(tr("Przerwano."));
+	if(closeRequested)
+		close();
 }
 
 void ScanFilesThread::run()
 {
 	abort = false;
 	fileList.clear();
-
 	emit scanFinished(doScan(searchPath));
 }
 
@@ -473,5 +463,4 @@ void GetFilesThread::run()
 	}
 
 	emit progressChange(100);
-	emit downloadFinished(false);
 }

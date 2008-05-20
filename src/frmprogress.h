@@ -90,9 +90,7 @@ class frmProgress: public QWidget
 
 		GetThread getThread;
 
-		bool batchMode;
-
-		bool showSummary;
+		bool batchMode, showSummary, closeRequested;
 		QMutex mutex;
 
 };

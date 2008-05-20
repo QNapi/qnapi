@@ -59,7 +59,6 @@ class GetFilesThread : public QNapiThread
 	signals:
 		void fileNameChange(const QString & newfileName);
 		void progressChange(int newValue);
-		void downloadFinished(bool interrupt);
 		void criticalError(const QString & message);
 
 	private slots:
@@ -95,6 +94,7 @@ Q_OBJECT
 		Ui::frmScan ui;
 		ScanFilesThread scanThread;
 		GetFilesThread getThread;
+		bool closeRequested;
 
 	private slots:
 		bool pbCancelClicked();
@@ -112,7 +112,7 @@ Q_OBJECT
 		void checkPbGetEnabled();
 		void pbGetClicked();
 		void fileNameChange(const QString & fileName);
-		void downloadFinished(bool interrupt);
+		void downloadFinished();
 };
 
 #endif

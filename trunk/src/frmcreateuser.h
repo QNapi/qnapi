@@ -33,6 +33,7 @@ Q_OBJECT
 		void run();
 		void setUserParams(const QString & u_nick, const QString & u_pass, const QString & u_mail)
 		{
+			setTerminationEnabled(true);
 			nick = u_nick;
 			pass = u_pass;
 			mail = u_mail;
@@ -66,8 +67,7 @@ Q_OBJECT
 	private slots:
 		void checkCreateEnable();
 		void pbCreateClicked();
-		void pbCancelClicked();
-		void creatingFinished(bool result);
+		void creatingFinished(bool result = false);
 		void serverMessage(QString msg);
 };
 

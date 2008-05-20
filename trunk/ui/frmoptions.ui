@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabPostProcessing" >
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral" >
       <property name="geometry" >
@@ -171,13 +171,13 @@
        </rect>
       </property>
       <attribute name="title" >
-       <string>Post-przetwarzanie</string>
+       <string>Przetwarzanie napisów</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <item>
         <widget class="QGroupBox" name="gbPpEnable" >
          <property name="title" >
-          <string>Włącz post-przetwarzanie pobranych napisów</string>
+          <string>Włącz przetwarzanie pobranych napisów</string>
          </property>
          <property name="checkable" >
           <bool>true</bool>

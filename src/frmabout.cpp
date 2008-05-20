@@ -40,7 +40,7 @@ const QString thanksText = tr(
 "adrian5632@gmail.com</a>&gt; - opiekun wersji na Mac OS X, liczne patche i poprawki</li>"
 "<li>Rafał Wójcik &lt;<a href=\"mailto:rafal.wojcik@gmail.com\">rafal.wojcik@gmail.com</a>&gt;"
 " - port dla Windows wraz z instalatorem</li></ul></p><p>A także paczkującym dla różnych "
-"dystrybucji:</p><p>obi_gl, Jakub Schmidtke, Jan Stępień, Łukasz Jagiełło</p><p>"
+"dystrybucji:</p><p>obi_gl, Jakub Schmidtke, Jan Stępień, Łukasz Jagiełło, Patryk Cisek</p><p>"
 "...oraz wszystkim tym, o których zapomniałem ;)</p></body></html>");
 const QString supportText = tr(
 "<html><body><p>QNapi zaoszczędził Ci sporo wysiłku przy szukaniu napisów do filmów? "

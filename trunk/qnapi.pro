@@ -103,8 +103,6 @@ unix {
  konqueror_integration.files =  doc/$${TARGET}-download.desktop
  kde4_integration.path =  /usr/lib/kde4/share/kde4/services/ServiceMenus
  kde4_integration.files =  doc/$${TARGET}-download.desktop
- gnome_integration.path = /usr/share/gconf/defaults
- gnome_integration.files = doc/10_$${TARGET}
  INSTALLS =  target \
   doc \
   man \

@@ -29,11 +29,12 @@ frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&scanThread, SIGNAL(scanFinished(bool)), this, SLOT(scanFinished(bool)));
 	connect(&scanThread, SIGNAL(folderChange(QString)), this, SLOT(folderChange(QString)));
 	connect(ui.pbUpload, SIGNAL(clicked()), this, SLOT(pbUploadClicked()));
-	connect(&uploadThread, SIGNAL(uploadFinished(bool)), this, SLOT(uploadFinished(bool)));
+	connect(&uploadThread, SIGNAL(finished()), this, SLOT(uploadFinished()));
 	connect(&uploadThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
 	connect(&uploadThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&uploadThread, SIGNAL(checkingUserPass()), this, SLOT(checkingUserPass()));
 	connect(&uploadThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
+	
 
 	if(QFileInfo(GlobalConfig().previousDialogPath()).isDir())
 		ui.leSelectDirectory->setText(GlobalConfig().previousDialogPath());
@@ -62,27 +63,17 @@ void frmUpload::closeEvent(QCloseEvent *event)
 		}
 		return;
 	}
-
-	if(uploadThread.isRunning())
+	else if(uploadThread.isRunning())
 	{
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać wysyłanie napisów?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			uploadThread.requestAbort();
-			ui.lbAction->setText(tr("Kończenie zadań..."));
-			qApp->processEvents();
-			uploadThread.terminate();
-			uploadThread.wait();
-			event->accept();
+			pbUploadClicked();
 		}
-		else
-		{
-			event->ignore();
-		}
-		return;
+		event->ignore();
 	}
-
-	event->accept();
+	else
+		event->accept();
 }
 
 void frmUpload::selectDirectory()
@@ -156,7 +147,7 @@ void frmUpload::scanFinished(bool result)
 		}
 		else
 		{
-			ui.lbAction->setText(tr("Teraz możesz dodać napisy do bazy NAPI."));
+			ui.lbAction->setText(tr("Teraz możesz wysłać napisy na serwer."));
 			ui.lbFoldersCount->setEnabled(true);
 			ui.lbFoldersCount->setText(tr("Folderów: ") + "<b>"
 								+ QString::number(scanThread.folders) + "</b>");
@@ -192,12 +183,6 @@ void frmUpload::pbUploadClicked()
 		ui.lbAction->setText(tr("Przerywanie wysyłania..."));
 		ui.pbUpload->setEnabled(false);
 		qApp->processEvents();
-		
-		uploadThread.terminate();
-		uploadThread.wait();
-		
-		ui.pbUpload->setEnabled(true);
-		uploadFinished(true);
 	}
 }
 
@@ -216,27 +201,23 @@ void frmUpload::checkingUserPass()
 	ui.lbAction->setText(tr("Sprawdzanie nazwy użytkownika i hasła..."));
 }
 
-void frmUpload::uploadFinished(bool interrupt)
+void frmUpload::uploadFinished()
 {
 	ui.lbSelectDirectory->setEnabled(true);
 	ui.leSelectDirectory->setEnabled(true);
 	ui.pbSelectDirectory->setEnabled(true);
 	ui.pbScan->setEnabled(true);
-	ui.pbUpload->setText(tr("Wyślij do bazy NAPI"));
+	ui.pbUpload->setEnabled(true);
+	ui.pbUpload->setText(tr("Wyślij napisy do serwera"));
 	ui.pbProgress->setValue(0);
 
-	if(!interrupt)
-	{
-		ui.lbAction->setText(tr("Napisy wysłano."));
-		
-		QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
-				+ tr("W tym zupełnie nowych: %1\n").arg(uploadThread.added_new)
-				+ tr("Nie udało się wysłać: %1\n").arg(uploadThread.failed);
+	ui.lbAction->setText(tr("Zakończono wysyłanie napisów."));
+	
+	QString msg = tr("Wysłano napisów: %1\n").arg(uploadThread.added_new+uploadThread.added_ok)
+			+ tr("W tym zupełnie nowych: %1\n").arg(uploadThread.added_new)
+			+ tr("Nie udało się wysłać: %1\n").arg(uploadThread.failed);
 
-		QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
-	}
-	else
-		ui.lbAction->setText(tr("Przerwano."));
+	QMessageBox::information(this, tr("Rezultat wysyłania"), msg);
 }
 
 void frmUpload::invalidUserPass()
@@ -303,9 +284,10 @@ void UploadThread::run()
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
-		emit uploadFinished(true);
 		return;
 	}
+
+	if(abort) return;
 
 	int size = movieList.size();
 	QNapiProjektEngine *napi;
@@ -332,5 +314,4 @@ void UploadThread::run()
 	}
 	
 	emit progressChange(100);
-	emit uploadFinished();
 }

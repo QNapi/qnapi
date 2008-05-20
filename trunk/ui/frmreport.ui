@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
-    <height>240</height>
+    <width>560</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -19,7 +19,8 @@
    <string>Zgłoś niepasujące napisy</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" colspan="2" >

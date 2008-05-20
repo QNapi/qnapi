@@ -57,7 +57,7 @@ void QNapiAbstractEngine::doPostProcessing()
 		}
 	}
 
-#ifndef Q_WS_WI
+#ifndef Q_WS_WIN
 	// Zmiana uprawnien do pliku
 	if(GlobalConfig().ppChangePermissions())
 	{

@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>183</height>
+    <width>500</width>
+    <height>190</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -19,7 +19,8 @@
    <string>QNapi - zakładanie konta na serwerze NAPI-PROJEKT</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
@@ -110,5 +111,22 @@
  <resources>
   <include location="../res/resources.qrc" />
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pbCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>frmCreateUser</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>434</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>248</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

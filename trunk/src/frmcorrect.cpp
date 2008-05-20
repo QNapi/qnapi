@@ -29,7 +29,7 @@ frmCorrect::frmCorrect(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.leSubtitlesSelect, SIGNAL(textChanged(QString)), this, SLOT(checkPostEnable()));
 	connect(ui.teComment, SIGNAL(textChanged()), this, SLOT(checkPostEnable()));
 	connect(ui.pbPost, SIGNAL(clicked()), this, SLOT(pbPostClicked()));
-	connect(&postThread, SIGNAL(postFinished()), this, SLOT(postFinished()));
+	connect(&postThread, SIGNAL(postFinished(bool)), this, SLOT(postFinished(bool)));
 	connect(&postThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
 
 	// workaround dla compiza?
@@ -44,19 +44,12 @@ void frmCorrect::closeEvent(QCloseEvent *event)
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać wysyłanie poprawki?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			ui.lbAction->setText(tr("Kończenie zadań..."));
-			qApp->processEvents();
-			postThread.terminate();
-			postThread.wait();
+			pbPostClicked();
 		}
-		else
-		{
-			event->ignore();
-			return;
-		}
+		event->ignore();
 	}
-
-	event->accept();
+	else
+		event->accept();
 }
 
 void frmCorrect::selectMovie()
@@ -119,7 +112,7 @@ void frmCorrect::pbPostClicked()
 		ui.pbSubtitlesSelect->setEnabled(false);
 		ui.teComment->setEnabled(false);
 		ui.pbPost->setText(tr("Zatrzymaj"));
-		ui.lbAction->setText(tr("Wysyłanie poprawki do serwera NAPI..."));
+		ui.lbAction->setText(tr("Wysyłanie poprawki do serwera..."));
 		
 		postThread.setPostParams(ui.leMovieSelect->text(),
 									ui.leSubtitlesSelect->text(),
@@ -129,14 +122,10 @@ void frmCorrect::pbPostClicked()
 	}
 	else
 	{
+		postThread.requestAbort();
 		ui.lbAction->setText(tr("Przerywanie wysyłania..."));
-		ui.pbPost->setEnabled(true);
+		ui.pbPost->setEnabled(false);
 		qApp->processEvents();
-		
-		postThread.terminate();
-		postThread.wait();
-		ui.pbPost->setEnabled(true);
-		postFinished(true);
 	}
 }
 
@@ -147,6 +136,7 @@ void frmCorrect::postFinished(bool interrupted)
 	ui.leSubtitlesSelect->setEnabled(true);
 	ui.pbSubtitlesSelect->setEnabled(true);
 	ui.teComment->setEnabled(true);
+	ui.pbPost->setEnabled(true);
 	ui.pbPost->setText(tr("Wyślij"));
 
 	if(interrupted)
@@ -170,10 +160,18 @@ void frmCorrect::invalidUserPass()
 
 void PostThread::run()
 {
+	abort = false;
+
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
 		emit postFinished();
+		return;
+	}
+
+	if(abort)
+	{
+		postFinished(true);
 		return;
 	}
 
@@ -186,5 +184,5 @@ void PostThread::run()
 		delete napi;
 	}
 
-	emit postFinished();
+	postFinished();
 }

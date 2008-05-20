@@ -369,7 +369,7 @@ void GetThread::run()
 		if(GlobalConfig().ppEnabled())
 		{
 			emit progressChange(i, queue.size(), 0.9);
-			emit actionChange(tr("Post-przetwarzanie napisów..."));
+			emit actionChange(tr("Przetwarzanie napisów..."));
 
 			napi->doPostProcessing();
 		}

@@ -28,7 +28,7 @@ frmReport::frmReport(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.cbProblem, SIGNAL(currentIndexChanged(int)), this, SLOT(cbProblemChanged()));
 	connect(ui.leProblem, SIGNAL(textChanged(QString)), this, SLOT(checkReportEnable()));
 	connect(ui.pbReport, SIGNAL(clicked()), this, SLOT(pbReportClicked()));
-	connect(&reportThread, SIGNAL(reportFinished()), this, SLOT(reportFinished()));
+	connect(&reportThread, SIGNAL(reportFinished(bool)), this, SLOT(reportFinished(bool)));
 	connect(&reportThread, SIGNAL(serverMessage(QString)), this, SLOT(serverMessage(QString)));
 	connect(&reportThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
 
@@ -44,19 +44,12 @@ void frmReport::closeEvent(QCloseEvent *event)
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać wysyłanie raportu?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			ui.lbAction->setText(tr("Kończenie zadań..."));
-			qApp->processEvents();
-			reportThread.terminate();
-			reportThread.wait();
+			pbReportClicked();
 		}
-		else
-		{
-			event->ignore();
-			return;
-		}
+		event->ignore();
 	}
-	
-	event->accept();
+	else
+		event->accept();
 }
 
 void frmReport::selectMovie()
@@ -98,31 +91,37 @@ void frmReport::pbReportClicked()
 {
 	if(!reportThread.isRunning())
 	{
-		ui.leMovieSelect->setEnabled(false);
-		ui.pbMovieSelect->setEnabled(false);
-		ui.cbLanguage->setEnabled(false);
-		ui.cbProblem->setEnabled(false);
-		ui.leProblem->setEnabled(false);
-		ui.pbReport->setText(tr("Zatrzymaj"));
-		ui.lbAction->setText(tr("Wysyłanie raportu do serwera NAPI..."));
-
-		reportThread.setReportParams(ui.leMovieSelect->text(),
-									(ui.cbLanguage->currentIndex() == 0) ? "PL" : "ENG",
-									(ui.cbProblem->currentIndex() < 4
-										? ui.cbProblem->currentText()
-										: ui.leProblem->text()) );
-		reportThread.start();
+		QFileInfo fi(ui.leMovieSelect->text());
+		if(!QFile::exists(fi.path() + "/" + fi.completeBaseName() + ".txt"))
+		{
+			ui.lbAction->setText(tr("Brak pliku z napisami dla podanego filmu!"));
+			QMessageBox::warning(this, tr("Brak pliku z napisami!"),
+									tr("Brak pliku z napisami dla podanego filmu!"));
+		}
+		else
+		{
+			ui.leMovieSelect->setEnabled(false);
+			ui.pbMovieSelect->setEnabled(false);
+			ui.cbLanguage->setEnabled(false);
+			ui.cbProblem->setEnabled(false);
+			ui.leProblem->setEnabled(false);
+			ui.pbReport->setText(tr("Zatrzymaj"));
+			ui.lbAction->setText(tr("Wysyłanie raportu do serwera..."));
+	
+			reportThread.setReportParams(ui.leMovieSelect->text(),
+											(ui.cbLanguage->currentIndex() == 0) ? "PL" : "ENG",
+											(ui.cbProblem->currentIndex() < 4
+												? ui.cbProblem->currentText()
+												: ui.leProblem->text()) );
+			reportThread.start();
+		}
 	}
 	else
 	{
+		reportThread.requestAbort();
 		ui.lbAction->setText(tr("Przerywanie wysyłania..."));
-		ui.pbReport->setEnabled(true);
+		ui.pbReport->setEnabled(false);
 		qApp->processEvents();
-		
-		reportThread.terminate();
-		reportThread.wait();
-		ui.pbReport->setEnabled(true);
-		reportFinished(true);
 	}
 }
 
@@ -133,8 +132,9 @@ void frmReport::reportFinished(bool interrupted)
 	ui.cbLanguage->setEnabled(true);
 	ui.cbProblem->setEnabled(true);
 	ui.leProblem->setEnabled(true);
+	ui.pbReport->setEnabled(true);
 	cbProblemChanged();
-	
+
 	ui.pbReport->setText(tr("Wyślij"));
 	
 	if(interrupted)
@@ -159,7 +159,7 @@ void frmReport::reportFinished(bool interrupted)
 void frmReport::serverMessage(QString msg)
 {
 	if(msg.indexOf("NPc0") == 0)
-		msg = tr("Zgłoszono raport do serwera NAPI.");
+		msg = tr("Zgłoszono raport do serwera.");
 	else
 		msg = tr("Odpowiedź serwera: ") + tr(qPrintable(msg));
 	
@@ -173,10 +173,17 @@ void frmReport::invalidUserPass()
 
 void ReportThread::run()
 {
+	abort = false;
 	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
 	{
 		emit invalidUserPass();
 		emit reportFinished();
+		return;
+	}
+
+	if(abort)
+	{
+		emit reportFinished(true);
 		return;
 	}
 

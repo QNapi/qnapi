@@ -45,7 +45,7 @@ Q_OBJECT
 		QNapiProjektEngine::ReportResult taskResult;
 
 	signals:
-		void reportFinished();
+		void reportFinished(bool interrupt = false);
 		void serverMessage(QString msg);
 		void invalidUserPass();
 

@@ -46,7 +46,7 @@ class PostThread : public QNapiThread
 		QNapiProjektEngine::UploadResult taskResult;
 
 	signals:
-		void postFinished();
+		void postFinished(bool interrupted = false);
 		void invalidUserPass();
 
 	private:

@@ -256,12 +256,27 @@ void QNapiConfig::setPpChangePermissions(bool change)
 
 QString QNapiConfig::ppPermissions()
 {
-	return settings->value("qnapi/permissions", "644").toString();
+	bool ok;
+	int perm = settings->value("qnapi/permissions", 644).toInt(&ok);
+	if(!ok || perm > 777)
+		perm = 644;  
+	QString str = QString("%1").arg(perm);
+	while(str.size() < 3)
+		str = QString("0") + str;
+	return str;
 }
 
 void QNapiConfig::setPpPermissions(const QString & permissions)
 {
-	settings->setValue("qnapi/permissions", permissions);
+	bool ok;
+	int perm = permissions.toInt(&ok);
+	if(ok && perm <= 777)
+	{
+		QString str = QString("%1").arg(perm);
+		while(str.size() < 3)
+			str = QString("0") + str;
+		settings->setValue("qnapi/permissions", str);
+	}
 }
 
 QString QNapiConfig::previousDialogPath()

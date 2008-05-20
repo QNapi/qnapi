@@ -24,7 +24,6 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	connect(ui.pbCreate, SIGNAL(clicked()), this, SLOT(pbCreateClicked()));
-	connect(ui.pbCancel, SIGNAL(clicked()), this, SLOT(pbCancelClicked()));
 
 	connect(ui.leLogin, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(ui.lePass, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
@@ -32,6 +31,7 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f
 	connect(ui.leMail, SIGNAL(textChanged(QString)), this, SLOT(checkCreateEnable()));
 	connect(&createUserThread, SIGNAL(creatingFinished(bool)), this, SLOT(creatingFinished(bool)));
 	connect(&createUserThread, SIGNAL(serverMessage(QString)), this, SLOT(serverMessage(QString)));
+	connect(&createUserThread, SIGNAL(terminated()), this, SLOT(creatingFinished()));
 
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
@@ -45,19 +45,13 @@ void frmCreateUser::closeEvent(QCloseEvent *event)
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać zakładanie konta?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			ui.pbCreate->setEnabled(false);
-			qApp->processEvents();
-			createUserThread.terminate();
-			createUserThread.wait();
+			pbCreateClicked();
+			event->accept();
 		}
-		else
-		{
-			event->ignore();
-			return;
-		}
+		event->ignore();
 	}
-
-	event->accept();
+	else
+		event->accept();
 }
 
 bool frmCreateUser::validEmail(const QString & email)
@@ -93,7 +87,7 @@ void frmCreateUser::pbCreateClicked()
 {
 	if(!createUserThread.isRunning())
 	{
-		ui.pbCreate->setText(tr("Przerwij"));
+		ui.pbCreate->setEnabled(false);
 		ui.lbStatus->setText(tr("Zakładanie konta na serwerze NAPI..."));
 		ui.leLogin->setEnabled(false);
 		ui.lePass->setEnabled(false);
@@ -105,24 +99,9 @@ void frmCreateUser::pbCreateClicked()
 	}
 	else
 	{
-		ui.pbCreate->setEnabled(false);
-		ui.lbStatus->setText(tr("Anulowanie operacji..."));
+		ui.lbStatus->setText(tr("Oczekiwanie na zakończenie zadania..."));
 		qApp->processEvents();
-		createUserThread.terminate();
-		createUserThread.wait();
-
-		creatingFinished(false);
-		ui.pbCreate->setEnabled(true);
-		ui.lbStatus->setText(tr("Przerwano zakładanie konta"));
 	}
-}
-
-void frmCreateUser::pbCancelClicked()
-{
-	if(createUserThread.isRunning())
-		pbCreateClicked();
-	else
-		close();
 }
 
 void frmCreateUser::creatingFinished(bool result)
@@ -130,7 +109,7 @@ void frmCreateUser::creatingFinished(bool result)
 	ui.lbStatus->setText(result
 							? tr("Operacja zakończona")
 							: tr("Zakładanie konta nie powiodło się"));
-	ui.pbCreate->setText(tr("Załóż konto"));
+	ui.pbCreate->setEnabled(true);
 	ui.leLogin->setEnabled(true);
 	ui.lePass->setEnabled(true);
 	ui.leRepeatPass->setEnabled(true);

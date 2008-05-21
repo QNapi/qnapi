@@ -116,7 +116,7 @@ int QNapiCli::exec()
 
 		if(GlobalConfig().ppEnabled())
 		{
-			printCli(QString(QString("   post-przetwarzanie pobranych napisow...")));
+			printCli(QString(QString("   przetwarzanie pobranych napisow...")));
 			napi->doPostProcessing();
 		}
 

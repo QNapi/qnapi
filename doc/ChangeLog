@@ -1,7 +1,7 @@
 QNapi ChangeLog:
 ================
 
-2008-05-21 v0.1.5:
+2008-05-22 v0.1.5:
  * uregulowane kwestie licencyjne; od tej chwili program wydawany jest na licencji
    GNU General Public License w wersji 2. lub pozniejszej (thx Patryk Cisek)
  * usuniety blad powodujacy niemoznosc uruchomienia programu na terminalu tekstowym (TTY)

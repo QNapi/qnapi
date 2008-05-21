@@ -17,6 +17,7 @@
 QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(argc, argv, useGui)
 {
 	openDialog = 0;
+
 	f_progress = 0;
 	f_options = 0;
 	f_createUser = 0;
@@ -25,6 +26,20 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(ar
 	f_upload = 0;
 	f_correct = 0;
 	f_report = 0;
+
+	getAction = 0;
+	scanAction = 0;
+	addNewAction = 0;
+	addCorrectedAction = 0;
+	reportBadAction = 0;
+	optionsAction = 0;
+	createUserAction = 0;
+	aboutAction = 0;
+	quitAction = 0;
+
+	napiSubMenu = 0;
+	trayIconMenu = 0;
+	trayIcon = 0;
 }
 
 QNapiApp::~QNapiApp()

@@ -18,18 +18,41 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(ar
 {
 	openDialog = 0;
 	f_progress = 0;
-	options = 0;
-	createUser = 0;
-	about = 0;
-	scan = 0;
-	upload = 0;
-	correct = 0;
-	report = 0;
+	f_options = 0;
+	f_createUser = 0;
+	f_about = 0;
+	f_scan = 0;
+	f_upload = 0;
+	f_correct = 0;
+	f_report = 0;
 }
 
 QNapiApp::~QNapiApp()
 {
+	if(openDialog) delete openDialog;
+
 	if(f_progress) delete f_progress;
+	if(f_options) delete f_options;
+	if(f_createUser) delete f_createUser;
+	if(f_about) delete f_about;
+	if(f_scan) delete f_scan;
+	if(f_upload) delete f_upload;
+	if(f_correct) delete f_correct;
+	if(f_report) delete f_report;
+
+	if(getAction) delete getAction;
+	if(scanAction) delete scanAction;
+	if(addNewAction) delete addNewAction;
+	if(addCorrectedAction) delete addCorrectedAction;
+	if(reportBadAction) delete reportBadAction;
+	if(optionsAction) delete optionsAction;
+	if(createUserAction) delete createUserAction;
+	if(aboutAction) delete aboutAction;
+	if(quitAction) delete quitAction;
+
+	if(napiSubMenu) delete napiSubMenu;
+	if(trayIconMenu) delete trayIconMenu;
+	if(trayIcon) delete trayIcon;
 }
 
 frmProgress * QNapiApp::progress()
@@ -148,103 +171,102 @@ void QNapiApp::showOpenDialog()
 
 void QNapiApp::showScanDialog()
 {
-	if(!scan) scan = new frmScan();
-	if(scan->isVisible())
+	if(!f_scan) f_scan = new frmScan();
+	if(f_scan->isVisible())
 	{
-		scan->raise();
+		f_scan->raise();
 		return;
 	}
-	scan->exec();
-	delete scan;
-	scan = 0;
+	f_scan->exec();
+	delete f_scan;
+	f_scan = 0;
 }
 
 void QNapiApp::showUploadDialog()
 {
-	if(!upload) upload = new frmUpload();
-	if(upload->isVisible())
+	if(!f_upload) f_upload = new frmUpload();
+	if(f_upload->isVisible())
 	{
-		upload->raise();
+		f_upload->raise();
 		return;
 	}
-	upload->exec();
-	delete upload;
-	upload = 0;
+	f_upload->exec();
+	delete f_upload;
+	f_upload = 0;
 }
 
 void QNapiApp::showCorrectDialog()
 {
-	if(!correct) correct = new frmCorrect();
-	if(correct->isVisible())
+	if(!f_correct) f_correct = new frmCorrect();
+	if(f_correct->isVisible())
 	{
-		correct->raise();
+		f_correct->raise();
 		return;
 	}
-	correct->exec();
-	delete correct;
-	correct = 0;
+	f_correct->exec();
+	delete f_correct;
+	f_correct = 0;
 }
 
 void QNapiApp::showReportDialog()
 {
-	if(!report) report = new frmReport();
-	if(report->isVisible())
+	if(!f_report) f_report = new frmReport();
+	if(f_report->isVisible())
 	{
-		report->raise();
+		f_report->raise();
 		return;
 	}
-	report->exec();
-	delete report;
-	report = 0;
+	f_report->exec();
+	delete f_report;
+	f_report = 0;
 }
 
 void QNapiApp::showOptions()
 {
-	if(!options)
+	if(!f_options)
 	{
-		options = new frmOptions();
-		options->readConfig();
+		f_options = new frmOptions();
+		f_options->readConfig();
 	}
 
-	if(options->isVisible())
+	if(f_options->isVisible())
 	{
-		options->raise();
+		f_options->raise();
 		return;
 	}
 
-	if(options->exec() == QDialog::Accepted)
-		options->writeConfig();
+	if(f_options->exec() == QDialog::Accepted)
+		f_options->writeConfig();
 
-	delete options;
-	options = 0;
+	delete f_options;
+	f_options = 0;
 }
 
 void QNapiApp::showCreateUser()
 {
-	if(!createUser) createUser = new frmCreateUser();
-	if(createUser->isVisible())
+	if(!f_createUser) f_createUser = new frmCreateUser();
+	if(f_createUser->isVisible())
 	{
-		createUser->raise();
+		f_createUser->raise();
 		return;
 	}
-	createUser->exec();
-	delete createUser;
-	createUser = 0;
+	f_createUser->exec();
+	delete f_createUser;
+	f_createUser = 0;
 }
 
 void QNapiApp::showAbout()
 {
-	if(!about) about = new frmAbout();
-	if(about->isVisible())
+	if(!f_about) f_about = new frmAbout();
+	if(f_about->isVisible())
 	{
-		about->raise();
+		f_about->raise();
 		return;
 	}
-	about->exec();
-	delete about;
-	about = 0;
+	f_about->exec();
+	delete f_about;
+	f_about = 0;
 }
-
 
 void QNapiApp::tryQuit()
 {

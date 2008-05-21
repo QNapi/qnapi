@@ -79,13 +79,13 @@ class QNapiApp : public QSingleApplication
 		QNapiOpenDialog *openDialog;
 		
 		frmProgress *f_progress;
-		frmOptions *options;
-		frmCreateUser *createUser;
-		frmAbout *about;
-		frmScan *scan;
-		frmUpload *upload;
-		frmCorrect *correct;
-		frmReport *report;
+		frmOptions *f_options;
+		frmCreateUser *f_createUser;
+		frmAbout *f_about;
+		frmScan *f_scan;
+		frmUpload *f_upload;
+		frmCorrect *f_correct;
+		frmReport *f_report;
 
 	private slots:
 

@@ -6,6 +6,7 @@
         <file>qnapi.png</file>
     </qresource>
 	<qresource prefix="/ui" >
+		<file>film.png</file>
 		<file>icon_accept.png</file>
 		<file>icon_cancel.png</file>
 	</qresource>

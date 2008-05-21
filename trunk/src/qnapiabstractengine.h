@@ -59,7 +59,9 @@ public:
 	bool ppChangeSubtitlesEncoding(const QString & from, const QString & to);
 	bool ppChangeSubtitlesEncoding(const QString & to);
 	bool ppRemoveLinesContainingWords(QStringList wordList);
+#ifndef Q_WS_WIN
 	bool ppChangeSubtitlesPermissions(QFile::Permissions permissions);
+#endif
 
 };
 

@@ -36,14 +36,28 @@ int main(int argc, char **argv)
 			args << p;
 	}
 
-	QNapiCli cliApp(argc, argv);
-	bool useGui = !cliApp.analyze();
+#ifndef Q_WS_WIN
+	QNapiCli *cliApp = new QNapiCli(argc, argv);
+	bool useGui = !cliApp->analyze();
+#else
+	bool useGui = true;
+#endif
 
 	QNapiApp app(argc, argv, useGui);
 	QNapiApp::setApplicationName("QNapi");
 
+#ifndef Q_WS_WIN
 	if(!useGui)
-		return cliApp.exec();
+	{
+		int r = cliApp->exec();
+		delete cliApp;
+		return r;
+	}
+	else
+	{
+		delete cliApp;
+	}
+#endif
 
 	app.setQuitOnLastWindowClosed(false);
 

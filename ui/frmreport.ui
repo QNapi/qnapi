@@ -159,7 +159,7 @@
         </sizepolicy>
        </property>
        <property name="text" >
-        <string>Zgłoś</string>
+        <string>Wyślij raport</string>
        </property>
       </widget>
      </item>

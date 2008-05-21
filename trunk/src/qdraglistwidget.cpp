@@ -14,13 +14,32 @@
 
 #include "qdraglistwidget.h"
 
+void QDragListWidget::addItem(const QString & label)
+{
+	QListWidgetItem *item = new QListWidgetItem(widgetIcon, label, this);
+	if(!item) return;
+	QListWidget::addItem(item);
+}
+
+void QDragListWidget::addItem(QListWidgetItem * item)
+{
+	if(!item) return;
+	item->setIcon(widgetIcon);
+	QListWidget::addItem(item);
+}
+
+void QDragListWidget::addItems(const QStringList & labels)
+{
+	foreach(QString label, labels)
+		addItem(label);
+}
+
 void QDragListWidget::MoveAll(QDragListWidget *another)
 {
 	for(int i = 0; i < count(); i++)
 	{
 		another->addItem(item(i)->text());
 	}
-
 	clear();
 }
 

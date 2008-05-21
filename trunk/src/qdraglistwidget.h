@@ -21,9 +21,20 @@ class QDragListWidget : public QListWidget
 {
 	Q_OBJECT
 	public:
-		QDragListWidget(QWidget *parent = 0) : QListWidget(parent)
+		QDragListWidget(QWidget *parent = 0, const QIcon & widgetIcon = QIcon())
+			: QListWidget(parent)
 		{
 			setAcceptDrops(true);
+			setWidgetIcon(widgetIcon);
+		}
+
+		void addItem(const QString & label);
+		void addItem(QListWidgetItem * item);
+		void addItems(const QStringList & labels);
+
+		void setWidgetIcon(const QIcon & icon)
+		{
+			widgetIcon = icon;
 		}
 
 		void MoveAll(QDragListWidget *another);
@@ -41,6 +52,7 @@ class QDragListWidget : public QListWidget
 
 	private:
 		QPoint dragStartPosition;
+		QIcon widgetIcon;
 };
 
 #endif

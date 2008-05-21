@@ -54,6 +54,10 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.leSkipFilters->setText(GlobalConfig().scanSkipFilters());
 	ui.cbSkipIfSubtitlesExists->setChecked(GlobalConfig().scanSkipIfSubtitlesExists());
 
+	QIcon iconFilm(":/ui/film.png");
+	ui.lwFound->setWidgetIcon(iconFilm);
+	ui.lwSelected->setWidgetIcon(iconFilm);
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);

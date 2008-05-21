@@ -159,10 +159,12 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 }
 
 // Usuwanie linii zawierajacych podane slowa z pliku z napisami
-bool QNapiAbstractEngine::ppRemoveLinesContainingWords(const QStringList & wordList)
+bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 {
 	if(!QFileInfo(subtitlesPath).exists())
 		return false;
+
+	wordList = wordList.filter("^(.+)$");
 
 	QString fromCodec = ppDetectEncoding(subtitlesPath);
 

@@ -58,7 +58,7 @@ public:
 	QString ppDetectEncoding(const QString & fileName, int testBufferSize = 10240);
 	bool ppChangeSubtitlesEncoding(const QString & from, const QString & to);
 	bool ppChangeSubtitlesEncoding(const QString & to);
-	bool ppRemoveLinesContainingWords(const QStringList & wordList);
+	bool ppRemoveLinesContainingWords(QStringList wordList);
 	bool ppChangeSubtitlesPermissions(QFile::Permissions permissions);
 
 };

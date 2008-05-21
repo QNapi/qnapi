@@ -69,7 +69,7 @@ int QNapiCli::exec()
 
 	if(!QNapiAbstractEngine::checkP7ZipPath())
 	{
-		printCli("Sciezka do programu p7zip jest nieprawidlowa!");
+		printCli("Sciezka do programu p7zip jest nieprawidlowa! Sprawdz swoje ustawienia.");
 		return 2;
 	}
 

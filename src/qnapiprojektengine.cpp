@@ -374,6 +374,8 @@ QNapiProjektEngine::ReportResult
 	if(!QFile::exists(subtitlesPath))
 		return NAPI_NO_SUBTITLES;
 
+	checksum();
+
 	QMultipartHttpRequest postData;
 
 	postData.addBoundary();

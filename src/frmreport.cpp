@@ -32,6 +32,9 @@ frmReport::frmReport(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&reportThread, SIGNAL(serverMessage(QString)), this, SLOT(serverMessage(QString)));
 	connect(&reportThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
 
+	ui.cbProblem->setCurrentIndex(4);
+	cbProblemChanged();
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -135,7 +138,7 @@ void frmReport::reportFinished(bool interrupted)
 	ui.pbReport->setEnabled(true);
 	cbProblemChanged();
 
-	ui.pbReport->setText(tr("Wyślij"));
+	ui.pbReport->setText(tr("Wyślij raport"));
 	
 	if(interrupted)
 	{

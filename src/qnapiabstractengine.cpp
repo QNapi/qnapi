@@ -220,6 +220,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 	return true;
 }
 
+#ifndef Q_WS_WIN
 // Zmienia uprawnienia do pliku z napisami
 bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permissions)
 {
@@ -228,3 +229,4 @@ bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permis
 
 	return QFile::setPermissions(subtitlesPath, permissions);
 }
+#endif

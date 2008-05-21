@@ -7,7 +7,7 @@ QNapi ChangeLog:
  * usuniety blad powodujacy niemoznosc uruchomienia programu na terminalu tekstowym (TTY)
  * poprawione wysylanie napisow do serwera
  * sprawdzanie uprawnien zapisu do katalogu przy pobieraniu napisow
- * zunifikowane opcje pozwalajace na wykonywanie przetwarzania pobranych napisów
+ * zunifikowane opcje pozwalajace na wykonywanie przetwarzania pobranych napisow
    (m.in usuwanie linii zawierajacych podane slowa, zmiana uprawnien do pliku)
  * bardziej szczegolowe podsumowanie pobierania napisow
  * mnostwo zmian w kodzie programu umozliwiajacych dalszy, swobodny rozwoj

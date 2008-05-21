@@ -127,7 +127,7 @@ bool QNapiProjektEngine::tryMatch()
 
 	bool r;
 
-	#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
 	QFile f(newName), f2(subtitleFile);
 	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
@@ -141,10 +141,10 @@ bool QNapiProjektEngine::tryMatch()
 		f2.close();
 		f.close();
 	}
-	#else
+#else
 	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
 	r = QFile::copy(subtitleFile, newName);
-	#endif
+#endif
 
 	subtitlesPath = newName;
 

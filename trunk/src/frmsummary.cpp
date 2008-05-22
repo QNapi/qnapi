@@ -43,8 +43,10 @@ void frmSummary::setSuccessList(const QStringList & list)
 												QFileInfo(item).fileName()));
 	}
 	ui.lwSuccess->sortItems();
-	ui.tabWidget->setTabText(0, tr("Dopasowano napisy dla %1 %2")
-								.arg(list.size()).arg(tr(list.size() > 1 ? "plików" : "pliku")));
+	ui.tabWidget->setTabText(ui.tabWidget->indexOf(ui.tabSuccess),
+								tr("Dopasowano napisy dla %1 %2")
+								.arg(list.size())
+								.arg(tr(list.size() > 1 ? "plików" : "pliku")));
 }
 
 void frmSummary::setFailedList(const QStringList & list)
@@ -63,6 +65,8 @@ void frmSummary::setFailedList(const QStringList & list)
 	}
 	ui.lwFail->sortItems();
 
-	ui.tabWidget->setTabText(1, tr("Nie udało się dopasować napisów dla %1 %2")
-								.arg(list.size()).arg(tr(list.size() > 1 ? "plików" : "pliku")));
+	ui.tabWidget->setTabText(ui.tabWidget->indexOf(ui.tabFail),
+								tr("Nie udało się dopasować napisów dla %1 %2")
+								.arg(list.size())
+								.arg(tr(list.size() > 1 ? "plików" : "pliku")));
 }

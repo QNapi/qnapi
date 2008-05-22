@@ -113,23 +113,23 @@ bool QNapiProjektEngine::tryMatch()
 
 	QFileInfo mf(moviePath);
 
-	QString newName = mf.path() + "/" + mf.completeBaseName() + ".txt";
+	subtitlesPath = mf.path() + "/" + mf.completeBaseName() + ".txt";
 
-	if(QFile::exists(newName))
+	if(QFile::exists(subtitlesPath))
 	{
 		if(!noBackup)
 		{
-			QFileInfo nn(newName);
-			QFile::copy(newName, nn.path() + "/" + nn.completeBaseName() + "_kopia.txt");
+			QFileInfo nn(subtitlesPath);
+			QFile::copy(subtitlesPath, nn.path() + "/" + nn.completeBaseName() + "_kopia.txt");
 		}
-		QFile::remove(newName);
+		QFile::remove(subtitlesPath);
 	}
 
 	bool r;
 
 #ifdef Q_WS_WIN
 	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
-	QFile f(newName), f2(subtitleFile);
+	QFile f(subtitlesPath), f2(subtitleFile);
 	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
 	{
 		r = false;
@@ -143,11 +143,9 @@ bool QNapiProjektEngine::tryMatch()
 	}
 #else
 	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
-	r = QFile::copy(subtitleFile, newName);
+	r = QFile::copy(subtitleFile, subtitlesPath);
 #endif
-
-	subtitlesPath = newName;
-
+	
 	QFile::remove(subtitleFile);
 	QFile::remove(tmpFile);
 

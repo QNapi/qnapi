@@ -32,7 +32,7 @@ void frmSummary::setSuccessList(const QStringList & list)
 {
 	if(list.isEmpty())
 	{
-		ui.tabSuccess->hide();
+		ui.tabWidget->removeTab(ui.tabWidget->indexOf(ui.tabSuccess));
 		return;
 	}
 
@@ -51,7 +51,7 @@ void frmSummary::setFailedList(const QStringList & list)
 {
 	if(list.isEmpty())
 	{
-		ui.tabFail->hide();
+		ui.tabWidget->removeTab(ui.tabWidget->indexOf(ui.tabFail));
 		return;
 	}
 

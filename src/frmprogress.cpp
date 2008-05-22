@@ -357,12 +357,6 @@ void GetThread::run()
 			continue;
 		}
 
-		if(abort)
-		{
-			delete napi;
-			return;
-		}
-
 		++napiSuccess;
 		gotList << queue[i];
 

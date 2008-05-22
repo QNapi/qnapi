@@ -118,10 +118,8 @@ bool QNapiProjektEngine::tryMatch()
 	if(QFile::exists(subtitlesPath))
 	{
 		if(!noBackup)
-		{
-			QFileInfo nn(subtitlesPath);
-			QFile::copy(subtitlesPath, nn.path() + "/" + nn.completeBaseName() + "_kopia.txt");
-		}
+			QFile::copy(subtitlesPath, mf.path() + "/" + mf.completeBaseName() + "_kopia.txt");
+
 		QFile::remove(subtitlesPath);
 	}
 

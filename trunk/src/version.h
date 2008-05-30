@@ -15,6 +15,6 @@
 #ifndef __VERSION__H__
 #define __VERSION__H__
 
-#define QNAPI_VERSION "0.1.5"
+#define QNAPI_VERSION "0.1.6-svn"
 
 #endif

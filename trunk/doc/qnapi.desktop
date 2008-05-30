@@ -6,6 +6,5 @@ Type=Application
 Categories=AudioVideo
 Comment=Program do pobierania napisów do filmów
 GenericName=Program do pobierania napisów do filmów
-Encoding=UTF-8
 Terminal=false
 X-KDE-StartupNotify=false

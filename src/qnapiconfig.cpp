@@ -63,7 +63,7 @@ QString QNapiConfig::p7zipPath()
 		paths << "/usr/bin" << "/usr/local/bin";
 
 	QStringList binaries;
-	binaries << "7z" << "7za" << "7zr";
+	binaries << "7z" << "7za" << "7zr" << "p7zip";
 
 	for(QStringList::iterator i = paths.begin(); i != paths.end(); i++)
 	{

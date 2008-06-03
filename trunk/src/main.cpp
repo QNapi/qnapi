@@ -25,11 +25,14 @@
 int main(int argc, char **argv)
 {
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
 	QStringList args;
 	for(int i = 1; i < argc; i++)
 	{
 		QString p = argv[i];
+
 		if(p.startsWith("file://"))
 			p = p.remove(0, 7);
 		if(QFileInfo(p).isFile())

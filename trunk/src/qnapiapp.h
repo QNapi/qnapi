@@ -53,7 +53,7 @@ class QNapiApp : public QSingleApplication
 
 	public slots:
 
-		void showOpenDialog();
+		bool showOpenDialog();
 		void showScanDialog();
 		void showUploadDialog();
 		void showCorrectDialog();

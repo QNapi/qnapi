@@ -152,7 +152,7 @@ void QNapiApp::showTrayMessage(QString title, QString msg)
 	trayIcon->showMessage(title, msg);
 }
 
-void QNapiApp::showOpenDialog()
+bool QNapiApp::showOpenDialog()
 {
 	QStringList fileList;
 
@@ -163,7 +163,9 @@ void QNapiApp::showOpenDialog()
 								GlobalConfig().previousDialogPath(),
 								QNapiOpenDialog::Movies))
 		)
-			return;
+		{
+			return false;
+		}
 	}
 
 	if(openDialog->selectFiles())
@@ -181,7 +183,11 @@ void QNapiApp::showOpenDialog()
 		progress()->download();
 	}
 	else if(progress()->isBatchMode())
-		quit();
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void QNapiApp::showScanDialog()

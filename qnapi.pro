@@ -25,7 +25,11 @@ SOURCES += src/main.cpp \
  src/qnapiabstractengine.cpp \
  src/qnapiprojektengine.cpp \
  src/qnapicli.cpp \
- src/qnapiopendialog.cpp
+ src/qnapiopendialog.cpp \
+ src/xmlrpc/client.cpp \
+ src/xmlrpc/request.cpp \
+ src/xmlrpc/variant.cpp \
+ src/xmlrpc/response.cpp
 HEADERS += src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
@@ -50,7 +54,12 @@ HEADERS += src/frmprogress.h \
  src/qnapiabstractengine.h \
  src/qnapiprojektengine.h \
  src/qnapicli.h \
- src/qnapiopendialog.h
+ src/qnapiopendialog.h \
+ src/xmlrpc/qsyncxmlrpcclient.h \
+ src/xmlrpc/variant.h \
+ src/xmlrpc/client.h \
+ src/xmlrpc/request.h \
+ src/xmlrpc/response.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -61,20 +70,21 @@ FORMS += ui/frmprogress.ui \
  ui/frmcreateuser.ui \
  ui/frmsummary.ui
 RESOURCES += res/resources.qrc
-QT += network gui core
+QT += network gui core xml
 UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
+INCLUDEPATH = src
 macx {
  QMAKE_MAC_SDK =  /Developer/SDKs/MacOSX10.4u.sdk
  CONFIG +=  x86  ppc
  ICON =  macx/qnapi.icns
  QMAKE_INFO_PLIST =  macx/Info.plist
  TARGET =  QNapi
-#7ZIP_BINARY.files = macx/7z macx/7z.so
-#7ZIP_BINARY.path = Contents/Resources
-#QMAKE_BUNDLE_DATA += 7ZIP_BINARY
+ 7ZIP_BINARY.files = macx/7z macx/7z.so
+ 7ZIP_BINARY.path = Contents/Resources
+ QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
 unix {
  INSTALL_PREFIX =  /usr

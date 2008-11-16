@@ -190,7 +190,11 @@ void frmOptions::writeConfig()
 	GlobalConfig().setPpRemoveLines(ui.cbRemoveLines->isChecked());
 	GlobalConfig().setPpRemoveWords(ui.teRemoveWords->toPlainText().split("\n"));
 	GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
-	GlobalConfig().setPpPermissions(ui.lePermissions->text());
+
+	QString permissions = QString("%1%2%3").arg(ui.sbOPerm->value())
+										   .arg(ui.sbGPerm->value())
+										   .arg(ui.sbUPerm->value());
+	GlobalConfig().setPpPermissions(permissions);
 
 	GlobalConfig().save();
 }
@@ -215,7 +219,15 @@ void frmOptions::readConfig()
 	ui.cbRemoveLines->setChecked(GlobalConfig().ppRemoveLines());
 	ui.teRemoveWords->setText(GlobalConfig().ppRemoveWords().join("\n"));
 	ui.cbChangePermissions->setChecked(GlobalConfig().ppChangePermissions());
-	ui.lePermissions->setText(GlobalConfig().ppPermissions());
+
+	QString permissions = GlobalConfig().ppPermissions();
+	unsigned short o, g, u;
+	o = permissions.at(0).toAscii() - '0';
+	g = permissions.at(1).toAscii() - '0';
+	u = permissions.at(2).toAscii() - '0';
+	ui.sbOPerm->setValue((o <= 7) ? o : 6);
+	ui.sbGPerm->setValue((g <= 7) ? g : 4);
+	ui.sbUPerm->setValue((u <= 7) ? u : 4);
 
 	changeEncodingClicked();
 	showAllEncodingsClicked();

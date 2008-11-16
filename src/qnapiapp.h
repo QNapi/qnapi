@@ -58,7 +58,7 @@ class QNapiApp : public QSingleApplication
 		void showUploadDialog();
 		void showCorrectDialog();
 		void showReportDialog();
-		void showOptions();
+		void showSettings();
 		void showCreateUser();
 		void showAbout();
 		void tryQuit();
@@ -71,10 +71,11 @@ class QNapiApp : public QSingleApplication
 		bool event(QEvent *ev);
 
 		QSystemTrayIcon *trayIcon;
-		QMenu *trayIconMenu, *napiSubMenu;
-		QAction *getAction, *scanAction, *addNewAction, *addCorrectedAction,
-				*reportBadAction, *optionsAction, *createUserAction,
-				*aboutAction, *quitAction;
+		QMenu *trayIconMenu, *napiSubMenu, *osSubMenu;
+		QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
+				*napiCorrectAction, *napiReportAction, *napiCreateUserAction,
+				*osGetAction, *osAddAction, *settingsAction, *aboutAction,
+				*quitAction;
 
 		QNapiOpenDialog *openDialog;
 		

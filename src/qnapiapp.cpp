@@ -29,15 +29,19 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(ar
 
 	getAction = 0;
 	scanAction = 0;
-	addNewAction = 0;
-	addCorrectedAction = 0;
-	reportBadAction = 0;
-	optionsAction = 0;
-	createUserAction = 0;
+	napiGetAction = 0;
+	napiAddAction = 0;
+	napiCorrectAction = 0;
+	napiReportAction = 0;
+	napiCreateUserAction = 0;
+	osGetAction = 0;
+	osAddAction = 0;
+	settingsAction = 0;
 	aboutAction = 0;
 	quitAction = 0;
 
 	napiSubMenu = 0;
+	osSubMenu = 0;
 	trayIconMenu = 0;
 	trayIcon = 0;
 }
@@ -57,11 +61,14 @@ QNapiApp::~QNapiApp()
 
 	if(getAction) delete getAction;
 	if(scanAction) delete scanAction;
-	if(addNewAction) delete addNewAction;
-	if(addCorrectedAction) delete addCorrectedAction;
-	if(reportBadAction) delete reportBadAction;
-	if(optionsAction) delete optionsAction;
-	if(createUserAction) delete createUserAction;
+	if(napiGetAction) delete napiGetAction;
+	if(napiAddAction) delete napiAddAction;
+	if(napiCorrectAction) delete napiCorrectAction;
+	if(napiReportAction) delete napiReportAction;
+	if(napiCreateUserAction) delete napiCreateUserAction;
+	if(osGetAction) delete osGetAction;
+	if(osAddAction) delete osAddAction;
+	if(settingsAction) delete settingsAction;
 	if(aboutAction) delete aboutAction;
 	if(quitAction) delete quitAction;
 
@@ -86,26 +93,35 @@ frmProgress * QNapiApp::progress()
 
 void QNapiApp::createTrayIcon()
 {
-	getAction = new QAction(tr("Pobierz"), 0);
+	getAction = new QAction(tr("Pobierz napisy"), 0);
 	connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 
-	scanAction = new QAction(tr("Skanuj katalogi i dopasuj napisy"), 0);
+	scanAction = new QAction(tr("Skanuj katalogi"), 0);
 	connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
 
-	addNewAction = new QAction(tr("Dodaj nowe"), 0);
-	connect(addNewAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+	napiGetAction = new QAction(tr("Pobierz napisy"), 0);
+//	connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
 
-	addCorrectedAction = new QAction(tr("Dodaj poprawione"), 0);
-	connect(addCorrectedAction, SIGNAL(triggered()), this, SLOT(showCorrectDialog()));
+	napiAddAction = new QAction(tr("Dodaj napisy"), 0);
+	connect(napiAddAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
 
-	reportBadAction = new QAction(tr("Zgłoś niepasujące"), 0);
-	connect(reportBadAction, SIGNAL(triggered()), this, SLOT(showReportDialog()));
+	napiCorrectAction = new QAction(tr("Popraw napisy"), 0);
+	connect(napiCorrectAction, SIGNAL(triggered()), this, SLOT(showCorrectDialog()));
 
-	optionsAction = new QAction(tr("Opcje"), 0);
-	connect(optionsAction, SIGNAL(triggered()), this, SLOT(showOptions()));
+	napiReportAction = new QAction(tr("Zgłoś niepasujące"), 0);
+	connect(napiReportAction, SIGNAL(triggered()), this, SLOT(showReportDialog()));
 
-	createUserAction = new QAction(tr("Załóż konto"), 0);
-	connect(createUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
+	napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
+	connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
+
+	osGetAction = new QAction(tr("Pobierz napisy"), 0);
+//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+
+	osAddAction = new QAction(tr("Dodaj napisy"), 0);
+//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+
+	settingsAction = new QAction(tr("Opcje"), 0);
+	connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
 
 	aboutAction = new QAction(tr("O programie"), 0);
 	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
@@ -114,20 +130,28 @@ void QNapiApp::createTrayIcon()
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(tryQuit()));
 
 	napiSubMenu = new QMenu(0);
-	napiSubMenu->setTitle(tr("Napisy"));
-	napiSubMenu->addAction(getAction);
-	napiSubMenu->addAction(scanAction);
+	napiSubMenu->setTitle(tr("napiprojekt.pl"));
+	napiSubMenu->addAction(napiGetAction);
 	napiSubMenu->addSeparator();
-	napiSubMenu->addAction(addNewAction);
-	napiSubMenu->addAction(addCorrectedAction);
+	napiSubMenu->addAction(napiAddAction);
+	napiSubMenu->addAction(napiCorrectAction);
+	napiSubMenu->addAction(napiReportAction);
 	napiSubMenu->addSeparator();
-	napiSubMenu->addAction(reportBadAction);
+	napiSubMenu->addAction(napiCreateUserAction);
+
+	osSubMenu = new QMenu(0);
+	osSubMenu->setTitle(tr("opensubtitles.org"));
+	osSubMenu->addAction(osGetAction);
+	osSubMenu->addAction(osAddAction);
 
 	trayIconMenu = new QMenu(0);
-	trayIconMenu->addMenu(napiSubMenu);
+	trayIconMenu->addAction(getAction);
+	trayIconMenu->addAction(scanAction);
 	trayIconMenu->addSeparator();
-	trayIconMenu->addAction(optionsAction);
-	trayIconMenu->addAction(createUserAction);
+	trayIconMenu->addMenu(napiSubMenu);
+	trayIconMenu->addMenu(osSubMenu);
+	trayIconMenu->addSeparator();
+	trayIconMenu->addAction(settingsAction);
 	trayIconMenu->addAction(aboutAction);
 	trayIconMenu->addSeparator();
 	trayIconMenu->addAction(quitAction);
@@ -242,7 +266,7 @@ void QNapiApp::showReportDialog()
 	f_report = 0;
 }
 
-void QNapiApp::showOptions()
+void QNapiApp::showSettings()
 {
 	if(!f_options)
 	{

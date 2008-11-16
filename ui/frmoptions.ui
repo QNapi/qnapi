@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>401</height>
+    <width>585</width>
+    <height>405</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -20,17 +20,9 @@
    <item>
     <widget class="QTabWidget" name="tabPostProcessing" >
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>530</width>
-        <height>317</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>Główne</string>
       </attribute>
@@ -162,14 +154,6 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>530</width>
-        <height>317</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>Przetwarzanie napisów</string>
       </attribute>
@@ -381,9 +365,9 @@
              <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">movie info&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;">synchro&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'DejaVu Sans';">movie info&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0; font-family:'DejaVu Sans';">synchro&lt;/p>&lt;/body>&lt;/html></string>
             </property>
             <property name="acceptRichText" >
              <bool>false</bool>
@@ -403,21 +387,41 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lePermissions" >
+             <widget class="QSpinBox" name="sbOPerm" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="maximum" >
+               <number>7</number>
               </property>
-              <property name="inputMask" >
-               <string>999; </string>
+              <property name="value" >
+               <number>6</number>
               </property>
-              <property name="text" >
-               <string>644</string>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbGPerm" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="maximum" >
+               <number>7</number>
+              </property>
+              <property name="value" >
+               <number>4</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbUPerm" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="maximum" >
+               <number>7</number>
+              </property>
+              <property name="value" >
+               <number>4</number>
               </property>
              </widget>
             </item>
@@ -496,12 +500,12 @@ p, li { white-space: pre-wrap; }
   <tabstop>cbRemoveLines</tabstop>
   <tabstop>teRemoveWords</tabstop>
   <tabstop>cbChangePermissions</tabstop>
-  <tabstop>lePermissions</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
  </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
+  <include location="../../qnapi_new/res/resources.qrc" />
  </resources>
  <connections>
   <connection>
@@ -511,8 +515,8 @@ p, li { white-space: pre-wrap; }
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>544</x>
-     <y>394</y>
+     <x>579</x>
+     <y>399</y>
     </hint>
     <hint type="destinationlabel" >
      <x>327</x>
@@ -527,8 +531,8 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>455</x>
-     <y>394</y>
+     <x>500</x>
+     <y>399</y>
     </hint>
     <hint type="destinationlabel" >
      <x>327</x>
@@ -543,8 +547,8 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>128</x>
-     <y>209</y>
+     <x>145</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
      <x>129</x>
@@ -555,16 +559,48 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>cbChangePermissions</sender>
    <signal>toggled(bool)</signal>
-   <receiver>lePermissions</receiver>
+   <receiver>sbOPerm</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>284</x>
-     <y>330</y>
+     <x>70</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>358</x>
-     <y>327</y>
+     <x>366</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbChangePermissions</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sbGPerm</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>162</x>
+     <y>335</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>423</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbChangePermissions</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sbUPerm</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>196</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>481</x>
+     <y>338</y>
     </hint>
    </hints>
   </connection>

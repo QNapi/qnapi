@@ -24,6 +24,7 @@
 
 int main(int argc, char **argv)
 {
+
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -98,7 +99,8 @@ int main(int argc, char **argv)
 		if(!QSystemTrayIcon::isSystemTrayAvailable())
 		{
 			app.progress()->setBatchMode(true);
-			app.showOpenDialog();
+			if(!app.showOpenDialog())
+				return 1;
 		}
 		else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
 		{

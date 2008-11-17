@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 				"teraz skonfigurować?"), QMessageBox::Yes | QMessageBox::No )
 			== QMessageBox::Yes )
 		{
-			app.showOptions();
+			app.showSettings();
 		}
 	}
 

@@ -16,11 +16,7 @@
 #define __FRMSCAN__H__
 
 #include "ui_frmscan.h"
-#include <QDesktopWidget>
-#include <QFileInfo>
-#include <QDir>
-#include <QCloseEvent>
-#include <QVariant>
+#include <QtGui>
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
@@ -28,6 +24,7 @@
 #include "qnapiopendialog.h"
 
 #include "frmsummary.h"
+
 
 class ScanFilesThread : public QNapiThread
 {
@@ -52,6 +49,7 @@ class ScanFilesThread : public QNapiThread
 		QStringList scanFilters, skipFilters;
 		bool skipIfSubtitlesExists;
 };
+
 
 class GetFilesThread : public QNapiThread
 {
@@ -80,6 +78,7 @@ class GetFilesThread : public QNapiThread
 		QString criticalMessage;
 };
 
+
 class frmScan: public QDialog
 {
 Q_OBJECT
@@ -96,6 +95,8 @@ Q_OBJECT
 		GetFilesThread getThread;
 		bool closeRequested;
 
+        QIcon iconFilm;
+
 	private slots:
 		bool pbCancelClicked();
 		void selectDirectory();
@@ -105,10 +106,9 @@ Q_OBJECT
 		void scanFinished();
 		void enableControlWidgets(bool enable);
 		void enableFilesWidgets(bool enable);
-		void pbAddAllClicked();
-		void pbAddClicked();
-		void pbRemoveClicked();
-		void pbRemoveAllClicked();
+		void tbSelectAllClicked();
+		void tbUnselectAllClicked();
+		void tbInvertSelectionClicked();
 		void checkPbGetEnabled();
 		void pbGetClicked();
 		void fileNameChange(const QString & fileName);

@@ -29,12 +29,10 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));
 	connect(&scanThread, SIGNAL(addFile(QString)), this, SLOT(addFile(QString)));
 	connect(&scanThread, SIGNAL(scanFinished(bool)), this, SLOT(scanFinished()));
-	connect(ui.pbAddAll, SIGNAL(clicked()), this, SLOT(pbAddAllClicked()));
-	connect(ui.pbAdd, SIGNAL(clicked()), this, SLOT(pbAddClicked()));
-	connect(ui.pbRemove, SIGNAL(clicked()), this, SLOT(pbRemoveClicked()));
-	connect(ui.pbRemoveAll, SIGNAL(clicked()), this, SLOT(pbRemoveAllClicked()));
-	connect(ui.lwFound, SIGNAL(dragFinished()), this, SLOT(checkPbGetEnabled()));
-	connect(ui.lwSelected, SIGNAL(dragFinished()), this, SLOT(checkPbGetEnabled()));
+	connect(ui.tbSelectAll, SIGNAL(clicked()), this, SLOT(tbSelectAllClicked()));
+	connect(ui.tbUnselectAll, SIGNAL(clicked()), this, SLOT(tbUnselectAllClicked()));
+	connect(ui.tbInvertSelection, SIGNAL(clicked()), this, SLOT(tbInvertSelectionClicked()));
+	connect(ui.lwMovies, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(checkPbGetEnabled()));
 	connect(ui.pbGet, SIGNAL(clicked()), this, SLOT(pbGetClicked()));
 	connect(&getThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
@@ -54,10 +52,8 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.leSkipFilters->setText(GlobalConfig().scanSkipFilters());
 	ui.cbSkipIfSubtitlesExists->setChecked(GlobalConfig().scanSkipIfSubtitlesExists());
 
-	QIcon iconFilm(":/ui/film.png");
-	ui.lwFound->setWidgetIcon(iconFilm);
-	ui.lwSelected->setWidgetIcon(iconFilm);
-
+	iconFilm = QIcon(":/ui/film.png");
+	
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -146,10 +142,10 @@ void frmScan::pbScanClicked()
 		ui.lbAction->setText(tr("Skanowanie folderów..."));
 		ui.pbProgress->setEnabled(false);
 		ui.pbGet->setEnabled(false);
-		ui.lwFound->clear();
-		ui.lwSelected->clear();
 		enableControlWidgets(false);
 		enableFilesWidgets(false);
+
+		ui.lwMovies->clear();
 
 		scanThread.setSearchPath(ui.leDirectory->text());
 		scanThread.setFilters(ui.cbFilters->currentText());
@@ -172,16 +168,23 @@ void frmScan::pbScanClicked()
 
 void frmScan::addFile(const QString & fileName)
 {
-	ui.lwFound->addItem(fileName);
+	QListWidgetItem * item = new QListWidgetItem(iconFilm,
+												 QFileInfo(fileName).fileName(),
+												 ui.lwMovies);
+	item->setToolTip(fileName);
+	item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+	item->setCheckState(Qt::Unchecked);
+
+	ui.lwMovies->addItem(item);
 }
 
 void frmScan::scanFinished()
 {
 	enableControlWidgets(true);
-	enableFilesWidgets(ui.lwFound->count() > 0);
+	enableFilesWidgets(ui.lwMovies->count() > 0);
 	ui.pbScan->setText("Skanuj");
-	ui.lbAction->setText(tr((ui.lwFound->count() > 0)
-							? "Przenieś pliki z listy znalezionych do listy wybranych."
+	ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
+							? "Zaznacz filmy, do których chcesz pobrać napisy."
 							: "Nie znaleziono plików z filmami."));
 }
 
@@ -199,44 +202,61 @@ void frmScan::enableControlWidgets(bool enable)
 
 void frmScan::enableFilesWidgets(bool enable)
 {
-	ui.lbFound->setEnabled(enable);
-	ui.lwFound->setEnabled(enable);
-	ui.pbAddAll->setEnabled(enable);
-	ui.pbAdd->setEnabled(enable);
-	ui.pbRemove->setEnabled(enable);
-	ui.pbRemoveAll->setEnabled(enable);
-	ui.lbSelected->setEnabled(enable);
-	ui.lwSelected->setEnabled(enable);
+	ui.lbMovies->setEnabled(enable);
+	ui.lwMovies->setEnabled(enable);
+	ui.tbSelectAll->setEnabled(enable);
+	ui.tbUnselectAll->setEnabled(enable);
+	ui.tbInvertSelection->setEnabled(enable);
 }
 
-void frmScan::pbAddAllClicked()
+void frmScan::tbSelectAllClicked()
 {
-	ui.lwFound->MoveAll(ui.lwSelected);
+	for(int i = 0; i < ui.lwMovies->count(); ++i)
+	{
+		ui.lwMovies->item(i)->setCheckState(Qt::Checked);
+	}
+
 	checkPbGetEnabled();
 }
 
-void frmScan::pbAddClicked()
+void frmScan::tbUnselectAllClicked()
 {
-	ui.lwFound->MoveSelected(ui.lwSelected);
+	for(int i = 0; i < ui.lwMovies->count(); ++i)
+	{
+		ui.lwMovies->item(i)->setCheckState(Qt::Unchecked);
+	}
+
 	checkPbGetEnabled();
 }
 
-void frmScan::pbRemoveClicked()
+void frmScan::tbInvertSelectionClicked()
 {
-	ui.lwSelected->MoveSelected(ui.lwFound);
+	Qt::CheckState state;
+	for(int i = 0; i < ui.lwMovies->count(); ++i)
+	{
+		state = ui.lwMovies->item(i)->checkState();
+		state = (state == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
+		ui.lwMovies->item(i)->setCheckState(state);
+	}
+
 	checkPbGetEnabled();
 }
 
-void frmScan::pbRemoveAllClicked()
-{
-	ui.lwSelected->MoveAll(ui.lwFound);
-	checkPbGetEnabled();
-}
 
 void frmScan::checkPbGetEnabled()
 {
-	ui.pbGet->setEnabled(ui.lwSelected->count() > 0);
-	ui.pbProgress->setEnabled(ui.lwSelected->count() > 0);
+	for(int i = 0; i < ui.lwMovies->count(); ++i)
+	{
+		if(ui.lwMovies->item(i)->checkState() == Qt::Checked)
+		{
+			ui.pbGet->setEnabled(true);
+			ui.pbProgress->setEnabled(true);
+			return;
+		}
+	}
+	
+	ui.pbGet->setEnabled(false);
+	ui.pbProgress->setEnabled(false);
 }
 
 void frmScan::pbGetClicked()
@@ -251,9 +271,10 @@ void frmScan::pbGetClicked()
 		ui.pbProgress->setValue(0);
 
 		getThread.queue.clear();
-		for(int i = 0; i < ui.lwSelected->count(); i++)
+		for(int i = 0; i < ui.lwMovies->count(); i++)
 		{
-			getThread.queue << ui.lwSelected->item(i)->text();
+			if(ui.lwMovies->item(i)->checkState() == Qt::Checked)
+				getThread.queue << ui.lwMovies->item(i)->toolTip();
 		}
 		getThread.start();
 	}
@@ -459,3 +480,4 @@ void GetFilesThread::run()
 
 	emit progressChange(100);
 }
+

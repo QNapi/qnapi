@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>450</height>
+    <width>754</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -19,10 +19,18 @@
    <string>QNapi - skanowanie katalogów i dopasowywanie napisów</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QGridLayout" >
-   <item row="1" column="0" >
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <widget class="QLabel" name="lbDirectory" >
+     <property name="text" >
+      <string>Wskaż katalog do przeszukania:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QLineEdit" name="leDirectory" >
@@ -53,223 +61,7 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0" >
-    <widget class="QLabel" name="lbDirectory" >
-     <property name="text" >
-      <string>Wskaż katalog do przeszukania:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" >
-    <layout class="QHBoxLayout" >
-     <item>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QLabel" name="lbFound" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>Znalezione filmy:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDragListWidget" name="lwFound" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="dragEnabled" >
-          <bool>true</bool>
-         </property>
-         <property name="dragDropMode" >
-          <enum>QAbstractItemView::DragDrop</enum>
-         </property>
-         <property name="selectionMode" >
-          <enum>QAbstractItemView::ExtendedSelection</enum>
-         </property>
-         <property name="uniformItemSizes" >
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Minimum</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>4</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" >
-       <property name="leftMargin" >
-        <number>0</number>
-       </property>
-       <property name="rightMargin" >
-        <number>0</number>
-       </property>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType" >
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" >
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbAddAll" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>>></string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbAdd" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>></string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbRemove" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>&lt;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbRemoveAll" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>&lt;&lt;</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Minimum</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>4</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" >
-       <item>
-        <widget class="QLabel" name="lbSelected" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>Wybrane filmy:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDragListWidget" name="lwSelected" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="dragEnabled" >
-          <bool>true</bool>
-         </property>
-         <property name="dragDropMode" >
-          <enum>QAbstractItemView::DragDrop</enum>
-         </property>
-         <property name="selectionMode" >
-          <enum>QAbstractItemView::ExtendedSelection</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item row="6" column="0" >
-    <widget class="QLabel" name="lbAction" >
-     <property name="text" >
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" >
-    <layout class="QHBoxLayout" >
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QProgressBar" name="pbProgress" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="value" >
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbCancel" >
-       <property name="text" >
-        <string>Anuluj</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbGet" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="text" >
-        <string>Pobierz napisy</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0" >
+   <item>
     <layout class="QHBoxLayout" >
      <property name="topMargin" >
       <number>0</number>
@@ -309,7 +101,7 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" >
+   <item>
     <layout class="QHBoxLayout" >
      <property name="topMargin" >
       <number>0</number>
@@ -330,22 +122,140 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0" >
+   <item>
     <widget class="QCheckBox" name="cbSkipIfSubtitlesExists" >
      <property name="text" >
       <string>Podczas wyszukiwania pomijaj pliki, do których istnieją juz napisy</string>
      </property>
     </widget>
    </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout" >
+     <property name="topMargin" >
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="lbMovies" >
+       <property name="text" >
+        <string>Znalezione pliki z filmami:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="lwMovies" >
+       <property name="editTriggers" >
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="selectionMode" >
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="verticalScrollMode" >
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="horizontalScrollMode" >
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout" >
+       <item>
+        <widget class="QToolButton" name="tbSelectAll" >
+         <property name="text" >
+          <string>Zaznacz wszystko</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tbUnselectAll" >
+         <property name="text" >
+          <string>Odznacz wszystko</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tbInvertSelection" >
+         <property name="text" >
+          <string>Odwróć zaznaczenie</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="lbAction" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="leftMargin" >
+      <number>0</number>
+     </property>
+     <property name="topMargin" >
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QProgressBar" name="pbProgress" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="value" >
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbCancel" >
+       <property name="text" >
+        <string>Anuluj</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbGet" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>Pobierz napisy</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QDragListWidget</class>
-   <extends>QListWidget</extends>
-   <header>../src/qdraglistwidget.h</header>
-  </customwidget>
- </customwidgets>
+ <tabstops>
+  <tabstop>leDirectory</tabstop>
+  <tabstop>pbDirectorySelect</tabstop>
+  <tabstop>pbScan</tabstop>
+  <tabstop>cbFilters</tabstop>
+  <tabstop>leSkipFilters</tabstop>
+  <tabstop>cbSkipIfSubtitlesExists</tabstop>
+  <tabstop>tbSelectAll</tabstop>
+  <tabstop>tbUnselectAll</tabstop>
+  <tabstop>tbInvertSelection</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbGet</tabstop>
+ </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
  </resources>

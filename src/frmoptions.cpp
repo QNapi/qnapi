@@ -33,7 +33,9 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 #ifdef Q_WS_WIN
 	// Pod Windowsami chowamy kontrolki odpowiadajace za zmiane uprawnien - i tak sie nie przydadza
 	ui.cbChangePermissions->hide();
-	ui.lePermissions->hide();
+	ui.sbOPerm->hide();
+	ui.sbGPerm->hide();
+	ui.sbUPerm->hide();
 #endif
 
 	setAttribute(Qt::WA_QuitOnClose, false);

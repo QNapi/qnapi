@@ -106,6 +106,7 @@ Q_OBJECT
 		void scanFinished();
 		void enableControlWidgets(bool enable);
 		void enableFilesWidgets(bool enable);
+		void lwMoviesClicked(QListWidgetItem * item);
 		void tbSelectAllClicked();
 		void tbUnselectAllClicked();
 		void tbInvertSelectionClicked();

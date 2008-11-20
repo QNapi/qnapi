@@ -32,7 +32,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.tbSelectAll, SIGNAL(clicked()), this, SLOT(tbSelectAllClicked()));
 	connect(ui.tbUnselectAll, SIGNAL(clicked()), this, SLOT(tbUnselectAllClicked()));
 	connect(ui.tbInvertSelection, SIGNAL(clicked()), this, SLOT(tbInvertSelectionClicked()));
-	connect(ui.lwMovies, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(checkPbGetEnabled()));
+	connect(ui.lwMovies, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(lwMoviesClicked(QListWidgetItem*)));
 	connect(ui.pbGet, SIGNAL(clicked()), this, SLOT(pbGetClicked()));
 	connect(&getThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
@@ -53,6 +53,8 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.cbSkipIfSubtitlesExists->setChecked(GlobalConfig().scanSkipIfSubtitlesExists());
 
 	iconFilm = QIcon(":/ui/film.png");
+	
+	ui.lwMovies->setMouseTracking(true);	
 	
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
@@ -207,6 +209,15 @@ void frmScan::enableFilesWidgets(bool enable)
 	ui.tbSelectAll->setEnabled(enable);
 	ui.tbUnselectAll->setEnabled(enable);
 	ui.tbInvertSelection->setEnabled(enable);
+}
+
+void frmScan::lwMoviesClicked(QListWidgetItem * item)
+{
+	//qDebug() <<	item->listWidget()->visualItemRect(item);
+	//if()
+	//item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);
+	
+	checkPbGetEnabled();
 }
 
 void frmScan::tbSelectAllClicked()

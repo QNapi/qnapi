@@ -59,7 +59,8 @@ HEADERS += src/frmprogress.h \
  src/xmlrpc/variant.h \
  src/xmlrpc/client.h \
  src/xmlrpc/request.h \
- src/xmlrpc/response.h
+ src/xmlrpc/response.h \
+ src/qcheckedlistwidget.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -82,9 +83,9 @@ macx {
  ICON =  macx/qnapi.icns
  QMAKE_INFO_PLIST =  macx/Info.plist
  TARGET =  QNapi
- 7ZIP_BINARY.files = macx/7z macx/7z.so
- 7ZIP_BINARY.path = Contents/Resources
- QMAKE_BUNDLE_DATA += 7ZIP_BINARY
+ 7ZIP_BINARY.files =  macx/7z  macx/7z.so
+ 7ZIP_BINARY.path =  Contents/Resources
+ QMAKE_BUNDLE_DATA +=  7ZIP_BINARY
 }
 unix {
  INSTALL_PREFIX =  /usr

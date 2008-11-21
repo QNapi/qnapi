@@ -54,8 +54,6 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 
 	iconFilm = QIcon(":/ui/film.png");
 	
-	ui.lwMovies->setMouseTracking(true);	
-	
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -81,6 +79,8 @@ void frmScan::closeEvent(QCloseEvent *event)
 		event->ignore();
 	closeRequested = true;
 }
+
+
 
 bool frmScan::pbCancelClicked()
 {
@@ -213,42 +213,27 @@ void frmScan::enableFilesWidgets(bool enable)
 
 void frmScan::lwMoviesClicked(QListWidgetItem * item)
 {
-	//qDebug() <<	item->listWidget()->visualItemRect(item);
-	//if()
-	//item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);
-	
+	Q_UNUSED(item);
 	checkPbGetEnabled();
 }
 
 void frmScan::tbSelectAllClicked()
 {
-	for(int i = 0; i < ui.lwMovies->count(); ++i)
-	{
-		ui.lwMovies->item(i)->setCheckState(Qt::Checked);
-	}
+	ui.lwMovies->selectAll();
 
 	checkPbGetEnabled();
 }
 
 void frmScan::tbUnselectAllClicked()
 {
-	for(int i = 0; i < ui.lwMovies->count(); ++i)
-	{
-		ui.lwMovies->item(i)->setCheckState(Qt::Unchecked);
-	}
+	ui.lwMovies->unselectAll();
 
 	checkPbGetEnabled();
 }
 
 void frmScan::tbInvertSelectionClicked()
 {
-	Qt::CheckState state;
-	for(int i = 0; i < ui.lwMovies->count(); ++i)
-	{
-		state = ui.lwMovies->item(i)->checkState();
-		state = (state == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
-		ui.lwMovies->item(i)->setCheckState(state);
-	}
+	ui.lwMovies->invertSelection();
 
 	checkPbGetEnabled();
 }

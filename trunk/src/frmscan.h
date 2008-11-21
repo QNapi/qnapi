@@ -89,6 +89,7 @@ Q_OBJECT
 
 	private:
 		void closeEvent(QCloseEvent *event);
+		
 
 		Ui::frmScan ui;
 		ScanFilesThread scanThread;

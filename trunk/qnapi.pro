@@ -85,7 +85,7 @@ macx {
  ICON =  macx/qnapi.icns
  QMAKE_INFO_PLIST =  macx/Info.plist
  TARGET =  QNapi
- 7ZIP_BINARY.files =  macx/7z  macx/7z.so
+ 7ZIP_BINARY.files =  macx/7za
  7ZIP_BINARY.path =  Contents/Resources
  QMAKE_BUNDLE_DATA +=  7ZIP_BINARY
 }

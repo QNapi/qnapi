@@ -48,10 +48,7 @@ protected:
 
 public:
 
-	static bool checkP7ZipPath();
-	static bool checkTmpPath();
 	bool checkWritePermissions();
-	static bool ppEnabled();
 
 	void doPostProcessing();
 

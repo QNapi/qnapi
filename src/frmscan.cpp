@@ -129,7 +129,7 @@ void frmScan::selectDirectory()
 
 void frmScan::leDirectoryTextChanged()
 {
-		ui.pbScan->setEnabled(!ui.leDirectory->text().isEmpty()
+	ui.pbScan->setEnabled(!ui.leDirectory->text().isEmpty()
 							? QDir().exists(ui.leDirectory->text())
 							: false);
 }

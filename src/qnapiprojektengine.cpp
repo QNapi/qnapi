@@ -98,7 +98,7 @@ bool QNapiProjektEngine::tryMatch()
 {
 	if(!QFile::exists(tmpFile)) return false;
 	if(!QFile::exists(moviePath)) return false;
-	if(!checkP7ZipPath()) return false;
+	//if(!checkP7ZipPath()) return false;
 
 	QStringList args;
 	args << "x" << "-y" << ("-p" + napiZipPassword) << ("-o" + tmpPath) << tmpFile;

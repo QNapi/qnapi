@@ -67,13 +67,13 @@ int QNapiCli::exec()
 		return 1;
 	}
 
-	if(!QNapiAbstractEngine::checkP7ZipPath())
+	if(!QNapi::checkP7ZipPath())
 	{
 		printCli("Sciezka do programu p7zip jest nieprawidlowa! Sprawdz swoje ustawienia.");
 		return 2;
 	}
 
-	if(!QNapiAbstractEngine::checkTmpPath())
+	if(!QNapi::checkTmpPath())
 	{
 		printCli("Nie można pisac do katalogu tymczasowego! Sprawdz swoje ustawienia.");
 		return 3;

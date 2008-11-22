@@ -16,18 +16,6 @@
 
 #include <QFlags>
 
-// Sprawdza poprawnosc sciezki do 7zipa (z konfiguracji)
-bool QNapiAbstractEngine::checkP7ZipPath()
-{
-	return QFileInfo(GlobalConfig().p7zipPath()).isExecutable();
-}
-
-// Sprawdza poprawnosc sciezki do katalogu tymczasowego (z konfiguracji)
-bool QNapiAbstractEngine::checkTmpPath()
-{
-	QFileInfo f(GlobalConfig().tmpPath());
-	return f.isDir() && f.isWritable();
-}
 
 // Sprawdza uprawnienia zapisu do katalogu docelowego (katalogu z filmem)
 bool QNapiAbstractEngine::checkWritePermissions()

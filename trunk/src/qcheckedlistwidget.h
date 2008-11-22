@@ -71,10 +71,9 @@ class QCheckedListWidget : public QListWidget
 
 		bool mouseUnderCheckBox;
 
-
-		void mouseMoveEvent(QMouseEvent *event)
+		void checkMousePos(QPoint pos)
 		{
-			QListWidgetItem* item = itemAt(event->pos());
+			QListWidgetItem* item = itemAt(pos);
 
 			if(!item)
 			{
@@ -87,14 +86,24 @@ class QCheckedListWidget : public QListWidget
 			opt.rect = visualItemRect(item);
 			QRect r = style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &opt);
 
-			mouseUnderCheckBox  = r.contains(event->pos());
-			
+			#ifdef Q_WS_WIN
+			r.moveLeft(7);
+			#endif
+
+			mouseUnderCheckBox  = r.contains(pos);
+		}
+
+		void mouseMoveEvent(QMouseEvent *event)
+		{
+			checkMousePos(event->pos());
 			QListWidget::mouseMoveEvent(event);
 		}
 
 
-		void mousePressEvent(QMouseEvent *event)
+		void mouseReleaseEvent(QMouseEvent *event)
 		{
+			checkMousePos(event->pos());
+			
 			QListWidgetItem* item = itemAt(event->pos());
 
 			if(!item)
@@ -105,7 +114,7 @@ class QCheckedListWidget : public QListWidget
 			if(!mouseUnderCheckBox)
 				item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);
 			
-			QListWidget::mousePressEvent(event);
+			QListWidget::mouseReleaseEvent(event);
 			//emit itemClicked(item);
 		}
 

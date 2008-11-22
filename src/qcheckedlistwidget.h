@@ -88,6 +88,8 @@ class QCheckedListWidget : public QListWidget
 			QRect r = style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &opt);
 
 			mouseUnderCheckBox  = r.contains(event->pos());
+			
+			QListWidget::mouseMoveEvent(event);
 		}
 
 
@@ -103,7 +105,8 @@ class QCheckedListWidget : public QListWidget
 			if(!mouseUnderCheckBox)
 				item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);
 			
-			emit itemClicked(item);
+			QListWidget::mousePressEvent(event);
+			//emit itemClicked(item);
 		}
 
 };

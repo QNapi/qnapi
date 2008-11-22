@@ -29,7 +29,8 @@ SOURCES += src/main.cpp \
  src/xmlrpc/client.cpp \
  src/xmlrpc/request.cpp \
  src/xmlrpc/variant.cpp \
- src/xmlrpc/response.cpp
+ src/xmlrpc/response.cpp \
+ src/qnapi.cpp
 HEADERS += src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
@@ -60,7 +61,8 @@ HEADERS += src/frmprogress.h \
  src/xmlrpc/client.h \
  src/xmlrpc/request.h \
  src/xmlrpc/response.h \
- src/qcheckedlistwidget.h
+ src/qcheckedlistwidget.h \
+ src/qnapi.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

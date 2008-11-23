@@ -29,9 +29,9 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));
 	connect(&scanThread, SIGNAL(addFile(QString)), this, SLOT(addFile(QString)));
 	connect(&scanThread, SIGNAL(scanFinished(bool)), this, SLOT(scanFinished()));
-	connect(ui.tbSelectAll, SIGNAL(clicked()), this, SLOT(tbSelectAllClicked()));
-	connect(ui.tbUnselectAll, SIGNAL(clicked()), this, SLOT(tbUnselectAllClicked()));
-	connect(ui.tbInvertSelection, SIGNAL(clicked()), this, SLOT(tbInvertSelectionClicked()));
+	connect(ui.pbSelectAll, SIGNAL(clicked()), this, SLOT(pbSelectAllClicked()));
+	connect(ui.pbUnselectAll, SIGNAL(clicked()), this, SLOT(pbUnselectAllClicked()));
+	connect(ui.pbInvertSelection, SIGNAL(clicked()), this, SLOT(pbInvertSelectionClicked()));
 	connect(ui.lwMovies, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(lwMoviesClicked(QListWidgetItem*)));
 	connect(ui.pbGet, SIGNAL(clicked()), this, SLOT(pbGetClicked()));
 	connect(&getThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
@@ -206,9 +206,9 @@ void frmScan::enableFilesWidgets(bool enable)
 {
 	ui.lbMovies->setEnabled(enable);
 	ui.lwMovies->setEnabled(enable);
-	ui.tbSelectAll->setEnabled(enable);
-	ui.tbUnselectAll->setEnabled(enable);
-	ui.tbInvertSelection->setEnabled(enable);
+	ui.pbSelectAll->setEnabled(enable);
+	ui.pbUnselectAll->setEnabled(enable);
+	ui.pbInvertSelection->setEnabled(enable);
 }
 
 void frmScan::lwMoviesClicked(QListWidgetItem * item)
@@ -217,21 +217,21 @@ void frmScan::lwMoviesClicked(QListWidgetItem * item)
 	checkPbGetEnabled();
 }
 
-void frmScan::tbSelectAllClicked()
+void frmScan::pbSelectAllClicked()
 {
 	ui.lwMovies->selectAll();
 
 	checkPbGetEnabled();
 }
 
-void frmScan::tbUnselectAllClicked()
+void frmScan::pbUnselectAllClicked()
 {
 	ui.lwMovies->unselectAll();
 
 	checkPbGetEnabled();
 }
 
-void frmScan::tbInvertSelectionClicked()
+void frmScan::pbInvertSelectionClicked()
 {
 	ui.lwMovies->invertSelection();
 

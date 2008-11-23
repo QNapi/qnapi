@@ -19,10 +19,9 @@
    <string>QNapi - skanowanie katalogów i dopasowywanie napisów</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >
-    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
+   <iconset resource="../res/resources.qrc" >:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" >
+  <layout class="QVBoxLayout" >
    <item>
     <widget class="QLabel" name="lbDirectory" >
      <property name="text" >
@@ -130,7 +129,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" >
+    <layout class="QVBoxLayout" >
      <property name="topMargin" >
       <number>10</number>
      </property>
@@ -158,34 +157,34 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" >
+      <layout class="QHBoxLayout" >
        <item>
-        <widget class="QToolButton" name="tbSelectAll" >
+        <widget class="QPushButton" name="pbSelectAll" >
          <property name="text" >
           <string>Zaznacz wszystko</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="tbUnselectAll" >
+        <widget class="QPushButton" name="pbUnselectAll" >
          <property name="text" >
           <string>Odznacz wszystko</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="tbInvertSelection" >
+        <widget class="QPushButton" name="pbInvertSelection" >
          <property name="text" >
           <string>Odwróć zaznaczenie</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer" >
+        <spacer>
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" >
           <size>
            <width>40</width>
            <height>20</height>
@@ -257,9 +256,6 @@
   <tabstop>cbFilters</tabstop>
   <tabstop>leSkipFilters</tabstop>
   <tabstop>cbSkipIfSubtitlesExists</tabstop>
-  <tabstop>tbSelectAll</tabstop>
-  <tabstop>tbUnselectAll</tabstop>
-  <tabstop>tbInvertSelection</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbGet</tabstop>
  </tabstops>

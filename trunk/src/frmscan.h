@@ -108,9 +108,9 @@ Q_OBJECT
 		void enableControlWidgets(bool enable);
 		void enableFilesWidgets(bool enable);
 		void lwMoviesClicked(QListWidgetItem * item);
-		void tbSelectAllClicked();
-		void tbUnselectAllClicked();
-		void tbInvertSelectionClicked();
+		void pbSelectAllClicked();
+		void pbUnselectAllClicked();
+		void pbInvertSelectionClicked();
 		void checkPbGetEnabled();
 		void pbGetClicked();
 		void fileNameChange(const QString & fileName);

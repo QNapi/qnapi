@@ -86,9 +86,12 @@ class QCheckedListWidget : public QListWidget
 			opt.rect = visualItemRect(item);
 			QRect r = style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &opt);
 
-			#ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
 			r.moveLeft(7);
-			#endif
+#endif
+#ifdef Q_WS_MAC
+			r.moveLeft(10);
+#endif
 
 			mouseUnderCheckBox  = r.contains(pos);
 		}

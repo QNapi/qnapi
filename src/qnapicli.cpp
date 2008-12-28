@@ -86,7 +86,7 @@ int QNapiCli::exec()
 		napi = new QNapiProjektEngine(movie);
 		if(!napi) continue;
 
-		if(!napi->checkWritePermissions())
+//		if(!napi->checkWritePermissions())
 		{
 			printCli(QString("Brak uprawnien zapisu do katalogu '%1'").arg(QFileInfo(movie).path()));
 			delete napi;
@@ -99,7 +99,7 @@ int QNapiCli::exec()
 		napi->checksum();
 
 		printCli(QString(QString("   pobieranie napisow z serwera...")));
-		if(!napi->tryDownload())
+//		if(!napi->tryDownload())
 		{
 			printCli(QString(QString("   ! nie znaleziono napisow")));
 			delete napi;
@@ -107,7 +107,7 @@ int QNapiCli::exec()
 		}
 
 		printCli(QString(QString("   dopasowywanie napisow...")));
-		if(!napi->tryMatch())
+//		if(!napi->tryMatch())
 		{
 			printCli(QString(QString("   ! nie udalo sie dopasowac napisow")));
 			delete napi;
@@ -117,7 +117,7 @@ int QNapiCli::exec()
 		if(GlobalConfig().ppEnabled())
 		{
 			printCli(QString(QString("   przetwarzanie pobranych napisow...")));
-			napi->doPostProcessing();
+//			napi->doPostProcessing();
 		}
 
 		delete napi;

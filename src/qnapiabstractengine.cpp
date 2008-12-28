@@ -17,14 +17,85 @@
 #include <QFlags>
 
 
-// Sprawdza uprawnienia zapisu do katalogu docelowego (katalogu z filmem)
-bool QNapiAbstractEngine::checkWritePermissions()
+// ustawia sciezke do pliku filmowego
+void QNapiAbstractEngine::setMoviePath(const QString & path)
 {
-	return QFileInfo(QFileInfo(moviePath).path()).isWritable();
+	movie = path;
+}
+
+// zwraca sciezke do pliku filmowego
+QString QNapiAbstractEngine::moviePath()
+{
+	return movie;
+}
+
+// ustawia sciezke do pliku z napisami
+void QNapiAbstractEngine::setSubtitlesPath(const QString & path)
+{
+	subtitles = path;
+}
+
+// zwraca sciezke do pliku z napisami
+QString QNapiAbstractEngine::subtitlesPath()
+{
+	return subtitles;
+}
+
+// dopasowuje napisy do pliku z filmem
+bool QNapiAbstractEngine::match()
+{
+	qDebug("tryMatch:");
+	QFileInfo stf(subtitlesTmp);
+
+	if(!stf.exists())
+		return false;
+	qDebug("tryMatch: stf exists");
+
+	QFileInfo mf(movie);
+
+	if(subtitles.isEmpty())
+		subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
+
+	qDebug("tryMatch: subtitlesPath = %s", qPrintable(subtitles));
+
+
+	QFileInfo sf(subtitles);
+
+	if(QFile::exists(subtitles))
+	{
+		if(!noBackup)
+			QFile::copy(subtitles, mf.path() + "/" + mf.completeBaseName() + "_kopia" + sf.suffix());
+
+		QFile::remove(subtitles);
+	}
+
+	bool r;
+
+#ifdef Q_WS_WIN
+	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
+	QFile f(subtitles), f2(subtitlesTmp);
+	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
+	{
+		r = false;
+		f.close();
+	}
+	else
+	{
+		r = f.write(f2.readAll()) > 0;
+		f2.close();
+		f.close();
+	}
+#else
+	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
+	r = QFile::copy(subtitlesTmp, subtitles);
+#endif
+	qDebug("tryMatch: r = %d", r);
+
+	return r;
 }
 
 // Dokonuje post-przetwarzania pliku z napisami (na podstawie konfiguracji)
-void QNapiAbstractEngine::doPostProcessing()
+void QNapiAbstractEngine::pp()
 {
 	// Usuwanie linii z plikow z napisami
 	if(GlobalConfig().ppRemoveLines())
@@ -108,7 +179,7 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
 // Konwertuje napisy z jednego kodowania na inne
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const QString & to)
 {
-	QFile f(subtitlesPath);
+	QFile f(subtitles);
 	if(!f.open(QIODevice::ReadOnly))
 		return false;
 
@@ -135,10 +206,10 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const 
 // kodowania zrodlowego
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 {
-	if(!QFileInfo(subtitlesPath).exists())
+	if(!QFileInfo(subtitles).exists())
 		return false;
 
-	QString from = ppDetectEncoding(subtitlesPath);
+	QString from = ppDetectEncoding(subtitles);
 
 	if(from.isEmpty())
 		return false;
@@ -149,17 +220,17 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 // Usuwanie linii zawierajacych podane slowa z pliku z napisami
 bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 {
-	if(!QFileInfo(subtitlesPath).exists())
+	if(!QFileInfo(subtitles).exists())
 		return false;
 
 	wordList = wordList.filter("^(.+)$");
 
-	QString fromCodec = ppDetectEncoding(subtitlesPath);
+	QString fromCodec = ppDetectEncoding(subtitles);
 
 	if(fromCodec.isEmpty())
 		fromCodec = GlobalConfig().ppEncodingFrom();
 
-	QFile f(subtitlesPath);
+	QFile f(subtitles);
 	if(!f.open(QIODevice::ReadOnly))
 		return false;
 
@@ -212,9 +283,9 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 // Zmienia uprawnienia do pliku z napisami
 bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permissions)
 {
-	if(!QFileInfo(subtitlesPath).exists())
+	if(!QFileInfo(subtitles).exists())
 		return false;
 
-	return QFile::setPermissions(subtitlesPath, permissions);
+	return QFile::setPermissions(subtitles, permissions);
 }
 #endif

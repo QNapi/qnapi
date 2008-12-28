@@ -62,7 +62,8 @@ HEADERS += src/frmprogress.h \
  src/xmlrpc/request.h \
  src/xmlrpc/response.h \
  src/qcheckedlistwidget.h \
- src/qnapi.h
+ src/qnapi.h \
+ src/qnapisubtitleinfo.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

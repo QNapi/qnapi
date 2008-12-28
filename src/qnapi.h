@@ -18,50 +18,66 @@
 
 #include <QtCore>
 #include "qnapiconfig.h"
+#include "qnapisubtitleinfo.h"
 #include "qnapiabstractengine.h"
 
-struct QNapiSubtitleInfo
-{
-	QString lang;
-	QString engine;
-	QString url;
-};
-
+// globalny menedzer pobierania napisow
 class QNapi
 {
 	public:
 
+		// sprawdza sciezke do 7zipa
 		static bool checkP7ZipPath();
+		// sprawdza katalog plikow tymczasowych
 		static bool checkTmpPath();
+		// sprawdza czy wlaczone jest przetwarzanie napisow
 		static bool ppEnabled();
 
-		void addEngine(QString engine);
-		void addEngines(QStringList engines);
-	
+		// wlacza silnik pobierania napisow o podanej nazwie
+		bool addEngine(QString engine);
+		// za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
+		bool addEngines(QStringList engines);
+
+		// ustawia sciezke do pliku z filmem
 		void setMoviePath(QString path);
+		// zwraca sciezke do pliku z filmem
+		QString moviePath();
+		// sprawdza uprawnienia zapisu do katalogu docelowego
 		bool checkWritePermissions();
+		// szuka napisow w podanym jezyku
 		bool lookForSubtitles(QString lang);
+		// zwraca liste znalezionych napisow
 		QList<QNapiSubtitleInfo> listSubtitles();
 
+		// pobiera napisy o i-tym indeksie z listy subtitlesList
 		bool download(int i);
+		// dopasowuje pobrane napisy
 		bool match();
+		// wykonuje przetwarzanie na dopasowanych napisach
 		bool pp();
+		// anuluje operacje
 		void cancel();
 
+		// czysci rozne smieci i pliki tymczasowe
 		void cleanup();
+		// zwraca komunikat o bledzie, w przypadku niepowodzenia
 		QString error();
 
 	private:
 
-		QString moviePath;
+		// sciezka do pliku z filmem
+		QString movie;
+		// aktualny komunikat o bledzie
 		QString errorMsg;
+		// lista zaladowanych silnikow z napisami
 		QList<QNapiAbstractEngine*> enginesList;
+		// lista znalezionych napisow
 		QList<QNapiSubtitleInfo> subtitlesList;
-
-	signals:
-
-		void listSubtitlesReady();
-		void downloadFinished(bool result);
+		
+		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
+		QNapiAbstractEngine * engineByName(QString name);
+		// na odwrot ;)
+		QString nameByEngine(QNapiAbstractEngine * engine);
 
 };
 

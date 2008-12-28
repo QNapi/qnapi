@@ -23,7 +23,7 @@ QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString 
 	nick = GlobalConfig().nick();
 	pass = GlobalConfig().pass();
 	noBackup = GlobalConfig().noBackup();
-	tmpFile =  tmpPath + "/QNapi.napisy.7z";
+	tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());	
 }
 
 // destruktor klasy
@@ -32,46 +32,77 @@ QNapiProjektEngine::~QNapiProjektEngine()
 	cleanup();
 }
 
-// oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)
-QString QNapiProjektEngine::checksum(const QString & filename, bool limit10M)
+
+// zwraca nazwe modulu
+QString QNapiProjektEngine::engineName()
 {
-	QFile file(filename);
-	QByteArray fileArray;
-
-	if(!file.open(QIODevice::ReadOnly))
-		return QString("");
-
-	fileArray = limit10M ? file.read(NAPI_10MB) : file.readAll();
-	file.close();
-
-	QByteArray b = QCryptographicHash::hash(fileArray, QCryptographicHash::Md5);
-	fileArray.clear();
-
-	QString out;
-	char next[3];
-
-	for(int i = 0; i < 16; i++)
-	{
-		snprintf(next, 3, "%.2x", (unsigned char)b[i]);
-		out += next;
-	}
-	
-	checkSum = out;
-	return checkSum;
+	return "NapiProjekt";
 }
 
-QString QNapiProjektEngine::checksum()
+// zwraca informacje nt. modulu
+QString QNapiProjektEngine::engineInfo()
 {
-	return checksum(moviePath);
+	return "Modul pobierania napisów z bazy <b>www.napiprojekt.pl</b>\n"
+			"Copyright (c) 2008 by Krzemin";
+}
+
+// zwraca ikone w formacie XMP
+QIcon QNapiProjektEngine::engineIcon()
+{
+	static const char * const icon[] = {
+		"16 16 5 1",
+		"   c #FFFFFF",
+		".  c #000080",
+		"+  c #0052CC",
+		"@  c #005CE6",
+		"#  c #BFD9FF",
+		"           ...  ",
+		"         ... .  ",
+		"       ... ...  ",
+		"     ... ....   ",
+		"   ... ....     ",
+		" ... ....       ",
+		".. ....         ",
+		"....+           ",
+		" ...............",
+		" . . . . . . . .",
+		" ...............",
+		" .@@####@####@@.",
+		" .@@#@@#@#@@#@@.",
+		" .@@#@@#@####@@.",
+		" .@@#@@#@#@@@@@.",
+		" ..............."};
+	return QIcon(icon);
+}
+
+// oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)
+QString QNapiProjektEngine::checksum(QString filename)
+{
+	if(filename.isEmpty())
+		filename = movie;
+	return (checkSum = checksum(filename, false));
+}
+
+
+bool QNapiProjektEngine::lookForSubtitles(QString lang)
+{
+	Q_UNUSED(lang);
+	return true;
+}
+
+QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
+{
+	QList<QNapiSubtitleInfo> a;
+	return a;
 }
 
 // Probuje pobrac napisy do filmu z serwera NAPI
-bool QNapiProjektEngine::tryDownload()
+bool QNapiProjektEngine::download()
 {
-	if(checkSum.isEmpty()) checksum();
+	if(checkSum.isEmpty()) return false;
 	
 	SyncHTTP http;
-	QString urlTxt = napiDownloadUrlTpl.arg(lang).arg(checkSum).arg(napiFDigest(checkSum)).arg(nick).arg(pass);
+	QString urlTxt = napiDownloadUrlTpl.arg(lang).arg(checkSum).arg(npFDigest(checkSum)).arg(nick).arg(pass);
 
 	QUrl url(urlTxt);
 
@@ -83,7 +114,7 @@ bool QNapiProjektEngine::tryDownload()
 	if(buffer.indexOf("NPc") == 0)
 		return false;
 
-	QFile file(tmpFile);
+	QFile file(tmpPackedFile);
 	if(file.exists()) file.remove();
 	if(!file.open(QIODevice::WriteOnly))
 		return false;
@@ -93,66 +124,33 @@ bool QNapiProjektEngine::tryDownload()
 	return (bool)r;
 }
 
-// Probuje dopasowac napisy do filmu
-bool QNapiProjektEngine::tryMatch()
+// Probuje rozpakowac napisy do filmu
+bool QNapiProjektEngine::unpack()
 {
-	if(!QFile::exists(tmpFile)) return false;
-	if(!QFile::exists(moviePath)) return false;
-	//if(!checkP7ZipPath()) return false;
+	if(!QFile::exists(tmpPackedFile)) return false;
+	if(!QFile::exists(movie)) return false;
+	subtitlesTmp = tmpPath + "/" + checkSum + ".txt";
+
+	if(QFile::exists(subtitlesTmp))
+		QFile::remove(subtitlesTmp);
 
 	QStringList args;
-	args << "x" << "-y" << ("-p" + napiZipPassword) << ("-o" + tmpPath) << tmpFile;
+	args << "e" << "-y" << ("-p" + napiZipPassword) << ("-o" + tmpPath) << tmpPackedFile;
 
 	QProcess p7zip;
 	p7zip.start(p7zipPath, args);
 
-	if(!p7zip.waitForFinished()) return false;
+	// Rozpakowujemy napisy max w ciagu 5 sekund
+	if(!p7zip.waitForFinished(5000)) return false;
 
-	QString subtitleFile = tmpPath + "/" + checkSum + ".txt";
-	if(!QFile::exists(subtitleFile)) return false;
-
-	QFileInfo mf(moviePath);
-
-	subtitlesPath = mf.path() + "/" + mf.completeBaseName() + ".txt";
-
-	if(QFile::exists(subtitlesPath))
-	{
-		if(!noBackup)
-			QFile::copy(subtitlesPath, mf.path() + "/" + mf.completeBaseName() + "_kopia.txt");
-
-		QFile::remove(subtitlesPath);
-	}
-
-	bool r;
-
-#ifdef Q_WS_WIN
-	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
-	QFile f(subtitlesPath), f2(subtitleFile);
-	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
-	{
-		r = false;
-		f.close();
-	}
-	else
-	{
-		r = f.write(f2.readAll()) > 0;
-		f2.close();
-		f.close();
-	}
-#else
-	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
-	r = QFile::copy(subtitleFile, subtitlesPath);
-#endif
-	
-	QFile::remove(subtitleFile);
-	QFile::remove(tmpFile);
-
-	return r;
+	subtitlesTmp = tmpPath + "/" + checkSum + ".txt";
+	return QFile::exists(subtitlesTmp);
 }
+
 
 void QNapiProjektEngine::cleanup()
 {
-	QFile::remove(tmpFile);
+	QFile::remove(tmpPackedFile);
 }
 
 // Tworzy konto uzytkownika na serwerze NAPI
@@ -221,18 +219,18 @@ QNapiProjektEngine::UploadResult
 	QNapiProjektEngine::uploadSubtitles(const QString & language, const QString & nick,
 										const QString & pass, bool correct, const QString & comment)
 {
-	if(!QFile::exists(moviePath) || !QFile::exists(subtitlesPath))
+	if(!QFile::exists(movie) || !QFile::exists(subtitles))
 		return NAPI_FAIL;
 
-	MovieInfo movieInfo(moviePath);
+	MovieInfo movieInfo(movie);
 
-	unsigned long movie_size = QFileInfo(moviePath).size();
-	QString movie_md5 = checksum(moviePath);
-	QString subtitles_md5 = checksum(subtitlesPath, false);
+	unsigned long movie_size = QFileInfo(movie).size();
+	QString movie_md5 = checksum(movie);
+	QString subtitles_md5 = checksum(subtitles, false);
 
 	QString newSubtitlesName = tmpPath + "/" + movie_md5 + ".txt";
 	if(QFile::exists(newSubtitlesName)) QFile::remove(newSubtitlesName);
-	if(!QFile::copy(subtitlesPath, newSubtitlesName))
+	if(!QFile::copy(subtitles, newSubtitlesName))
 		return NAPI_FAIL;
 
 	QString zipFileName = QFileInfo(newSubtitlesName).path() + "/"
@@ -280,11 +278,11 @@ QNapiProjektEngine::UploadResult
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"t\"");
-	postData.addData(napiFDigest(movie_md5));
+	postData.addData(npFDigest(movie_md5));
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"m_filename\"");
-	postData.addData(QFileInfo(moviePath).fileName());
+	postData.addData(QFileInfo(movie).fileName());
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"nick\"");
@@ -364,10 +362,10 @@ QNapiProjektEngine::ReportResult
 	QNapiProjektEngine::reportBad(const QString & language, const QString & nick, const QString & pass,
 									const QString & comment, QString *response)
 {
-	QFileInfo fi(moviePath);
-	subtitlesPath = fi.path() + "/" + fi.completeBaseName() + ".txt";
+	QFileInfo fi(movie);
+	subtitles = fi.path() + "/" + fi.completeBaseName() + ".txt";
 
-	if(!QFile::exists(subtitlesPath))
+	if(!QFile::exists(subtitles))
 		return NAPI_NO_SUBTITLES;
 
 	checksum();
@@ -417,8 +415,37 @@ QNapiProjektEngine::ReportResult
 	return NAPI_REPORTED;
 }
 
-// Tajemnicza funkcja f() :D
-QString QNapiProjektEngine::napiFDigest(const QString & input)
+
+// oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)
+QString QNapiProjektEngine::checksum(QString filename, bool limit10M)
+{
+	QFile file(filename);
+	QByteArray fileArray;
+
+	if(!file.open(QIODevice::ReadOnly))
+		return QString("");
+
+	fileArray = limit10M ? file.read(NAPI_10MB) : file.readAll();
+	file.close();
+
+	QByteArray b = QCryptographicHash::hash(fileArray, QCryptographicHash::Md5);
+	fileArray.clear();
+
+	QString out;
+	char next[3];
+
+	for(int i = 0; i < 16; i++)
+	{
+		snprintf(next, 3, "%.2x", (unsigned char)b[i]);
+		out += next;
+	}
+	
+	checkSum = out;
+	return checkSum;
+}
+
+// Tajemnicza funkcja f()
+QString QNapiProjektEngine::npFDigest(const QString & input)
 {
 	if(input.size() != 32) return "";
 

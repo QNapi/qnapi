@@ -298,7 +298,7 @@ void GetThread::run()
 		emit progressChange(i, queue.size(), 0.1);
 		emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
 
-		if(!napi->checkWritePermissions())
+//		if(!napi->checkWritePermissions())
 		{
 			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
 			delete napi;
@@ -319,7 +319,7 @@ void GetThread::run()
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 
 		// pobieranie
-		if(!napi->tryDownload())
+//		if(!napi->tryDownload())
 		{
 			if(abort)
 			{
@@ -343,7 +343,7 @@ void GetThread::run()
 		emit actionChange(tr("Dopasowywanie napisów..."));
 
 		// dopasowywanie
-		if(!napi->tryMatch())
+//		if(!napi->tryMatch())
 		{
 			if(abort)
 			{
@@ -365,7 +365,7 @@ void GetThread::run()
 			emit progressChange(i, queue.size(), 0.9);
 			emit actionChange(tr("Przetwarzanie napisów..."));
 
-			napi->doPostProcessing();
+//			napi->doPostProcessing();
 		}
 
 		emit progressChange(i, queue.size(), 1);

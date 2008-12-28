@@ -115,10 +115,10 @@ void QNapiApp::createTrayIcon()
 	connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
 
 	osGetAction = new QAction(tr("Pobierz napisy"), 0);
-//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showOSGetDialog()));
 
 	osAddAction = new QAction(tr("Dodaj napisy"), 0);
-//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+//	connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
 
 	settingsAction = new QAction(tr("Opcje"), 0);
 	connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));

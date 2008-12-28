@@ -396,13 +396,13 @@ void GetFilesThread::run()
 
 	for(int i = 0; i < size; i++)
 	{
-		napi = new QNapiProjektEngine(queue[i]);
+//		napi = new QNapiProjektEngine(queue[i]);
 		if(!napi) continue;
 
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
-		if(!napi->checkWritePermissions())
+//		if(!napi->checkWritePermissions())
 		{
 			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
 			delete napi;
@@ -419,7 +419,7 @@ void GetFilesThread::run()
 		emit progressChange((int)ceil(step * i + step / 3));
 
 		// pobieranie
-		if(!napi->tryDownload())
+//		if(!napi->tryDownload())
 		{
 			if(abort)
 			{
@@ -441,7 +441,7 @@ void GetFilesThread::run()
 		emit progressChange((int)ceil(step * i + 2 * step / 3));
 
 		// dopasowywanie
-		if(!napi->tryMatch())
+//		if(!napi->tryMatch())
 		{
 			if(abort)
 			{
@@ -467,7 +467,7 @@ void GetFilesThread::run()
 		if(GlobalConfig().ppEnabled())
 		{
 			emit progressChange((int)ceil(step * i + 5 * step / 6));
-			napi->doPostProcessing();
+//			napi->doPostProcessing();
 		}
 
 		emit progressChange((int)ceil(step * (i + 1)));

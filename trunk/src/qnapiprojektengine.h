@@ -25,6 +25,7 @@
 #include <cmath>
 
 #include "qnapiabstractengine.h"
+#include "qmultiparthttprequest.h"
 #include "synchttp.h"
 #include "movieinfo.h"
 
@@ -58,11 +59,24 @@ public:
 	QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile = "");
 	~QNapiProjektEngine();
 
-	QString checksum(const QString & filename, bool limit10M = true);
-	QString checksum();
-	bool tryDownload();
-	bool tryMatch();
+	// zwraca nazwe modulu
+	QString engineName();
+	// zwraca informacje nt. modulu
+	QString engineInfo();
+	// zwraca ikone silnika pobierania
+	QIcon engineIcon();
+
+	QString checksum(QString filename = "");
+	bool lookForSubtitles(QString lang);
+	QList<QNapiSubtitleInfo> listSubtitles();
+	bool download();
+	bool unpack();
 	void cleanup();
+
+	QString name()
+	{
+		return QString("NapiProjekt");
+	}
 
 	static bool createUser(const QString & nick, const QString & pass,
 							const QString & email, QString * response);
@@ -75,10 +89,11 @@ public:
 
 private:
 
-	QString p7zipPath, lang, nick, pass, tmpFile;
-	bool noBackup;
+	QString p7zipPath, lang, nick, pass, tmpPackedFile;
 
-	QString napiFDigest(const QString & input);
+	QString checksum(QString filename, bool limit10M);
+	QString npFDigest(const QString & input);
+
 };
 
 #endif

@@ -32,6 +32,9 @@ class QNapiAbstractEngine
 {
 public:
 
+	// destruktor
+	virtual ~QNapiAbstractEngine() {};
+
 	// ustawia sciezke do pliku filmowego
 	void setMoviePath(const QString & path);
 	// zwraca sciezke do pliku filmowego
@@ -67,7 +70,20 @@ public:
 	// zwraca ikone silnika pobierania
 	virtual QIcon engineIcon() = 0;
 
-
+	// powinna obliczac i zwracac sume kontrolna pliku filmowego,
+	// a takze ustawiac wartosc zmiennej checkSym
+	virtual QString checksum(QString filename = "") = 0;
+	// szuka napisow w podanym jezyku
+	virtual bool lookForSubtitles(QString lang) = 0;
+	// zwraca liste dostepnych napisow
+	virtual QList<QNapiSubtitleInfo> listSubtitles() = 0;
+	// powinna pobierac napisy do filmu i zapisywac w jakims pliku tymczasowym
+	virtual bool download(int idx) = 0;
+	// powinna rozpakowywac pobrane napisy, a ich sciezke zapisywac w poli
+	// subtitlesTmpPath
+	virtual bool unpack() = 0;
+	// powinna czyscic pliki tymczasowe itd.
+	virtual void cleanup() = 0;
 
 protected:
 
@@ -93,24 +109,7 @@ protected:
 		noBackup = GlobalConfig().noBackup();
 	};
 
-	// destruktor
-	virtual ~QNapiAbstractEngine() {};
-
-	// powinna obliczac i zwracac sume kontrolna pliku filmowego,
-	// a takze ustawiac wartosc zmiennej checkSym
-	virtual QString checksum(QString filename = "") = 0;
-	// szuka napisow w podanym jezyku
-	virtual bool lookForSubtitles(QString lang) = 0;
-	// zwraca liste dostepnych napisow
-	virtual QList<QNapiSubtitleInfo> listSubtitles() = 0;
-	// powinna pobierac napisy do filmu i zapisywac w jakims pliku tymczasowym
-	virtual bool download() = 0;
-	// powinna rozpakowywac pobrane napisy, a ich sciezke zapisywac w poli
-	// subtitlesTmpPath
-	virtual bool unpack() = 0;
-	// powinna czyscic pliki tymczasowe itd.
-	virtual void cleanup() = 0;
-
+	
 	// generuje nazwe dla pliku tymczasowego
 	QString generateTmpFileName()
 	{

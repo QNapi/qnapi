@@ -15,6 +15,17 @@
 
 #include "qnapi.h"
 
+QNapi::~QNapi()
+{
+	foreach(QNapiAbstractEngine *e, enginesList)
+	{
+		if(e)
+		{
+			e->cleanup();
+			delete e;
+		}
+	}
+}
 
 bool QNapi::checkP7ZipPath()
 {
@@ -39,12 +50,12 @@ bool QNapi::addEngine(QString engine)
 {
 	if(engine == "NapiProjekt")
 	{
-		//enginesList << new QNapiProjektEngine();
+		enginesList << (new QNapiProjektEngine());
 		return true;
 	}
 	else if(engine == "OpenSubtitles")
 	{
-		//enginesList << new QOpenSubtitlesEngine();
+//		eginesList << (new QOpenSubtitlesEngine());
 		return true;
 	}
 	else
@@ -84,16 +95,36 @@ bool QNapi::checkWritePermissions()
 
 bool QNapi::lookForSubtitles(QString lang)
 {
+	subtitlesList.clear();
+
+	bool result = false;
 	foreach(QNapiAbstractEngine *e, enginesList)
 	{
-		//e->costam...
+		e->setMoviePath(movie);
+		result = e->lookForSubtitles(lang) || result;
 	}
-	return true;
+
+	if(!result)
+	{
+		errorMsg = "Żaden z silników pobierania nie działa!";
+	}
+
+	return result;
 }
 
 
 QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 {
+	int curr_offset = 0;
+	
+	foreach(QNapiAbstractEngine *e, enginesList)
+	{
+		QList<QNapiSubtitleInfo> list =  e->listSubtitles();
+		offsetsList.insert(nameByEngine(e), curr_offset);
+		curr_offset += list.size();
+		subtitlesList << list;
+	}
+	
 	return subtitlesList;
 }
 
@@ -101,35 +132,35 @@ QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 bool QNapi::download(int i)
 {
 	QNapiSubtitleInfo s = subtitlesList[i];
-	QNapiAbstractEngine *e = engineByName(s.engine);
-	//e->blablabla
-	return true;
+	currentEngine = engineByName(s.engine);
+	int offset = offsetsList.value(s.engine, 0);
+	return currentEngine->download(i - offset);
 }
 
 
 bool QNapi::match()
 {
-	return true;
+	return currentEngine->match();
 }
 
 
 bool QNapi::pp()
 {
-	
+	currentEngine->pp();
 }
 
 
-void QNapi::cancel()
-{
+//void QNapi::cancel()
+//{
 	
-}
+//}
 
 
 void QNapi::cleanup()
 {
 	foreach(QNapiAbstractEngine *e, enginesList)
 	{
-		//e->cleanup
+		e->cleanup();
 	}
 }
 

@@ -56,7 +56,7 @@ public:
 		NAPI_REPORTED, NAPI_NO_SUBTITLES, NAPI_NOT_REPORTED
 	};
 
-	QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile = "");
+	QNapiProjektEngine(const QString & movieFile = "", const QString & subtitlesFile = "");
 	~QNapiProjektEngine();
 
 	// zwraca nazwe modulu
@@ -69,7 +69,7 @@ public:
 	QString checksum(QString filename = "");
 	bool lookForSubtitles(QString lang);
 	QList<QNapiSubtitleInfo> listSubtitles();
-	bool download();
+	bool download(int idx);
 	bool unpack();
 	void cleanup();
 

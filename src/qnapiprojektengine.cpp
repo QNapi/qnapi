@@ -97,8 +97,10 @@ QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
 }
 
 // Probuje pobrac napisy do filmu z serwera NAPI
-bool QNapiProjektEngine::download()
+bool QNapiProjektEngine::download(int idx)
 {
+	Q_UNUSED(idx)
+	
 	if(checkSum.isEmpty()) return false;
 	
 	SyncHTTP http;

@@ -20,11 +20,15 @@
 #include "qnapiconfig.h"
 #include "qnapisubtitleinfo.h"
 #include "qnapiabstractengine.h"
+#include "qnapiprojektengine.h"
 
 // globalny menedzer pobierania napisow
 class QNapi
 {
 	public:
+
+		QNapi() {}
+		~QNapi();
 
 		// sprawdza sciezke do 7zipa
 		static bool checkP7ZipPath();
@@ -56,7 +60,7 @@ class QNapi
 		// wykonuje przetwarzanie na dopasowanych napisach
 		bool pp();
 		// anuluje operacje
-		void cancel();
+		//void cancel();
 
 		// czysci rozne smieci i pliki tymczasowe
 		void cleanup();
@@ -73,6 +77,11 @@ class QNapi
 		QList<QNapiAbstractEngine*> enginesList;
 		// lista znalezionych napisow
 		QList<QNapiSubtitleInfo> subtitlesList;
+		// offsety w indeksach w powyzszej liscie napisow dla poszczegolnych silnikow
+		QHash<QString, int> offsetsList;
+		// wskaznik do obiektu silnika, na ktorym aktualnie pracujemy
+		// ustawiany po wykonaniu metody download()
+		QNapiAbstractEngine * currentEngine;
 		
 		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
 		QNapiAbstractEngine * engineByName(QString name);

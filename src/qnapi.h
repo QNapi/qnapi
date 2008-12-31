@@ -48,6 +48,8 @@ class QNapi
 		QString moviePath();
 		// sprawdza uprawnienia zapisu do katalogu docelowego
 		bool checkWritePermissions();
+		// oblicza sume kontrolna pliku z filmem
+		void checksum();
 		// szuka napisow w podanym jezyku
 		bool lookForSubtitles(QString lang);
 		// zwraca liste znalezionych napisow
@@ -55,12 +57,12 @@ class QNapi
 
 		// pobiera napisy o i-tym indeksie z listy subtitlesList
 		bool download(int i);
+		// rozpakowuje pobrane napisy, a sciezke do nich zapisuje w subtitlesTmp
+		bool unpack();
 		// dopasowuje pobrane napisy
 		bool match();
 		// wykonuje przetwarzanie na dopasowanych napisach
-		bool pp();
-		// anuluje operacje
-		//void cancel();
+		void pp();
 
 		// czysci rozne smieci i pliki tymczasowe
 		void cleanup();

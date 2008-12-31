@@ -89,7 +89,9 @@ public:
 
 private:
 
-	QString p7zipPath, lang, nick, pass, tmpPackedFile;
+	QString p7zipPath, nick, pass, tmpPackedFile;
+
+	QList<QNapiSubtitleInfo> subtitlesList;
 
 	QString checksum(QString filename, bool limit10M);
 	QString npFDigest(const QString & input);

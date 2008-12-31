@@ -51,6 +51,7 @@ bool QNapi::addEngine(QString engine)
 	if(engine == "NapiProjekt")
 	{
 		enginesList << (new QNapiProjektEngine());
+		qDebug() << "addEngine: " << enginesList;
 		return true;
 	}
 	else if(engine == "OpenSubtitles")
@@ -80,6 +81,7 @@ bool QNapi::addEngines(QStringList engines)
 void QNapi::setMoviePath(QString path)
 {
 	movie = path;
+	currentEngine = 0;
 }
 
 QString QNapi::moviePath()
@@ -92,6 +94,13 @@ bool QNapi::checkWritePermissions()
 	return QFileInfo(QFileInfo(movie).path()).isWritable();
 }
 
+void QNapi::checksum()
+{
+	foreach(QNapiAbstractEngine *e, enginesList)
+	{
+		e->checksum(movie);
+	}
+}
 
 bool QNapi::lookForSubtitles(QString lang)
 {
@@ -133,28 +142,26 @@ bool QNapi::download(int i)
 {
 	QNapiSubtitleInfo s = subtitlesList[i];
 	currentEngine = engineByName(s.engine);
+	if(!currentEngine) return false;
 	int offset = offsetsList.value(s.engine, 0);
 	return currentEngine->download(i - offset);
 }
 
 
+bool QNapi::unpack()
+{
+	return currentEngine ? currentEngine->unpack() : false;
+}
+
 bool QNapi::match()
 {
-	return currentEngine->match();
+	return currentEngine ? currentEngine->match() : false;
 }
 
-
-bool QNapi::pp()
+void QNapi::pp()
 {
-	currentEngine->pp();
+	if(currentEngine) currentEngine->pp();
 }
-
-
-//void QNapi::cancel()
-//{
-	
-//}
-
 
 void QNapi::cleanup()
 {
@@ -163,7 +170,6 @@ void QNapi::cleanup()
 		e->cleanup();
 	}
 }
-
 
 QString QNapi::error()
 {

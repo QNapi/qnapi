@@ -283,13 +283,13 @@ void GetThread::run()
 	gotList.clear();
 	failedList.clear();
 
-	QNapiProjektEngine *napi;
+	QNapi *napi;
 
 	emit progressChange(0, queue.size(), 0.0f);
 
 	for(int i = 0; i < queue.size(); i++)
 	{
-		napi = new QNapiProjektEngine(queue[i]);
+//		napi = new QNapiProjektEngine(queue[i]);
 		if(!napi) continue;
 
 		QFileInfo fi(queue[i]);

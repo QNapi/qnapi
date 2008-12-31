@@ -79,48 +79,67 @@ int QNapiCli::exec()
 		return 3;
 	}
 
-	QNapiProjektEngine *napi;
+	QNapi *napi = new QNapi();
+	
+	if(!napi->addEngine("NapiProjekt"))
+	{
+		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
+		delete napi;
+		return 1;
+	}
 
 	foreach(QString movie, movieList)
 	{
-		napi = new QNapiProjektEngine(movie);
-		if(!napi) continue;
-
-//		if(!napi->checkWritePermissions())
-		{
-			printCli(QString("Brak uprawnien zapisu do katalogu '%1'").arg(QFileInfo(movie).path()));
-			delete napi;
-			continue;
-		}
-
 		printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
 
-		printCli(QString(QString("   obliczanie sumy kontrolnej...")));
+		napi->setMoviePath(movie);
+
+		if(!napi->checkWritePermissions())
+		{
+			printCli(QString("   brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
+			continue;
+		}
+
+		printCli(QString(QString("   obliczanie sum kontrolnych...")));
 		napi->checksum();
 
-		printCli(QString(QString("   pobieranie napisow z serwera...")));
-//		if(!napi->tryDownload())
+		printCli(QString(QString("   szukanie napisów...")));
+		if(!napi->lookForSubtitles("PL") || (napi->listSubtitles().size() == 0))
 		{
-			printCli(QString(QString("   ! nie znaleziono napisow")));
-			delete napi;
+			printCli(QString(QString("   nie znaleziono napisow!")));
 			continue;
 		}
+
+		printCli(QString(QString("   pobieranie napisow z serwera...")));
+		if(!napi->download(0))
+		{
+			printCli(QString(QString("   nie udało się pobrać napisów!")));
+			continue;
+		}
+
+		printCli(QString(QString("   rozpakowywanie napisów...")));
+		if(!napi->unpack())
+		{
+			printCli(QString(QString("   nie udało się poprawnie rozpakować napisów!")));
+			continue;
+		}
+
 
 		printCli(QString(QString("   dopasowywanie napisow...")));
-//		if(!napi->tryMatch())
+		if(!napi->match())
 		{
-			printCli(QString(QString("   ! nie udalo sie dopasowac napisow")));
+			printCli(QString(QString("   nie udalo sie dopasowac napisow!")));
 			delete napi;
 			continue;
 		}
 
-		if(GlobalConfig().ppEnabled())
+		if(napi->ppEnabled())
 		{
 			printCli(QString(QString("   przetwarzanie pobranych napisow...")));
-//			napi->doPostProcessing();
+			napi->pp();
 		}
-
-		delete napi;
+		
+		napi->cleanup();
 	}
 
 	return 0;

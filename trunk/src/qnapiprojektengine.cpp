@@ -19,7 +19,7 @@ QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString 
 	: QNapiAbstractEngine(movieFile, subtitlesFile)
 {
 	p7zipPath = GlobalConfig().p7zipPath();
-	lang = GlobalConfig().language();
+	//lang = GlobalConfig().language();
 	nick = GlobalConfig().nick();
 	pass = GlobalConfig().pass();
 	noBackup = GlobalConfig().noBackup();
@@ -80,27 +80,12 @@ QString QNapiProjektEngine::checksum(QString filename)
 {
 	if(filename.isEmpty())
 		filename = movie;
-	return (checkSum = checksum(filename, false));
+	return (checkSum = checksum(filename, true));
 }
 
 
 bool QNapiProjektEngine::lookForSubtitles(QString lang)
 {
-	Q_UNUSED(lang);
-	return true;
-}
-
-QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
-{
-	QList<QNapiSubtitleInfo> a;
-	return a;
-}
-
-// Probuje pobrac napisy do filmu z serwera NAPI
-bool QNapiProjektEngine::download(int idx)
-{
-	Q_UNUSED(idx)
-	
 	if(checkSum.isEmpty()) return false;
 	
 	SyncHTTP http;
@@ -123,7 +108,27 @@ bool QNapiProjektEngine::download(int idx)
 
 	int r = file.write(buffer);
 	file.close();
-	return (bool)r;
+	
+	if(!r) return false;
+	
+	subtitlesList << QNapiSubtitleInfo(QFileInfo(movie).fileName(),
+										engineName(),
+										urlTxt); 
+
+	return true;
+}
+
+QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
+{
+	return subtitlesList;
+}
+
+// Probuje pobrac napisy do filmu z serwera NAPI
+bool QNapiProjektEngine::download(int idx)
+{
+	Q_UNUSED(idx)
+	
+	return (subtitlesList.size() > 0);
 }
 
 // Probuje rozpakowac napisy do filmu

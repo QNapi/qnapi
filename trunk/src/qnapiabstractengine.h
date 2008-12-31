@@ -79,7 +79,7 @@ public:
 	virtual QList<QNapiSubtitleInfo> listSubtitles() = 0;
 	// powinna pobierac napisy do filmu i zapisywac w jakims pliku tymczasowym
 	virtual bool download(int idx) = 0;
-	// powinna rozpakowywac pobrane napisy, a ich sciezke zapisywac w poli
+	// powinna rozpakowywac pobrane napisy, a ich sciezke zapisywac w polu
 	// subtitlesTmpPath
 	virtual bool unpack() = 0;
 	// powinna czyscic pliki tymczasowe itd.

@@ -20,7 +20,6 @@
 #include <QFileInfo>
 
 #include "version.h"
-#include "qnapiprojektengine.h"
 #include "qnapi.h"
 
 class QNapiCli

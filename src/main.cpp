@@ -17,6 +17,9 @@
 #include <QSystemTrayIcon>
 #include <QStringList>
 #include <QTextCodec>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QLocale>
 #include "version.h"
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
@@ -48,6 +51,11 @@ int main(int argc, char **argv)
 #endif
 
 	QNapiApp app(argc, argv, useGui, "QNapi");
+
+	QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+	QTranslator cuteTranslator;
+	cuteTranslator.load("qt_" + QLocale::system().name(), resourceDir);
+	app.installTranslator(&cuteTranslator);
 
 #ifndef Q_WS_WIN
 	if(!useGui)

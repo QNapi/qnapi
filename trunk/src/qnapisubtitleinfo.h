@@ -18,11 +18,15 @@
 // struktura opisujaca napisy
 struct QNapiSubtitleInfo
 {
-	QNapiSubtitleInfo(QString l, QString e, QString u)
-		: lang(l), engine(e), url(u) {}
+	QNapiSubtitleInfo(QString l, QString e, QString u, QString n = "",
+					  QString c = "", QString f = "")
+		: lang(l), engine(e), url(u), name(n), comment(c), format(f) {}
 	QString lang;
 	QString engine;
 	QString url;
+	QString name;
+	QString comment;
+	QString format;
 };
 
 #endif

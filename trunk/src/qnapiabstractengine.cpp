@@ -53,8 +53,7 @@ bool QNapiAbstractEngine::match()
 
 	QFileInfo mf(movie);
 
-	if(subtitles.isEmpty())
-		subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
+	subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
 
 	qDebug("tryMatch: subtitlesPath = %s", qPrintable(subtitles));
 

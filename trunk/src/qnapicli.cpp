@@ -81,12 +81,20 @@ int QNapiCli::exec()
 
 	QNapi *napi = new QNapi();
 	
-	if(!napi->addEngine("NapiProjekt"))
+/*	if(!napi->addEngine("NapiProjekt"))
+	{
+		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
+		delete napi;
+		return 1;
+	}*/
+
+	if(!napi->addEngine("OpenSubtitles"))
 	{
 		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
 		delete napi;
 		return 1;
 	}
+
 
 	foreach(QString movie, movieList)
 	{

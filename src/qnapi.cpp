@@ -56,7 +56,7 @@ bool QNapi::addEngine(QString engine)
 	}
 	else if(engine == "OpenSubtitles")
 	{
-//		eginesList << (new QOpenSubtitlesEngine());
+		enginesList << (new QOpenSubtitlesEngine());
 		return true;
 	}
 	else

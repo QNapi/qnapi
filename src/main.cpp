@@ -47,8 +47,7 @@ int main(int argc, char **argv)
 	bool useGui = true;
 #endif
 
-	QNapiApp app(argc, argv, useGui);
-	QNapiApp::setApplicationName("QNapi");
+	QNapiApp app(argc, argv, useGui, "QNapi");
 
 #ifndef Q_WS_WIN
 	if(!useGui)

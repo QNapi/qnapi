@@ -56,6 +56,13 @@
 QInterProcessChannel::QInterProcessChannel(QObject *p)
  : QThread(p), pServer(0), pServerTimer(0)
 {
+	#ifdef Q_WS_WIN
+	rcFile = QDir::tempPath() + QDir::separator() + QApplication::applicationName() + "rc";
+	#else
+	rcFile = QDir::tempPath() + QDir::separator() + QApplication::applicationName()
+			+ "-" + getenv("USER") + "-" + getenv("DISPLAY") + "-"  + "rc";
+	#endif
+
 	init();
 }
 
@@ -145,8 +152,7 @@ void QInterProcessChannel::close()
 		delete pServer;
 		pServer = 0;
 		
-		QString ini = QDir::tempPath() + QDir::separator() + QApplication::applicationName() + "rc";
-		QFile::remove(ini);
+		QFile::remove(rcFile);
 	}
 }
 
@@ -240,7 +246,6 @@ void QInterProcessChannel::init()
 	
 	m_port = 0;
 	m_addr = QHostAddress::LocalHost;
-	QString ini = QDir::tempPath() + QDir::separator() + QApplication::applicationName() + "rc";
 	
 	pServer = new QTcpServer(this);
 	pServer->listen(m_addr, m_port);
@@ -248,14 +253,14 @@ void QInterProcessChannel::init()
 	connect(pServer	, SIGNAL( newConnection() ),
 			this	, SLOT  ( connection() ) );
 	
-	if ( QFile::exists(ini) )
+	if ( QFile::exists(rcFile) )
 	{
 		/*
 			found a server config file, let us assume it is from a running server
 		*/
 		//qDebug("checking old server...");
 		
-		QSettings conf(ini, QSettings::IniFormat);
+		QSettings conf(rcFile, QSettings::IniFormat);
 		
 		m_port = conf.value("port").toUInt();
 		m_addr = QHostAddress(conf.value("address").toString());
@@ -278,14 +283,14 @@ void QInterProcessChannel::init()
 		
 		if ( !ok )
 		{
-			QFile::remove(ini);
+			QFile::remove(rcFile);
 		}
 		
 		pSocket->disconnectFromHost();
 		delete pSocket;
 	}
 	
-	if ( !QFile::exists(ini) )
+	if ( !QFile::exists(rcFile) )
 	{
 		// no server found... Create one
 		//qDebug("setting up new server...");
@@ -293,7 +298,7 @@ void QInterProcessChannel::init()
 		m_port = pServer->serverPort();
 		m_addr = pServer->serverAddress();
 		
-		QSettings conf(ini, QSettings::IniFormat);
+		QSettings conf(rcFile, QSettings::IniFormat);
 		conf.setValue("port", m_port);
 		conf.setValue("address", m_addr.toString());
 		

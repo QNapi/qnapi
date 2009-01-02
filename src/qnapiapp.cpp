@@ -14,7 +14,8 @@
 
 #include "qnapiapp.h"
 
-QNapiApp::QNapiApp(int & argc, char **argv, bool useGui) : QSingleApplication(argc, argv, useGui)
+QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName)
+	: QSingleApplication(argc, argv, useGui, appName)
 {
 	openDialog = 0;
 

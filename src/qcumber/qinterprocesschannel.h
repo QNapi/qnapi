@@ -65,6 +65,7 @@ class QCUMBER_EXPORT QInterProcessChannel : public QThread
 		void serverRoleChanged(bool y);
 		
 	protected:
+		QString rcFile;
 		virtual void run();
 		
 	private slots:

@@ -43,7 +43,7 @@ class QNapiApp : public QSingleApplication
 {
 	Q_OBJECT
 	public:
-		QNapiApp(int & argc, char **argv, bool useGui);
+		QNapiApp(int & argc, char **argv, bool useGui, const QString & appName);
 		~QNapiApp();
 
 		void createTrayIcon();

@@ -23,9 +23,11 @@
 /*!
 	\brief Constructor
 */
-QSingleApplication::QSingleApplication(int& argc, char **argv, bool useGui)
+QSingleApplication::QSingleApplication(int& argc, char **argv, bool useGui, const QString & appName)
  : QApplication(argc, argv, useGui)
 {
+	setApplicationName(appName);
+
 	pChannel = new QInterProcessChannel(this);
 	
 	connect(pChannel, SIGNAL( message(QString) ),

@@ -133,39 +133,44 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 	if(!responseMap.contains("data"))
 		return false;
 
-
 	QList<QVariant> dataList = responseMap["data"].toList();
 	QList<QVariant>::iterator i;
+
+//qDebug() << "dataList.size = " << dataList.size();
 
 	i = dataList.begin();
 	while(i != dataList.end())
 	{
-		responseMap = (*i).toMap();
+		responseMap = (*(i++)).toMap();
 
-		if((checkSum == responseMap["MovieHash"]) && (fileSize == responseMap["MovieByteSize"]))
+		if((checkSum != responseMap["MovieHash"]) && (fileSize != responseMap["MovieByteSize"]))
+			continue;
+
+		QNapiSubtitleResolution r = SUBTITLE_UNKNOWN;
+
+		if(responseMap["SubBad"].toString() != "0")
 		{
-			subtitlesList << QNapiSubtitleInfo(	responseMap["ISO639"].toString(),
-												engineName(),
-												responseMap["IDSubtitleFile"].toString(),
-												responseMap["MovieName"].toString(),
-												responseMap["SubAuthorComment"].toString(),
-												QFileInfo(responseMap["SubFileName"].toString()).suffix());
-			
-			/*
-			qDebug("tryDownload: znaleziono napisy!");
-			//subtitlesUrl = responseMap["SubDownloadLink"].toString();
-			if(subtitlesUrl.isEmpty())
-			{
-				subtitlesUrl = responseMap["ZipDownloadLink"].toString();
-				lastDownloadedIsZip = true;
-			}
-			subFileName = responseMap["SubFileName"].toString();
-			qDebug("tryDownload: SubDownloadLink = %s", qPrintable(subtitlesUrl));
-
-			break;*/
+			r = SUBTITLE_BAD;
+		}
+		else if(QFileInfo(movie).completeBaseName() ==
+				QFileInfo(responseMap["SubFileName"].toString()).completeBaseName())
+		{
+			r = SUBTITLE_GOOD;
+		}
+		else if(QRegExp(QString("^%1").arg(responseMap["MovieReleaseName"].toString()),
+						Qt::CaseInsensitive)
+				.exactMatch(QFileInfo(movie).completeBaseName()))
+		{
+			r = SUBTITLE_GOOD;
 		}
 
-		++i;
+		subtitlesList << QNapiSubtitleInfo(	responseMap["ISO639"].toString(),
+											engineName(),
+											responseMap["IDSubtitleFile"].toString(),
+											responseMap["MovieReleaseName"].toString(),
+											responseMap["SubAuthorComment"].toString(),
+											QFileInfo(responseMap["SubFileName"].toString()).suffix(),
+											r);
 	}
 
 	return true;
@@ -174,21 +179,44 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 // wyniki wyszukiwania
 QList<QNapiSubtitleInfo> QOpenSubtitlesEngine::listSubtitles()
 {
+	QList<QNapiSubtitleInfo> good, unknown, bad;
+
+	foreach(QNapiSubtitleInfo n, subtitlesList)
+	{
+		switch(n.resolution)
+		{
+			case SUBTITLE_GOOD: good << n; break;
+			case SUBTITLE_UNKNOWN: unknown << n; break;
+			case SUBTITLE_BAD: bad << n; break;
+		}
+	}
+
+	subtitlesList.clear();
+	
+	subtitlesList << good << unknown << bad;
+
 	return subtitlesList;
 }
 
 // Probuje pobrac napisy do filmu z serwera OpenSubtitles
 bool QOpenSubtitlesEngine::download(int idx)
 {
-	//qDebug() << "idx = " << idx;
+//	qDebug() << "idx = " << idx;
 	
+//qDebug() << "subtitlesList.size = " << subtitlesList.size();
+	
+	
+	if(idx >= subtitlesList.size())
+		return false;
+
 
 	QList<xmlrpc::Variant> paramsList;
 	QList<xmlrpc::Variant> requestList;
 
-	paramsList << subtitlesList.at(idx).url;
-	subFileName = generateTmpFileName() + "." + subtitlesList.at(idx).format;
+	QNapiSubtitleInfo s = subtitlesList.at(idx);
 
+	subFileName = generateTmpFileName() + "." + s.format;
+	paramsList << s.url;
 	requestList << paramsList;
 
 //qDebug() << "\n\nrequestList:\n\n" << requestList;
@@ -250,17 +278,10 @@ bool QOpenSubtitlesEngine::unpack()
 
 void QOpenSubtitlesEngine::cleanup()
 {
-/*	QStringList tmpFiles = QDir(tmpDir).entryList(QDir::Files | QDir::NoDotAndDotDot);
-	foreach(QString tmpF, tmpFiles)
-	{
-		qDebug("QOpenSubtitlesEngine::cleanup() tmpF = %s", qPrintable(tmpDir + "/" + tmpF));
-		QFile::remove(tmpDir + "/" + tmpF);
-	}
-	QDir().rmdir(tmpDir);*/
-
-
-	QFile::remove(tmpPackedFile);
-	QFile::remove(subtitlesTmp);
+	if(QFile::exists(tmpPackedFile))
+		QFile::remove(tmpPackedFile);
+	if(QFile::exists(subtitlesTmp))
+		QFile::remove(subtitlesTmp);
 }
 
 bool QOpenSubtitlesEngine::login()

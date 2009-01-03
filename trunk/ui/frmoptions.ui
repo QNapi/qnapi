@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
-    <height>405</height>
+    <width>656</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -18,9 +18,9 @@
   </property>
   <layout class="QVBoxLayout" >
    <item>
-    <widget class="QTabWidget" name="tabPostProcessing" >
+    <widget class="QTabWidget" name="tabOptions" >
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral" >
       <attribute name="title" >
@@ -78,7 +78,7 @@
        <item row="2" column="0" >
         <widget class="QLabel" name="lbNick" >
          <property name="text" >
-          <string>Nazwa użytkownika:</string>
+          <string>Nazwa użytkownika NapiProjekt:</string>
          </property>
         </widget>
        </item>
@@ -99,7 +99,7 @@
        <item row="3" column="0" >
         <widget class="QLabel" name="lbPass" >
          <property name="text" >
-          <string>Hasło:</string>
+          <string>Hasło NapiProjekt:</string>
          </property>
         </widget>
        </item>
@@ -134,14 +134,14 @@
          </item>
         </widget>
        </item>
-       <item row="5" column="0" colspan="4" >
+       <item row="8" column="0" colspan="4" >
         <widget class="QCheckBox" name="cbNoBackup" >
          <property name="text" >
           <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="4" >
+       <item row="9" column="0" colspan="4" >
         <widget class="QCheckBox" name="cbUseBrushedMetal" >
          <property name="text" >
           <string>Używaj stylu BrushedMetal (Mac OS X)</string>
@@ -151,9 +151,164 @@
          </property>
         </widget>
        </item>
+       <item row="6" column="0" colspan="4" >
+        <widget class="QCheckBox" name="cbDownloadSecondaryLang" >
+         <property name="text" >
+          <string>Gdy nie ma napisów w preferowanym języku, spróbuj ściągnąć napisy w języku zastępczym</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" >
+        <widget class="QLabel" name="lbSecondaryLang" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Język zastępczy:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1" >
+        <widget class="QComboBox" name="cbSecondaryLang" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Angielski</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Polski</string>
+          </property>
+         </item>
+        </widget>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2" >
+     <widget class="QWidget" name="tabDownloadEngines" >
+      <attribute name="title" >
+       <string>Moduły pobierania napisów</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item rowspan="8" row="1" column="0" >
+        <widget class="QListWidget" name="lwEngines" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="dragDropMode" >
+          <enum>QAbstractItemView::InternalMove</enum>
+         </property>
+         <property name="gridSize" >
+          <size>
+           <width>0</width>
+           <height>18</height>
+          </size>
+         </property>
+         <property name="selectionRectVisible" >
+          <bool>true</bool>
+         </property>
+         <property name="currentRow" >
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" >
+        <widget class="QLabel" name="lbAvailableEngines" >
+         <property name="text" >
+          <string>Dostępne moduły pobierania napisów:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QPushButton" name="pbMoveUp" >
+         <property name="text" >
+          <string>Przesuń w górę</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/arrow_up.png</normaloff>:/ui/arrow_up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QPushButton" name="pbMoveDown" >
+         <property name="text" >
+          <string>Przesuń w dół</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/arrow_down.png</normaloff>:/ui/arrow_down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="QPushButton" name="pushButton" >
+         <property name="text" >
+          <string>Konfiguruj...</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/wrench.png</normaloff>:/ui/wrench.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="QPushButton" name="pbEngineInfo" >
+         <property name="text" >
+          <string>Informacje...</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/information.png</normaloff>:/ui/information.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" >
+        <widget class="QLabel" name="label" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text" >
+          <string>Polityka pobierania napisów:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="2" >
+        <widget class="QComboBox" name="comboBox" >
+         <property name="currentIndex" >
+          <number>1</number>
+         </property>
+         <property name="maxCount" >
+          <number>3</number>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Zawsze pokazuj listę dostępnych napisów</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Pokazuj listę dostępnych napisów tylko wtedy, gdy potrzeba</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Zawsze pobieraj pierwsze pasujące napisy i nigdy nie pokazuj listy</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabPostProcessing" >
       <attribute name="title" >
        <string>Przetwarzanie napisów</string>
       </attribute>
@@ -387,7 +542,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbOPerm" >
+             <widget class="QSpinBox" name="sbUPerm" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -413,7 +568,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbUPerm" >
+             <widget class="QSpinBox" name="sbOPerm" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -481,7 +636,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabPostProcessing</tabstop>
+  <tabstop>tabOptions</tabstop>
   <tabstop>le7zPath</tabstop>
   <tabstop>pb7zPathSelect</tabstop>
   <tabstop>leTmpPath</tabstop>
@@ -490,22 +645,28 @@ p, li { white-space: pre-wrap; }
   <tabstop>lePass</tabstop>
   <tabstop>pbRegister</tabstop>
   <tabstop>cbLang</tabstop>
+  <tabstop>cbDownloadSecondaryLang</tabstop>
+  <tabstop>cbSecondaryLang</tabstop>
   <tabstop>cbNoBackup</tabstop>
   <tabstop>cbUseBrushedMetal</tabstop>
+  <tabstop>lwEngines</tabstop>
   <tabstop>gbPpEnable</tabstop>
   <tabstop>cbChangeEncoding</tabstop>
   <tabstop>cbAutoDetectEncoding</tabstop>
   <tabstop>cbEncFrom</tabstop>
   <tabstop>cbEncTo</tabstop>
+  <tabstop>cbShowAllEncodings</tabstop>
   <tabstop>cbRemoveLines</tabstop>
   <tabstop>teRemoveWords</tabstop>
   <tabstop>cbChangePermissions</tabstop>
+  <tabstop>sbUPerm</tabstop>
+  <tabstop>sbGPerm</tabstop>
+  <tabstop>sbOPerm</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
  </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
-  <include location="../../qnapi_new/res/resources.qrc" />
  </resources>
  <connections>
   <connection>
@@ -515,8 +676,8 @@ p, li { white-space: pre-wrap; }
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>579</x>
-     <y>399</y>
+     <x>619</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
      <x>327</x>
@@ -531,8 +692,8 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>500</x>
-     <y>399</y>
+     <x>540</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
      <x>327</x>
@@ -547,60 +708,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>145</x>
-     <y>208</y>
+     <x>128</x>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel" >
      <x>129</x>
      <y>251</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbChangePermissions</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>sbOPerm</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>70</x>
-     <y>329</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>366</x>
-     <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbChangePermissions</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>sbGPerm</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>162</x>
-     <y>335</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>423</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbChangePermissions</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>sbUPerm</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>196</x>
-     <y>333</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>481</x>
-     <y>338</y>
     </hint>
    </hints>
   </connection>

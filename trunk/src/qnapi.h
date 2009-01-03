@@ -38,6 +38,8 @@ class QNapi
 		// sprawdza czy wlaczone jest przetwarzanie napisow
 		static bool ppEnabled();
 
+		// listuje dostępne silniki pobierania
+		QStringList enumerateEngines();
 		// wlacza silnik pobierania napisow o podanej nazwie
 		bool addEngine(QString engine);
 		// za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
@@ -55,6 +57,11 @@ class QNapi
 		bool lookForSubtitles(QString lang);
 		// zwraca liste znalezionych napisow
 		QList<QNapiSubtitleInfo> listSubtitles();
+
+		// decyduje (na podst. konfiguracji) czy pokazywac liste napisow
+		bool needToShowList();
+		// jesli nie potrzeba pokazywac listy, zwracamy najlepszy indeks napisow
+		int bestIdx();
 
 		// pobiera napisy o i-tym indeksie z listy subtitlesList
 		bool download(int i);
@@ -85,6 +92,9 @@ class QNapi
 		// wskaznik do obiektu silnika, na ktorym aktualnie pracujemy
 		// ustawiany po wykonaniu metody download()
 		QNapiAbstractEngine * currentEngine;
+		
+		// najlepszy indeks napisow
+		int theBestIdx;
 		
 		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
 		QNapiAbstractEngine * engineByName(QString name);

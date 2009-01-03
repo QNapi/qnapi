@@ -1,13 +1,17 @@
 <RCC>
-    <qresource prefix="/icon" >
-        <file>qnapi-22-mono.png</file>
-        <file>qnapi-48-icon.png</file>
-        <file>qnapi-48.png</file>
-        <file>qnapi.png</file>
-    </qresource>
-	<qresource prefix="/ui" >
-		<file>film.png</file>
-		<file>icon_accept.png</file>
-		<file>icon_cancel.png</file>
-	</qresource>
+  <qresource prefix="/icon" >
+    <file>qnapi-22-mono.png</file>
+    <file>qnapi-48-icon.png</file>
+    <file>qnapi-48.png</file>
+    <file>qnapi.png</file>
+  </qresource>
+  <qresource prefix="/ui" >
+    <file>arrow_down.png</file>
+    <file>arrow_up.png</file>
+    <file>wrench.png</file>
+    <file>information.png</file>
+    <file>film.png</file>
+    <file>icon_accept.png</file>
+    <file>icon_cancel.png</file>
+  </qresource>
 </RCC>

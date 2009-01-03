@@ -32,26 +32,32 @@ bool QNapi::checkP7ZipPath()
 	return QFileInfo(GlobalConfig().p7zipPath()).isExecutable();
 }
 
-
 bool QNapi::checkTmpPath()
 {
 	QFileInfo f(GlobalConfig().tmpPath());
 	return f.isDir() && f.isWritable();
 }
 
-
 bool QNapi::ppEnabled()
 {
 	return GlobalConfig().ppEnabled();
 }
 
+QStringList QNapi::enumerateEngines()
+{
+	QStringList engines;
+	engines << "NapiProjekt";
+	engines << "OpenSubtitles";
+	return engines;	
+}
 
 bool QNapi::addEngine(QString engine)
 {
+//	qDebug() << "addEngine: " << engine;
+	
 	if(engine == "NapiProjekt")
 	{
 		enginesList << (new QNapiProjektEngine());
-		qDebug() << "addEngine: " << enginesList;
 		return true;
 	}
 	else if(engine == "OpenSubtitles")
@@ -66,7 +72,6 @@ bool QNapi::addEngine(QString engine)
 	}
 }
 
-
 bool QNapi::addEngines(QStringList engines)
 {
 	foreach(QString e, engines)
@@ -76,7 +81,6 @@ bool QNapi::addEngines(QStringList engines)
 	}
 	return true;
 }
-
 	
 void QNapi::setMoviePath(QString path)
 {
@@ -115,28 +119,71 @@ bool QNapi::lookForSubtitles(QString lang)
 
 	if(!result)
 	{
-		errorMsg = "Żaden z silników pobierania nie działa!";
+		errorMsg = "Nie znaleziono napisów!";
 	}
 
 	return result;
 }
 
-
 QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 {
 	int curr_offset = 0;
-	
+	subtitlesList.clear();
+
+//	qDebug() << "enginesList.size: " << enginesList.size();
+
 	foreach(QNapiAbstractEngine *e, enginesList)
 	{
 		QList<QNapiSubtitleInfo> list =  e->listSubtitles();
+
+//	qDebug() << "(list).size: " << list.size();
+
 		offsetsList.insert(nameByEngine(e), curr_offset);
 		curr_offset += list.size();
 		subtitlesList << list;
 	}
-	
+//	qDebug() << "enginesList.size: " << enginesList.size();
+
 	return subtitlesList;
 }
 
+bool QNapi::needToShowList()
+{
+	theBestIdx = 0;
+	
+	int i = 0;
+	foreach(QNapiSubtitleInfo s, subtitlesList)
+	{
+		if(s.resolution == SUBTITLE_GOOD)
+		{
+			theBestIdx = i;
+			break;
+		}
+		++i;
+	}
+	
+	if(subtitlesList.size() < 2)
+		return false;
+	
+	//if(alwaysshow)
+	{
+		return true;
+	}
+	//else if(show when needed)
+	{
+		return (theBestIdx == 0);
+	}
+	//else // never show
+	{
+		return false;
+	}
+	
+}
+
+int QNapi::bestIdx()
+{
+	return theBestIdx;
+}
 
 bool QNapi::download(int i)
 {
@@ -146,7 +193,6 @@ bool QNapi::download(int i)
 	int offset = offsetsList.value(s.engine, 0);
 	return currentEngine->download(i - offset);
 }
-
 
 bool QNapi::unpack()
 {

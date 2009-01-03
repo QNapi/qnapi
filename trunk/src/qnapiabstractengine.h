@@ -108,7 +108,6 @@ protected:
 		tmpPath = GlobalConfig().tmpPath();
 		noBackup = GlobalConfig().noBackup();
 	};
-
 	
 	// generuje nazwe dla pliku tymczasowego
 	QString generateTmpFileName()

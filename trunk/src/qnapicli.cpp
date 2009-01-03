@@ -53,7 +53,7 @@ bool QNapiCli::analyze()
 int QNapiCli::exec()
 {
 	if(mode != CM_QUIET)
-		printCli(QString("QNapi %1, (C) 2008 Krzemin, http://krzemin.iglu.cz\n").arg(QNAPI_VERSION));
+		printCli(QString("QNapi %1, (C) 2008 Krzemin, http://krzemin.iglu.cz/qnapi\n").arg(QNAPI_VERSION));
 
 	if(mode == CM_HELP)
 	{
@@ -117,9 +117,71 @@ int QNapiCli::exec()
 			printCli(QString(QString("   nie znaleziono napisow!")));
 			continue;
 		}
+		
+		int selIdx = 0;
+
+		// jesli mozna i potrzeba, listujemy dostepne napisy
+		if((mode != CM_QUIET) && (napi->needToShowList()))
+		{
+//			if(GlobalConfig().downloadPolicy() == pokazuj zawsze)
+//			{
+	
+			bool ok = false;
+			
+			printCli("   znalezione napisy:");			
+			
+			while(!ok)
+			{
+				int i = 1;
+
+				QList<QNapiSubtitleInfo> list = napi->listSubtitles();
+
+				printCli(QString("   0)\tnie pobieraj napisow dla tego filmu"));
+
+				foreach(QNapiSubtitleInfo s, list)
+				{
+					QString resolution = "";
+					
+					if(s.resolution == SUBTITLE_GOOD)
+						resolution = " (good)";
+					else if(s.resolution == SUBTITLE_BAD)
+						resolution = " (bad)";
+					
+					printCli(QString("   %1)\t%2 (%3) (%4) (%5)%6")
+								.arg(i++)
+								.arg(s.name)
+								.arg(s.format)
+								.arg(s.lang)
+								.arg(s.engine)
+								.arg(resolution));
+				}
+	
+				std::cout << "   wybierz napisy do pobrania: ";
+				char line[16];
+				std::cin.getline(line, 16);
+				
+				selIdx = QString(line).toInt(&ok);
+	
+				if(!ok)
+				{
+					printCli("   wpisz liczbe!");
+				}
+				else if((selIdx > list.size()) || (selIdx < 0))
+				{
+					ok = false;
+					printCli("   wpisz liczbe z listy!");
+				}
+			}
+			
+			--selIdx;
+				
+//			}
+		}
+
+		if(selIdx == -1) continue;
 
 		printCli(QString(QString("   pobieranie napisow z serwera...")));
-		if(!napi->download(0))
+		if(!napi->download(selIdx))
 		{
 			printCli(QString(QString("   nie udało się pobrać napisów!")));
 			continue;
@@ -150,6 +212,8 @@ int QNapiCli::exec()
 		napi->cleanup();
 	}
 
+	delete napi;
+
 	return 0;
 }
 
@@ -160,14 +224,17 @@ void QNapiCli::printHelp()
 	printCli(QString("QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.\n"));
 	printCli(QString("Uzycie programu: %1 [opcje] [lista plikow]").arg(m_argv[0]));
 	printCli(QString("Dostepne opcje:"));
-	printCli(QString("    -c, --console    pobieranie napisow z konsoli"));
-	printCli(QString("    -q, --quiet      pobiera napisy nie wypisujac zadnych komunikatow"));
-	printCli(QString("                     ani nie pokazujac zadnych okien"));
-	printCli(QString("    -h, --help       tekst pomocy, ktory wlasnie czytasz\n"));
+	printCli(QString("    -c, --console          pobieranie napisow z konsoli"));
+	printCli(QString("    -l, --show-list        pokazuj liste napisow"));
+	printCli(QString("    -d, --dont-show-list   nie pokazuj listy napisow"));
+	printCli(QString("    -q, --quiet            pobiera napisy nie wypisujac zadnych komunikatow"));
+	printCli(QString("                           ani nie pokazujac zadnych okien (implikuje -d)"));
+	printCli(QString("    -h, --help             pokazuje tekst pomocy, ktory wlasnie czytasz\n"));
 }
 
 void QNapiCli::printCli(const QString & string)
 {
 	if(mode != CM_QUIET)
-		qDebug(qPrintable(string));
+//		qDebug(qPrintable(string));
+		std::cout << string.toStdString() << std::endl;
 }

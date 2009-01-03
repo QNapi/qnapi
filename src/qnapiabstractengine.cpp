@@ -44,19 +44,19 @@ QString QNapiAbstractEngine::subtitlesPath()
 // dopasowuje napisy do pliku z filmem
 bool QNapiAbstractEngine::match()
 {
-	qDebug("tryMatch:");
+//	qDebug("tryMatch:");
 	QFileInfo stf(subtitlesTmp);
 
 	if(!stf.exists())
 		return false;
-	qDebug("tryMatch: stf exists");
+
+//	qDebug("tryMatch: stf exists");
 
 	QFileInfo mf(movie);
 
 	subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
 
-	qDebug("tryMatch: subtitlesPath = %s", qPrintable(subtitles));
-
+//	qDebug("tryMatch: subtitlesPath = %s", qPrintable(subtitles));
 
 	QFileInfo sf(subtitles);
 
@@ -88,7 +88,7 @@ bool QNapiAbstractEngine::match()
 	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
 	r = QFile::copy(subtitlesTmp, subtitles);
 #endif
-	qDebug("tryMatch: r = %d", r);
+//	qDebug("tryMatch: r = %d", r);
 
 	return r;
 }
@@ -222,7 +222,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 	if(!QFileInfo(subtitles).exists())
 		return false;
 
-	wordList = wordList.filter("^(.+)$");
+	wordList = wordList.filter(QRegExp("^(.+)$"));
 
 	QString fromCodec = ppDetectEncoding(subtitles);
 
@@ -230,7 +230,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 		fromCodec = GlobalConfig().ppEncodingFrom();
 
 	QFile f(subtitles);
-	if(!f.open(QIODevice::ReadOnly))
+	if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
 		return false;
 
 	QList<QByteArray> lines = f.readAll().split('\n');
@@ -246,7 +246,11 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 		ts.setCodec(qPrintable(fromCodec));
 		QString encLine = ts.readAll();
 
-		if(encLine.isEmpty()) continue;
+		if(encLine.isEmpty())
+		{
+			out << line;
+			continue;
+		}
 
 		bool found = false;
 		foreach(QString word, wordList)
@@ -257,7 +261,6 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 				break;
 			}
 		}
-
 		if(found) continue;
 
 		out << line;
@@ -265,13 +268,13 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 
 	f.close();
 
-	if(!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+	if(!f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
 		return false;
 
 	foreach(QByteArray line, out)
 	{
 		f.write(line);
-		f.write("\r\n", 2);
+		f.write("\n", 1);
 	}
 	f.close();
 

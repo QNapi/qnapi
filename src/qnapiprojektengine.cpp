@@ -118,8 +118,8 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 										urlTxt,
 										QFileInfo(movie).completeBaseName(),
 										"",
-										"txt"/*,
-										"zip"*/); 
+										"txt",
+										SUBTITLE_UNKNOWN); 
 
 	return true;
 }
@@ -160,11 +160,12 @@ bool QNapiProjektEngine::unpack()
 	return QFile::exists(subtitlesTmp);
 }
 
-
 void QNapiProjektEngine::cleanup()
 {
-	QFile::remove(tmpPackedFile);
-	QFile::remove(subtitlesTmp);
+	if(QFile::exists(tmpPackedFile))
+		QFile::remove(tmpPackedFile);
+	if(QFile::exists(subtitlesTmp))
+		QFile::remove(subtitlesTmp);
 }
 
 // Tworzy konto uzytkownika na serwerze NAPI

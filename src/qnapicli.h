@@ -15,6 +15,7 @@
 #ifndef __QNAPICLI__H__
 #define __QNAPICLI__H__
 
+#include <iostream>
 #include <QString>
 #include <QStringList>
 #include <QFileInfo>

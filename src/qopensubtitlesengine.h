@@ -17,6 +17,7 @@
 
 #include <QUrl>
 #include <QDir>
+#include <QMessageBox>
 
 #include "qnapiabstractengine.h"
 #include "xmlrpc/qsyncxmlrpcclient.h"
@@ -40,6 +41,10 @@ public:
 	QString engineInfo();
 	// zwraca ikone silnika pobierania
 	QIcon engineIcon();
+	// zwraca czy silnik jest konfigurowalny
+	bool isConfigurable();
+	// wywoluje okienko konfiguracji
+	void configure();
 
 	// oblicza sume kontrolna pliku filmowego
 	QString checksum(QString filename = "");

@@ -162,7 +162,8 @@ void PostThread::run()
 {
 	abort = false;
 
-	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(	GlobalConfig().nick("NapiProjekt"),
+										GlobalConfig().pass("NapiProjekt")))
 	{
 		emit invalidUserPass();
 		emit postFinished(true);
@@ -179,8 +180,11 @@ void PostThread::run()
 
 	if((napi = new QNapiProjektEngine(movie, subtitles)))
 	{
-		taskResult = napi->uploadSubtitles(language, GlobalConfig().nick(),
-											GlobalConfig().pass(), true, comment);
+		taskResult = napi->uploadSubtitles(	language,
+											GlobalConfig().nick("NapiProjekt"),
+											GlobalConfig().pass("NapiProjekt"),
+											true,
+											comment);
 		delete napi;
 	}
 

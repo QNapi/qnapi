@@ -130,8 +130,8 @@ void frmCreateUser::serverMessage(QString msg)
 		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz uaktualnić ustawienia w programie?"),
 			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
 		{
-			GlobalConfig().setNick(ui.leLogin->text());
-			GlobalConfig().setPass(ui.lePass->text());
+			GlobalConfig().setNick("NapiProjekt", ui.leLogin->text());
+			GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
 			GlobalConfig().save();
 		}
 

@@ -286,7 +286,8 @@ void UploadThread::run()
 
 	emit checkingUserPass();
 
-	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(	GlobalConfig().nick("NapiProjekt"),
+										GlobalConfig().pass("NapiProjekt")))
 	{
 		invalidUP = true;
 		emit invalidUserPass();
@@ -307,8 +308,10 @@ void UploadThread::run()
 		emit fileNameChange(fi.fileName());
 		emit progressChange(i * 100 / size);
 		
-		switch( napi->uploadSubtitles(GlobalConfig().language(), GlobalConfig().nick(),
-										GlobalConfig().pass(), false ) )
+		switch( napi->uploadSubtitles(	GlobalConfig().language(),
+										GlobalConfig().nick("NapiProjekt"),
+										GlobalConfig().pass("NapiProjekt"),
+										false ) )
 		{
 			case QNapiProjektEngine::NAPI_ADDED_NEW: ++added_new; break;
 			case QNapiProjektEngine::NAPI_FAIL: ++failed; break;

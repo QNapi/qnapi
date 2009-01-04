@@ -81,16 +81,16 @@ int QNapiCli::exec()
 
 	QNapi *napi = new QNapi();
 	
-/*	if(!napi->addEngine("NapiProjekt"))
+	if(!napi->addEngine("NapiProjekt"))
 	{
 		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
 		delete napi;
 		return 1;
-	}*/
+	}
 
 	if(!napi->addEngine("OpenSubtitles"))
 	{
-		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
+		printCli("Błąd! Nie udało się zainicjalizować silnika OpenSubtitles!");
 		delete napi;
 		return 1;
 	}
@@ -123,9 +123,6 @@ int QNapiCli::exec()
 		// jesli mozna i potrzeba, listujemy dostepne napisy
 		if((mode != CM_QUIET) && (napi->needToShowList()))
 		{
-//			if(GlobalConfig().downloadPolicy() == pokazuj zawsze)
-//			{
-	
 			bool ok = false;
 			
 			printCli("   znalezione napisy:");			
@@ -174,8 +171,6 @@ int QNapiCli::exec()
 			}
 			
 			--selIdx;
-				
-//			}
 		}
 
 		if(selIdx == -1) continue;
@@ -193,7 +188,6 @@ int QNapiCli::exec()
 			printCli(QString(QString("   nie udało się poprawnie rozpakować napisów!")));
 			continue;
 		}
-
 
 		printCli(QString(QString("   dopasowywanie napisow...")));
 		if(!napi->match())

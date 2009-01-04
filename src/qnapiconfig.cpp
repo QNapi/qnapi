@@ -108,24 +108,24 @@ void QNapiConfig::setTmpPath(const QString & path)
 	settings->setValue("qnapi/tmp_path", path);
 }
 
-QString QNapiConfig::nick()
+QString QNapiConfig::nick(const QString & engine)
 {
-	return settings->value("qnapi/nick", "").toString();
+	return settings->value(engine + "/nick", "").toString();
 }
 
-void QNapiConfig::setNick(const QString & nick)
+void QNapiConfig::setNick(const QString & engine, const QString & nick)
 {
-	settings->setValue("qnapi/nick", nick);
+	settings->setValue(engine + "/nick", nick);
 }
 
-QString QNapiConfig::pass()
+QString QNapiConfig::pass(const QString & engine)
 {
-	return settings->value("qnapi/pass", "").toString();
+	return settings->value(engine + "/pass", "").toString();
 }
 
-void QNapiConfig::setPass(const QString & pass)
+void QNapiConfig::setPass(const QString & engine, const QString & pass)
 {
-	settings->setValue("qnapi/pass", pass);
+	settings->setValue(engine + "/pass", pass);
 }
 
 QString QNapiConfig::language()

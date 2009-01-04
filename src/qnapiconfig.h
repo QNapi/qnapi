@@ -40,11 +40,11 @@ class QNapiConfig
 		QString tmpPath();
 		void setTmpPath(const QString & path);
 
-		QString nick();
-		void setNick(const QString & nick);
+		QString nick(const QString & engine);
+		void setNick(const QString & engine, const QString & nick);
 
-		QString pass();
-		void setPass(const QString & pass);
+		QString pass(const QString & engine);
+		void setPass(const QString & engine, const QString & pass);
 
 		QString language();
 		void setLanguage(const QString & language);

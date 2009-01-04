@@ -44,7 +44,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
 	connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
 	connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
-	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+//	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
@@ -177,8 +177,8 @@ void frmOptions::writeConfig()
 {
 	GlobalConfig().setP7zipPath(ui.le7zPath->text());
 	GlobalConfig().setTmpPath(ui.leTmpPath->text());
-	GlobalConfig().setNick(ui.leNick->text());
-	GlobalConfig().setPass(ui.lePass->text());
+//	GlobalConfig().setNick(ui.leNick->text());
+//	GlobalConfig().setPass(ui.lePass->text());
 	GlobalConfig().setLanguage((ui.cbLang->currentIndex() == 0) ? "PL" : "ENG");
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
@@ -207,8 +207,8 @@ void frmOptions::readConfig()
 
 	ui.le7zPath->setText(GlobalConfig().p7zipPath());
 	ui.leTmpPath->setText(GlobalConfig().tmpPath());
-	ui.leNick->setText(GlobalConfig().nick());
-	ui.lePass->setText(GlobalConfig().pass());
+	//ui.leNick->setText(GlobalConfig().nick());
+	//ui.lePass->setText(GlobalConfig().pass());
 	ui.cbLang->setCurrentIndex((GlobalConfig().language() == "PL") ? 0 : 1);
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());

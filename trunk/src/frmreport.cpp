@@ -177,7 +177,8 @@ void frmReport::invalidUserPass()
 void ReportThread::run()
 {
 	abort = false;
-	if(!QNapiProjektEngine::checkUser(GlobalConfig().nick(), GlobalConfig().pass()))
+	if(!QNapiProjektEngine::checkUser(	GlobalConfig().nick("NapiProjekt"),
+										GlobalConfig().pass("NapiProjekt")))
 	{
 		emit invalidUserPass();
 		emit reportFinished(true);
@@ -198,8 +199,11 @@ void ReportThread::run()
 	}
 
 	QString *response = new QString();
-	taskResult = napi->reportBad(language, GlobalConfig().nick(),
-								GlobalConfig().pass(), comment, response);
+	taskResult = napi->reportBad(	language,
+									GlobalConfig().nick("NapiProjekt"),
+									GlobalConfig().pass("NapiProjekt"),
+									comment,
+									response);
 	if(taskResult == QNapiProjektEngine::NAPI_REPORTED)
 		emit serverMessage(*response);
 	delete response;

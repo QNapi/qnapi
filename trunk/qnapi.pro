@@ -74,7 +74,9 @@ FORMS += ui/frmprogress.ui \
  ui/frmreport.ui \
  ui/frmscan.ui \
  ui/frmcreateuser.ui \
- ui/frmsummary.ui
+ ui/frmsummary.ui \
+ ui/napiprojekt/frmNapiProjektConfig.ui \
+ ui/opensubtitles/frmOpenSubtitlesConfig.ui
 RESOURCES += res/resources.qrc
 QT += network gui core xml
 UI_DIR = tmp

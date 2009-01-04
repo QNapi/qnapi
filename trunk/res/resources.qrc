@@ -6,6 +6,7 @@
     <file>qnapi.png</file>
   </qresource>
   <qresource prefix="/ui" >
+    <file>folder.png</file>
     <file>arrow_down.png</file>
     <file>arrow_up.png</file>
     <file>wrench.png</file>
@@ -13,5 +14,9 @@
     <file>film.png</file>
     <file>icon_accept.png</file>
     <file>icon_cancel.png</file>
+  </qresource>
+  <qresource prefix="/engines" >
+    <file>opensubtitles.png</file>
+    <file>napiprojekt.png</file>
   </qresource>
 </RCC>

@@ -17,6 +17,7 @@
 
 #include <QCryptographicHash>
 #include <QUrl>
+#include <QMessageBox>
 
 #ifdef Q_WS_WIN // for SetFileAttributes
 #include <windows.h>
@@ -65,6 +66,10 @@ public:
 	QString engineInfo();
 	// zwraca ikone silnika pobierania
 	QIcon engineIcon();
+	// zwraca czy silnik jest konfigurowalny
+	bool isConfigurable();
+	// wywoluje okienko konfiguracji
+	void configure();
 
 	QString checksum(QString filename = "");
 	bool lookForSubtitles(QString lang);

@@ -20,8 +20,8 @@ QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString 
 {
 	p7zipPath = GlobalConfig().p7zipPath();
 	//lang = GlobalConfig().language();
-	nick = GlobalConfig().nick();
-	pass = GlobalConfig().pass();
+	nick = GlobalConfig().nick(engineName());
+	pass = GlobalConfig().pass(engineName());
 	noBackup = GlobalConfig().noBackup();
 	tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());	
 }
@@ -73,6 +73,18 @@ QIcon QNapiProjektEngine::engineIcon()
 		" .@@#@@#@#@@@@@.",
 		" ..............."};
 	return QIcon(icon);
+}
+
+// zwraca czy silnik jest konfigurowalny
+bool QNapiProjektEngine::isConfigurable()
+{
+	return true;
+}
+
+// wywoluje okienko konfiguracji
+void QNapiProjektEngine::configure()
+{
+	QMessageBox::information(0, "dupa", "stara");
 }
 
 // oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)

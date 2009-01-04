@@ -84,6 +84,18 @@ QIcon QOpenSubtitlesEngine::engineIcon()
 	return QIcon(icon);
 }
 
+// zwraca czy silnik jest konfigurowalny
+bool QOpenSubtitlesEngine::isConfigurable()
+{
+	return true;
+}
+
+// wywoluje okienko konfiguracji
+void QOpenSubtitlesEngine::configure()
+{
+	QMessageBox::information(0, "dupa", "stara");
+}
+
 // oblicza sume kontrolna dla pliku filmowego
 QString QOpenSubtitlesEngine::checksum(QString filename)
 {

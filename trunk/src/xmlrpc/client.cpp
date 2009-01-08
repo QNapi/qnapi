@@ -9,7 +9,7 @@
 #include <qbuffer.h>
 #include <QtNetwork>
 
-#define XMLRPC_DEBUG
+//#define XMLRPC_DEBUG
 
 namespace  xmlrpc {
 

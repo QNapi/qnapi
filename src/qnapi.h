@@ -77,6 +77,11 @@ class QNapi
 		// zwraca komunikat o bledzie, w przypadku niepowodzenia
 		QString error();
 
+		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
+		QNapiAbstractEngine * engineByName(QString name);
+		// na odwrot ;)
+		QString nameByEngine(QNapiAbstractEngine * engine);
+
 	private:
 
 		// sciezka do pliku z filmem
@@ -95,11 +100,6 @@ class QNapi
 		
 		// najlepszy indeks napisow
 		int theBestIdx;
-		
-		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
-		QNapiAbstractEngine * engineByName(QString name);
-		// na odwrot ;)
-		QString nameByEngine(QNapiAbstractEngine * engine);
 
 };
 

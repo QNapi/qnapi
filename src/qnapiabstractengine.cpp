@@ -291,3 +291,15 @@ bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permis
 	return QFile::setPermissions(subtitles, permissions);
 }
 #endif
+
+// generuje nazwe dla pliku tymczasowego
+QString QNapiAbstractEngine::generateTmpFileName()
+{
+	static bool gen_inited;
+	if(!gen_inited)
+	{
+		qsrand(time(0));
+		gen_inited = true;
+	}
+	return QString("QNapi.%1.tmp").arg(qrand());
+}

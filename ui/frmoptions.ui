@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabOptions" >
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral" >
       <attribute name="title" >
@@ -154,7 +154,23 @@
         </widget>
        </item>
        <item rowspan="7" row="1" column="0" >
-        <widget class="QTableView" name="tvEngines" />
+        <widget class="QTableView" name="tvEngines" >
+         <property name="selectionMode" >
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior" >
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="verticalScrollMode" >
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="horizontalScrollMode" >
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="cornerButtonEnabled" >
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item row="8" column="0" >
         <widget class="QLabel" name="label" >

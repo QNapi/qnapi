@@ -52,9 +52,27 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 
 	showAllEncodings();
 
+
+//wypelnianie tvEngines
+
+//	ui.tvEngines->setItemDelegateForColumn(1, col2Delegate);
+///	ui.tvEngines->setItemDelegate(new QNapiEngineConfigItemDelegate(this));
+	
+	ui.tvEngines->setModel(&enginesModel);
+	ui.tvEngines->verticalHeader()->hide();
+	ui.tvEngines->verticalHeader()->setDefaultSectionSize(20);
+	ui.tvEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
+	ui.tvEngines->setColumnWidth(0, 300);
+
+
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2,
 		(QApplication::desktop()->height() - height()) / 2);
+}
+
+frmOptions::~frmOptions()
+{
 }
 
 void frmOptions::le7zPathChanged()
@@ -193,9 +211,9 @@ void frmOptions::writeConfig()
 	GlobalConfig().setPpRemoveWords(ui.teRemoveWords->toPlainText().split("\n"));
 	GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
 
-	QString permissions = QString("%1%2%3").arg(ui.sbOPerm->value())
+	QString permissions = QString("%1%2%3").arg(ui.sbUPerm->value())
 										   .arg(ui.sbGPerm->value())
-										   .arg(ui.sbUPerm->value());
+										   .arg(ui.sbOPerm->value());
 	GlobalConfig().setPpPermissions(permissions);
 
 	GlobalConfig().save();
@@ -227,9 +245,9 @@ void frmOptions::readConfig()
 	o = permissions.at(0).toAscii() - '0';
 	g = permissions.at(1).toAscii() - '0';
 	u = permissions.at(2).toAscii() - '0';
-	ui.sbOPerm->setValue((o <= 7) ? o : 6);
+	ui.sbUPerm->setValue((o <= 7) ? o : 6);
 	ui.sbGPerm->setValue((g <= 7) ? g : 4);
-	ui.sbUPerm->setValue((u <= 7) ? u : 4);
+	ui.sbOPerm->setValue((u <= 7) ? u : 4);
 
 	changeEncodingClicked();
 	showAllEncodingsClicked();

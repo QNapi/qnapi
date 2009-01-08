@@ -25,6 +25,7 @@
 
 #include "ui_frmoptions.h"
 #include "qnapiconfig.h"
+#include "qnapiengineconfigmodel.h"
 
 #include "frmcreateuser.h"
 
@@ -33,7 +34,7 @@ class frmOptions: public QDialog
 Q_OBJECT
 	public:
 		frmOptions(QWidget *parent = 0, Qt::WFlags f = 0);
-		~frmOptions() {};
+		~frmOptions();
 
 	public slots:
 		void writeConfig();
@@ -53,6 +54,9 @@ Q_OBJECT
 	private:
 		Ui::frmOptions ui;
 		void showAllEncodings();
+
+		QNapiEngineConfigModel enginesModel;
+		
 };
 
 #endif

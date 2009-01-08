@@ -31,7 +31,8 @@ SOURCES += src/main.cpp \
  src/xmlrpc/variant.cpp \
  src/xmlrpc/response.cpp \
  src/qnapi.cpp \
- src/qopensubtitlesengine.cpp
+ src/qopensubtitlesengine.cpp \
+ src/qnapiengineconfigmodel.cpp
 HEADERS += src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
@@ -65,7 +66,9 @@ HEADERS += src/frmprogress.h \
  src/qcheckedlistwidget.h \
  src/qnapi.h \
  src/qnapisubtitleinfo.h \
- src/qopensubtitlesengine.h
+ src/qopensubtitlesengine.h \
+ src/qnapiengineconfig.h \
+ src/qnapiengineconfigmodel.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

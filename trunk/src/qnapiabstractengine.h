@@ -112,18 +112,9 @@ protected:
 		tmpPath = GlobalConfig().tmpPath();
 		noBackup = GlobalConfig().noBackup();
 	};
-	
+
 	// generuje nazwe dla pliku tymczasowego
-	QString generateTmpFileName()
-	{
-		static bool gen_inited;
-		if(!gen_inited)
-		{
-			qsrand(time(0));
-			gen_inited = true;
-		}
-		return QString("QNapi.%1.tmp").arg(qrand());
-	}
+	QString generateTmpFileName();
 
 };
 

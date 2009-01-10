@@ -25,7 +25,6 @@
 
 #include "ui_frmoptions.h"
 #include "qnapiconfig.h"
-#include "qnapiengineconfigmodel.h"
 
 #include "frmcreateuser.h"
 
@@ -45,7 +44,15 @@ Q_OBJECT
 		void select7zPath();
 		void leTmpPathChanged();
 		void selectTmpPath();
-		void pbRegisterClicked();
+		//void pbRegisterClicked();
+		
+		void twEnginesSelectionChanged();
+		void twEnginesItemChanged(QTableWidgetItem * item);
+		void pbMoveUpClicked();
+		void pbMoveDownClicked();
+		void pbEngineConfClicked();
+		void pbEngineInfoClicked();	
+
 		void changeEncodingClicked();
 		void autoDetectEncodingClicked();
 		void showAllEncodingsClicked();
@@ -54,8 +61,6 @@ Q_OBJECT
 	private:
 		Ui::frmOptions ui;
 		void showAllEncodings();
-
-		QNapiEngineConfigModel enginesModel;
 		
 };
 

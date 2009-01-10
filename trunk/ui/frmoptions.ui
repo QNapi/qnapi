@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>410</height>
+    <width>601</width>
+    <height>404</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -99,11 +99,6 @@
          </item>
          <item>
           <property name="text" >
-           <string>Albanian</string>
-          </property>
-         </item>
-         <item>
-          <property name="text" >
            <string>Angielski</string>
           </property>
          </item>
@@ -154,7 +149,13 @@
         </widget>
        </item>
        <item rowspan="7" row="1" column="0" >
-        <widget class="QTableView" name="tvEngines" >
+        <widget class="QTableWidget" name="twEngines" >
+         <property name="editTriggers" >
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="dragDropMode" >
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
          <property name="selectionMode" >
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>
@@ -167,12 +168,9 @@
          <property name="horizontalScrollMode" >
           <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>
-         <property name="cornerButtonEnabled" >
-          <bool>false</bool>
-         </property>
         </widget>
        </item>
-       <item row="8" column="0" >
+       <item row="10" column="0" >
         <widget class="QLabel" name="label" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
@@ -185,7 +183,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2" >
+       <item row="11" column="0" colspan="2" >
         <widget class="QComboBox" name="comboBox" >
          <property name="currentIndex" >
           <number>1</number>
@@ -212,6 +210,9 @@
        </item>
        <item row="1" column="1" >
         <widget class="QPushButton" name="pbMoveUp" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="text" >
           <string>Przesuń w górę</string>
          </property>
@@ -221,19 +222,32 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" >
-        <widget class="QPushButton" name="pbMoveDown" >
+       <item row="9" column="0" colspan="2" >
+        <widget class="QComboBox" name="comboBox_2" >
+         <item>
+          <property name="text" >
+           <string>Wyszukaj wszystkie dostępne napisy (wolniej)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2" >
+        <widget class="QLabel" name="label_2" >
          <property name="text" >
-          <string>Przesuń w dół</string>
-         </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
-           <normaloff>:/ui/arrow_down.png</normaloff>:/ui/arrow_down.png</iconset>
+          <string>Wyszukiwanie napisów:</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1" >
-        <widget class="QPushButton" name="pushButton" >
+        <widget class="QPushButton" name="pbEngineConf" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="text" >
           <string>Konfiguruj</string>
          </property>
@@ -245,6 +259,9 @@
        </item>
        <item row="4" column="1" >
         <widget class="QPushButton" name="pbEngineInfo" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
          <property name="text" >
           <string>Informacje</string>
          </property>
@@ -254,7 +271,33 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="1" >
+        <widget class="QPushButton" name="pbMoveDown" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Przesuń w dół</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/arrow_down.png</normaloff>:/ui/arrow_down.png</iconset>
+         </property>
+        </widget>
+       </item>
       </layout>
+      <zorder>lbAvailableEngines</zorder>
+      <zorder>tvEngines</zorder>
+      <zorder>label</zorder>
+      <zorder>comboBox</zorder>
+      <zorder>tableWidget</zorder>
+      <zorder>twEngines</zorder>
+      <zorder>pbMoveUp</zorder>
+      <zorder>comboBox_2</zorder>
+      <zorder>label_2</zorder>
+      <zorder>pbMoveDown</zorder>
+      <zorder>pbEngineInfo</zorder>
+      <zorder>pbEngineConf</zorder>
      </widget>
      <widget class="QWidget" name="tabPostProcessing" >
       <attribute name="title" >
@@ -553,6 +596,13 @@ p, li { white-space: pre-wrap; }
    <item>
     <layout class="QHBoxLayout" >
      <item>
+      <widget class="QPushButton" name="pushButton" >
+       <property name="text" >
+        <string>Przywróć domyslne</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer>
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
@@ -592,6 +642,13 @@ p, li { white-space: pre-wrap; }
   <tabstop>cbLang</tabstop>
   <tabstop>cbNoBackup</tabstop>
   <tabstop>cbUseBrushedMetal</tabstop>
+  <tabstop>twEngines</tabstop>
+  <tabstop>pbMoveUp</tabstop>
+  <tabstop>pbMoveDown</tabstop>
+  <tabstop>pbEngineConf</tabstop>
+  <tabstop>pbEngineInfo</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>comboBox</tabstop>
   <tabstop>gbPpEnable</tabstop>
   <tabstop>cbChangeEncoding</tabstop>
   <tabstop>cbAutoDetectEncoding</tabstop>
@@ -604,6 +661,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>sbUPerm</tabstop>
   <tabstop>sbGPerm</tabstop>
   <tabstop>sbOPerm</tabstop>
+  <tabstop>pushButton</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
  </tabstops>

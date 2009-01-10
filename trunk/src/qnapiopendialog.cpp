@@ -24,12 +24,22 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 
 	if(filterMode == Movies)
 	{
-		setFilter(tr("Filmy (*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
-					"*.rm *.rmvb *.wmv);; Wszystkie pliki (*.*)"));
+#if QT_VERSION >= 0x040400
+		setNameFilter
+#else
+		setFilter
+#endif
+				(tr("Filmy (*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
+					"*.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
 	}
 	else if(filterMode == Subtitles)
 	{
-		setFilter(tr("Napisy (*.txt);; Wszystkie pliki (*.*)"));
+#if QT_VERSION >= 0x040400
+		setNameFilter
+#else
+		setFilter
+#endif
+				(tr("Napisy (*.txt);;Wszystkie pliki (*.*)"));
 	}
 
 	if(QFileInfo(init_path).isDir())
@@ -64,25 +74,73 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 
 bool QNapiOpenDialog::selectFile()
 {
+#ifdef Q_WS_WIN
+	files.clear();
+	QString file = getOpenFileName(this, windowTitle(), directory().path(),
+#if QT_VERSION >= 0x040400
+		nameFilters().join("\n")
+#else
+		filter()
+#endif
+					);
+
+	if(!file.isEmpty())
+		files << file;
+
+	return !file.isEmpty();
+#else
 	if(!placeWindow()) return false;
 	setFileMode(QFileDialog::ExistingFile);
 	return exec();
+#endif
 }
 
 bool QNapiOpenDialog::selectFiles()
 {
+#ifdef Q_WS_WIN
+	files = getOpenFileNames(this, windowTitle(), directory().path(),
+#if QT_VERSION >= 0x040400
+		nameFilters().join("\n")
+#else
+		filter()
+#endif
+					);
+
+	return !files.isEmpty();	
+#else
 	if(!placeWindow()) return false;
 	setFileMode(QFileDialog::ExistingFiles);
 	return exec();
+#endif
 }
 
 bool QNapiOpenDialog::selectDirectory()
 {
+#ifdef Q_WS_WIN
+	files.clear();
+	QString dir = getExistingDirectory(this, windowTitle(), directory().path());
+
+	if(dir == directory().path())
+		dir = "";
+
+	if(!dir.isEmpty())
+		files << dir;
+
+	return !dir.isEmpty();
+#else
 	if(!placeWindow()) return false;
 	// QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks ?
 	setFileMode(QFileDialog::DirectoryOnly);
 	return exec();
+#endif
 }
+
+#ifdef Q_WS_WIN
+QStringList QNapiOpenDialog::selectedFiles() const
+{
+	return files;
+}
+#endif
 
 bool QNapiOpenDialog::placeWindow()
 {

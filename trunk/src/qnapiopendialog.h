@@ -40,10 +40,19 @@ public:
 	bool selectFile();
 	bool selectFiles();
 	bool selectDirectory();
+	
+#ifdef Q_WS_WIN
+	QStringList selectedFiles() const;
+#endif
 
 private:
 
 	bool placeWindow();
+
+#ifdef Q_WS_WIN
+	QStringList files;
+#endif
+
 };
 
 #endif

@@ -42,7 +42,7 @@ QString QNapiProjektEngine::engineName()
 // zwraca informacje nt. modulu
 QString QNapiProjektEngine::engineInfo()
 {
-	return "Modul pobierania napisów z bazy <b>www.napiprojekt.pl</b>\n"
+	return "Modul pobierania napisów z bazy <b>www.napiprojekt.pl</b><br />"
 			"Copyright (c) 2008 by Krzemin";
 }
 
@@ -82,9 +82,9 @@ bool QNapiProjektEngine::isConfigurable()
 }
 
 // wywoluje okienko konfiguracji
-void QNapiProjektEngine::configure()
+void QNapiProjektEngine::configure(QWidget * parent)
 {
-	QMessageBox::information(0, "dupa", "stara");
+	QMessageBox::information(parent, "Konfiguracja", "NapiProjekt");
 }
 
 // oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)

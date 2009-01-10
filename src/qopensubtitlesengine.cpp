@@ -42,7 +42,7 @@ QString QOpenSubtitlesEngine::engineName()
 // zwraca informacje nt. modulu
 QString QOpenSubtitlesEngine::engineInfo()
 {
-	return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b>\n"
+	return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b><br />"
 			"Copyright (c) 2008 by Krzemin";
 }
 
@@ -87,13 +87,13 @@ QIcon QOpenSubtitlesEngine::engineIcon()
 // zwraca czy silnik jest konfigurowalny
 bool QOpenSubtitlesEngine::isConfigurable()
 {
-	return true;
+	return false;
 }
 
 // wywoluje okienko konfiguracji
-void QOpenSubtitlesEngine::configure()
+void QOpenSubtitlesEngine::configure(QWidget * parent)
 {
-	QMessageBox::information(0, "dupa", "stara");
+	QMessageBox::information(parent, "Konfiguracja", "OpenSubtitles");
 }
 
 // oblicza sume kontrolna dla pliku filmowego

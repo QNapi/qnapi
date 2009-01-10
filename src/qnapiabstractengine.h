@@ -72,7 +72,7 @@ public:
 	// zwraca czy silnik jest konfigurowalny
 	virtual bool isConfigurable() = 0;
 	// wywoluje okienko konfiguracji
-	virtual void configure() = 0;
+	virtual void configure(QWidget * parent) = 0;
 
 	// powinna obliczac i zwracac sume kontrolna pliku filmowego,
 	// a takze ustawiac wartosc zmiennej checkSym

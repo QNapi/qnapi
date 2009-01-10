@@ -38,7 +38,11 @@
      <item>
       <widget class="QPushButton" name="pbMovieSelect" >
        <property name="text" >
-        <string>...</string>
+        <string/>
+       </property>
+       <property name="icon" >
+        <iconset resource="../res/resources.qrc" >
+         <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
        </property>
       </widget>
      </item>
@@ -59,7 +63,11 @@
      <item>
       <widget class="QPushButton" name="pbSubtitlesSelect" >
        <property name="text" >
-        <string>...</string>
+        <string/>
+       </property>
+       <property name="icon" >
+        <iconset resource="../res/resources.qrc" >
+         <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
        </property>
       </widget>
      </item>

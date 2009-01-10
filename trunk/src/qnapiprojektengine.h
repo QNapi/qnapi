@@ -69,7 +69,7 @@ public:
 	// zwraca czy silnik jest konfigurowalny
 	bool isConfigurable();
 	// wywoluje okienko konfiguracji
-	void configure();
+	void configure(QWidget * parent);
 
 	QString checksum(QString filename = "");
 	bool lookForSubtitles(QString lang);

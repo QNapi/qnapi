@@ -44,7 +44,7 @@ public:
 	// zwraca czy silnik jest konfigurowalny
 	bool isConfigurable();
 	// wywoluje okienko konfiguracji
-	void configure();
+	void configure(QWidget * parent);
 
 	// oblicza sume kontrolna pliku filmowego
 	QString checksum(QString filename = "");

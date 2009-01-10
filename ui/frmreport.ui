@@ -45,7 +45,11 @@
       </sizepolicy>
      </property>
      <property name="text" >
-      <string>...</string>
+      <string/>
+     </property>
+     <property name="icon" >
+      <iconset resource="../res/resources.qrc" >
+       <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
      </property>
     </widget>
    </item>

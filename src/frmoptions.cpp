@@ -45,6 +45,15 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
 	connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
 //	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+
+	connect(ui.twEngines, SIGNAL(itemSelectionChanged()), this, SLOT(twEnginesSelectionChanged()));
+	connect(ui.twEngines, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(twEnginesItemChanged(QTableWidgetItem *)));
+
+	connect(ui.pbMoveUp, SIGNAL(clicked()), this, SLOT(pbMoveUpClicked()));
+	connect(ui.pbMoveDown, SIGNAL(clicked()), this, SLOT(pbMoveDownClicked()));
+	connect(ui.pbEngineConf, SIGNAL(clicked()), this, SLOT(pbEngineConfClicked()));
+	connect(ui.pbEngineInfo, SIGNAL(clicked()), this, SLOT(pbEngineInfoClicked()));
+
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
@@ -53,18 +62,29 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	showAllEncodings();
 
 
-//wypelnianie tvEngines
+//wypelnianie twEngines
 
-//	ui.tvEngines->setItemDelegateForColumn(1, col2Delegate);
-///	ui.tvEngines->setItemDelegate(new QNapiEngineConfigItemDelegate(this));
+
+	QNapi n;
+	n.addEngines(n.enumerateEngines());
 	
-	ui.tvEngines->setModel(&enginesModel);
-	ui.tvEngines->verticalHeader()->hide();
-	ui.tvEngines->verticalHeader()->setDefaultSectionSize(20);
-	ui.tvEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
-	ui.tvEngines->setColumnWidth(0, 300);
+	ui.twEngines->setColumnCount(1);
+	ui.twEngines->setRowCount(n.enumerateEngines().size());
+	
+	QTableWidgetItem *i = new QTableWidgetItem(n.engineByName("NapiProjekt")->engineIcon(), "NapiProjekt");
+	i->setCheckState(Qt::Checked);
+	ui.twEngines->setItem(0, 0, i);
+
+	i = new QTableWidgetItem(n.engineByName("OpenSubtitles")->engineIcon(), "OpenSubtitles");
+	i->setCheckState(Qt::Checked);
+	ui.twEngines->setItem(1, 0, i);
 
 
+	ui.twEngines->horizontalHeader()->hide();
+	ui.twEngines->verticalHeader()->hide();
+	ui.twEngines->verticalHeader()->setDefaultSectionSize(20);
+	ui.twEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
+	ui.twEngines->setColumnWidth(0, 300);
 
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2,
@@ -115,16 +135,107 @@ void frmOptions::selectTmpPath()
 	QString tmpDir = QFileDialog::getExistingDirectory(this,
 									tr("Wskaż katalog tymczasowy"),
 									QFileInfo(ui.leTmpPath->text()).path(),
-									QFileDialog::ShowDirsOnly| QFileDialog::DontResolveSymlinks);
+									QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if(!tmpDir.isEmpty())
 		ui.leTmpPath->setText(QFileInfo(tmpDir).path());
 }
 
-void frmOptions::pbRegisterClicked()
+/*void frmOptions::pbRegisterClicked()
 {
 	((QNapiApp*)qApp)->showCreateUser();
 	readConfig();
+}*/
+
+
+void frmOptions::twEnginesSelectionChanged()
+{
+	QNapi n;
+	n.addEngines(n.enumerateEngines());
+	
+	QNapiAbstractEngine * e;
+	e = n.engineByName(ui.twEngines->selectedItems().at(0)->text());
+	
+	int currentRow = ui.twEngines->row(ui.twEngines->selectedItems().at(0));
+
+	ui.pbMoveUp->setEnabled(currentRow > 0);
+	ui.pbMoveDown->setEnabled(currentRow < ui.twEngines->rowCount() - 1);
+	ui.pbEngineConf->setEnabled(e->isConfigurable());
+	ui.pbEngineInfo->setEnabled(true);
 }
+
+void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
+{
+	bool foundActive = false;
+
+	for(int i = 0; i < ui.twEngines->rowCount(); ++i)
+	{
+		if(ui.twEngines->item(i, 0)->checkState() == Qt::Checked)
+		{
+			foundActive = true;
+			break;
+		}
+	}
+	
+	if(!foundActive)
+	{
+		item->setCheckState(Qt::Checked);
+		QMessageBox::warning(this,
+							"Ostrzeżenie",
+							"Przynajmniej jeden moduł pobierania musi pozostać aktywny!");
+
+	}
+	
+}
+
+void frmOptions::pbMoveUpClicked()
+{
+	int currentRow = ui.twEngines->row(ui.twEngines->selectedItems().at(0));
+
+	QTableWidgetItem *current, *above;
+	current = ui.twEngines->item(currentRow, 0);
+	above = ui.twEngines->item(currentRow - 1, 0);
+
+	QTableWidgetItem tmp = *current;
+	*current = *above;
+	*above = tmp;
+
+	ui.twEngines->selectRow(currentRow - 1);
+}
+
+void frmOptions::pbMoveDownClicked()
+{
+	int currentRow = ui.twEngines->row(ui.twEngines->selectedItems().at(0));
+
+	QTableWidgetItem *current, *below;
+	current = ui.twEngines->item(currentRow, 0);
+	below = ui.twEngines->item(currentRow + 1, 0);
+
+	QTableWidgetItem tmp = *current;
+	*current = *below;
+	*below = tmp;
+
+	ui.twEngines->selectRow(currentRow + 1);
+}
+
+void frmOptions::pbEngineConfClicked()
+{
+	QNapi n;
+	n.addEngines(n.enumerateEngines());
+	n.engineByName(ui.twEngines->selectedItems().at(0)->text())->configure(this);
+}
+
+void frmOptions::pbEngineInfoClicked()
+{
+	QNapi n;
+	n.addEngines(n.enumerateEngines());
+	QString engineName = ui.twEngines->selectedItems().at(0)->text();
+	QString engineInfo = n.engineByName(engineName)->engineInfo();
+	
+	QMessageBox::information(	this,
+								QString("Informacje o silniku %1").arg(engineName),
+								engineInfo);
+}
+
 
 void frmOptions::changeEncodingClicked()
 {

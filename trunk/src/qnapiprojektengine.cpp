@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "qnapiprojektengine.h"
+#include "frmnapiprojektconfig.h"
 
 // konstruktor klasy
 QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile)
@@ -84,7 +85,8 @@ bool QNapiProjektEngine::isConfigurable()
 // wywoluje okienko konfiguracji
 void QNapiProjektEngine::configure(QWidget * parent)
 {
-	QMessageBox::information(parent, "Konfiguracja", "NapiProjekt");
+	frmNapiProjektConfig config(parent);
+	config.exec();
 }
 
 // oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)

@@ -44,7 +44,6 @@ Q_OBJECT
 		void select7zPath();
 		void leTmpPathChanged();
 		void selectTmpPath();
-		//void pbRegisterClicked();
 
 		void twEnginesSelectionChanged();
 		void twEnginesItemChanged(QTableWidgetItem * item);

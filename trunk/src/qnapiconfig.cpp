@@ -110,7 +110,21 @@ void QNapiConfig::setTmpPath(const QString & path)
 
 QString QNapiConfig::nick(const QString & engine)
 {
-	return settings->value(engine + "/nick", "").toString();
+	QString nick = settings->value(engine + "/nick", "").toString();
+
+	// Konwersja z konfigow <= 0.1.5
+	if(nick.isEmpty() && (engine == "NapiProjekt"))
+	{
+		nick = settings->value("qnapi/nick", "").toString();
+		
+		if(!nick.isEmpty())
+		{
+			settings->remove("qnapi/nick");
+			setNick("NapiProjekt", nick);
+		}
+	}
+
+	return nick;
 }
 
 void QNapiConfig::setNick(const QString & engine, const QString & nick)
@@ -120,7 +134,20 @@ void QNapiConfig::setNick(const QString & engine, const QString & nick)
 
 QString QNapiConfig::pass(const QString & engine)
 {
-	return settings->value(engine + "/pass", "").toString();
+	QString pass = settings->value(engine + "/pass", "").toString();
+	
+	if(pass.isEmpty() && (engine == "NapiProjekt"))
+	{
+		pass = settings->value("qnapi/pass", "").toString();
+		
+		if(!pass.isEmpty())
+		{
+			settings->remove("qnapi/pass");
+			setPass("NapiProjekt", pass);
+		}
+	}
+
+	return pass;
 }
 
 void QNapiConfig::setPass(const QString & engine, const QString & pass)
@@ -185,7 +212,7 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 			<< QPair<QString,bool>("OpenSubtitles", true);
 	}
 	
-	qDebug() << "final map: " << map;	
+	//qDebug() << "final map: " << map;	
 	
 	return map;
 }

@@ -145,5 +145,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>leNick</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmNapiProjektConfig</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>220</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lePass</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmNapiProjektConfig</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>220</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

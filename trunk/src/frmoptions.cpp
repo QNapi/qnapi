@@ -44,7 +44,6 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
 	connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
 	connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
-//	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 
 	connect(ui.twEngines, SIGNAL(itemSelectionChanged()), this, SLOT(twEnginesSelectionChanged()));
 	connect(ui.twEngines, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(twEnginesItemChanged(QTableWidgetItem *)));
@@ -114,13 +113,6 @@ void frmOptions::selectTmpPath()
 	if(!tmpDir.isEmpty())
 		ui.leTmpPath->setText(QFileInfo(tmpDir).path());
 }
-
-/*void frmOptions::pbRegisterClicked()
-{
-	((QNapiApp*)qApp)->showCreateUser();
-	readConfig();
-}*/
-
 
 void frmOptions::twEnginesSelectionChanged()
 {
@@ -303,6 +295,9 @@ void frmOptions::writeConfig()
 	}
 
 	GlobalConfig().setEngines(engines);
+	
+	GlobalConfig().setSearchPolicy(ui.cbSearchPolicy->currentIndex());
+	GlobalConfig().setDownloadPolicy(ui.cbDownloadPolicy->currentIndex());
 
 	GlobalConfig().setPpEnabled(ui.gbPpEnable->isChecked());
 	GlobalConfig().setPpChangeEncoding(ui.cbChangeEncoding->isChecked());
@@ -364,6 +359,8 @@ void frmOptions::readConfig()
 	ui.twEngines->setColumnWidth(0, 300);
 
 
+	ui.cbSearchPolicy->setCurrentIndex(GlobalConfig().searchPolicy());
+	ui.cbDownloadPolicy->setCurrentIndex(GlobalConfig().downloadPolicy());
 
 	ui.cbChangeEncoding->setChecked(GlobalConfig().ppChangeEncoding());
 	ui.cbAutoDetectEncoding->setChecked(GlobalConfig().ppAutoDetectEncoding());

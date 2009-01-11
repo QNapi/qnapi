@@ -31,7 +31,8 @@ SOURCES += src/main.cpp \
  src/xmlrpc/variant.cpp \
  src/xmlrpc/response.cpp \
  src/qnapi.cpp \
- src/qopensubtitlesengine.cpp
+ src/qopensubtitlesengine.cpp \
+ src/frmnapiprojektconfig.cpp
 HEADERS += src/frmprogress.h \
  src/frmabout.h \
  src/frmoptions.h \
@@ -65,7 +66,8 @@ HEADERS += src/frmprogress.h \
  src/qcheckedlistwidget.h \
  src/qnapi.h \
  src/qnapisubtitleinfo.h \
- src/qopensubtitlesengine.h
+ src/qopensubtitlesengine.h \
+ src/frmnapiprojektconfig.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \
@@ -75,8 +77,8 @@ FORMS += ui/frmprogress.ui \
  ui/frmscan.ui \
  ui/frmcreateuser.ui \
  ui/frmsummary.ui \
- ui/napiprojekt/frmNapiProjektConfig.ui \
- ui/opensubtitles/frmOpenSubtitlesConfig.ui
+ ui/napiprojekt/frmnapiprojektconfig.ui \
+ ui/opensubtitles/frmopensubtitlesconfig.ui
 RESOURCES += res/resources.qrc
 QT += network gui core xml
 UI_DIR = tmp

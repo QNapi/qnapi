@@ -61,31 +61,6 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 
 	showAllEncodings();
 
-
-//wypelnianie twEngines
-
-
-	QNapi n;
-	n.addEngines(n.enumerateEngines());
-	
-	ui.twEngines->setColumnCount(1);
-	ui.twEngines->setRowCount(n.enumerateEngines().size());
-	
-	QTableWidgetItem *i = new QTableWidgetItem(n.engineByName("NapiProjekt")->engineIcon(), "NapiProjekt");
-	i->setCheckState(Qt::Checked);
-	ui.twEngines->setItem(0, 0, i);
-
-	i = new QTableWidgetItem(n.engineByName("OpenSubtitles")->engineIcon(), "OpenSubtitles");
-	i->setCheckState(Qt::Checked);
-	ui.twEngines->setItem(1, 0, i);
-
-
-	ui.twEngines->horizontalHeader()->hide();
-	ui.twEngines->verticalHeader()->hide();
-	ui.twEngines->verticalHeader()->setDefaultSectionSize(20);
-	ui.twEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
-	ui.twEngines->setColumnWidth(0, 300);
-
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2,
 		(QApplication::desktop()->height() - height()) / 2);
@@ -169,6 +144,11 @@ void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
 
 	for(int i = 0; i < ui.twEngines->rowCount(); ++i)
 	{
+		if(!ui.twEngines->item(i, 0))
+		{
+			return;
+		}
+		
 		if(ui.twEngines->item(i, 0)->checkState() == Qt::Checked)
 		{
 			foundActive = true;
@@ -312,6 +292,18 @@ void frmOptions::writeConfig()
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 
+	//QHash<QString,bool> engines;
+	QList<QPair<QString, bool> > engines;
+	for(int i = 0; i < ui.twEngines->rowCount(); ++i)
+	{
+//		engines[ui.twEngines->item(i, 0)->text()] = ui.twEngines->item(i, 0)->checkState() == Qt::Checked;
+		engines << qMakePair(ui.twEngines->item(i, 0)->text(),
+							(ui.twEngines->item(i, 0)->checkState() == Qt::Checked));
+		qDebug() << engines;
+	}
+
+	GlobalConfig().setEngines(engines);
+
 	GlobalConfig().setPpEnabled(ui.gbPpEnable->isChecked());
 	GlobalConfig().setPpChangeEncoding(ui.cbChangeEncoding->isChecked());
 	GlobalConfig().setPpAutoDetectEncoding(ui.cbAutoDetectEncoding->isChecked());
@@ -341,6 +333,37 @@ void frmOptions::readConfig()
 	ui.cbLang->setCurrentIndex((GlobalConfig().language() == "PL") ? 0 : 1);
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
+
+
+	QNapi n;
+	n.addEngines(n.enumerateEngines());
+	
+
+
+	ui.twEngines->clear();
+
+	QList<QPair<QString,bool> > engines = GlobalConfig().engines();
+	ui.twEngines->setColumnCount(1);
+	ui.twEngines->setRowCount(engines.size());
+
+	//qDebug() << "READCONFIG:" << engines.size();
+//	qDebug() << ui.twEngines->columnCount() << "x" << ui.twEngines->rowCount();
+
+	for(int i = 0; i < 2; ++i)
+	{
+		QPair<QString,bool> e = engines.at(i);
+		QTableWidgetItem *item = new QTableWidgetItem(n.engineByName(e.first)->engineIcon(), e.first);
+		item->setCheckState(e.second ? Qt::Checked : Qt::Unchecked);
+		ui.twEngines->setItem(i, 0, item);
+	}
+
+	ui.twEngines->horizontalHeader()->hide();
+	ui.twEngines->verticalHeader()->hide();
+	ui.twEngines->verticalHeader()->setDefaultSectionSize(20);
+	ui.twEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
+	ui.twEngines->setColumnWidth(0, 300);
+
+
 
 	ui.cbChangeEncoding->setChecked(GlobalConfig().ppChangeEncoding());
 	ui.cbAutoDetectEncoding->setChecked(GlobalConfig().ppAutoDetectEncoding());

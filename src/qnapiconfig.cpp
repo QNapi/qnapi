@@ -159,6 +159,93 @@ void QNapiConfig::setUseBrushedMetal(bool use)
 	settings->setValue("qnapi/use_brushed_metal", use);
 }
 
+#include <QtDebug>
+
+QList<QPair<QString, bool> > QNapiConfig::engines()
+{
+	QList<QVariant> inList = settings->value("qnapi/engines").toList();
+	QList<QPair<QString, bool> > map;
+
+	foreach(QVariant v, inList)
+	{
+//		qDebug() << "foricz" << v;
+		QStringList sl = v.toStringList();
+		if(sl.size() != 2) continue;
+
+		QString key = sl.at(0);
+		bool value = (sl.at(1) == "1");
+//		qDebug() << "kv:" << key << value;
+		map << qMakePair(key, value);
+	}
+
+	if(map.isEmpty())
+	{
+//		qDebug() << "mapa pusta";
+		map << QPair<QString,bool>("NapiProjekt", true)
+			<< QPair<QString,bool>("OpenSubtitles", true);
+	}
+	
+	qDebug() << "final map: " << map;	
+	
+	return map;
+}
+
+QList<QString> QNapiConfig::enginesList()
+{
+	QList<QPair<QString, bool> > map = engines();
+	QStringList list;
+	
+	for(int i = 0; i < map.size(); ++i)
+	{
+		QPair<QString,bool> e = map.at(i);
+		if(e.second) list << e.first;
+	}
+	
+	if(list.isEmpty())
+	{
+		list << "NapiProjekt" << "OpenSubtitles";
+	}
+	
+	return list;
+}
+
+void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
+{
+	QList<QVariant> outList;
+	for(int i = 0; i < engines.size(); ++i)
+	{
+		QPair<QString, bool> e = engines.at(i);
+//		qDebug() << "for: " << e.first << e.second;
+		
+		QStringList sl;
+		sl << e.first << (e.second ? "1" : "0");
+//		qDebug() << "sl: " << sl;
+		outList << sl;
+//		qDebug() << outList;
+	}
+	settings->setValue("qnapi/engines", outList);
+}
+
+int QNapiConfig::searchPolicy()
+{
+	return settings->value("qnapi/search_policy", 0).toInt();		
+}
+
+void QNapiConfig::setSearchPolicy(int policy)
+{
+	settings->setValue("qnapi/search_policy", policy);
+}
+
+int QNapiConfig::downloadPolicy()
+{
+	return settings->value("qnapi/download_policy", 1).toInt();	
+}
+
+void QNapiConfig::setDownloadPolicy(int policy)
+{
+	settings->setValue("qnapi/download_policy", policy);
+}
+
 bool QNapiConfig::ppEnabled()
 {
 	return settings->value("qnapi/post_processing", false).toBool();

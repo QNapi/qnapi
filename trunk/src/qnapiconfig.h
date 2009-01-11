@@ -23,6 +23,8 @@
 #include <QDir>
 #include <QProcess>
 #include <QRegExp>
+#include <QList>
+#include <QPair>
 #include "version.h"
 
 class QNapiConfig
@@ -54,6 +56,16 @@ class QNapiConfig
 
 		bool useBrushedMetal();
 		void setUseBrushedMetal(bool use);
+
+		QList<QPair<QString, bool> > engines();
+		QList<QString> enginesList();
+		void setEngines(QList<QPair<QString, bool> > engines);
+
+		int searchPolicy();
+		void setSearchPolicy(int policy);
+		
+		int downloadPolicy();
+		void setDownloadPolicy(int policy);
 
 		bool ppEnabled();
 		void setPpEnabled(bool enable);

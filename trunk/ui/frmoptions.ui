@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabOptions" >
      <property name="currentIndex" >
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabGeneral" >
       <attribute name="title" >
@@ -148,30 +148,8 @@
          </property>
         </widget>
        </item>
-       <item rowspan="7" row="1" column="0" >
-        <widget class="QTableWidget" name="twEngines" >
-         <property name="editTriggers" >
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="dragDropMode" >
-          <enum>QAbstractItemView::NoDragDrop</enum>
-         </property>
-         <property name="selectionMode" >
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior" >
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <property name="verticalScrollMode" >
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="horizontalScrollMode" >
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-        </widget>
-       </item>
        <item row="10" column="0" >
-        <widget class="QLabel" name="label" >
+        <widget class="QLabel" name="lbDownloadPolicy" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
            <horstretch>0</horstretch>
@@ -184,7 +162,7 @@
         </widget>
        </item>
        <item row="11" column="0" colspan="2" >
-        <widget class="QComboBox" name="comboBox" >
+        <widget class="QComboBox" name="cbDownloadPolicy" >
          <property name="currentIndex" >
           <number>1</number>
          </property>
@@ -208,6 +186,28 @@
          </item>
         </widget>
        </item>
+       <item rowspan="7" row="1" column="0" >
+        <widget class="QTableWidget" name="twEngines" >
+         <property name="editTriggers" >
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="dragDropMode" >
+          <enum>QAbstractItemView::NoDragDrop</enum>
+         </property>
+         <property name="selectionMode" >
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior" >
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="verticalScrollMode" >
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="horizontalScrollMode" >
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1" >
         <widget class="QPushButton" name="pbMoveUp" >
          <property name="enabled" >
@@ -223,7 +223,7 @@
         </widget>
        </item>
        <item row="9" column="0" colspan="2" >
-        <widget class="QComboBox" name="comboBox_2" >
+        <widget class="QComboBox" name="cbSearchPolicy" >
          <item>
           <property name="text" >
            <string>Wyszukaj wszystkie dostępne napisy (wolniej)</string>
@@ -237,37 +237,9 @@
         </widget>
        </item>
        <item row="8" column="0" colspan="2" >
-        <widget class="QLabel" name="label_2" >
+        <widget class="QLabel" name="lbSearchPolicy" >
          <property name="text" >
           <string>Wyszukiwanie napisów:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" >
-        <widget class="QPushButton" name="pbEngineConf" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>Konfiguruj</string>
-         </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
-           <normaloff>:/ui/wrench.png</normaloff>:/ui/wrench.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" >
-        <widget class="QPushButton" name="pbEngineInfo" >
-         <property name="enabled" >
-          <bool>false</bool>
-         </property>
-         <property name="text" >
-          <string>Informacje</string>
-         </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
-           <normaloff>:/ui/information.png</normaloff>:/ui/information.png</iconset>
          </property>
         </widget>
        </item>
@@ -285,16 +257,42 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="1" >
+        <widget class="QPushButton" name="pbEngineInfo" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Informacje</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/information.png</normaloff>:/ui/information.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="QPushButton" name="pbEngineConf" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Konfiguruj</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../res/resources.qrc" >
+           <normaloff>:/ui/wrench.png</normaloff>:/ui/wrench.png</iconset>
+         </property>
+        </widget>
+       </item>
       </layout>
       <zorder>lbAvailableEngines</zorder>
-      <zorder>tvEngines</zorder>
-      <zorder>label</zorder>
-      <zorder>comboBox</zorder>
-      <zorder>tableWidget</zorder>
+      <zorder>lbDownloadPolicy</zorder>
+      <zorder>cbDownloadPolicy</zorder>
       <zorder>twEngines</zorder>
       <zorder>pbMoveUp</zorder>
-      <zorder>comboBox_2</zorder>
-      <zorder>label_2</zorder>
+      <zorder>cbSearchPolicy</zorder>
+      <zorder>lbSearchPolicy</zorder>
       <zorder>pbMoveDown</zorder>
       <zorder>pbEngineInfo</zorder>
       <zorder>pbEngineConf</zorder>
@@ -647,8 +645,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>pbMoveDown</tabstop>
   <tabstop>pbEngineConf</tabstop>
   <tabstop>pbEngineInfo</tabstop>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>comboBox</tabstop>
+  <tabstop>cbSearchPolicy</tabstop>
+  <tabstop>cbDownloadPolicy</tabstop>
   <tabstop>gbPpEnable</tabstop>
   <tabstop>cbChangeEncoding</tabstop>
   <tabstop>cbAutoDetectEncoding</tabstop>

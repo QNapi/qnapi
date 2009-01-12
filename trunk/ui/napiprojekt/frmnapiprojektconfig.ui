@@ -5,30 +5,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>120</height>
+    <width>360</width>
+    <height>150</height>
    </rect>
   </property>
   <property name="minimumSize" >
    <size>
     <width>330</width>
-    <height>120</height>
+    <height>130</height>
    </size>
   </property>
   <property name="maximumSize" >
    <size>
-    <width>400</width>
-    <height>150</height>
+    <width>450</width>
+    <height>180</height>
    </size>
   </property>
   <property name="windowTitle" >
    <string>NapiProjekt - konfiguracja</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../../res/resources.qrc" >
-    <normaloff>:/engines/napiprojekt.png</normaloff>:/engines/napiprojekt.png</iconset>
+   <iconset resource="../../res/resources.qrc" >:/engines/napiprojekt.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
+  <layout class="QGridLayout" >
    <item row="0" column="0" >
     <widget class="QLabel" name="lbNick" >
      <property name="text" >
@@ -61,11 +60,11 @@
     </widget>
    </item>
    <item row="2" column="0" colspan="4" >
-    <spacer name="verticalSpacer" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>318</width>
        <height>41</height>
@@ -81,11 +80,11 @@
     </widget>
    </item>
    <item row="3" column="1" >
-    <spacer name="horizontalSpacer" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>108</width>
        <height>20</height>

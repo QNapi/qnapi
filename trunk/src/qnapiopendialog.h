@@ -41,7 +41,7 @@ public:
 	bool selectFiles();
 	bool selectDirectory();
 	
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 	QStringList selectedFiles() const;
 #endif
 
@@ -49,7 +49,7 @@ private:
 
 	bool placeWindow();
 
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 	QStringList files;
 #endif
 

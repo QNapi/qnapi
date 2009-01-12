@@ -74,13 +74,13 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 
 bool QNapiOpenDialog::selectFile()
 {
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 	files.clear();
 	QString file = getOpenFileName(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
 		nameFilters().join("\n")
 #else
-		filter()
+		filters().join("\n")
 #endif
 					);
 
@@ -97,12 +97,12 @@ bool QNapiOpenDialog::selectFile()
 
 bool QNapiOpenDialog::selectFiles()
 {
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 	files = getOpenFileNames(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
 		nameFilters().join("\n")
 #else
-		filter()
+		filters().join("\n")
 #endif
 					);
 
@@ -116,7 +116,7 @@ bool QNapiOpenDialog::selectFiles()
 
 bool QNapiOpenDialog::selectDirectory()
 {
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 	files.clear();
 	QString dir = getExistingDirectory(this, windowTitle(), directory().path());
 
@@ -135,7 +135,7 @@ bool QNapiOpenDialog::selectDirectory()
 #endif
 }
 
-#ifdef Q_WS_WIN
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 QStringList QNapiOpenDialog::selectedFiles() const
 {
 	return files;

@@ -296,8 +296,8 @@ void frmOptions::writeConfig()
 
 	GlobalConfig().setEngines(engines);
 	
-	GlobalConfig().setSearchPolicy(ui.cbSearchPolicy->currentIndex());
-	GlobalConfig().setDownloadPolicy(ui.cbDownloadPolicy->currentIndex());
+	GlobalConfig().setSearchPolicy((SearchPolicy)ui.cbSearchPolicy->currentIndex());
+	GlobalConfig().setDownloadPolicy((DownloadPolicy)ui.cbDownloadPolicy->currentIndex());
 
 	GlobalConfig().setPpEnabled(ui.gbPpEnable->isChecked());
 	GlobalConfig().setPpChangeEncoding(ui.cbChangeEncoding->isChecked());

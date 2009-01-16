@@ -39,7 +39,7 @@ class QNapi
 		static bool ppEnabled();
 
 		// listuje dostępne silniki pobierania
-		QStringList enumerateEngines();
+		static QStringList enumerateEngines();
 		// wlacza silnik pobierania napisow o podanej nazwie
 		bool addEngine(QString engine);
 		// za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
@@ -54,7 +54,7 @@ class QNapi
 		// oblicza sume kontrolna pliku z filmem
 		void checksum();
 		// szuka napisow w podanym jezyku
-		bool lookForSubtitles(QString lang);
+		bool lookForSubtitles(QString lang, QString engine = "");
 		// zwraca liste znalezionych napisow
 		QList<QNapiSubtitleInfo> listSubtitles();
 
@@ -81,6 +81,9 @@ class QNapi
 		QNapiAbstractEngine * engineByName(QString name);
 		// na odwrot ;)
 		QString nameByEngine(QNapiAbstractEngine * engine);
+
+		// listuje zaladowane moduly pobierania
+		QStringList listLoadedEngines();
 
 	private:
 

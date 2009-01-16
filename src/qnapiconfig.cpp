@@ -217,7 +217,7 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 	return map;
 }
 
-QList<QString> QNapiConfig::enginesList()
+QStringList QNapiConfig::enginesList()
 {
 	QList<QPair<QString, bool> > map = engines();
 	QStringList list;
@@ -242,33 +242,30 @@ void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
 	for(int i = 0; i < engines.size(); ++i)
 	{
 		QPair<QString, bool> e = engines.at(i);
-//		qDebug() << "for: " << e.first << e.second;
 		
 		QStringList sl;
 		sl << e.first << (e.second ? "1" : "0");
-//		qDebug() << "sl: " << sl;
 		outList << sl;
-//		qDebug() << outList;
 	}
 	settings->setValue("qnapi/engines", outList);
 }
 
-int QNapiConfig::searchPolicy()
+SearchPolicy QNapiConfig::searchPolicy()
 {
-	return settings->value("qnapi/search_policy", 0).toInt();		
+	return (SearchPolicy)settings->value("qnapi/search_policy", 0).toInt();		
 }
 
-void QNapiConfig::setSearchPolicy(int policy)
+void QNapiConfig::setSearchPolicy(SearchPolicy policy)
 {
 	settings->setValue("qnapi/search_policy", policy);
 }
 
-int QNapiConfig::downloadPolicy()
+DownloadPolicy QNapiConfig::downloadPolicy()
 {
-	return settings->value("qnapi/download_policy", 1).toInt();	
+	return (DownloadPolicy)settings->value("qnapi/download_policy", 1).toInt();	
 }
 
-void QNapiConfig::setDownloadPolicy(int policy)
+void QNapiConfig::setDownloadPolicy(DownloadPolicy policy)
 {
 	settings->setValue("qnapi/download_policy", policy);
 }

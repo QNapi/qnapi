@@ -267,5 +267,22 @@
  <resources>
   <include location="../res/resources.qrc" />
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>leDirectory</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pbScan</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>302</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>723</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

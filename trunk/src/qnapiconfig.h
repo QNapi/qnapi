@@ -27,6 +27,19 @@
 #include <QPair>
 #include "version.h"
 
+enum SearchPolicy
+{
+	SP_SEARCH_ALL = 0,
+	SP_BREAK_IF_FOUND = 1
+};
+
+enum DownloadPolicy
+{
+	DP_ALWAYS_SHOW_LIST = 0,
+	DP_SHOW_LIST_IF_NEEDED = 1,
+	DP_NEVER_SHOW_LIST  = 2
+};
+
 class QNapiConfig
 {
 	public:
@@ -58,14 +71,14 @@ class QNapiConfig
 		void setUseBrushedMetal(bool use);
 
 		QList<QPair<QString, bool> > engines();
-		QList<QString> enginesList();
+		QStringList enginesList();
 		void setEngines(QList<QPair<QString, bool> > engines);
 
-		int searchPolicy();
-		void setSearchPolicy(int policy);
+		SearchPolicy searchPolicy();
+		void setSearchPolicy(SearchPolicy policy);
 		
-		int downloadPolicy();
-		void setDownloadPolicy(int policy);
+		DownloadPolicy downloadPolicy();
+		void setDownloadPolicy(DownloadPolicy policy);
 
 		bool ppEnabled();
 		void setPpEnabled(bool enable);

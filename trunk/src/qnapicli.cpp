@@ -14,6 +14,8 @@
 
 #include "qnapicli.h"
 
+#include "frmlistsubtitles.h"
+
 bool QNapiCli::analyze()
 {
 	QString p;
@@ -81,20 +83,13 @@ int QNapiCli::exec()
 
 	QNapi *napi = new QNapi();
 	
-	if(!napi->addEngine("NapiProjekt"))
+	
+	if(!napi->addEngines(GlobalConfig().enginesList()))
 	{
-		printCli("Błąd! Nie udało się zainicjalizować silnika NapiProjekt!");
+		printCli(QString("Błąd: ") + napi->error());
 		delete napi;
 		return 1;
 	}
-
-	if(!napi->addEngine("OpenSubtitles"))
-	{
-		printCli("Błąd! Nie udało się zainicjalizować silnika OpenSubtitles!");
-		delete napi;
-		return 1;
-	}
-
 
 	foreach(QString movie, movieList)
 	{
@@ -111,24 +106,45 @@ int QNapiCli::exec()
 		printCli(QString(QString("   obliczanie sum kontrolnych...")));
 		napi->checksum();
 
-		printCli(QString(QString("   szukanie napisów...")));
-		if(!napi->lookForSubtitles("PL") || (napi->listSubtitles().size() == 0))
+		bool found = false;
+		SearchPolicy sp = GlobalConfig().searchPolicy();
+		
+		foreach(QString e, napi->listLoadedEngines())
+		{
+			printCli(QString(QString("   szukanie napisów (%1)...").arg(e)));
+			found = napi->lookForSubtitles("PL", e) || found;
+
+			if(sp == SP_BREAK_IF_FOUND)
+				break;
+		}
+
+		if(!found)
 		{
 			printCli(QString(QString("   nie znaleziono napisow!")));
 			continue;
 		}
-		
+
 		int selIdx = 0;
 
 		// jesli mozna i potrzeba, listujemy dostepne napisy
 		if((mode != CM_QUIET) && (napi->needToShowList()))
 		{
+			frmListSubtitles list;
+			
+			list.setFileName(QFileInfo(movie).fileName());
+			list.setSubtitlesList(napi->listSubtitles());
+
+			if(list.exec() == QDialog::Accepted)
+			{
+				selIdx = list.getSelectedIndex();
+			}
+			else continue;
+			
+			/*
 			bool ok = false;
 			
 			printCli("   znalezione napisy:");			
 			
-			while(!ok)
-			{
 				int i = 1;
 
 				QList<QNapiSubtitleInfo> list = napi->listSubtitles();
@@ -152,16 +168,19 @@ int QNapiCli::exec()
 								.arg(s.engine)
 								.arg(resolution));
 				}
-	
+				while(!ok)
+			{
+
 				std::cout << "   wybierz napisy do pobrania: ";
-				char line[16];
-				std::cin.getline(line, 16);
+				char line[8];
+				std::cin.getline(line, 8);
 				
 				selIdx = QString(line).toInt(&ok);
 	
 				if(!ok)
 				{
 					printCli("   wpisz liczbe!");
+					std::cin.clear();
 				}
 				else if((selIdx > list.size()) || (selIdx < 0))
 				{
@@ -171,6 +190,7 @@ int QNapiCli::exec()
 			}
 			
 			--selIdx;
+			*/
 		}
 
 		if(selIdx == -1) continue;
@@ -229,6 +249,5 @@ void QNapiCli::printHelp()
 void QNapiCli::printCli(const QString & string)
 {
 	if(mode != CM_QUIET)
-//		qDebug(qPrintable(string));
 		std::cout << string.toStdString() << std::endl;
 }

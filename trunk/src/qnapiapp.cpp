@@ -215,7 +215,7 @@ bool QNapiApp::showOpenDialog()
 	return true;
 }
 
-void QNapiApp::showScanDialog()
+void QNapiApp::showScanDialog(QString init_dir)
 {
 	if(!f_scan) f_scan = new frmScan();
 	if(f_scan->isVisible())
@@ -223,6 +223,7 @@ void QNapiApp::showScanDialog()
 		f_scan->raise();
 		return;
 	}
+	f_scan->setInitDir(init_dir);
 	f_scan->exec();
 	delete f_scan;
 	f_scan = 0;

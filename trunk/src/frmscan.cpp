@@ -59,6 +59,14 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 		(QApplication::desktop()->height() - height()) / 2);
 }
 
+void frmScan::setInitDir(const QString & dir)
+{
+	if(!dir.isEmpty() && QFileInfo(dir).isDir())
+	{
+		ui.leDirectory->setText(QFileInfo(dir).absoluteFilePath());
+	}
+}	
+
 void frmScan::closeEvent(QCloseEvent *event)
 {
 	QList<QString> scanFilters;

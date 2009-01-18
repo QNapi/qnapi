@@ -66,6 +66,7 @@ class GetFilesThread : public QNapiThread
 		}
 
 	public:
+	
 		GetFilesThread()
 		{
 			connect(this, SIGNAL(criticalError(const QString &)),
@@ -86,6 +87,9 @@ Q_OBJECT
 	public:
 		frmScan(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmScan(){};
+		
+		void setInitDir(const QString & dir);
+		
 
 	private:
 		void closeEvent(QCloseEvent *event);

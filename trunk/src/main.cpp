@@ -39,6 +39,13 @@ int main(int argc, char **argv)
 
 		if(p.startsWith("file://"))
 			p = p.remove(0, 7);
+
+		if((i == 1) && QFileInfo(p).isDir())
+		{
+			args << p;
+			break;
+		}
+
 		if(QFileInfo(p).isFile())
 			args << p;
 	}
@@ -50,7 +57,8 @@ int main(int argc, char **argv)
 	bool useGui = true;
 #endif
 
-	QNapiApp app(argc, argv, useGui, "QNapi");
+
+	QNapiApp app(argc, argv, true/*useGui*/, "QNapi");
 
 	QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 	QTranslator cuteTranslator;
@@ -89,13 +97,21 @@ int main(int argc, char **argv)
 			app.showSettings();
 		}
 	}
-
+	
 	// Jesli podano parametry, ustawiamy tzw. batch mode
 	if(args.size() > 0)
 	{
-		app.progress()->enqueueFiles(args);
-		app.progress()->setBatchMode(true);
-		if(!app.progress()->download()) return 1;
+		if(QFileInfo(args.at(0)).isDir())
+		{
+			app.progress()->setBatchMode(true);
+			app.showScanDialog(args.at(0));
+		}
+		else
+		{
+			app.progress()->enqueueFiles(args);
+			app.progress()->setBatchMode(true);
+			if(!app.progress()->download()) return 1;
+		}
 	}
 
 	// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u

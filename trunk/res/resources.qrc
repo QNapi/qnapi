@@ -5,6 +5,10 @@
     <file>qnapi-48.png</file>
     <file>qnapi.png</file>
   </qresource>
+  <qresource prefix="/languages" >
+    <file>pl.gif</file>
+    <file>en.gif</file>
+  </qresource>
   <qresource prefix="/ui" >
     <file>folder.png</file>
     <file>arrow_down.png</file>

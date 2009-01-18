@@ -54,7 +54,7 @@ class QNapiApp : public QSingleApplication
 	public slots:
 
 		bool showOpenDialog();
-		void showScanDialog();
+		void showScanDialog(QString init_dir = "");
 		void showUploadDialog();
 		void showCorrectDialog();
 		void showReportDialog();

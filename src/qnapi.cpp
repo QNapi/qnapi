@@ -48,13 +48,13 @@ QStringList QNapi::enumerateEngines()
 	QStringList engines;
 	engines << "NapiProjekt";
 	engines << "OpenSubtitles";
-	return engines;	
+	return engines;
 }
 
 bool QNapi::addEngine(QString engine)
 {
 //	qDebug() << "addEngine: " << engine;
-	
+
 	if(engine == "NapiProjekt")
 	{
 		enginesList << (new QNapiProjektEngine());
@@ -81,7 +81,7 @@ bool QNapi::addEngines(QStringList engines)
 	}
 	return true;
 }
-	
+
 void QNapi::setMoviePath(QString path)
 {
 	movie = path;
@@ -106,15 +106,29 @@ void QNapi::checksum()
 	}
 }
 
-bool QNapi::lookForSubtitles(QString lang)
+bool QNapi::lookForSubtitles(QString lang, QString engine)
 {
 	subtitlesList.clear();
 
 	bool result = false;
-	foreach(QNapiAbstractEngine *e, enginesList)
+
+
+	if(engine.isEmpty())
 	{
-		e->setMoviePath(movie);
-		result = e->lookForSubtitles(lang) || result;
+		foreach(QNapiAbstractEngine *e, enginesList)
+		{
+			e->setMoviePath(movie);
+			result = e->lookForSubtitles(lang) || result;
+		}
+	}
+	else
+	{
+		QNapiAbstractEngine *e = engineByName(engine);
+		if(e)
+		{
+			e->setMoviePath(movie);
+			result = e->lookForSubtitles(lang);
+		}
 	}
 
 	if(!result)
@@ -150,7 +164,7 @@ QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 bool QNapi::needToShowList()
 {
 	theBestIdx = 0;
-	
+
 	int i = 0;
 	foreach(QNapiSubtitleInfo s, subtitlesList)
 	{
@@ -161,23 +175,16 @@ bool QNapi::needToShowList()
 		}
 		++i;
 	}
-	
-	if(subtitlesList.size() < 2)
+
+	if(listSubtitles().size() < 2)
 		return false;
-	
-	//if(alwaysshow)
-	{
+
+	if(GlobalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST)	
 		return true;
-	}
-	//else if(show when needed)
-	{
-		return (theBestIdx == 0);
-	}
-	//else // never show
-	{
-		return false;
-	}
-	
+	if(GlobalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)	
+		return true;
+	return (theBestIdx == 0);
+
 }
 
 int QNapi::bestIdx()
@@ -231,11 +238,21 @@ QNapiAbstractEngine * QNapi::engineByName(QString name)
 			return e;
 		}
 	}
-	
+
 	return 0;
 }
 
 QString QNapi::nameByEngine(QNapiAbstractEngine * engine)
 {
 	return engine->engineName();
+}
+
+QStringList QNapi::listLoadedEngines()
+{
+	QStringList list;
+	foreach(QNapiAbstractEngine *e, enginesList)
+	{
+		list << e->engineName();
+	}
+	return list;
 }

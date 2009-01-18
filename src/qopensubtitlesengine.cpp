@@ -176,10 +176,15 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 			r = SUBTITLE_GOOD;
 		}
 
+
+		QString subtitleName = responseMap["MovieReleaseName"].toString();
+		if(subtitleName.isEmpty())
+			subtitleName = QFileInfo(movie).completeBaseName();
+
 		subtitlesList << QNapiSubtitleInfo(	responseMap["ISO639"].toString(),
 											engineName(),
 											responseMap["IDSubtitleFile"].toString(),
-											responseMap["MovieReleaseName"].toString(),
+											subtitleName,
 											responseMap["SubAuthorComment"].toString(),
 											QFileInfo(responseMap["SubFileName"].toString()).suffix(),
 											r);

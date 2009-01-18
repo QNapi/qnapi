@@ -33,7 +33,7 @@ struct QNapiSubtitleInfo
 	QNapiSubtitleInfo(QString l = "", QString e = "", QString u = "",
 					  QString n = "", QString c = "", QString f = "",
 					  QNapiSubtitleResolution r = SUBTITLE_UNKNOWN)
-		: lang(l), engine(e), url(u), name(n), comment(c), format(f),
+		: lang(l.toLower()), engine(e), url(u), name(n), comment(c), format(f),
 		  resolution(r) {}
 	QString lang;
 	QString engine;

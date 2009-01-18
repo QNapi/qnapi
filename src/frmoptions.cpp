@@ -291,7 +291,7 @@ void frmOptions::writeConfig()
 //		engines[ui.twEngines->item(i, 0)->text()] = ui.twEngines->item(i, 0)->checkState() == Qt::Checked;
 		engines << qMakePair(ui.twEngines->item(i, 0)->text(),
 							(ui.twEngines->item(i, 0)->checkState() == Qt::Checked));
-		qDebug() << engines;
+//		qDebug() << engines;
 	}
 
 	GlobalConfig().setEngines(engines);

@@ -36,7 +36,7 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 	ui.twSubtitles->clear();
 	ui.twSubtitles->setColumnCount(4);
 	ui.twSubtitles->setRowCount(list.size());
-	
+
 	ui.twSubtitles->horizontalHeader()->hide();
 	ui.twSubtitles->verticalHeader()->hide();
 	ui.twSubtitles->verticalHeader()->setDefaultSectionSize(20);
@@ -47,11 +47,11 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 	foreach(QNapiSubtitleInfo s, list)
 	{
 		QTableWidgetItem *item;
-		
+
 		bool highlight = (s.resolution != SUBTITLE_UNKNOWN);
-		
+
 		QBrush brush((s.resolution == SUBTITLE_GOOD) ? QColor(qRgb(200, 255, 200)) : QColor(qRgb(255, 200, 200)));		
-		
+
 		QString lang_path = QString(":/languages/") + s.lang + ".gif";
 		if(QFile::exists(lang_path))
 		{
@@ -64,17 +64,17 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 
 		if(highlight) item->setBackground(brush);
 		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 0, item);
+		ui.twSubtitles->setItem(i, 1, item);
 
 		item = new QTableWidgetItem(s.name);
 		if(highlight) item->setBackground(brush);
 		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 1, item);
+		ui.twSubtitles->setItem(i, 2, item);
 
 		item = new QTableWidgetItem(s.format);
 		if(highlight) item->setBackground(brush);
 		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 2, item);
+		ui.twSubtitles->setItem(i, 3, item);
 
 		QNapiAbstractEngine *e = n.engineByName(s.engine);
 		if(e)
@@ -82,7 +82,7 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 			item = new QTableWidgetItem(e->engineIcon(), "");
 			if(highlight) item->setBackground(brush);
 			item->setToolTip(s.comment);
-			ui.twSubtitles->setItem(i, 3, item);
+			ui.twSubtitles->setItem(i, 0, item);
 		}
 
 

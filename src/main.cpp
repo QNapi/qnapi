@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 #endif
 
 
-	QNapiApp app(argc, argv, true/*useGui*/, "QNapi");
+	QNapiApp app(argc, argv, useGui, "QNapi");
 
 	QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 	QTranslator cuteTranslator;

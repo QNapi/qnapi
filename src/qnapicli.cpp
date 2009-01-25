@@ -14,8 +14,6 @@
 
 #include "qnapicli.h"
 
-#include "frmlistsubtitles.h"
-
 bool QNapiCli::analyze()
 {
 	QString p;
@@ -83,7 +81,7 @@ int QNapiCli::exec()
 
 	QNapi *napi = new QNapi();
 	
-	
+
 	if(!napi->addEngines(GlobalConfig().enginesList()))
 	{
 		printCli(QString("Błąd: ") + napi->error());
@@ -129,48 +127,35 @@ int QNapiCli::exec()
 		// jesli mozna i potrzeba, listujemy dostepne napisy
 		if((mode != CM_QUIET) && (napi->needToShowList()))
 		{
-			frmListSubtitles list;
-			
-			list.setFileName(QFileInfo(movie).fileName());
-			list.setSubtitlesList(napi->listSubtitles());
-
-			if(list.exec() == QDialog::Accepted)
-			{
-				selIdx = list.getSelectedIndex();
-			}
-			else continue;
-			
-			/*
 			bool ok = false;
 			
 			printCli("   znalezione napisy:");			
 			
-				int i = 1;
+			int i = 1;
 
-				QList<QNapiSubtitleInfo> list = napi->listSubtitles();
+			QList<QNapiSubtitleInfo> list = napi->listSubtitles();
 
-				printCli(QString("   0)\tnie pobieraj napisow dla tego filmu"));
+			printCli(QString("   0)\tnie pobieraj napisow dla tego filmu"));
 
-				foreach(QNapiSubtitleInfo s, list)
-				{
-					QString resolution = "";
-					
-					if(s.resolution == SUBTITLE_GOOD)
-						resolution = " (good)";
-					else if(s.resolution == SUBTITLE_BAD)
-						resolution = " (bad)";
-					
-					printCli(QString("   %1)\t%2 (%3) (%4) (%5)%6")
-								.arg(i++)
-								.arg(s.name)
-								.arg(s.format)
-								.arg(s.lang)
-								.arg(s.engine)
-								.arg(resolution));
-				}
-				while(!ok)
+			foreach(QNapiSubtitleInfo s, list)
 			{
-
+				QString resolution = "";
+					
+				if(s.resolution == SUBTITLE_GOOD)
+					resolution = " (good)";
+				else if(s.resolution == SUBTITLE_BAD)
+					resolution = " (bad)";
+					
+				printCli(QString("   %1)\t%2 (%3) (%4) (%5)%6")
+							.arg(i++)
+							.arg(s.name)
+							.arg(s.format)
+							.arg(s.lang)
+							.arg(s.engine)
+							.arg(resolution));
+			}
+			while(!ok)
+			{
 				std::cout << "   wybierz napisy do pobrania: ";
 				char line[8];
 				std::cin.getline(line, 8);
@@ -190,7 +175,6 @@ int QNapiCli::exec()
 			}
 			
 			--selIdx;
-			*/
 		}
 
 		if(selIdx == -1) continue;

@@ -135,7 +135,7 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 										"txt",
 										SUBTITLE_UNKNOWN); 
 
-	return true;
+	return (subtitlesList.size() > 0);
 }
 
 QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()

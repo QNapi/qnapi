@@ -44,4 +44,6 @@ struct QNapiSubtitleInfo
 	QNapiSubtitleResolution resolution;
 };
 
+typedef QList<QNapiSubtitleInfo> QNapiSubtitleInfoList;
+
 #endif

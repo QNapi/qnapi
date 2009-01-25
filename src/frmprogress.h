@@ -30,8 +30,8 @@
 #include "qnapi.h"
 #include "qnapithread.h"
 #include "qnapiconfig.h"
-#include "qnapiprojektengine.h"
 #include "qnapiopendialog.h"
+#include "frmlistsubtitles.h"
 
 class GetThread : public QNapiThread
 {
@@ -42,12 +42,14 @@ class GetThread : public QNapiThread
 		void actionChange(const QString & newAction);
 		void progressChange(int current, int all, float stageProgress);
 		void criticalError(const QString & message);
+		void selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles);
 
 	private slots:
 		void setCriticalMessage(const QString & msg)
 		{
 			criticalMessage = msg;
 		}
+		void subtitlesSelected(int idx);
 
 	public:
 		GetThread()
@@ -60,6 +62,8 @@ class GetThread : public QNapiThread
 		QStringList queue, gotList, failedList;
 		int napiSuccess, napiFail;
 		QString criticalMessage;
+		QMutex waitForDlg;
+		int selIdx;
 };
 
 class frmProgress: public QWidget
@@ -70,6 +74,9 @@ class frmProgress: public QWidget
 		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmProgress(){};
 
+	signals:
+		void subtitlesSelected(int idx);
+
 	public slots:
 
 		void receiveRequest(const QString & request);
@@ -77,6 +84,7 @@ class frmProgress: public QWidget
 		void enqueueFiles(const QStringList &fileList);
 		bool download();
 		void updateProgress(int current, int all, float stageProgress);
+		void selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles);
 		void downloadFinished();
 
 		void setBatchMode(bool value) { batchMode = value; }

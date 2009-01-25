@@ -17,6 +17,8 @@
 
 frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 {
+	qRegisterMetaType<QNapiSubtitleInfoList>("QNapiSubtitleInfoList");
+
 	ui.setupUi(this);
 
 #ifdef Q_WS_MAC
@@ -33,6 +35,10 @@ frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
 			ui.lbAction, SLOT(setText(const QString &)));
 	connect(&getThread, SIGNAL(progressChange(int, int, float)),
 			this, SLOT(updateProgress(int, int, float)));
+	connect(&getThread, SIGNAL(selectSubtitles(QString, QNapiSubtitleInfoList)),
+			this, SLOT(selectSubtitles(QString, QNapiSubtitleInfoList)));
+	connect(this, SIGNAL(subtitlesSelected(int)),
+			&getThread, SLOT(subtitlesSelected(int)));
 	connect(&getThread, SIGNAL(finished()),
 			this, SLOT(downloadFinished()));
 }
@@ -125,6 +131,27 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
 	ui.pbProgress->setValue(lastCurrent * 100 + (int)(lastStageProgress * 100));
 
 	m.unlock();
+}
+
+void frmProgress::selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles)
+{
+	frmListSubtitles frmSelect;
+
+	frmSelect.setFileName(fileName);
+	frmSelect.setSubtitlesList(subtitles);
+
+	int selIdx;
+
+	if(frmSelect.exec() == QDialog::Accepted)
+	{
+		selIdx = frmSelect.getSelectedIndex();
+	}
+	else
+	{
+		selIdx = -1;
+	}
+
+	emit subtitlesSelected(selIdx);
 }
 
 void frmProgress::downloadFinished()
@@ -272,6 +299,12 @@ void frmProgress::dropEvent(QDropEvent *event)
 	}
 }
 
+void GetThread::subtitlesSelected(int idx)
+{
+	selIdx = idx;
+	waitForDlg.unlock();
+}
+
 void GetThread::run()
 {
 	abort = false;
@@ -283,22 +316,29 @@ void GetThread::run()
 	gotList.clear();
 	failedList.clear();
 
-	QNapi *napi;
+	QNapi *napi = new QNapi();
+
+	if(!napi->addEngines(GlobalConfig().enginesList()))
+	{
+		emit criticalError(tr("Błąd: ") + napi->error());
+		delete napi;
+		return;
+	}
 
 	emit progressChange(0, queue.size(), 0.0f);
 
 	for(int i = 0; i < queue.size(); i++)
 	{
-//		napi = new QNapiProjektEngine(queue[i]);
-		if(!napi) continue;
-
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
+
+
+		napi->setMoviePath(queue[i]);
 
 		emit progressChange(i, queue.size(), 0.1);
 		emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
 
-//		if(!napi->checkWritePermissions())
+		if(!napi->checkWritePermissions())
 		{
 			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
 			delete napi;
@@ -309,17 +349,57 @@ void GetThread::run()
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 
 		napi->checksum();
+
 		if(abort)
 		{
 			delete napi;
 			return;
 		}
 
-		emit progressChange(i, queue.size(), 0.5f);
+		bool found = false;
+		SearchPolicy sp = GlobalConfig().searchPolicy();
+		
+		foreach(QString e, napi->listLoadedEngines())
+		{
+			emit progressChange(i, queue.size(), 0.4);
+			emit actionChange(tr("Szukanie napisów..."));
+			found = napi->lookForSubtitles("PL", e) || found;
+
+			if(sp == SP_BREAK_IF_FOUND)
+				break;
+		}
+
+		if(!found)
+		{
+			++napiFail;
+			failedList << queue[i];
+			continue;
+		}
+
+		int selIdx = 0;
+
+		// jesli mozna i potrzeba, listujemy dostepne napisy
+		if(napi->needToShowList())
+		{
+			emit selectSubtitles(	QFileInfo(queue[i]).fileName(),
+									napi->listSubtitles());
+
+			waitForDlg.lock();
+			waitForDlg.lock();
+			waitForDlg.unlock();
+		}
+
+		if(selIdx == -1)
+		{
+			++napiFail;
+			failedList << queue[i];
+			continue;
+		}
+
+		emit progressChange(i, queue.size(), 0.5);
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 
-		// pobieranie
-//		if(!napi->tryDownload())
+		if(!napi->download(selIdx))
 		{
 			if(abort)
 			{
@@ -329,49 +409,52 @@ void GetThread::run()
 
 			++napiFail;
 			failedList << queue[i];
-			delete napi;
 			continue;
 		}
 
-		if(abort)
+		emit progressChange(i, queue.size(), 0.6);
+		emit actionChange(tr("Dopasowywanie napisów..."));
+		if(!napi->unpack())
 		{
+			emit criticalError(tr("Nie udało się poprawnie rozpakować napisów!!"));
+			continue;
+		}
+
+		emit progressChange(i, queue.size(), 0.75);
+		emit actionChange(tr("Dopasowywanie napisów..."));
+		if(!napi->match())
+		{
+			if(abort)
+			{
+				delete napi;
+				return;
+			}
+
+			++napiFail;
+			failedList << queue[i];
+
+			emit criticalError(tr("Nie udało się dopasować napisów!!"));
+
 			delete napi;
 			return;
-		}
-
-		emit progressChange(i, queue.size(), 0.7f);
-		emit actionChange(tr("Dopasowywanie napisów..."));
-
-		// dopasowywanie
-//		if(!napi->tryMatch())
-		{
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
-
-			++napiFail;
-			failedList << queue[i];
-			delete napi;
-			continue;
 		}
 
 		++napiSuccess;
 		gotList << queue[i];
 
-		if(GlobalConfig().ppEnabled())
+		if(napi->ppEnabled())
 		{
 			emit progressChange(i, queue.size(), 0.9);
 			emit actionChange(tr("Przetwarzanie napisów..."));
-
-//			napi->doPostProcessing();
+			napi->pp();
 		}
+		
+		napi->cleanup();
 
 		emit progressChange(i, queue.size(), 1);
-
-		delete napi;
 	}
 
 	emit progressChange(queue.size() - 1, queue.size(), 1);
+
+	delete napi;
 }

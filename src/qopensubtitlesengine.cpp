@@ -190,7 +190,7 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 											r);
 	}
 
-	return true;
+	return (subtitlesList.size() > 0);
 }
 
 // wyniki wyszukiwania

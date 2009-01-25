@@ -342,7 +342,7 @@ void GetThread::run()
 		{
 			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
 			delete napi;
-			break;
+			return;
 		}
 
 		emit progressChange(i, queue.size(), 0.3);
@@ -413,10 +413,13 @@ void GetThread::run()
 		}
 
 		emit progressChange(i, queue.size(), 0.6);
-		emit actionChange(tr("Dopasowywanie napisów..."));
+		emit actionChange(tr("Rozpakowywanie napisów..."));
+
 		if(!napi->unpack())
 		{
-			emit criticalError(tr("Nie udało się poprawnie rozpakować napisów!!"));
+			++napiFail;
+			failedList << queue[i];
+
 			continue;
 		}
 

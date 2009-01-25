@@ -166,24 +166,26 @@ bool QNapi::needToShowList()
 	theBestIdx = 0;
 
 	int i = 0;
-	foreach(QNapiSubtitleInfo s, subtitlesList)
+	bool foundBestIdx = false;
+	foreach(QNapiSubtitleInfo s, listSubtitles())
 	{
 		if(s.resolution == SUBTITLE_GOOD)
 		{
 			theBestIdx = i;
+			foundBestIdx = true;
 			break;
 		}
 		++i;
 	}
 
-	if(listSubtitles().size() < 2)
+	if(listSubtitles().size() <= 1)
 		return false;
 
 	if(GlobalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST)	
 		return true;
 	if(GlobalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)	
-		return true;
-	return (theBestIdx == 0);
+		return false;
+	return !foundBestIdx;
 
 }
 

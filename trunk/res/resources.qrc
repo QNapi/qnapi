@@ -16,8 +16,8 @@
     <file>wrench.png</file>
     <file>information.png</file>
     <file>film.png</file>
-    <file>icon_accept.png</file>
-    <file>icon_cancel.png</file>
+    <file>accept.png</file>
+    <file>exclamation.png</file>
   </qresource>
   <qresource prefix="/engines" >
     <file>opensubtitles.png</file>

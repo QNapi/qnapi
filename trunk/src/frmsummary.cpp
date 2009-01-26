@@ -39,7 +39,7 @@ void frmSummary::setSuccessList(const QStringList & list)
 	ui.lwSuccess->clear();
 	foreach(QString item, list)
 	{
-		ui.lwSuccess->addItem(new QListWidgetItem(QIcon(":/ui/icon_accept.png"),
+		ui.lwSuccess->addItem(new QListWidgetItem(QIcon(":/ui/accept.png"),
 												QFileInfo(item).fileName()));
 	}
 	ui.lwSuccess->sortItems();
@@ -60,7 +60,7 @@ void frmSummary::setFailedList(const QStringList & list)
 	ui.lwFail->clear();
 	foreach(QString item, list)
 	{
-		ui.lwFail->addItem(new QListWidgetItem(QIcon(":/ui/icon_cancel.png"),
+		ui.lwFail->addItem(new QListWidgetItem(QIcon(":/ui/exclamation.png"),
 												QFileInfo(item).fileName()));
 	}
 	ui.lwFail->sortItems();

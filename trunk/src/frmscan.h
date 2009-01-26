@@ -51,34 +51,6 @@ class ScanFilesThread : public QNapiThread
 };
 
 
-class GetFilesThread : public QNapiThread
-{
-	Q_OBJECT
-	signals:
-		void fileNameChange(const QString & newfileName);
-		void progressChange(int newValue);
-		void criticalError(const QString & message);
-
-	private slots:
-		void setCriticalMessage(const QString & msg)
-		{
-			criticalMessage = msg;
-		}
-
-	public:
-	
-		GetFilesThread()
-		{
-			connect(this, SIGNAL(criticalError(const QString &)),
-					this, SLOT(setCriticalMessage(const QString &)));
-		}
-		void run();
-
-		QStringList queue, gotList, failedList;
-		int napiSuccess, napiFail;
-		QString criticalMessage;
-};
-
 
 class frmScan: public QDialog
 {
@@ -89,7 +61,14 @@ Q_OBJECT
 		~frmScan(){};
 		
 		void setInitDir(const QString & dir);
-		
+		QStringList getSelectedFiles()
+		{
+			return selectedFiles;
+		}
+
+	public slots:
+
+		void accept();
 
 	private:
 		void closeEvent(QCloseEvent *event);
@@ -97,13 +76,11 @@ Q_OBJECT
 
 		Ui::frmScan ui;
 		ScanFilesThread scanThread;
-		GetFilesThread getThread;
-		bool closeRequested;
 
         QIcon iconFilm;
+        QStringList selectedFiles;
 
 	private slots:
-		bool pbCancelClicked();
 		void selectDirectory();
 		void leDirectoryTextChanged();
 		void pbScanClicked();
@@ -116,9 +93,6 @@ Q_OBJECT
 		void pbUnselectAllClicked();
 		void pbInvertSelectionClicked();
 		void checkPbGetEnabled();
-		void pbGetClicked();
-		void fileNameChange(const QString & fileName);
-		void downloadFinished();
 };
 
 #endif

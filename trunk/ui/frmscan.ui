@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>481</height>
+    <width>740</width>
+    <height>429</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -22,15 +22,15 @@
    <iconset resource="../res/resources.qrc" >
     <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" >
-   <item>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" >
     <widget class="QLabel" name="lbDirectory" >
      <property name="text" >
       <string>Wskaż katalog do przeszukania:</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0" >
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QLineEdit" name="leDirectory" >
@@ -65,7 +65,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="2" column="0" >
     <layout class="QHBoxLayout" >
      <property name="topMargin" >
       <number>0</number>
@@ -100,12 +100,9 @@
        </item>
       </widget>
      </item>
-     <item>
-      <layout class="QHBoxLayout" />
-     </item>
     </layout>
    </item>
-   <item>
+   <item row="3" column="0" >
     <layout class="QHBoxLayout" >
      <property name="topMargin" >
       <number>0</number>
@@ -126,14 +123,14 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="4" column="0" >
     <widget class="QCheckBox" name="cbSkipIfSubtitlesExists" >
      <property name="text" >
       <string>Podczas wyszukiwania pomijaj pliki, do których istnieją juz napisy</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="5" column="0" >
     <layout class="QVBoxLayout" >
      <property name="topMargin" >
       <number>10</number>
@@ -147,6 +144,12 @@
      </item>
      <item>
       <widget class="QCheckedListWidget" name="lwMovies" >
+       <property name="minimumSize" >
+        <size>
+         <width>695</width>
+         <height>170</height>
+        </size>
+       </property>
        <property name="editTriggers" >
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -197,51 +200,24 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QPushButton" name="pbCancel" >
+         <property name="text" >
+          <string>Anuluj</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbGet" >
+         <property name="enabled" >
+          <bool>false</bool>
+         </property>
+         <property name="text" >
+          <string>Pobierz napisy</string>
+         </property>
+        </widget>
+       </item>
       </layout>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="lbAction" >
-     <property name="text" >
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QProgressBar" name="pbProgress" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="value" >
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbCancel" >
-       <property name="text" >
-        <string>Anuluj</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbGet" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="text" >
-        <string>Pobierz napisy</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -261,8 +237,6 @@
   <tabstop>cbFilters</tabstop>
   <tabstop>leSkipFilters</tabstop>
   <tabstop>cbSkipIfSubtitlesExists</tabstop>
-  <tabstop>pbCancel</tabstop>
-  <tabstop>pbGet</tabstop>
  </tabstops>
  <resources>
   <include location="../res/resources.qrc" />
@@ -281,6 +255,38 @@
     <hint type="destinationlabel" >
      <x>723</x>
      <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>frmScan</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>570</x>
+     <y>408</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>369</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbGet</sender>
+   <signal>clicked()</signal>
+   <receiver>frmScan</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>671</x>
+     <y>408</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>369</x>
+     <y>214</y>
     </hint>
    </hints>
   </connection>

@@ -23,7 +23,6 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 #endif
 	setAttribute(Qt::WA_QuitOnClose, false);
 
-	connect(ui.pbCancel, SIGNAL(clicked()), this, SLOT(pbCancelClicked()));
 	connect(ui.pbDirectorySelect, SIGNAL(clicked()), this, SLOT(selectDirectory()));
 	connect(ui.leDirectory, SIGNAL(textChanged(QString)), this, SLOT(leDirectoryTextChanged()));
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));
@@ -33,10 +32,6 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.pbUnselectAll, SIGNAL(clicked()), this, SLOT(pbUnselectAllClicked()));
 	connect(ui.pbInvertSelection, SIGNAL(clicked()), this, SLOT(pbInvertSelectionClicked()));
 	connect(ui.lwMovies, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(lwMoviesClicked(QListWidgetItem*)));
-	connect(ui.pbGet, SIGNAL(clicked()), this, SLOT(pbGetClicked()));
-	connect(&getThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
-	connect(&getThread, SIGNAL(progressChange(int)), ui.pbProgress, SLOT(setValue(int)));
-	connect(&getThread, SIGNAL(finished()), this, SLOT(downloadFinished()));
 
 	if(QFileInfo(GlobalConfig().lastScanDir()).isDir())
 		ui.leDirectory->setText(GlobalConfig().lastScanDir());
@@ -81,43 +76,7 @@ void frmScan::closeEvent(QCloseEvent *event)
 	GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
 	GlobalConfig().save();
 
-	if(pbCancelClicked())
-		event->accept();
-	else
-		event->ignore();
-	closeRequested = true;
-}
-
-
-
-bool frmScan::pbCancelClicked()
-{
-	if(scanThread.isRunning())
-	{
-		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać skanowanie katalogów?"),
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
-		{
-			scanThread.requestAbort();
-			ui.lbAction->setText(tr("Kończenie zadań..."));
-			qApp->processEvents();
-			scanThread.wait();
-			return true;
-		}
-		return false;
-	}
-
-	if(getThread.isRunning())
-	{
-		if( QMessageBox::question(this, tr("QNapi"), tr("Czy chcesz przerwać pobieranie napisów?"),
-			QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
-		{
-			pbGetClicked();
-		}
-		return false;
-	}
-
-	close();
-	return true;
+	event->accept();
 }
 
 void frmScan::selectDirectory()
@@ -149,8 +108,7 @@ void frmScan::pbScanClicked()
 		ui.leDirectory->setEnabled(false);
 		ui.pbDirectorySelect->setEnabled(false);
 		ui.pbScan->setText(tr("Przerwij"));
-		ui.lbAction->setText(tr("Skanowanie folderów..."));
-		ui.pbProgress->setEnabled(false);
+//		ui.lbAction->setText(tr("Skanowanie folderów..."));
 		ui.pbGet->setEnabled(false);
 		enableControlWidgets(false);
 		enableFilesWidgets(false);
@@ -167,7 +125,7 @@ void frmScan::pbScanClicked()
 	else
 	{
 		scanThread.requestAbort();
-		ui.lbAction->setText(tr("Przerywanie skanowania..."));
+//		ui.lbAction->setText(tr("Przerywanie skanowania..."));
 		ui.pbScan->setEnabled(false);
 		qApp->processEvents();
 		scanThread.wait();
@@ -193,9 +151,9 @@ void frmScan::scanFinished()
 	enableControlWidgets(true);
 	enableFilesWidgets(ui.lwMovies->count() > 0);
 	ui.pbScan->setText("Skanuj");
-	ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
-							? "Zaznacz filmy, do których chcesz pobrać napisy."
-							: "Nie znaleziono plików z filmami."));
+//	ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
+//							? "Zaznacz filmy, do których chcesz pobrać napisy."
+//							: "Nie znaleziono plików z filmami."));
 }
 
 void frmScan::enableControlWidgets(bool enable)
@@ -254,76 +212,24 @@ void frmScan::checkPbGetEnabled()
 		if(ui.lwMovies->item(i)->checkState() == Qt::Checked)
 		{
 			ui.pbGet->setEnabled(true);
-			ui.pbProgress->setEnabled(true);
 			return;
 		}
 	}
 	
 	ui.pbGet->setEnabled(false);
-	ui.pbProgress->setEnabled(false);
 }
 
-void frmScan::pbGetClicked()
+void frmScan::accept()
 {
-	if(!getThread.isRunning())
+	selectedFiles.clear();
+
+	for(int i = 0; i < ui.lwMovies->count(); i++)
 	{
-		closeRequested = false;
-		enableControlWidgets(false);
-		enableFilesWidgets(false);
-		ui.pbScan->setEnabled(false);
-		ui.pbGet->setText(tr("Przerwij"));
-		ui.pbProgress->setValue(0);
-
-		getThread.queue.clear();
-		for(int i = 0; i < ui.lwMovies->count(); i++)
-		{
-			if(ui.lwMovies->item(i)->checkState() == Qt::Checked)
-				getThread.queue << ui.lwMovies->item(i)->toolTip();
-		}
-		getThread.start();
+		if(ui.lwMovies->item(i)->checkState() == Qt::Checked)
+			selectedFiles << ui.lwMovies->item(i)->toolTip();
 	}
-	else
-	{
-		getThread.requestAbort();
-		ui.lbAction->setText(tr("Przerywanie pobierania..."));
-		ui.pbGet->setEnabled(false);
-		qApp->processEvents();
-	}
-}
 
-void frmScan::fileNameChange(const QString & fileName)
-{
-	ui.lbAction->setText(tr("Pobieranie napisów dla <b>%1</b>...").arg(fileName));
-}
-
-void frmScan::downloadFinished()
-{
-	enableControlWidgets(true);
-	enableFilesWidgets(true);
-	ui.pbGet->setEnabled(true);
-	ui.pbScan->setEnabled(true);
-	ui.pbGet->setText(tr("Pobierz napisy"));
-	ui.pbProgress->setValue(0);
-	
-	if(!getThread.criticalMessage.isEmpty())
-	{
-		ui.lbAction->setText(getThread.criticalMessage);
-		QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
-	}
-	else if(getThread.napiSuccess + getThread.napiFail > 0)
-	{
-		ui.lbAction->setText(tr("Napisy pobrano."));
-
-		frmSummary summary;
-		summary.setSuccessList(getThread.gotList);
-		summary.setFailedList(getThread.failedList);
-		summary.exec();
-	}
-	else
-		ui.lbAction->setText(tr("Zakończono."));
-
-	if(closeRequested)
-		close();
+	QDialog::accept();
 }
 
 void ScanFilesThread::run()
@@ -383,105 +289,3 @@ bool ScanFilesThread::doScan(const QString & path)
 
 	return true;
 }
-
-void GetFilesThread::run()
-{
-	abort = false;
-	criticalMessage.clear();
-	gotList.clear();
-	failedList.clear();
-	int size = queue.size();
-
-	if(size <= 0) return;
-
-	float step = 100.0f / size;
-	QString windowTitle, md5;
-	napiSuccess = napiFail = 0;
-
-	QNapiProjektEngine *napi;
-
-	emit progressChange(0);
-
-	for(int i = 0; i < size; i++)
-	{
-//		napi = new QNapiProjektEngine(queue[i]);
-		if(!napi) continue;
-
-		QFileInfo fi(queue[i]);
-		emit fileNameChange(fi.fileName());
-
-//		if(!napi->checkWritePermissions())
-		{
-			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
-			delete napi;
-			break;
-		}
-
-		napi->checksum();
-		if(abort)
-		{
-			delete napi;
-			return;
-		}
-
-		emit progressChange((int)ceil(step * i + step / 3));
-
-		// pobieranie
-//		if(!napi->tryDownload())
-		{
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
-			++napiFail;
-			failedList << queue[i];
-			delete napi;
-			continue;
-		}
-
-		if(abort)
-		{
-			delete napi;
-			return;
-		}
-
-		emit progressChange((int)ceil(step * i + 2 * step / 3));
-
-		// dopasowywanie
-//		if(!napi->tryMatch())
-		{
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
-
-			++napiFail;
-			failedList << queue[i];
-			delete napi;
-			continue;
-		}
-
-		if(abort)
-		{
-			delete napi;
-			return;
-		}
-
-		++napiSuccess;
-		gotList << queue[i];
-
-		if(GlobalConfig().ppEnabled())
-		{
-			emit progressChange((int)ceil(step * i + 5 * step / 6));
-//			napi->doPostProcessing();
-		}
-
-		emit progressChange((int)ceil(step * (i + 1)));
-		delete napi;
-	}
-
-	emit progressChange(100);
-}
-

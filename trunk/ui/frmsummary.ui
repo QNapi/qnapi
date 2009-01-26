@@ -29,14 +29,6 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tabSuccess" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>590</width>
-        <height>206</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>Pobrano napisy dla</string>
       </attribute>
@@ -47,14 +39,6 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tabFail" >
-      <property name="geometry" >
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>590</width>
-        <height>206</height>
-       </rect>
-      </property>
       <attribute name="title" >
        <string>Nie udało się pobrać napisów</string>
       </attribute>

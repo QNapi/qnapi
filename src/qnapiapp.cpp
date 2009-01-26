@@ -223,8 +223,15 @@ void QNapiApp::showScanDialog(QString init_dir)
 		f_scan->raise();
 		return;
 	}
+
 	f_scan->setInitDir(init_dir);
-	f_scan->exec();
+
+	if(f_scan->exec() == QDialog::Accepted)
+	{
+		progress()->enqueueFiles(f_scan->getSelectedFiles());
+		progress()->download();
+	}
+
 	delete f_scan;
 	f_scan = 0;
 }

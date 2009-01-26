@@ -101,6 +101,8 @@ int main(int argc, char **argv)
 	// Jesli podano parametry, ustawiamy tzw. batch mode
 	if(args.size() > 0)
 	{
+		app.progress()->setBatchMode(true);
+
 		if(QFileInfo(args.at(0)).isDir())
 		{
 			app.progress()->setBatchMode(true);
@@ -109,7 +111,6 @@ int main(int argc, char **argv)
 		else
 		{
 			app.progress()->enqueueFiles(args);
-			app.progress()->setBatchMode(true);
 			if(!app.progress()->download()) return 1;
 		}
 	}

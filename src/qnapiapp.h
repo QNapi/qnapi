@@ -22,6 +22,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QSystemTrayIcon>
+#include <QDesktopServices>
 
 #include "qcumber/qsingleapplication.h"
 
@@ -53,13 +54,19 @@ class QNapiApp : public QSingleApplication
 
 	public slots:
 
-		bool showOpenDialog();
+		bool showOpenDialog(QString engine = "");
 		void showScanDialog(QString init_dir = "");
-		void showUploadDialog();
-		void showCorrectDialog();
-		void showReportDialog();
+
+		void showNPGetDialog();
+		void showNPUploadDialog();
+		void showNPCorrectDialog();
+		void showNPReportDialog();
+		void showNPCreateUser();
+
+		void showOSGetDialog();
+		void showOSUploadDialog();
+		
 		void showSettings();
-		void showCreateUser();
 		void showAbout();
 		void tryQuit();
 

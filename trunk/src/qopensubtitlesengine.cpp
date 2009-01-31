@@ -134,21 +134,15 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 
 	requestList << paramsMap;
 
-//qDebug() << "\n\nrequestList:\n\n" << requestList;
-
 	rpc.request("SearchSubtitles", token, requestList);
 
 	QMap<QString, QVariant> responseMap = rpc.result().toMap();
-
-//qDebug() << "\n\nresponseMap:\n\n" << responseMap;
 
 	if(!responseMap.contains("data"))
 		return false;
 
 	QList<QVariant> dataList = responseMap["data"].toList();
 	QList<QVariant>::iterator i;
-
-//qDebug() << "dataList.size = " << dataList.size();
 
 	i = dataList.begin();
 	while(i != dataList.end())
@@ -218,11 +212,6 @@ QList<QNapiSubtitleInfo> QOpenSubtitlesEngine::listSubtitles()
 // Probuje pobrac napisy do filmu z serwera OpenSubtitles
 bool QOpenSubtitlesEngine::download(int idx)
 {
-//	qDebug() << "idx = " << idx;
-	
-//qDebug() << "subtitlesList.size = " << subtitlesList.size();
-	
-	
 	if(idx >= subtitlesList.size())
 		return false;
 
@@ -236,18 +225,12 @@ bool QOpenSubtitlesEngine::download(int idx)
 	paramsList << s.url;
 	requestList << paramsList;
 
-//qDebug() << "\n\nrequestList:\n\n" << requestList;
-
 	rpc.request("DownloadSubtitles", token, requestList);
 
 	QMap<QString, QVariant> responseMap = rpc.result().toMap();
 
-//qDebug() << "\n\nresponseMap:\n\n" << responseMap;
-
 	if(!responseMap.contains("data"))
 		return false;
-
-//	qDebug() << "still alive!";
 
 	QVariantList responseList;
 	responseList << responseMap["data"].toList();
@@ -265,7 +248,6 @@ bool QOpenSubtitlesEngine::download(int idx)
 
 	int r = file.write(subtitleContent);
 	file.close();
-	//qDebug("download: r = %d", r);
 
 	return (bool)r;
 }

@@ -262,7 +262,7 @@
    <sender>pbCancel</sender>
    <signal>clicked()</signal>
    <receiver>frmScan</receiver>
-   <slot>reject()</slot>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
      <x>570</x>

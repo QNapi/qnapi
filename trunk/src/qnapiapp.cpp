@@ -101,25 +101,25 @@ void QNapiApp::createTrayIcon()
 	connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
 
 	napiGetAction = new QAction(tr("Pobierz napisy"), 0);
-//	connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+	connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showNPGetDialog()));
 
 	napiAddAction = new QAction(tr("Dodaj napisy"), 0);
-	connect(napiAddAction, SIGNAL(triggered()), this, SLOT(showUploadDialog()));
+	connect(napiAddAction, SIGNAL(triggered()), this, SLOT(showNPUploadDialog()));
 
 	napiCorrectAction = new QAction(tr("Popraw napisy"), 0);
-	connect(napiCorrectAction, SIGNAL(triggered()), this, SLOT(showCorrectDialog()));
+	connect(napiCorrectAction, SIGNAL(triggered()), this, SLOT(showNPCorrectDialog()));
 
 	napiReportAction = new QAction(tr("Zgłoś niepasujące"), 0);
-	connect(napiReportAction, SIGNAL(triggered()), this, SLOT(showReportDialog()));
+	connect(napiReportAction, SIGNAL(triggered()), this, SLOT(showNPReportDialog()));
 
 	napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
-	connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showCreateUser()));
+	connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showNPCreateUser()));
 
 	osGetAction = new QAction(tr("Pobierz napisy"), 0);
-//	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showOSGetDialog()));
+	connect(osGetAction, SIGNAL(triggered()), this, SLOT(showOSGetDialog()));
 
 	osAddAction = new QAction(tr("Dodaj napisy"), 0);
-//	connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
+	connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
 
 	settingsAction = new QAction(tr("Opcje"), 0);
 	connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
@@ -177,7 +177,7 @@ void QNapiApp::showTrayMessage(QString title, QString msg)
 	trayIcon->showMessage(title, msg);
 }
 
-bool QNapiApp::showOpenDialog()
+bool QNapiApp::showOpenDialog(QString engine)
 {
 	QStringList fileList;
 
@@ -204,6 +204,13 @@ bool QNapiApp::showOpenDialog()
 
 	if(!fileList.isEmpty())
 	{
+		if(!engine.isEmpty())
+		{
+			QStringList e;
+			e << engine;
+			progress()->setEngines(e);
+		}
+
 		progress()->enqueueFiles(fileList);
 		progress()->download();
 	}
@@ -236,7 +243,13 @@ void QNapiApp::showScanDialog(QString init_dir)
 	f_scan = 0;
 }
 
-void QNapiApp::showUploadDialog()
+
+void QNapiApp::showNPGetDialog()
+{
+	showOpenDialog("NapiProjekt");
+}
+
+void QNapiApp::showNPUploadDialog()
 {
 	if(!f_upload) f_upload = new frmUpload();
 	if(f_upload->isVisible())
@@ -249,7 +262,7 @@ void QNapiApp::showUploadDialog()
 	f_upload = 0;
 }
 
-void QNapiApp::showCorrectDialog()
+void QNapiApp::showNPCorrectDialog()
 {
 	if(!f_correct) f_correct = new frmCorrect();
 	if(f_correct->isVisible())
@@ -262,7 +275,7 @@ void QNapiApp::showCorrectDialog()
 	f_correct = 0;
 }
 
-void QNapiApp::showReportDialog()
+void QNapiApp::showNPReportDialog()
 {
 	if(!f_report) f_report = new frmReport();
 	if(f_report->isVisible())
@@ -273,6 +286,29 @@ void QNapiApp::showReportDialog()
 	f_report->exec();
 	delete f_report;
 	f_report = 0;
+}
+
+void QNapiApp::showNPCreateUser()
+{
+	if(!f_createUser) f_createUser = new frmCreateUser();
+	if(f_createUser->isVisible())
+	{
+		f_createUser->raise();
+		return;
+	}
+	f_createUser->exec();
+	delete f_createUser;
+	f_createUser = 0;
+}
+
+void QNapiApp::showOSGetDialog()
+{
+	showOpenDialog("OpenSubtitles");
+}
+
+void QNapiApp::showOSUploadDialog()
+{
+	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
 }
 
 void QNapiApp::showSettings()
@@ -294,19 +330,6 @@ void QNapiApp::showSettings()
 
 	delete f_options;
 	f_options = 0;
-}
-
-void QNapiApp::showCreateUser()
-{
-	if(!f_createUser) f_createUser = new frmCreateUser();
-	if(f_createUser->isVisible())
-	{
-		f_createUser->raise();
-		return;
-	}
-	f_createUser->exec();
-	delete f_createUser;
-	f_createUser = 0;
 }
 
 void QNapiApp::showAbout()

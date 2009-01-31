@@ -379,8 +379,6 @@ void GetThread::run()
 			continue;
 		}
 
-		int selIdx = 0;
-
 		// jesli mozna i potrzeba, listujemy dostepne napisy
 		if(napi->needToShowList())
 		{
@@ -390,6 +388,10 @@ void GetThread::run()
 			waitForDlg.lock();
 			waitForDlg.lock();
 			waitForDlg.unlock();
+		}
+		else
+		{
+			selIdx = napi->bestIdx();
 		}
 
 		ABORT_POINT
@@ -432,6 +434,7 @@ void GetThread::run()
 
 		emit progressChange(i, queue.size(), 0.75);
 		emit actionChange(tr("Dopasowywanie napisów..."));
+
 		if(!napi->match())
 		{
 			ABORT_POINT
@@ -454,7 +457,7 @@ void GetThread::run()
 			emit actionChange(tr("Przetwarzanie napisów..."));
 			napi->pp();
 		}
-		
+
 		napi->cleanup();
 
 		emit progressChange(i, queue.size(), 1);

@@ -305,6 +305,8 @@ void GetThread::subtitlesSelected(int idx)
 	waitForDlg.unlock();
 }
 
+#define ABORT_POINT {if(abort){delete napi;return;}}
+
 void GetThread::run()
 {
 	abort = false;
@@ -318,7 +320,11 @@ void GetThread::run()
 
 	QNapi *napi = new QNapi();
 
-	if(!napi->addEngines(GlobalConfig().enginesList()))
+	if(!engines.isEmpty())
+	{
+		napi->addEngines(engines);
+	}
+	else if(!napi->addEngines(GlobalConfig().enginesList()))
 	{
 		emit criticalError(tr("Błąd: ") + napi->error());
 		delete napi;
@@ -331,7 +337,6 @@ void GetThread::run()
 	{
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
-
 
 		napi->setMoviePath(queue[i]);
 
@@ -350,11 +355,7 @@ void GetThread::run()
 
 		napi->checksum();
 
-		if(abort)
-		{
-			delete napi;
-			return;
-		}
+		ABORT_POINT
 
 		bool found = false;
 		SearchPolicy sp = GlobalConfig().searchPolicy();
@@ -367,6 +368,8 @@ void GetThread::run()
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;
+
+			ABORT_POINT
 		}
 
 		if(!found)
@@ -388,6 +391,8 @@ void GetThread::run()
 			waitForDlg.lock();
 			waitForDlg.unlock();
 		}
+
+		ABORT_POINT
 
 		if(selIdx == -1)
 		{
@@ -412,6 +417,8 @@ void GetThread::run()
 			continue;
 		}
 
+		ABORT_POINT
+
 		emit progressChange(i, queue.size(), 0.6);
 		emit actionChange(tr("Rozpakowywanie napisów..."));
 
@@ -427,11 +434,7 @@ void GetThread::run()
 		emit actionChange(tr("Dopasowywanie napisów..."));
 		if(!napi->match())
 		{
-			if(abort)
-			{
-				delete napi;
-				return;
-			}
+			ABORT_POINT
 
 			++napiFail;
 			failedList << queue[i];

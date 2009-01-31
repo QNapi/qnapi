@@ -85,7 +85,6 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 			ui.twSubtitles->setItem(i, 0, item);
 		}
 
-
 		++i;
 	}
 

@@ -33,7 +33,7 @@ void frmNapiProjektConfig::accept()
 
 void frmNapiProjektConfig::pbRegisterClicked()
 {
-	((QNapiApp*)qApp)->showCreateUser();
+	((QNapiApp*)qApp)->showNPCreateUser();
 	load();
 }
 

@@ -57,9 +57,13 @@ class GetThread : public QNapiThread
 			connect(this, SIGNAL(criticalError(const QString &)),
 					this, SLOT(setCriticalMessage(const QString &)));
 		}
+		void setEngines(QStringList enginesList)
+		{
+			engines = enginesList;
+		}
 		void run();
 
-		QStringList queue, gotList, failedList;
+		QStringList queue, gotList, failedList, engines;
 		int napiSuccess, napiFail;
 		QString criticalMessage;
 		QMutex waitForDlg;
@@ -73,6 +77,10 @@ class frmProgress: public QWidget
 	public:
 		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmProgress(){};
+		void setEngines(QStringList enginesList)
+		{
+			getThread.setEngines(enginesList);
+		}
 
 	signals:
 		void subtitlesSelected(int idx);

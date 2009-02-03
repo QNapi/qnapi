@@ -5,18 +5,19 @@ CONFIG += warn_on \
  release
 TEMPLATE = app
 SOURCES += src/main.cpp \
- src/frmprogress.cpp \
- src/frmabout.cpp \
- src/frmoptions.cpp \
- src/frmupload.cpp \
- src/frmcorrect.cpp \
- src/frmreport.cpp \
- src/frmscan.cpp \
- src/frmcreateuser.cpp \
- src/frmsummary.cpp \
+ src/forms/frmprogress.cpp \
+ src/forms/frmabout.cpp \
+ src/forms/frmoptions.cpp \
+ src/forms/frmupload.cpp \
+ src/forms/frmcorrect.cpp \
+ src/forms/frmreport.cpp \
+ src/forms/frmscan.cpp \
+ src/forms/frmcreateuser.cpp \
+ src/forms/frmsummary.cpp \
+ src/forms/frmnapiprojektconfig.cpp \
+ src/forms/frmlistsubtitles.cpp \
  src/qnapiconfig.cpp \
  src/qnapiapp.cpp \
- src/qdraglistwidget.cpp \
  src/movieinfo.cpp \
  src/qmultiparthttprequest.cpp \
  src/qcumber/qmanagedrequest.cpp \
@@ -31,22 +32,21 @@ SOURCES += src/main.cpp \
  src/xmlrpc/variant.cpp \
  src/xmlrpc/response.cpp \
  src/qnapi.cpp \
- src/qopensubtitlesengine.cpp \
- src/frmnapiprojektconfig.cpp \
- src/frmlistsubtitles.cpp
-HEADERS += src/frmprogress.h \
- src/frmabout.h \
- src/frmoptions.h \
- src/frmupload.h \
- src/frmcorrect.h \
- src/frmreport.h \
- src/frmscan.h \
- src/frmcreateuser.h \
- src/frmsummary.h \
+ src/qopensubtitlesengine.cpp
+HEADERS += src/forms/frmprogress.h \
+ src/forms/frmabout.h \
+ src/forms/frmoptions.h \
+ src/forms/frmupload.h \
+ src/forms/frmcorrect.h \
+ src/forms/frmreport.h \
+ src/forms/frmscan.h \
+ src/forms/frmcreateuser.h \
+ src/forms/frmsummary.h \
+ src/forms/frmnapiprojektconfig.h \
+ src/forms/frmlistsubtitles.h \
  src/version.h \
  src/qnapiconfig.h \
  src/qnapiapp.h \
- src/qdraglistwidget.h \
  src/movieinfo.h \
  src/qmultiparthttprequest.h \
  src/qnapithread.h \
@@ -67,9 +67,7 @@ HEADERS += src/frmprogress.h \
  src/qcheckedlistwidget.h \
  src/qnapi.h \
  src/qnapisubtitleinfo.h \
- src/qopensubtitlesengine.h \
- src/frmnapiprojektconfig.h \
- src/frmlistsubtitles.h
+ src/qopensubtitlesengine.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

@@ -13,7 +13,7 @@
 *****************************************************************************/
 
 #include "qnapiprojektengine.h"
-#include "frmnapiprojektconfig.h"
+#include "forms/frmnapiprojektconfig.h"
 
 // konstruktor klasy
 QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile)

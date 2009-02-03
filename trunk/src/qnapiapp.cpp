@@ -183,14 +183,15 @@ bool QNapiApp::showOpenDialog(QString engine)
 
 	if(!openDialog)
 	{
-		if( !(openDialog = new QNapiOpenDialog(0,
-								tr("Wybierz jeden lub więcej plików z filmami"),
-								GlobalConfig().previousDialogPath(),
-								QNapiOpenDialog::Movies))
-		)
-		{
-			return false;
-		}
+		openDialog = new QNapiOpenDialog(0,
+							tr("Wybierz jeden lub więcej plików z filmami"),
+							GlobalConfig().previousDialogPath(),
+							QNapiOpenDialog::Movies);
+	}
+	else if(openDialog)
+	{
+		openDialog->raise();
+		return true;
 	}
 
 	if(openDialog->selectFiles())

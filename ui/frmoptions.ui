@@ -286,16 +286,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>lbAvailableEngines</zorder>
-      <zorder>lbDownloadPolicy</zorder>
-      <zorder>cbDownloadPolicy</zorder>
-      <zorder>twEngines</zorder>
-      <zorder>pbMoveUp</zorder>
-      <zorder>cbSearchPolicy</zorder>
-      <zorder>lbSearchPolicy</zorder>
-      <zorder>pbMoveDown</zorder>
-      <zorder>pbEngineInfo</zorder>
-      <zorder>pbEngineConf</zorder>
      </widget>
      <widget class="QWidget" name="tabPostProcessing" >
       <attribute name="title" >
@@ -594,7 +584,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <layout class="QHBoxLayout" >
      <item>
-      <widget class="QPushButton" name="pushButton" >
+      <widget class="QPushButton" name="pbRestoreDefaults" >
        <property name="text" >
         <string>Przywróć domyslne</string>
        </property>
@@ -659,7 +649,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>sbUPerm</tabstop>
   <tabstop>sbGPerm</tabstop>
   <tabstop>sbOPerm</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>pbRestoreDefaults</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
  </tabstops>

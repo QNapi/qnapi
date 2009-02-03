@@ -57,6 +57,8 @@ Q_OBJECT
 		void showAllEncodingsClicked();
 		void useBrushedMetalClicked();
 
+		void restoreDefaults();
+
 	private:
 		Ui::frmOptions ui;
 		void showAllEncodings();

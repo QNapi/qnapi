@@ -58,6 +58,8 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
 	connect(ui.cbUseBrushedMetal, SIGNAL(clicked()), this, SLOT(useBrushedMetalClicked()));
 
+	connect(ui.pbRestoreDefaults, SIGNAL(clicked()), this, SLOT(restoreDefaults()));
+
 	showAllEncodings();
 
 	// workaround dla compiza?
@@ -118,6 +120,9 @@ void frmOptions::twEnginesSelectionChanged()
 {
 	QNapi n;
 	n.addEngines(n.enumerateEngines());
+	
+	if(ui.twEngines->selectedItems().size() < 1)
+		return;	
 	
 	QNapiAbstractEngine * e;
 	e = n.engineByName(ui.twEngines->selectedItems().at(0)->text());
@@ -278,20 +283,15 @@ void frmOptions::writeConfig()
 {
 	GlobalConfig().setP7zipPath(ui.le7zPath->text());
 	GlobalConfig().setTmpPath(ui.leTmpPath->text());
-//	GlobalConfig().setNick(ui.leNick->text());
-//	GlobalConfig().setPass(ui.lePass->text());
 	GlobalConfig().setLanguage((ui.cbLang->currentIndex() == 0) ? "PL" : "ENG");
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 
-	//QHash<QString,bool> engines;
 	QList<QPair<QString, bool> > engines;
 	for(int i = 0; i < ui.twEngines->rowCount(); ++i)
 	{
-//		engines[ui.twEngines->item(i, 0)->text()] = ui.twEngines->item(i, 0)->checkState() == Qt::Checked;
 		engines << qMakePair(ui.twEngines->item(i, 0)->text(),
 							(ui.twEngines->item(i, 0)->checkState() == Qt::Checked));
-//		qDebug() << engines;
 	}
 
 	GlobalConfig().setEngines(engines);
@@ -323,17 +323,12 @@ void frmOptions::readConfig()
 
 	ui.le7zPath->setText(GlobalConfig().p7zipPath());
 	ui.leTmpPath->setText(GlobalConfig().tmpPath());
-	//ui.leNick->setText(GlobalConfig().nick());
-	//ui.lePass->setText(GlobalConfig().pass());
 	ui.cbLang->setCurrentIndex((GlobalConfig().language() == "PL") ? 0 : 1);
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
 
-
 	QNapi n;
 	n.addEngines(n.enumerateEngines());
-	
-
 
 	ui.twEngines->clear();
 
@@ -341,10 +336,7 @@ void frmOptions::readConfig()
 	ui.twEngines->setColumnCount(1);
 	ui.twEngines->setRowCount(engines.size());
 
-	//qDebug() << "READCONFIG:" << engines.size();
-//	qDebug() << ui.twEngines->columnCount() << "x" << ui.twEngines->rowCount();
-
-	for(int i = 0; i < 2; ++i)
+	for(int i = 0; i < engines.size(); ++i)
 	{
 		QPair<QString,bool> e = engines.at(i);
 		QTableWidgetItem *item = new QTableWidgetItem(n.engineByName(e.first)->engineIcon(), e.first);
@@ -385,3 +377,39 @@ void frmOptions::readConfig()
 
 	ui.gbPpEnable->setChecked(GlobalConfig().ppEnabled());
 }
+
+void frmOptions::restoreDefaults()
+{
+	GlobalConfig().setP7zipPath("");
+	GlobalConfig().setTmpPath(QDir::tempPath());
+	GlobalConfig().setLanguage("PL");
+	GlobalConfig().setNoBackup(false);
+	GlobalConfig().setUseBrushedMetal(false);
+	QList<QPair<QString, bool> > engines;
+	engines << QPair<QString, bool>("NapiProjekt", true)
+			<< QPair<QString, bool>("OpenSubtitles", true);
+	GlobalConfig().setEngines(engines);
+	GlobalConfig().setSearchPolicy(SP_SEARCH_ALL);
+	GlobalConfig().setDownloadPolicy(DP_SHOW_LIST_IF_NEEDED);
+
+	GlobalConfig().setPpEnabled(false);
+	GlobalConfig().setPpChangeEncoding(false);
+	GlobalConfig().setPpAutoDetectEncoding(false);
+	GlobalConfig().setPpEncodingFrom("windows-1250");
+	GlobalConfig().setPpEncodingTo("UTF-8");
+	GlobalConfig().setPpShowAllEncodings(false);
+	GlobalConfig().setPpRemoveLines(false);
+	QStringList words;
+	words << "movie info" << "synchro";
+	GlobalConfig().setPpRemoveWords(words);
+	GlobalConfig().setPpChangePermissions(false);
+	GlobalConfig().setPpPermissions("644");
+
+	GlobalConfig().save();
+
+	readConfig();
+}
+
+
+
+

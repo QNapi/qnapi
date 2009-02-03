@@ -178,7 +178,7 @@ void QNapiConfig::setNoBackup(bool noBackup)
 
 bool QNapiConfig::useBrushedMetal()
 {
-	return settings->value("qnapi/use_brushed_metal", true).toBool();
+	return settings->value("qnapi/use_brushed_metal", false).toBool();
 }
 
 void QNapiConfig::setUseBrushedMetal(bool use)
@@ -186,33 +186,26 @@ void QNapiConfig::setUseBrushedMetal(bool use)
 	settings->setValue("qnapi/use_brushed_metal", use);
 }
 
-#include <QtDebug>
-
 QList<QPair<QString, bool> > QNapiConfig::engines()
 {
 	QList<QVariant> inList = settings->value("qnapi/engines").toList();
 	QList<QPair<QString, bool> > map;
-
+	
 	foreach(QVariant v, inList)
 	{
-//		qDebug() << "foricz" << v;
 		QStringList sl = v.toStringList();
 		if(sl.size() != 2) continue;
 
 		QString key = sl.at(0);
 		bool value = (sl.at(1) == "1");
-//		qDebug() << "kv:" << key << value;
 		map << qMakePair(key, value);
 	}
 
 	if(map.isEmpty())
 	{
-//		qDebug() << "mapa pusta";
 		map << QPair<QString,bool>("NapiProjekt", true)
 			<< QPair<QString,bool>("OpenSubtitles", true);
 	}
-	
-	//qDebug() << "final map: " << map;	
 	
 	return map;
 }
@@ -247,6 +240,7 @@ void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
 		sl << e.first << (e.second ? "1" : "0");
 		outList << sl;
 	}
+
 	settings->setValue("qnapi/engines", outList);
 }
 

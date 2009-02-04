@@ -13,14 +13,18 @@
 *****************************************************************************/
 
 #include "frmnapiprojektconfig.h"
+#include "../qnapi.h"
 
 frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WFlags f)
 	: QDialog(parent, f)
 {
 	ui.setupUi(this);
+	QNapi q;
+	q.addEngines(q.enumerateEngines());
+	setWindowIcon(q.engineByName("NapiProjekt")->engineIcon());
 
-	load();	
-	
+	load();
+
 	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 }
 

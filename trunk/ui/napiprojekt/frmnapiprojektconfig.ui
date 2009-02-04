@@ -24,9 +24,6 @@
   <property name="windowTitle" >
    <string>NapiProjekt - konfiguracja</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../../res/resources.qrc" >:/engines/napiprojekt.png</iconset>
-  </property>
   <layout class="QGridLayout" >
    <item row="0" column="0" >
     <widget class="QLabel" name="lbNick" >
@@ -64,7 +61,7 @@
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>318</width>
        <height>41</height>
@@ -84,7 +81,7 @@
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0" >
       <size>
        <width>108</width>
        <height>20</height>

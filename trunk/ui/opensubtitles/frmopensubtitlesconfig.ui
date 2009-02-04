@@ -5,28 +5,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
-    <height>120</height>
+    <width>359</width>
+    <height>146</height>
    </rect>
   </property>
   <property name="minimumSize" >
    <size>
     <width>330</width>
-    <height>120</height>
+    <height>130</height>
    </size>
   </property>
   <property name="maximumSize" >
    <size>
-    <width>400</width>
-    <height>150</height>
+    <width>450</width>
+    <height>180</height>
    </size>
   </property>
   <property name="windowTitle" >
    <string>OpenSubtitles - konfiguracja</string>
-  </property>
-  <property name="windowIcon" >
-   <iconset resource="../../res/resources.qrc" >
-    <normaloff>:/engines/opensubtitles.png</normaloff>:/engines/opensubtitles.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" >

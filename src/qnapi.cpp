@@ -53,8 +53,6 @@ QStringList QNapi::enumerateEngines()
 
 bool QNapi::addEngine(QString engine)
 {
-//	qDebug() << "addEngine: " << engine;
-
 	if(engine == "NapiProjekt")
 	{
 		enginesList << (new QNapiProjektEngine());
@@ -144,20 +142,14 @@ QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 	int curr_offset = 0;
 	subtitlesList.clear();
 
-//	qDebug() << "enginesList.size: " << enginesList.size();
-
 	foreach(QNapiAbstractEngine *e, enginesList)
 	{
 		QList<QNapiSubtitleInfo> list =  e->listSubtitles();
-
-//	qDebug() << "(list).size: " << list.size();
 
 		offsetsList.insert(nameByEngine(e), curr_offset);
 		curr_offset += list.size();
 		subtitlesList << list;
 	}
-//	qDebug() << "enginesList.size: " << enginesList.size();
-
 	return subtitlesList;
 }
 

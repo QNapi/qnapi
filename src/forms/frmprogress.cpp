@@ -364,7 +364,7 @@ void GetThread::run()
 		{
 			emit progressChange(i, queue.size(), 0.4);
 			emit actionChange(tr("Szukanie napisów..."));
-			found = napi->lookForSubtitles("PL", e) || found;
+			found = napi->lookForSubtitles(GlobalConfig().language(), e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;

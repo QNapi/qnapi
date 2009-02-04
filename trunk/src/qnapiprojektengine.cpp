@@ -20,11 +20,10 @@ QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString 
 	: QNapiAbstractEngine(movieFile, subtitlesFile)
 {
 	p7zipPath = GlobalConfig().p7zipPath();
-	//lang = GlobalConfig().language();
 	nick = GlobalConfig().nick(engineName());
 	pass = GlobalConfig().pass(engineName());
 	noBackup = GlobalConfig().noBackup();
-	tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());	
+	tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());
 }
 
 // destruktor klasy
@@ -101,11 +100,22 @@ QString QNapiProjektEngine::checksum(QString filename)
 bool QNapiProjektEngine::lookForSubtitles(QString lang)
 {
 	if(checkSum.isEmpty()) return false;
-	
+
 	subtitlesList.clear();
-	
+
 	SyncHTTP http;
-	QString urlTxt = napiDownloadUrlTpl.arg(lang).arg(checkSum).arg(npFDigest(checkSum)).arg(nick).arg(pass);
+	QString urlTxt = napiDownloadUrlTpl.arg(QNapiLanguage(lang).toTwoLetter().toUpper())
+										.arg(checkSum)
+										.arg(npFDigest(checkSum))
+										.arg(nick)
+										.arg(pass)
+#ifdef Q_WS_WIN
+										.arg("Windows");
+#elif defined(Q_WS_MAC)
+										.arg("Mac OS X");
+#else
+										.arg("Linux/UNIX");
+#endif
 
 	QUrl url(urlTxt);
 

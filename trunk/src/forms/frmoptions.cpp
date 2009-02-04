@@ -22,7 +22,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 #ifdef Q_WS_MAC
 	if ( QSysInfo::MacintoshVersion == QSysInfo::MV_10_5) // bo na Leopardzie nie ma juz stylu BM
 	{
-		ui.cbUseBrushedMetal->setText(tr("Używaj przyciemnionych okien (Mac OS X Leopard)"));
+		ui.cbUseBrushedMetal->setText(tr("Używaj ciemnego stylu (Mac OS X Leopard)"));
 	}
 
 	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
@@ -37,6 +37,16 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.sbGPerm->hide();
 	ui.sbUPerm->hide();
 #endif
+
+
+	QString tlcode;
+	foreach(QString lang, QNapiLanguage("").listLanguages())
+	{
+		tlcode = QNapiLanguage(lang).toTwoLetter();
+		ui.cbLang->addItem(QIcon(QString(":/languages/%1.gif").arg(tlcode)),
+							lang,
+							QVariant(tlcode));
+	}
 
 	setAttribute(Qt::WA_QuitOnClose, false);
 
@@ -283,7 +293,7 @@ void frmOptions::writeConfig()
 {
 	GlobalConfig().setP7zipPath(ui.le7zPath->text());
 	GlobalConfig().setTmpPath(ui.leTmpPath->text());
-	GlobalConfig().setLanguage((ui.cbLang->currentIndex() == 0) ? "PL" : "ENG");
+	GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 
@@ -323,7 +333,8 @@ void frmOptions::readConfig()
 
 	ui.le7zPath->setText(GlobalConfig().p7zipPath());
 	ui.leTmpPath->setText(GlobalConfig().tmpPath());
-	ui.cbLang->setCurrentIndex((GlobalConfig().language() == "PL") ? 0 : 1);
+	ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
+
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
 
@@ -382,7 +393,7 @@ void frmOptions::restoreDefaults()
 {
 	GlobalConfig().setP7zipPath("");
 	GlobalConfig().setTmpPath(QDir::tempPath());
-	GlobalConfig().setLanguage("PL");
+	GlobalConfig().setLanguage("pl");
 	GlobalConfig().setNoBackup(false);
 	GlobalConfig().setUseBrushedMetal(false);
 	QList<QPair<QString, bool> > engines;

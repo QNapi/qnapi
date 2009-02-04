@@ -128,7 +128,7 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 	QMap<QString, xmlrpc::Variant> paramsMap;
 	QList<xmlrpc::Variant> requestList;
 
-	paramsMap["sublanguageid"] = QString("pol");
+	paramsMap["sublanguageid"] = QNapiLanguage(lang).toTriLetter();
 	paramsMap["moviehash"] = checkSum;
 	paramsMap["moviebytesize"] = (uint) fileSize;
 

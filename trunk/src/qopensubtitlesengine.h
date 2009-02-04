@@ -23,6 +23,8 @@
 #include "xmlrpc/qsyncxmlrpcclient.h"
 #include "synchttp.h"
 #include "version.h"
+#include "qnapilanguage.h"
+
 
 const QString openSubtitlesXmlRpcHost  = "www.opensubtitles.org";
 const QString openSubtitlesXmlRpcPath  = "/xml-rpc";

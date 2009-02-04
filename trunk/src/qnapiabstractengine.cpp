@@ -44,19 +44,14 @@ QString QNapiAbstractEngine::subtitlesPath()
 // dopasowuje napisy do pliku z filmem
 bool QNapiAbstractEngine::match()
 {
-//	qDebug("tryMatch:");
 	QFileInfo stf(subtitlesTmp);
 
 	if(!stf.exists())
 		return false;
 
-//	qDebug("tryMatch: stf exists");
-
 	QFileInfo mf(movie);
 
 	subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
-
-//	qDebug("tryMatch: subtitlesPath = %s", qPrintable(subtitles));
 
 	QFileInfo sf(subtitles);
 
@@ -88,7 +83,6 @@ bool QNapiAbstractEngine::match()
 	// pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
 	r = QFile::copy(subtitlesTmp, subtitles);
 #endif
-//	qDebug("tryMatch: r = %d", r);
 
 	return r;
 }

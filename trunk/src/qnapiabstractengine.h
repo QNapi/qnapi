@@ -40,10 +40,10 @@ public:
 	// zwraca sciezke do pliku filmowego
 	QString moviePath();
 	// ustawia sciezke do pliku z napisami
-	void setSubtitlesPath(const QString & path);	
+	void setSubtitlesPath(const QString & path);
 	// zwraca sciezke do pliku z napisami
 	QString subtitlesPath();
-	
+
 	// dopasowuje napisy do pliku z filmem
 	bool match();
 

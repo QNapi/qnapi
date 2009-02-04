@@ -6,6 +6,63 @@
     <file>qnapi.png</file>
   </qresource>
   <qresource prefix="/languages" >
+    <file>sq.gif</file>
+    <file>el.gif</file>
+    <file>ar.gif</file>
+    <file>bg.gif</file>
+    <file>cs.gif</file>
+    <file>da.gif</file>
+    <file>de.gif</file>
+    <file>es.gif</file>
+    <file>en.gif</file>
+    <file>et.gif</file>
+    <file>fi.gif</file>
+    <file>fr.gif</file>
+    <file>hr.gif</file>
+    <file>hu.gif</file>
+    <file>id.gif</file>
+    <file>it.gif</file>
+    <file>ja.gif</file>
+    <file>ko.gif</file>
+    <file>mk.gif</file>
+    <file>nl.gif</file>
+    <file>zh.gif</file>
+    <file>vi.gif</file>
+    <file>tr.gif</file>
+    <file>sv.gif</file>
+    <file>sr.gif</file>
+    <file>sq.gif</file>
+    <file>sl.gif</file>
+    <file>sk.gif</file>
+    <file>ru.gif</file>
+    <file>ro.gif</file>
+    <file>pt.gif</file>
+    <file>pl.gif</file>
+    <file>pb.gif</file>
+    <file>no.gif</file>
+    <file>bg.gif</file>
+    <file>de.gif</file>
+    <file>en.gif</file>
+    <file>es.gif</file>
+    <file>et.gif</file>
+    <file>fi.gif</file>
+    <file>fr.gif</file>
+    <file>hr.gif</file>
+    <file>hu.gif</file>
+    <file>id.gif</file>
+    <file>it.gif</file>
+    <file>mk.gif</file>
+    <file>nl.gif</file>
+    <file>no.gif</file>
+    <file>ro.gif</file>
+    <file>pt.gif</file>
+    <file>pl.gif</file>
+    <file>ru.gif</file>
+    <file>sk.gif</file>
+    <file>sl.gif</file>
+    <file>sr.gif</file>
+    <file>sv.gif</file>
+    <file>tr.gif</file>
     <file>pl.gif</file>
     <file>en.gif</file>
   </qresource>
@@ -18,9 +75,5 @@
     <file>film.png</file>
     <file>accept.png</file>
     <file>exclamation.png</file>
-  </qresource>
-  <qresource prefix="/engines" >
-    <file>opensubtitles.png</file>
-    <file>napiprojekt.png</file>
   </qresource>
 </RCC>

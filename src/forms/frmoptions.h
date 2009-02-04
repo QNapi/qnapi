@@ -27,6 +27,8 @@
 #include "qnapiconfig.h"
 
 #include "frmcreateuser.h"
+#include "qnapilanguage.h"
+
 
 class frmOptions: public QDialog
 {

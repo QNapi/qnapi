@@ -91,18 +91,7 @@
         </widget>
        </item>
        <item row="2" column="1" colspan="2" >
-        <widget class="QComboBox" name="cbLang" >
-         <item>
-          <property name="text" >
-           <string>Polski</string>
-          </property>
-         </item>
-         <item>
-          <property name="text" >
-           <string>Angielski</string>
-          </property>
-         </item>
-        </widget>
+        <widget class="QComboBox" name="cbLang" />
        </item>
        <item row="3" column="0" colspan="3" >
         <widget class="QCheckBox" name="cbNoBackup" >

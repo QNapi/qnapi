@@ -69,10 +69,18 @@
       <property name="text" >
        <string>Polski</string>
       </property>
+      <property name="icon" >
+       <iconset resource="../res/resources.qrc" >
+        <normaloff>:/languages/pl.gif</normaloff>:/languages/pl.gif</iconset>
+      </property>
      </item>
      <item>
       <property name="text" >
        <string>Angielski</string>
+      </property>
+      <property name="icon" >
+       <iconset resource="../res/resources.qrc" >
+        <normaloff>:/languages/en.gif</normaloff>:/languages/en.gif</iconset>
       </property>
      </item>
     </widget>

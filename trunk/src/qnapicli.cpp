@@ -106,11 +106,11 @@ int QNapiCli::exec()
 
 		bool found = false;
 		SearchPolicy sp = GlobalConfig().searchPolicy();
-		
+
 		foreach(QString e, napi->listLoadedEngines())
 		{
 			printCli(QString(QString("   szukanie napisów (%1)...").arg(e)));
-			found = napi->lookForSubtitles("PL", e) || found;
+			found = napi->lookForSubtitles(GlobalConfig().language(), e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;

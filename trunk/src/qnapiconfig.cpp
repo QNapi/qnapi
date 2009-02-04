@@ -66,7 +66,7 @@ QString QNapiConfig::p7zipPath()
 	// Pod MacOS X 7zip jest w zasobach aplikacji
 	paths << QApplication::applicationDirPath() + "/../Resources";
 #endif
-	
+
 	QStringList binaries;
 	binaries << "7z" << "7za" << "7zr" << "p7zip";
 
@@ -116,7 +116,7 @@ QString QNapiConfig::nick(const QString & engine)
 	if(nick.isEmpty() && (engine == "NapiProjekt"))
 	{
 		nick = settings->value("qnapi/nick", "").toString();
-		
+
 		if(!nick.isEmpty())
 		{
 			settings->remove("qnapi/nick");
@@ -135,11 +135,11 @@ void QNapiConfig::setNick(const QString & engine, const QString & nick)
 QString QNapiConfig::pass(const QString & engine)
 {
 	QString pass = settings->value(engine + "/pass", "").toString();
-	
+
 	if(pass.isEmpty() && (engine == "NapiProjekt"))
 	{
 		pass = settings->value("qnapi/pass", "").toString();
-		
+
 		if(!pass.isEmpty())
 		{
 			settings->remove("qnapi/pass");
@@ -157,7 +157,7 @@ void QNapiConfig::setPass(const QString & engine, const QString & pass)
 
 QString QNapiConfig::language()
 {
-	return settings->value("qnapi/language", "PL").toString();
+	return settings->value("qnapi/language", "pl").toString();
 }
 
 void QNapiConfig::setLanguage(const QString & language)
@@ -190,7 +190,7 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 {
 	QList<QVariant> inList = settings->value("qnapi/engines").toList();
 	QList<QPair<QString, bool> > map;
-	
+
 	foreach(QVariant v, inList)
 	{
 		QStringList sl = v.toStringList();
@@ -206,7 +206,7 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 		map << QPair<QString,bool>("NapiProjekt", true)
 			<< QPair<QString,bool>("OpenSubtitles", true);
 	}
-	
+
 	return map;
 }
 
@@ -214,18 +214,18 @@ QStringList QNapiConfig::enginesList()
 {
 	QList<QPair<QString, bool> > map = engines();
 	QStringList list;
-	
+
 	for(int i = 0; i < map.size(); ++i)
 	{
 		QPair<QString,bool> e = map.at(i);
 		if(e.second) list << e.first;
 	}
-	
+
 	if(list.isEmpty())
 	{
 		list << "NapiProjekt" << "OpenSubtitles";
 	}
-	
+
 	return list;
 }
 
@@ -235,7 +235,7 @@ void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
 	for(int i = 0; i < engines.size(); ++i)
 	{
 		QPair<QString, bool> e = engines.at(i);
-		
+
 		QStringList sl;
 		sl << e.first << (e.second ? "1" : "0");
 		outList << sl;
@@ -246,7 +246,7 @@ void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
 
 SearchPolicy QNapiConfig::searchPolicy()
 {
-	return (SearchPolicy)settings->value("qnapi/search_policy", 0).toInt();		
+	return (SearchPolicy)settings->value("qnapi/search_policy", 0).toInt();
 }
 
 void QNapiConfig::setSearchPolicy(SearchPolicy policy)
@@ -256,7 +256,7 @@ void QNapiConfig::setSearchPolicy(SearchPolicy policy)
 
 DownloadPolicy QNapiConfig::downloadPolicy()
 {
-	return (DownloadPolicy)settings->value("qnapi/download_policy", 1).toInt();	
+	return (DownloadPolicy)settings->value("qnapi/download_policy", 1).toInt();
 }
 
 void QNapiConfig::setDownloadPolicy(DownloadPolicy policy)
@@ -338,7 +338,7 @@ QStringList QNapiConfig::ppRemoveWords()
 {
 	QStringList defaultRemoveWords;
 	defaultRemoveWords << "movie info" << "synchro ";
-						
+
 	return settings->value("qnapi/remove_words", defaultRemoveWords).toStringList();
 }
 
@@ -362,7 +362,7 @@ QString QNapiConfig::ppPermissions()
 	bool ok;
 	int perm = settings->value("qnapi/permissions", 644).toInt(&ok);
 	if(!ok || perm > 777)
-		perm = 644;  
+		perm = 644;
 	QString str = QString("%1").arg(perm);
 	while(str.size() < 3)
 		str = QString("0") + str;
@@ -398,7 +398,7 @@ QStringList QNapiConfig::scanFilters()
 	QStringList defaultScanFilters;
 	defaultScanFilters << "*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg"
 							" *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
-						
+
 	return settings->value("scan/filters", defaultScanFilters).toStringList();
 }
 

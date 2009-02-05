@@ -16,6 +16,8 @@
 #define __FRMABOUT__H__
 
 #include <QDesktopWidget>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "ui_frmabout.h"
 #include "version.h"

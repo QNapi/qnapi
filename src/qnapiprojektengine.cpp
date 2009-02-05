@@ -43,7 +43,7 @@ QString QNapiProjektEngine::engineName()
 QString QNapiProjektEngine::engineInfo()
 {
 	return "Modul pobierania napisów z bazy <b>www.napiprojekt.pl</b><br />"
-			"Copyright (c) 2008 by Krzemin";
+			"Copyright (c) 2008-2009 by Krzemin";
 }
 
 // zwraca ikone w formacie XMP

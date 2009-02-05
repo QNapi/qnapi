@@ -43,7 +43,7 @@ QString QOpenSubtitlesEngine::engineName()
 QString QOpenSubtitlesEngine::engineInfo()
 {
 	return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b><br />"
-			"Copyright (c) 2008 by Krzemin";
+			"Copyright (c) 2008-2009 by Krzemin";
 }
 
 // zwraca ikone w formacie XMP

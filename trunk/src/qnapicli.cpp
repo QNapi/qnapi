@@ -53,7 +53,8 @@ bool QNapiCli::analyze()
 int QNapiCli::exec()
 {
 	if(mode != CM_QUIET)
-		printCli(QString("QNapi %1, (C) 2008 Krzemin, http://krzemin.iglu.cz/qnapi\n").arg(QNAPI_VERSION));
+		printCli(QString("QNapi %1, (C) 2008 Krzemin, http://krzemin.iglu.cz/qnapi\n")
+						.arg(QNAPI_DISPLAYABLE_VERSION));
 
 	if(mode == CM_HELP)
 	{

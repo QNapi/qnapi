@@ -23,42 +23,17 @@ frmAbout::frmAbout(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 #endif
 
 	setAttribute(Qt::WA_QuitOnClose, false);
-	ui.lbTitle->setText(QString("QNapi ") + QNAPI_VERSION);
+	ui.lbTitle->setText(QString("QNapi ") + QNAPI_DISPLAYABLE_VERSION);
 
-const QString aboutText = tr(
-"<html><body><p>QNapi jest nieoficjalnym, wolnym klonem programu NAPI-PROJEKT, "
-"napisanym z myślą o użytkownikach systemów Linux, Mac OS X oraz innych, pod które "
-"oryginalny klient NAPI nie jest dostępny.</p><p></p><p><b>Ten program rozprowadzany "
-"jest na licencji GNU General Public License w wersji 2. lub każdej nowszej.</b></p>"
-"<p></p><p><b>Autor</b>: Krzemin &lt;<a href=\"mailto:pkrzemin@o2.pl?subject=QNapi\">"
-"pkrzemin@o2.pl</a>&gt;</p><p><b>Prawa autorskie:</b> Copyright (C) 2008 Krzemin</p>"
-"<p><b>WWW</b>:  <a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a></p>"
-"</body></html>");
-const QString thanksText = tr(
-"<html><body><p>Podziękowania należą się wszystkim osobom, które aktywnie wsparły rozwój "
-"QNapi, a w szczególności:<ul><li>adrian5632 &lt;<a href=\"mailto:adrian5632@gmail.com\">"
-"adrian5632@gmail.com</a>&gt; - opiekun wersji na Mac OS X, liczne patche i poprawki</li>"
-"<li>Rafał Wójcik &lt;<a href=\"mailto:rafal.wojcik@gmail.com\">rafal.wojcik@gmail.com</a>&gt;"
-" - port dla Windows wraz z instalatorem</li></ul></p><p>A także paczkującym dla różnych "
-"dystrybucji:</p><p>obi_gl, Jakub Schmidtke, Jan Stępień, Łukasz Jagiełło, Patryk Cisek</p><p>"
-"...oraz wszystkim tym, o których zapomniałem ;)</p></body></html>");
-const QString supportText = tr(
-"<html><body><p>QNapi zaoszczędził Ci sporo wysiłku przy szukaniu napisów do filmów? "
-"Uważasz, że to dobry program i powinien się dalej rozwijać?</p>"
-"<p><b>Ty również możesz wesprzeć dalszy rozwój programu!</b></p>"
-"<p>Oprócz promowania go wśród znajomych, na forach internetowych, blogach itp., rozważ drobne wsparcie "
-"finansowe autora projektu, motywując go do dalszych prac nad programem, poprzez dokonanie przelewu na "
-"podany niżej nr konta:</p>"
-"<p>73 1020 3974 0000 5202 0098 8774</p>"
-"<p>lub za pośrednictwem serwisu PayPal:</p>"
-"<p><a href=\"http://www.qt-apps.org/content/donate.php?content=76259\">"
-"http://www.qt-apps.org/content/donate.php?content=76259</a></p>"
-"<p>Będę wdzięczny nawet za najmniejsze wpłaty ;)</p>"
-);
+const QString www = tr("<a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a>");
+const QString author = tr("Copyright (C) 2008-2009 Krzemin &lt;<a href=\"mailto:pkrzemin@o2.pl\">pkrzemin@o2.pl</a>&gt;");
+const QString useos = tr("Program korzysta z bazy <a href=\"http://www.opensubtitles.org\">http://www.opensubtitles.org</a>");
+const QString usenp = tr("Program korzysta z bazy <a href=\"http://www.napiprojekt.pl\">http://www.napiprojekt.pl</a>");
 
-	ui.tbAbout->setText(aboutText);
-	ui.tbThanks->setText(thanksText);
-	ui.tbSupport->setText(supportText);
+	ui.lbWWW->setText(www);
+	ui.lbAuthor->setText(author);
+	ui.lbUseOS->setText(useos);
+	ui.lbUseNP->setText(usenp);
 
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 

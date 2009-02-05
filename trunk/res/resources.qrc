@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/icon" >
+    <file>opensubtitles.gif</file>
     <file>qnapi-22-mono.png</file>
     <file>qnapi-48-icon.png</file>
     <file>qnapi-48.png</file>

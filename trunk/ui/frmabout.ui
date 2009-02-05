@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
-    <height>422</height>
+    <width>650</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -33,7 +33,7 @@
         <set>Qt::AlignCenter</set>
        </property>
        <property name="margin" >
-        <number>20</number>
+        <number>15</number>
        </property>
       </widget>
      </item>

@@ -16,8 +16,6 @@
 #define __QCHECKEDLISTWIDGET__H__
 
 #include <QtGui>
-#include <QtDebug>
-
 
 class QCheckedListWidget : public QListWidget
 {
@@ -66,62 +64,5 @@ class QCheckedListWidget : public QListWidget
 				item(i)->setCheckState(state);
 			}
 		}
-
-	private:
-
-		bool mouseUnderCheckBox;
-
-		void checkMousePos(QPoint pos)
-		{
-			QListWidgetItem* item = itemAt(pos);
-
-			if(!item)
-			{
-				mouseUnderCheckBox  = false;
-				return;
-			}
-
-			QStyleOptionButton opt;
-			opt.QStyleOption::operator=(viewOptions());
-			opt.rect = visualItemRect(item);
-			QRect r = style()->subElementRect(QStyle::SE_ViewItemCheckIndicator, &opt);
-
-#ifdef Q_WS_WIN
-			r.moveLeft(7);
-#endif
-#ifdef Q_WS_MAC
-			r.moveLeft(10);
-#endif
-
-			mouseUnderCheckBox  = r.contains(pos);
-		}
-
-		void mouseMoveEvent(QMouseEvent *event)
-		{
-			checkMousePos(event->pos());
-			QListWidget::mouseMoveEvent(event);
-		}
-
-
-		void mouseReleaseEvent(QMouseEvent *event)
-		{
-			checkMousePos(event->pos());
-			
-			QListWidgetItem* item = itemAt(event->pos());
-
-			if(!item)
-			{
-				return;
-			}
-
-			if(!mouseUnderCheckBox)
-				item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);
-			
-			QListWidget::mouseReleaseEvent(event);
-			//emit itemClicked(item);
-		}
-
-};
-
 
 #endif // __QCHECKEDLISTWIDGET__H__

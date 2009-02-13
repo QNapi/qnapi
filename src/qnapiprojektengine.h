@@ -102,6 +102,7 @@ private:
 
 	QString checksum(QString filename, bool limit10M);
 	QString npFDigest(const QString & input);
+	QString npLangWrapper(QString lang);
 
 };
 

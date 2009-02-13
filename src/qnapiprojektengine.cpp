@@ -104,7 +104,7 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 	subtitlesList.clear();
 
 	SyncHTTP http;
-	QString urlTxt = napiDownloadUrlTpl.arg(QNapiLanguage(lang).toTwoLetter().toUpper())
+	QString urlTxt = napiDownloadUrlTpl.arg(npLangWrapper(lang))
 										.arg(checkSum)
 										.arg(npFDigest(checkSum))
 										.arg(nick)
@@ -143,7 +143,7 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 										QFileInfo(movie).completeBaseName(),
 										"",
 										"txt",
-										SUBTITLE_UNKNOWN); 
+										SUBTITLE_UNKNOWN);
 
 	return (subtitlesList.size() > 0);
 }
@@ -511,4 +511,14 @@ QString QNapiProjektEngine::npFDigest(const QString & input)
 	}
 
 	return b;
+}
+
+QString QNapiProjektEngine::npLangWrapper(QString lang)
+{
+	lang = QNapiLanguage(lang).toTwoLetter().toUpper();
+
+	if(lang == "EN")
+		lang = "ENG";
+
+	return lang;
 }

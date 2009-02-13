@@ -223,25 +223,28 @@ bool QNapiApp::showOpenDialog(QString engine)
 	return true;
 }
 
-void QNapiApp::showScanDialog(QString init_dir)
+bool QNapiApp::showScanDialog(QString init_dir)
 {
-	if(!f_scan) f_scan = new frmScan();
 	if(f_scan->isVisible())
 	{
 		f_scan->raise();
-		return;
+		return false;
 	}
 
 	f_scan->setInitDir(init_dir);
 
+	bool result = false;
+
 	if(f_scan->exec() == QDialog::Accepted)
 	{
+		result = true;
 		progress()->enqueueFiles(f_scan->getSelectedFiles());
 		progress()->download();
 	}
 
 	delete f_scan;
 	f_scan = 0;
+	return result;
 }
 
 

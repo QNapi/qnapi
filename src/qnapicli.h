@@ -15,37 +15,48 @@
 #ifndef __QNAPICLI__H__
 #define __QNAPICLI__H__
 
-#include <iostream>
+#include <QCoreApplication>
 #include <QString>
 #include <QStringList>
 #include <QFileInfo>
+#include <iostream>
 
 #include "version.h"
 #include "qnapi.h"
+#include "qnapilanguage.h"
 
-class QNapiCli
+class QNapiCli : public QCoreApplication
 {
 public:
 
-	QNapiCli(int argc, char **argv)
-		: m_argc(argc), m_argv(argv), mode(CM_UNSET) {}
+	QNapiCli(int argc, char **argv) :
+		QCoreApplication(argc, argv),
+		mode(CM_UNSET), showPolicy(SLP_USE_CONFIG) {}
 
-	bool analyze();
+	static bool isCliCall(int argc, char **argv);
 	int exec();
 
 private:
 
-	int m_argc;
-	char **m_argv;
 	QStringList movieList;
 
 	enum CliMode {
-		CM_UNSET, CM_HELP, CM_CONSOLE, CM_QUIET
+		CM_UNSET, CM_HELP, CM_HELP_LANGUAGES, CM_CONSOLE, CM_QUIET
 	};
-	
-	CliMode mode;
 
+	enum ShowListPolicy{
+		SLP_SHOW, SLP_USE_CONFIG, SLP_NEVER_SHOW
+	};
+
+	CliMode mode;
+	ShowListPolicy showPolicy;
+
+	QString lang;
+
+	bool analyze();
+	void printHeader();
 	void printHelp();
+	void printHelpLanguages();
 	void printCli(const QString & string);
 
 };

@@ -27,7 +27,6 @@
 
 int main(int argc, char **argv)
 {
-
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -51,86 +50,79 @@ int main(int argc, char **argv)
 	}
 
 #ifndef Q_WS_WIN
-	QNapiCli *cliApp = new QNapiCli(argc, argv);
-	bool useGui = !cliApp->analyze();
+	bool useGui = !QNapiCli::isCliCall(argc, argv);
 #else
 	bool useGui = true;
 #endif
 
-
-	QNapiApp app(argc, argv, useGui, "QNapi");
-
-	QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-	QTranslator cuteTranslator;
-	cuteTranslator.load("qt_" + QLocale::system().name(), resourceDir);
-	app.installTranslator(&cuteTranslator);
-
-#ifndef Q_WS_WIN
-	if(!useGui)
+	if(useGui)
 	{
-		int r = cliApp->exec();
-		delete cliApp;
-		return r;
+		QNapiApp app(argc, argv, true, "QNapi");
+
+		QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+		QTranslator cuteTranslator;
+		cuteTranslator.load("qt_" + QLocale::system().name(), resourceDir);
+		app.installTranslator(&cuteTranslator);
+
+		app.setQuitOnLastWindowClosed(false);
+
+		if(!app.isInstanceAllowed())
+		{
+			for(int i = 0; i < args.size(); i++)
+				app.sendRequest(args[i]);
+			return 0;
+		}
+
+		if(GlobalConfig().firstRun())
+		{
+			if(QMessageBox::question(0, QObject::tr("Pierwsze uruchomienie"),
+					QObject::tr("To jest pierwsze uruchomienie programu QNapi. Czy chcesz go "
+					"teraz skonfigurować?"), QMessageBox::Yes | QMessageBox::No )
+				== QMessageBox::Yes )
+			{
+				app.showSettings();
+			}
+		}
+
+		// Jesli podano parametry, ustawiamy tzw. batch mode
+		if(args.size() > 0)
+		{
+			app.progress()->setBatchMode(true);
+	
+			if(QFileInfo(args.at(0)).isDir())
+			{
+				app.progress()->setBatchMode(true);
+				app.showScanDialog(args.at(0));
+			}
+			else
+			{
+				app.progress()->enqueueFiles(args);
+				if(!app.progress()->download()) return 1;
+			}
+		}
+
+		// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u
+		// badz pokazac okno wyboru plikow z filmami
+		if(!app.progress()->isBatchMode())
+		{
+			// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
+			if(!QSystemTrayIcon::isSystemTrayAvailable())
+			{
+				app.progress()->setBatchMode(true);
+				if(!app.showOpenDialog())
+					return 1;
+			}
+			else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
+			{
+				app.createTrayIcon();
+			}
+		}
+
+		return app.exec();
 	}
 	else
 	{
-		delete cliApp;
+		QNapiCli app(argc, argv);
+		return app.exec();
 	}
-#endif
-
-	app.setQuitOnLastWindowClosed(false);
-
-	if(!app.isInstanceAllowed())
-	{
-		for(int i = 0; i < args.size(); i++)
-			app.sendRequest(args[i]);
-		return 0;
-	}
-
-	if(GlobalConfig().firstRun())
-	{
-		if(QMessageBox::question(0, QObject::tr("Pierwsze uruchomienie"),
-				QObject::tr("To jest pierwsze uruchomienie programu QNapi. Czy chcesz go "
-				"teraz skonfigurować?"), QMessageBox::Yes | QMessageBox::No )
-			== QMessageBox::Yes )
-		{
-			app.showSettings();
-		}
-	}
-	
-	// Jesli podano parametry, ustawiamy tzw. batch mode
-	if(args.size() > 0)
-	{
-		app.progress()->setBatchMode(true);
-
-		if(QFileInfo(args.at(0)).isDir())
-		{
-			app.progress()->setBatchMode(true);
-			app.showScanDialog(args.at(0));
-		}
-		else
-		{
-			app.progress()->enqueueFiles(args);
-			if(!app.progress()->download()) return 1;
-		}
-	}
-
-	// Jesli nie dzialamy w trybie pobierania, mozemy ew. utworzyc ikone w tray-u
-	// badz pokazac okno wyboru plikow z filmami
-	if(!app.progress()->isBatchMode())
-	{
-		// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
-		if(!QSystemTrayIcon::isSystemTrayAvailable())
-		{
-			app.progress()->setBatchMode(true);
-			if(!app.showOpenDialog())
-				return 1;
-		}
-		else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
-		{
-			app.createTrayIcon();
-		}
-	}
-
-	return app.exec();
 }

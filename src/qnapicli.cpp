@@ -14,17 +14,42 @@
 
 #include "qnapicli.h"
 
-bool QNapiCli::analyze()
+bool QNapiCli::isCliCall(int argc, char **argv)
 {
 	QString p;
 
-	for(int i = 1; i < m_argc; i++)
+	for(int i = 1; i < argc; i++)
 	{
-		p = m_argv[i];
+		p = argv[i];
+		if( (p == "--help") || (p == "-h") ||
+			(p == "--help-languages") || (p == "-hl") ||
+			(p == "--console") || (p == "-c") ||
+			(p == "--quiet") || (p == "-q") )
+		{
+			return true;	
+		}
+	}
+
+	return false;
+}
+
+bool QNapiCli::analyze()
+{
+	QString p;
+	QStringList args = arguments();
+
+	for(int i = 1; i < args.size(); i++)
+	{
+		p = args[i];
 
 		if((p == "--help") || (p == "-h"))
 		{
 			mode = CM_HELP;
+			return true;
+		}
+		else if((p == "--help-languages") || (p == "-hl"))
+		{
+			mode = CM_HELP_LANGUAGES;
 			return true;
 		}
 		else if((p == "--console") || (p == "-c"))
@@ -35,6 +60,32 @@ bool QNapiCli::analyze()
 		else if((p == "--quiet") || (p == "-q"))
 		{
 			mode = CM_QUIET;
+			showPolicy = SLP_NEVER_SHOW;
+		}
+		else if((p == "--lang") || (p == "-l"))
+		{
+			++i;
+			if(i >= args.size())
+				return false;
+
+			p = args[i];
+
+			QNapiLanguage L(p);
+			lang = L.toTwoLetter();
+			if(lang.isEmpty())
+			{
+				printCli(QString("Niepoprawny kod jezykowy: %1").arg(p));
+				return false;
+			}
+		}
+		else if((p == "--show-list") || (p == "-s"))
+		{
+			if(mode != CM_QUIET)
+				showPolicy = SLP_SHOW;
+		}
+		else if((p == "--dont-show-list") || (p == "-d"))
+		{
+			showPolicy = SLP_NEVER_SHOW;
 		}
 		else if(QFileInfo(p).isFile())
 		{
@@ -47,25 +98,30 @@ bool QNapiCli::analyze()
 		mode = CM_CONSOLE;
 #endif
 
-	return (mode == CM_CONSOLE) || (mode == CM_QUIET);
+	return true;
 }
 
 int QNapiCli::exec()
 {
-	if(mode != CM_QUIET)
-		printCli(QString("QNapi %1, (C) 2008 Krzemin, http://krzemin.iglu.cz/qnapi\n")
-						.arg(QNAPI_DISPLAYABLE_VERSION));
+	if(!analyze())
+		return -1;
 
-	if(mode == CM_HELP)
+	if(mode == CM_UNSET)
+		return 1;
+
+	if(mode != CM_QUIET)
+		printHeader();
+
+	if(mode == CM_HELP_LANGUAGES)
 	{
-		printHelp();
+		printHelpLanguages();
 		return 0;
 	}
 
-	if(movieList.empty())
+	if((mode == CM_HELP) || ((mode == CM_CONSOLE) && (movieList.isEmpty())))
 	{
-		printCli("Nie podano sciezki do pliku z filmem!");
-		return 1;
+		printHelp();
+		return 0;
 	}
 
 	if(!QNapi::checkP7ZipPath())
@@ -87,8 +143,11 @@ int QNapiCli::exec()
 	{
 		printCli(QString("Błąd: ") + napi->error());
 		delete napi;
-		return 1;
+		return 4;
 	}
+	
+	if(lang.isEmpty())
+		lang = GlobalConfig().language();
 
 	foreach(QString movie, movieList)
 	{
@@ -111,7 +170,7 @@ int QNapiCli::exec()
 		foreach(QString e, napi->listLoadedEngines())
 		{
 			printCli(QString(QString("   szukanie napisów (%1)...").arg(e)));
-			found = napi->lookForSubtitles(GlobalConfig().language(), e) || found;
+			found = napi->lookForSubtitles(lang, e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;
@@ -125,8 +184,16 @@ int QNapiCli::exec()
 
 		int selIdx = 0;
 
+		bool showList = false;
+		bool napiShowList = napi->needToShowList();
+
+		if((mode != CM_QUIET) && (showPolicy != SLP_NEVER_SHOW))
+			showList = napiShowList;
+		else if(showPolicy == SLP_SHOW)
+			showList = true;
+		
 		// jesli mozna i potrzeba, listujemy dostepne napisy
-		if((mode != CM_QUIET) && (napi->needToShowList()))
+		if(showList)
 		{
 			bool ok = false;
 			
@@ -155,14 +222,15 @@ int QNapiCli::exec()
 							.arg(s.engine)
 							.arg(resolution));
 			}
+
 			while(!ok)
 			{
 				std::cout << "   wybierz napisy do pobrania: ";
 				char line[8];
 				std::cin.getline(line, 8);
-				
+
 				selIdx = QString(line).toInt(&ok);
-	
+
 				if(!ok)
 				{
 					printCli("   wpisz liczbe!");
@@ -174,8 +242,12 @@ int QNapiCli::exec()
 					printCli("   wpisz liczbe z listy!");
 				}
 			}
-			
+
 			--selIdx;
+		}
+		else
+		{
+			selIdx = napi->bestIdx();
 		}
 
 		if(selIdx == -1) continue;
@@ -216,19 +288,46 @@ int QNapiCli::exec()
 	return 0;
 }
 
+void QNapiCli::printHeader()
+{
+	printCli(QString("QNapi %1, (C) 2008-2009 Krzemin, http://krzemin.iglu.cz/qnapi\n")
+				.arg(QNAPI_DISPLAYABLE_VERSION));
+}
+
 void QNapiCli::printHelp()
 {
-	printCli(QString("QNapi jest programem do automatycznego pobierania i dopasowywania"));
-	printCli(QString("napisow do filmow, korzystajacym z bazy programu NAPI-PROJEKT.\n"));
 	printCli(QString("QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.\n"));
-	printCli(QString("Uzycie programu: %1 [opcje] [lista plikow]").arg(m_argv[0]));
+	printCli(QString("Skladnia: %1 [opcje] [lista plikow]").arg(QFileInfo(arguments().at(0)).fileName()));
 	printCli(QString("Dostepne opcje:"));
-	printCli(QString("    -c, --console          pobieranie napisow z konsoli"));
-	printCli(QString("    -l, --show-list        pokazuj liste napisow"));
-	printCli(QString("    -d, --dont-show-list   nie pokazuj listy napisow"));
-	printCli(QString("    -q, --quiet            pobiera napisy nie wypisujac zadnych komunikatow"));
-	printCli(QString("                           ani nie pokazujac zadnych okien (implikuje -d)"));
-	printCli(QString("    -h, --help             pokazuje tekst pomocy, ktory wlasnie czytasz\n"));
+	printCli(QString("    -c,  --console          pobieranie napisow z konsoli"));
+	printCli(QString("    -q,  --quiet            pobiera napisy nie wypisujac zadnych komunikatow"));
+	printCli(QString("                            ani nie pokazujac zadnych okien (implikuje -d)\n"));
+	printCli(QString("    -s,  --show-list        pokazuj liste napisow (dziala tylko z -c)"));
+	printCli(QString("    -d,  --dont-show-list   nie pokazuj listy napisow (dziala tylko z -c)\n"));
+	printCli(QString("    -l,  --lang [jezyk]     pobieraj napisy w zadanym jezyku\n"));
+	printCli(QString("    -h,  --help             pokazuje tekst pomocy"));
+	printCli(QString("    -hl, --help-languages   listuje jezyki, w jakich mozna pobierac napisy\n"));
+}
+
+void QNapiCli::printHelpLanguages()
+{
+	printCli(QString("Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym"));
+	printCli(QString("im dwuliterowych kodow:\n"));
+	
+	QNapiLanguage L;
+	QStringList langs = L.listLanguages();
+	
+	foreach(QString lang, langs)
+	{
+		L.setLanguage(lang);
+		printCli(QString(" %1 - %2").arg(L.toTwoLetter()).arg(lang));
+	}
+
+	L.setLanguage(GlobalConfig().language());
+
+	printCli(QString("\nAktualnie ustawiony, domyslny jezyk napisow: %1 (%2)")
+				.arg(L.toFullName()).arg(L.toTwoLetter()));
+
 }
 
 void QNapiCli::printCli(const QString & string)

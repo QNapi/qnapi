@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-	QStringList args;
+	QStringList pathList;
 	for(int i = 1; i < argc; i++)
 	{
 		QString p = argv[i];
@@ -39,21 +39,17 @@ int main(int argc, char **argv)
 		if(p.startsWith("file://"))
 			p = p.remove(0, 7);
 
-		if((i == 1) && QFileInfo(p).isDir())
+		if((pathList.size() == 0) && QFileInfo(p).isDir())
 		{
-			args << p;
+			pathList << p;
 			break;
 		}
 
 		if(QFileInfo(p).isFile())
-			args << p;
+			pathList << p;
 	}
 
-#ifndef Q_WS_WIN
 	bool useGui = !QNapiCli::isCliCall(argc, argv);
-#else
-	bool useGui = true;
-#endif
 
 	if(useGui)
 	{
@@ -68,8 +64,8 @@ int main(int argc, char **argv)
 
 		if(!app.isInstanceAllowed())
 		{
-			for(int i = 0; i < args.size(); i++)
-				app.sendRequest(args[i]);
+			for(int i = 0; i < pathList.size(); i++)
+				app.sendRequest(pathList[i]);
 			return 0;
 		}
 
@@ -85,18 +81,51 @@ int main(int argc, char **argv)
 		}
 
 		// Jesli podano parametry, ustawiamy tzw. batch mode
-		if(args.size() > 0)
+		if(pathList.size() > 0)
 		{
 			app.progress()->setBatchMode(true);
-	
-			if(QFileInfo(args.at(0)).isDir())
+
+			QString batchLang, p;
+			bool invalidLang = false;
+
+			for(int i = 1; i < argc; i++)
 			{
-				app.progress()->setBatchMode(true);
-				app.showScanDialog(args.at(0));
+				p = argv[i];
+				
+				if((p == "-l") || (p == "--language"))
+				{
+					++i;
+					if(i < argc)
+					{
+						batchLang = QNapiLanguage(argv[i]).toTwoLetter();
+						if(batchLang.isEmpty())
+							invalidLang = true;
+					} else invalidLang = true;
+					break;
+				}
+			}
+
+			if(invalidLang)
+			{
+				if(QMessageBox::question(0, "QNapi", "Niepoprawny kod językowy!\n"
+						"Czy chcesz pobrać napisy w domyślnym języku?",
+						QMessageBox::Yes | QMessageBox::No)
+					!= QMessageBox::Yes)
+				{
+					return 0;
+				}
+			}
+
+			app.progress()->setBatchLanguage(batchLang);
+
+			if(QFileInfo(pathList.at(0)).isDir())
+			{
+				if(!app.showScanDialog(pathList.at(0)))
+					return 1;
 			}
 			else
 			{
-				app.progress()->enqueueFiles(args);
+				app.progress()->enqueueFiles(pathList);
 				if(!app.progress()->download()) return 1;
 			}
 		}
@@ -108,9 +137,12 @@ int main(int argc, char **argv)
 			// Jesli nie ma traya, od razu wyswietlamy okienko z wyborem pliku
 			if(!QSystemTrayIcon::isSystemTrayAvailable())
 			{
-				app.progress()->setBatchMode(true);
-				if(!app.showOpenDialog())
-					return 1;
+				if(!app.progress()->isBatchMode())
+				{
+					app.progress()->setBatchMode(true);
+					if(!app.showOpenDialog())
+						return 1;
+				}
 			}
 			else // Jesli ikona w tray-u jest obsligiwana, tworzymy ja
 			{

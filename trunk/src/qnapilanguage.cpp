@@ -16,9 +16,14 @@
 
 QNapiLanguage::QNapiLanguage(QString source) : QObject(0)
 {
-	idx = -1;
-
 	fill_tables();
+
+	setLanguage(source);
+}
+
+void QNapiLanguage::setLanguage(QString source)
+{
+	idx = -1;
 
 	if(source.length() == 2)
 	{
@@ -31,7 +36,7 @@ QNapiLanguage::QNapiLanguage(QString source) : QObject(0)
 	else
 	{
 		idx = names.indexOf(source);
-	}
+	}	
 }
 
 QString QNapiLanguage::toTwoLetter()

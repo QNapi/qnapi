@@ -17,7 +17,6 @@
 
 #include <QObject>
 #include <QStringList>
-#include <QDebug>
 
 class QNapiLanguage : public QObject
 {
@@ -25,7 +24,9 @@ Q_OBJECT
 
 public:
 
-	QNapiLanguage(QString source);
+	QNapiLanguage(QString source = "");
+
+	void setLanguage(QString source);
 
 	QString toTwoLetter();
 	QString toTriLetter();

@@ -18,16 +18,28 @@ bool QNapiCli::isCliCall(int argc, char **argv)
 {
 	QString p;
 
+	#ifdef Q_WS_X11
+		if(getenv("DISPLAY") == 0)
+			return true;
+	#endif
+
 	for(int i = 1; i < argc; i++)
 	{
 		p = argv[i];
-		if( (p == "--help") || (p == "-h") ||
-			(p == "--help-languages") || (p == "-hl") ||
-			(p == "--console") || (p == "-c") ||
+
+		if( (p == "--console") || (p == "-c") ||
 			(p == "--quiet") || (p == "-q") )
 		{
-			return true;	
+			return true;
 		}
+
+#ifndef Q_WS_WIN
+		if( (p == "--help") || (p == "-h") ||
+			(p == "--help-languages") || (p == "-hl"))
+		{
+			return true;
+		}
+#endif
 	}
 
 	return false;
@@ -55,7 +67,14 @@ bool QNapiCli::analyze()
 		else if((p == "--console") || (p == "-c"))
 		{
 			if(mode == CM_UNSET)
+			{
+#ifdef Q_WS_WIN
+				mode = CM_QUIET;
+				showPolicy = SLP_NEVER_SHOW;
+#else
 				mode = CM_CONSOLE;
+#endif
+			}
 		}
 		else if((p == "--quiet") || (p == "-q"))
 		{
@@ -70,8 +89,7 @@ bool QNapiCli::analyze()
 
 			p = args[i];
 
-			QNapiLanguage L(p);
-			lang = L.toTwoLetter();
+			lang = QNapiLanguage(p).toTwoLetter();
 			if(lang.isEmpty())
 			{
 				printCli(QString("Niepoprawny kod jezykowy: %1").arg(p));
@@ -137,15 +155,14 @@ int QNapiCli::exec()
 	}
 
 	QNapi *napi = new QNapi();
-	
 
 	if(!napi->addEngines(GlobalConfig().enginesList()))
 	{
-		printCli(QString("Błąd: ") + napi->error());
+		printCli(QString("Blad: ") + napi->error());
 		delete napi;
 		return 4;
 	}
-	
+
 	if(lang.isEmpty())
 		lang = GlobalConfig().language();
 
@@ -157,11 +174,11 @@ int QNapiCli::exec()
 
 		if(!napi->checkWritePermissions())
 		{
-			printCli(QString("   brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
+			printCli(QString("   Brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
 			continue;
 		}
 
-		printCli(QString(QString("   obliczanie sum kontrolnych...")));
+		printCli(QString(QString("   Obliczanie sum kontrolnych...")));
 		napi->checksum();
 
 		bool found = false;
@@ -169,7 +186,7 @@ int QNapiCli::exec()
 
 		foreach(QString e, napi->listLoadedEngines())
 		{
-			printCli(QString(QString("   szukanie napisów (%1)...").arg(e)));
+			printCli(QString(QString("   Szukanie napisow (%1)...").arg(e)));
 			found = napi->lookForSubtitles(lang, e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
@@ -178,7 +195,7 @@ int QNapiCli::exec()
 
 		if(!found)
 		{
-			printCli(QString(QString("   nie znaleziono napisow!")));
+			printCli(QString(QString("   Nie znaleziono napisow!")));
 			continue;
 		}
 
@@ -191,29 +208,29 @@ int QNapiCli::exec()
 			showList = napiShowList;
 		else if(showPolicy == SLP_SHOW)
 			showList = true;
-		
+
 		// jesli mozna i potrzeba, listujemy dostepne napisy
 		if(showList)
 		{
 			bool ok = false;
-			
-			printCli("   znalezione napisy:");			
-			
+
+			printCli(QString("   0)\tNie pobieraj napisow dla tego filmu"));
+			printCli("   Znalezione napisy:");
+
 			int i = 1;
 
 			QList<QNapiSubtitleInfo> list = napi->listSubtitles();
 
-			printCli(QString("   0)\tnie pobieraj napisow dla tego filmu"));
 
 			foreach(QNapiSubtitleInfo s, list)
 			{
 				QString resolution = "";
-					
+
 				if(s.resolution == SUBTITLE_GOOD)
 					resolution = " (good)";
 				else if(s.resolution == SUBTITLE_BAD)
 					resolution = " (bad)";
-					
+
 				printCli(QString("   %1)\t%2 (%3) (%4) (%5)%6")
 							.arg(i++)
 							.arg(s.name)
@@ -225,7 +242,7 @@ int QNapiCli::exec()
 
 			while(!ok)
 			{
-				std::cout << "   wybierz napisy do pobrania: ";
+				std::cout << "   Wybierz napisy do pobrania: ";
 				char line[8];
 				std::cin.getline(line, 8);
 
@@ -233,13 +250,13 @@ int QNapiCli::exec()
 
 				if(!ok)
 				{
-					printCli("   wpisz liczbe!");
+					printCli("   Wpisz liczbe!");
 					std::cin.clear();
 				}
 				else if((selIdx > list.size()) || (selIdx < 0))
 				{
 					ok = false;
-					printCli("   wpisz liczbe z listy!");
+					printCli("   Wpisz liczbe z listy!");
 				}
 			}
 
@@ -252,34 +269,34 @@ int QNapiCli::exec()
 
 		if(selIdx == -1) continue;
 
-		printCli(QString(QString("   pobieranie napisow z serwera...")));
+		printCli(QString(QString("   Pobieranie napisow z serwera...")));
 		if(!napi->download(selIdx))
 		{
-			printCli(QString(QString("   nie udało się pobrać napisów!")));
+			printCli(QString(QString("   Nie udalo sie pobrac napisow!")));
 			continue;
 		}
 
-		printCli(QString(QString("   rozpakowywanie napisów...")));
+		printCli(QString(QString("   Rozpakowywanie napisow...")));
 		if(!napi->unpack())
 		{
-			printCli(QString(QString("   nie udało się poprawnie rozpakować napisów!")));
+			printCli(QString(QString("   Nie udało sie poprawnie rozpakowac napisow!")));
 			continue;
 		}
 
-		printCli(QString(QString("   dopasowywanie napisow...")));
+		printCli(QString(QString("   Dopasowywanie napisow...")));
 		if(!napi->match())
 		{
-			printCli(QString(QString("   nie udalo sie dopasowac napisow!")));
+			printCli(QString(QString("   Nie udalo sie dopasowac napisow!")));
 			delete napi;
 			continue;
 		}
 
 		if(napi->ppEnabled())
 		{
-			printCli(QString(QString("   przetwarzanie pobranych napisow...")));
+			printCli(QString(QString("   Przetwarzanie pobranych napisow...")));
 			napi->pp();
 		}
-		
+
 		napi->cleanup();
 	}
 
@@ -313,10 +330,10 @@ void QNapiCli::printHelpLanguages()
 {
 	printCli(QString("Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym"));
 	printCli(QString("im dwuliterowych kodow:\n"));
-	
+
 	QNapiLanguage L;
 	QStringList langs = L.listLanguages();
-	
+
 	foreach(QString lang, langs)
 	{
 		L.setLanguage(lang);

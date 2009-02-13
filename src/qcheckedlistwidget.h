@@ -64,5 +64,6 @@ class QCheckedListWidget : public QListWidget
 				item(i)->setCheckState(state);
 			}
 		}
+};
 
 #endif // __QCHECKEDLISTWIDGET__H__

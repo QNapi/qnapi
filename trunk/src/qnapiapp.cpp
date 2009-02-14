@@ -225,6 +225,8 @@ bool QNapiApp::showOpenDialog(QString engine)
 
 bool QNapiApp::showScanDialog(QString init_dir)
 {
+	if(!f_scan) f_scan = new frmScan();
+
 	if(f_scan->isVisible())
 	{
 		f_scan->raise();

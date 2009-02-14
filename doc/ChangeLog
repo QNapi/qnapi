@@ -9,8 +9,6 @@ QNapi ChangeLog:
  * liczne ulepszenia w skanowaniu katalogow
  * przywracanie domyslnych ustawien
  * znacznie rozbudowany tekstowy interfejs programu
- * obsluga interfejsu cichego (wywolanie programu z argumentem -q) pod systemami
-   Windows
  ? poprawiona integracja z menedzerami plikow
  * usuniete znalezione bledy, dodane nowe
 

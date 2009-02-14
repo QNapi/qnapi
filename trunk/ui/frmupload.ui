@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>200</height>
+    <width>679</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="minimumSize" >
@@ -66,14 +66,14 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="5" >
+   <item row="3" column="0" colspan="5" >
     <widget class="QLabel" name="lbAction" >
      <property name="text" >
       <string/>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="5" >
+   <item row="4" column="0" colspan="5" >
     <widget class="QProgressBar" name="pbProgress" >
      <property name="enabled" >
       <bool>false</bool>
@@ -83,12 +83,12 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="5" >
+   <item row="5" column="0" colspan="5" >
     <layout class="QHBoxLayout" >
      <item>
       <widget class="QLabel" name="lbFoldersCount" >
        <property name="text" >
-        <string>Folderów: &lt;b>0&lt;/b></string>
+        <string>Katalogów: &lt;b>0&lt;/b></string>
        </property>
       </widget>
      </item>
@@ -136,6 +136,16 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0" colspan="3" >
+    <widget class="QCheckBox" name="cbFollowSymLinks" >
+     <property name="text" >
+      <string>Podążaj za dowiązaniami symbolicznymi</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

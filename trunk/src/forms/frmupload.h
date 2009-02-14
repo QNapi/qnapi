@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDesktopWidget>
+#include <QSet>
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
@@ -34,6 +35,7 @@ class ScanThread : public QNapiThread
 	public:
 		void run();
 		void setSearchPath(const QString & path) { searchPath = path; }
+		void setFollowSymLinks(bool follow) { followSymLinks = follow; }
 
 		QStringList fileList;
 		unsigned int folders, movies, subtitles;
@@ -43,9 +45,11 @@ class ScanThread : public QNapiThread
 		void folderChange(const QString & folder);
 
 	private:
-		bool doScan(const QString & path);
+		bool doScan(const QString & path, QDir::Filters filters);
 		QString searchPath;
 		QStringList searchFilters;
+		bool followSymLinks;
+		QSet<QString> visited;
 };
 
 class UploadThread : public QNapiThread

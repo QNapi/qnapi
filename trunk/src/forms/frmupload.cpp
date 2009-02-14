@@ -105,17 +105,19 @@ void frmUpload::pbScanClicked()
 		ui.leSelectDirectory->setEnabled(false);
 		ui.pbSelectDirectory->setEnabled(false);
 		ui.pbScan->setText(tr("Przerwij"));
-		ui.lbAction->setText(tr("Skanowanie folderów..."));
+		ui.lbAction->setText(tr("Skanowanie katalogów..."));
 		ui.lbFoldersCount->setEnabled(false);
-		ui.lbFoldersCount->setText(tr("Folderów: <b>0</b>"));
+		ui.lbFoldersCount->setText(tr("Katalogów: <b>0</b>"));
 		ui.lbMoviesCount->setEnabled(false);
 		ui.lbMoviesCount->setText(tr("Filmów: <b>0</b>"));
 		ui.lbSubtitlesCount->setEnabled(false);
 		ui.lbSubtitlesCount->setText(tr("Napisów: <b>0</b>"));
 		ui.pbProgress->setEnabled(false);
 		ui.pbUpload->setEnabled(false);
+		ui.cbFollowSymLinks->setEnabled(false);
 
 		scanThread.setSearchPath(ui.leSelectDirectory->text());
+		scanThread.setFollowSymLinks(ui.cbFollowSymLinks->isChecked());
 		scanThread.start();
 	}
 	else
@@ -135,6 +137,7 @@ void frmUpload::scanFinished(bool result)
 {
 	ui.leSelectDirectory->setEnabled(true);
 	ui.pbSelectDirectory->setEnabled(true);
+	ui.cbFollowSymLinks->setEnabled(true);
 	ui.pbScan->setText(tr("Skanuj"));
 	ui.lbAction->setText("");
 	
@@ -143,13 +146,13 @@ void frmUpload::scanFinished(bool result)
 		if(scanThread.fileList.size() == 0)
 		{
 			QMessageBox::warning(this, tr("Nie znaleziono napisów"),
-								tr("W wybranym folderze nie znaleziono żadnych napisów!"));
+								tr("W wybranym katalogu nie znaleziono żadnych napisów!"));
 		}
 		else
 		{
 			ui.lbAction->setText(tr("Teraz możesz wysłać napisy na serwer."));
 			ui.lbFoldersCount->setEnabled(true);
-			ui.lbFoldersCount->setText(tr("Folderów: ") + "<b>"
+			ui.lbFoldersCount->setText(tr("Katalogów: ") + "<b>"
 								+ QString::number(scanThread.folders) + "</b>");
 			ui.lbMoviesCount->setEnabled(true);
 			ui.lbMoviesCount->setText(tr("Filmów: ") + "<b>"
@@ -234,24 +237,38 @@ void ScanThread::run()
 	abort = false;
 	folders = movies = subtitles = 0;
 	fileList.clear();
+	visited.clear();
 	searchFilters.clear();
 	searchFilters << "*.avi" << "*.asf" << "*.divx" << "*.dat" << "*.mkv" << "*.mov" << "*.mp4"
 					<< "*.mpeg" << "*.mpg" << "*.ogm" << "*.rm" << "*.rmvb" << "*.wmv";
 
-	emit scanFinished(doScan(searchPath));
+	QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot
+							| QDir::Readable | QDir::Hidden;
+
+	if(!followSymLinks)
+		filters |= QDir::NoSymLinks;
+
+	emit scanFinished(doScan(searchPath, filters));
 }
 
-bool ScanThread::doScan(const QString & path)
+bool ScanThread::doScan(const QString & path, QDir::Filters filters)
 {
 	QString myPath = QFileInfo(path).absoluteFilePath();
+
 	if(!QDir().exists(myPath))
 		return false;
+
+	QString myCPath = QDir(path).canonicalPath();
+
+	if(visited.contains(myCPath))
+		return true;
+
+	visited << myCPath;
 
 	emit folderChange(myPath);
 	++folders;
 
-	QFileInfoList list = QDir(myPath).entryInfoList(searchFilters, QDir::AllDirs | QDir::Files
-							| QDir::NoDotAndDotDot | QDir::Readable | QDir::Hidden);
+	QFileInfoList list = QDir(myPath).entryInfoList(searchFilters, filters);
 
 	for(QFileInfoList::iterator p=list.begin(); p != list.end(); p++)
 	{
@@ -259,7 +276,7 @@ bool ScanThread::doScan(const QString & path)
 
 		if((*p).isDir() && ((*p).absoluteFilePath() != myPath))
 		{
-			if(!doScan((*p).absoluteFilePath()))
+			if(!doScan((*p).absoluteFilePath(), filters))
 				return false;
 		}
 		else

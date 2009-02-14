@@ -27,6 +27,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(ui.leDirectory, SIGNAL(textChanged(QString)), this, SLOT(leDirectoryTextChanged()));
 	connect(ui.pbScan, SIGNAL(clicked()), this, SLOT(pbScanClicked()));
 	connect(&scanThread, SIGNAL(addFile(QString)), this, SLOT(addFile(QString)));
+	connect(&scanThread, SIGNAL(folderChange(QString)), this, SLOT(folderChange(QString)));
 	connect(&scanThread, SIGNAL(scanFinished(bool)), this, SLOT(scanFinished()));
 	connect(ui.pbSelectAll, SIGNAL(clicked()), this, SLOT(pbSelectAllClicked()));
 	connect(ui.pbUnselectAll, SIGNAL(clicked()), this, SLOT(pbUnselectAllClicked()));
@@ -120,7 +121,7 @@ void frmScan::pbScanClicked()
 		ui.leDirectory->setEnabled(false);
 		ui.pbDirectorySelect->setEnabled(false);
 		ui.pbScan->setText(tr("Przerwij"));
-//		ui.lbAction->setText(tr("Skanowanie folderów..."));
+		ui.lbAction->setText(tr("Skanowanie katalogów..."));
 		ui.pbGet->setEnabled(false);
 		enableControlWidgets(false);
 		enableFilesWidgets(false);
@@ -131,13 +132,14 @@ void frmScan::pbScanClicked()
 		scanThread.setFilters(ui.cbFilters->currentText());
 		scanThread.setSkipFilters(ui.leSkipFilters->text());
 		scanThread.setSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
+		scanThread.setFollowSymLinks(ui.cbFollowSymLinks->isChecked());
 
 		scanThread.start();
 	}
 	else
 	{
 		scanThread.requestAbort();
-//		ui.lbAction->setText(tr("Przerywanie skanowania..."));
+		ui.lbAction->setText(tr("Przerywanie skanowania katalogów..."));
 		ui.pbScan->setEnabled(false);
 		qApp->processEvents();
 		scanThread.wait();
@@ -158,14 +160,19 @@ void frmScan::addFile(const QString & fileName)
 	ui.lwMovies->addItem(item);
 }
 
+void frmScan::folderChange(const QString & dirName)
+{
+	ui.lbAction->setText(QString("Skanowanie katalogu <b>%1</b>..").arg(dirName));
+}
+
 void frmScan::scanFinished()
 {
 	enableControlWidgets(true);
 	enableFilesWidgets(ui.lwMovies->count() > 0);
 	ui.pbScan->setText("Skanuj");
-//	ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
-//							? "Zaznacz filmy, do których chcesz pobrać napisy."
-//							: "Nie znaleziono plików z filmami."));
+	ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
+							? "Zaznacz filmy, do których chcesz pobrać napisy."
+							: "Nie znaleziono plików z filmami."));
 }
 
 void frmScan::enableControlWidgets(bool enable)
@@ -178,6 +185,7 @@ void frmScan::enableControlWidgets(bool enable)
 	ui.lbSkip->setEnabled(enable);
 	ui.leSkipFilters->setEnabled(enable);
 	ui.cbSkipIfSubtitlesExists->setEnabled(enable);
+	ui.cbFollowSymLinks->setEnabled(enable);
 }
 
 void frmScan::enableFilesWidgets(bool enable)
@@ -248,19 +256,34 @@ void ScanFilesThread::run()
 {
 	abort = false;
 	fileList.clear();
-	emit scanFinished(doScan(searchPath));
+	visited.clear();
+
+	QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot
+							| QDir::Readable | QDir::Hidden;
+
+	if(!followSymLinks)
+		filters |= QDir::NoSymLinks;
+
+	emit scanFinished(doScan(searchPath, filters));
 }
 
-bool ScanFilesThread::doScan(const QString & path)
+bool ScanFilesThread::doScan(const QString & path, QDir::Filters filters)
 {
 	QString myPath = QFileInfo(path).absoluteFilePath();
+
 	if(!QDir().exists(myPath))
 		return false;
+	
+	QString myCPath = QDir(path).canonicalPath();
 
+	if(visited.contains(myCPath))
+		return true;
+	
+	visited << myCPath;
+	
 	emit folderChange(myPath);
 
-	QFileInfoList list = QDir(myPath).entryInfoList(scanFilters, QDir::AllDirs | QDir::Files
-							| QDir::NoDotAndDotDot | QDir::Readable | QDir::Hidden);
+	QFileInfoList list = QDir(myPath).entryInfoList(scanFilters, filters);
 
 	for(QFileInfoList::iterator p=list.begin(); p != list.end(); p++)
 	{
@@ -268,7 +291,7 @@ bool ScanFilesThread::doScan(const QString & path)
 
 		if((*p).isDir() && ((*p).absoluteFilePath() != myPath))
 		{
-			if(!doScan((*p).absoluteFilePath()))
+			if(!doScan((*p).absoluteFilePath(), filters))
 				return false;
 		}
 		else

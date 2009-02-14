@@ -131,7 +131,7 @@ void QNapiApp::createTrayIcon()
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(tryQuit()));
 
 	napiSubMenu = new QMenu(0);
-	napiSubMenu->setTitle(tr("napiprojekt.pl"));
+	napiSubMenu->setTitle(tr("NapiProjekt"));
 	napiSubMenu->addAction(napiGetAction);
 	napiSubMenu->addSeparator();
 	napiSubMenu->addAction(napiAddAction);
@@ -141,7 +141,7 @@ void QNapiApp::createTrayIcon()
 	napiSubMenu->addAction(napiCreateUserAction);
 
 	osSubMenu = new QMenu(0);
-	osSubMenu->setTitle(tr("opensubtitles.org"));
+	osSubMenu->setTitle(tr("OpenSubtitles"));
 	osSubMenu->addAction(osGetAction);
 	osSubMenu->addAction(osAddAction);
 

@@ -48,7 +48,7 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.cbSkipIfSubtitlesExists->setChecked(GlobalConfig().scanSkipIfSubtitlesExists());
 
 	iconFilm = QIcon(":/ui/film.png");
-	
+
 	// workaround dla compiza?
 	move((QApplication::desktop()->width() - width()) / 2, 
 		(QApplication::desktop()->height() - height()) / 2);
@@ -60,10 +60,16 @@ void frmScan::setInitDir(const QString & dir)
 	{
 		ui.leDirectory->setText(QFileInfo(dir).absoluteFilePath());
 	}
-}	
+}
 
 void frmScan::closeEvent(QCloseEvent *event)
 {
+	if(scanThread.isRunning())
+	{
+		scanThread.requestAbort();
+		scanThread.wait();
+	}
+
 	QList<QString> scanFilters;
 	for(int i = 0; i < ui.cbFilters->count(); i++)
 	{
@@ -77,6 +83,12 @@ void frmScan::closeEvent(QCloseEvent *event)
 	GlobalConfig().save();
 
 	event->accept();
+}
+
+void frmScan::keyPressEvent(QKeyEvent * event)
+{
+	if(event->key() == Qt::Key_Escape)
+		close();
 }
 
 void frmScan::selectDirectory()

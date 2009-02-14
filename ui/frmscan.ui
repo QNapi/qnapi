@@ -130,7 +130,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" >
+   <item row="6" column="0" >
     <layout class="QVBoxLayout" >
      <property name="topMargin" >
       <number>10</number>
@@ -161,6 +161,13 @@
        </property>
        <property name="horizontalScrollMode" >
         <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbAction" >
+       <property name="text" >
+        <string/>
        </property>
       </widget>
      </item>
@@ -220,6 +227,16 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item row="5" column="0" >
+    <widget class="QCheckBox" name="cbFollowSymLinks" >
+     <property name="text" >
+      <string>Podążaj za dowiązaniami symbolicznymi</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

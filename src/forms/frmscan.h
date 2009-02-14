@@ -17,6 +17,7 @@
 
 #include "ui_frmscan.h"
 #include <QtGui>
+#include <QSet>
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
@@ -35,6 +36,7 @@ class ScanFilesThread : public QNapiThread
 		void setFilters(const QString & filters) { scanFilters = filters.split(" "); }
 		void setSkipFilters(const QString & filters) { skipFilters = filters.split(" "); }
 		void setSkipIfSubtitlesExists(bool skip) { skipIfSubtitlesExists = skip; }
+		void setFollowSymLinks(bool follow) { followSymLinks = follow; }
 
 		QStringList fileList;
 
@@ -44,10 +46,11 @@ class ScanFilesThread : public QNapiThread
 		void folderChange(const QString & folder);
 
 	private:
-		bool doScan(const QString & path);
+		bool doScan(const QString & path, QDir::Filters filters);
 		QString searchPath;
 		QStringList scanFilters, skipFilters;
-		bool skipIfSubtitlesExists;
+		bool skipIfSubtitlesExists, followSymLinks;
+		QSet<QString> visited;
 };
 
 
@@ -88,6 +91,7 @@ Q_OBJECT
 		void leDirectoryTextChanged();
 		void pbScanClicked();
 		void addFile(const QString & fileName);
+		void folderChange(const QString & dirName);
 		void scanFinished();
 		void enableControlWidgets(bool enable);
 		void enableFilesWidgets(bool enable);

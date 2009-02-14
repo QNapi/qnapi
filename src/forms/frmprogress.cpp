@@ -226,13 +226,13 @@ void frmProgress::downloadFinished()
 			}
 			else
 			{
-				QString msg = tr("Nie znaleziono napisów dla:\n%1.").arg(QFileInfo(queue[0]).fileName());
+				QString msg = tr("Nie pobrano napisów dla:\n%1.").arg(QFileInfo(queue[0]).fileName());
 #ifndef Q_WS_MAC
 				if(QSystemTrayIcon::supportsMessages() && !batchMode)
-					((QNapiApp*)qApp)->showTrayMessage(tr("Nie znaleziono napisów"), msg);
+					((QNapiApp*)qApp)->showTrayMessage(tr("Nie pobrano napisów"), msg);
 				else
 #endif
-					QMessageBox::information(0, tr("Nie znaleziono napisów"), msg);
+					QMessageBox::information(0, tr("Nie pobrano napisów!"), msg);
 			}
 		}
 	}
@@ -333,6 +333,8 @@ void GetThread::run()
 
 	emit progressChange(0, queue.size(), 0.0f);
 
+	QString language = !lang.isEmpty() ? lang : GlobalConfig().language();
+
 	for(int i = 0; i < queue.size(); i++)
 	{
 		QFileInfo fi(queue[i]);
@@ -358,13 +360,13 @@ void GetThread::run()
 		ABORT_POINT
 
 		bool found = false;
-		SearchPolicy sp = GlobalConfig().searchPolicy();
+		SearchPolicy sp = GlobalConfig().searchPolicy();		
 		
 		foreach(QString e, napi->listLoadedEngines())
 		{
 			emit progressChange(i, queue.size(), 0.4);
-			emit actionChange(tr("Szukanie napisów..."));
-			found = napi->lookForSubtitles(GlobalConfig().language(), e) || found;
+			emit actionChange(tr("Szukanie napisów (%1)...").arg(e));
+			found = napi->lookForSubtitles(language, e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;

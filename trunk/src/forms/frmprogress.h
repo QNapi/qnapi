@@ -57,13 +57,12 @@ class GetThread : public QNapiThread
 			connect(this, SIGNAL(criticalError(const QString &)),
 					this, SLOT(setCriticalMessage(const QString &)));
 		}
-		void setEngines(QStringList enginesList)
-		{
-			engines = enginesList;
-		}
+		void setEngines(QStringList enginesList) {engines = enginesList;}
+		void setLanguage(QString language){ lang = language; }
 		void run();
 
 		QStringList queue, gotList, failedList, engines;
+		QString lang;
 		int napiSuccess, napiFail;
 		QString criticalMessage;
 		QMutex waitForDlg;
@@ -96,6 +95,7 @@ class frmProgress: public QWidget
 		void downloadFinished();
 
 		void setBatchMode(bool value) { batchMode = value; }
+		void setBatchLanguage(QString lang) { getThread.setLanguage(lang); }
 		bool isBatchMode() { return batchMode; }
 
 	private:
@@ -109,7 +109,6 @@ class frmProgress: public QWidget
 
 		bool batchMode, showSummary, closeRequested;
 		QMutex mutex;
-
 };
 
 #endif

@@ -59,8 +59,9 @@ Q_OBJECT
 	public:
 		frmScan(QWidget *parent = 0, Qt::WFlags f = 0);
 		~frmScan(){};
-		
+
 		void setInitDir(const QString & dir);
+
 		QStringList getSelectedFiles()
 		{
 			return selectedFiles;
@@ -71,8 +72,9 @@ Q_OBJECT
 		void accept();
 
 	private:
+
 		void closeEvent(QCloseEvent *event);
-		
+		void keyPressEvent(QKeyEvent * event);
 
 		Ui::frmScan ui;
 		ScanFilesThread scanThread;
@@ -81,6 +83,7 @@ Q_OBJECT
         QStringList selectedFiles;
 
 	private slots:
+
 		void selectDirectory();
 		void leDirectoryTextChanged();
 		void pbScanClicked();

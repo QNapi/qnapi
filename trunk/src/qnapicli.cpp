@@ -16,12 +16,16 @@
 
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
-	QString p;
-
+#ifdef Q_WS_WIN
+	return false;
+#else
+	
 	#ifdef Q_WS_X11
 		if(getenv("DISPLAY") == 0)
 			return true;
 	#endif
+
+	QString p;
 
 	for(int i = 1; i < argc; i++)
 	{
@@ -33,16 +37,15 @@ bool QNapiCli::isCliCall(int argc, char **argv)
 			return true;
 		}
 
-#ifndef Q_WS_WIN
 		if( (p == "--help") || (p == "-h") ||
 			(p == "--help-languages") || (p == "-hl"))
 		{
 			return true;
 		}
-#endif
 	}
 
 	return false;
+#endif
 }
 
 bool QNapiCli::analyze()

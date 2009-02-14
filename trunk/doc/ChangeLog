@@ -1,13 +1,18 @@
 QNapi ChangeLog:
 ================
 
-2009-01-?? v0.1.6:
+2009-02-?? v0.1.6:
  * wsparcie dla roznych silnikow pobierania napisow, w tym eksperymentalna
    obsluga serwisu opensubtitles.org
  * usprawnione przetwarzanie napisow
  * skanowanie katalogu zadanego jako argument wywolania aplikacji
- * ???
- * poprawki wielu znalezionych bledow
+ * liczne ulepszenia w skanowaniu katalogow
+ * przywracanie domyslnych ustawien
+ * znacznie rozbudowany tekstowy interfejs programu
+ * obsluga interfejsu cichego (wywolanie programu z argumentem -q) pod systemami
+   Windows
+ ? poprawiona integracja z menedzerami plikow
+ * usuniete znalezione bledy, dodane nowe
 
 2008-05-22 v0.1.5:
  * uregulowane kwestie licencyjne; od tej chwili program wydawany jest na licencji

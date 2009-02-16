@@ -1,18 +1,32 @@
 .TH "qnapi" 1
 .SH NAZWA
-qnapi \- program do pobierania napisow z bazy NAPI-PROJEKT.
+qnapi \- narzedzie do automatycznego pobierania i dopasowywania napisow do filmow
+
 .SH SKLADNIA
 \fBqnapi\fP [opcje] [lista plikow]
 .SH OPIS
+\fBqnapi\fP jest programem do automatycznego pobierania i dopasowywania napisow do filmow. Program korzysta z zasobow serwisow napiprojekt.pl i opensubtitles.com.
+
 \fBqnapi\fP potrafi pracowac w dwoch trybach: GUI oraz konsolowym. Podanie listy plikow (filmowych) zmusi program do pobrania napisow dla zadanych filmow.
 .SH OPCJE
-    -c, \-\-console    pobieranie napisow z konsoli
-    -q, \-\-quiet      pobiera napisy nie wypisujac zadnych komunikatow
-                     ani nie pokazujac zadnych okien
-    -h, \-\-help       pokazuje pomoc programu
+
+ -c,  \-\-console           pobieranie napisow z konsoli
+ -q,  \-\-quiet             pobiera napisy nie wypisujac zadnych
+                          komunikatow ani nie pokazujac zadnych
+                          okien (implikuje -d)
+ -s,  \-\-show\-list         pokazuj liste napisow (dziala tylko
+                          z opcja -c)
+ -d,  \-\-dont\-show\-list    nie pokazuj listy napisow (dziala
+                          tylko z opcja -c)
+ -l,  \-\-lang [jezyk]      pobieraj napisy w zadanym jezyku
+ -h,  \-\-help              pokazuje pomoc programu
+ -hl, \-\-help\-languages    listuje jezyki, w jakich mozna
+                          pobierac napisy
+
 .SH AUTOR
-Copyright (C) 2008 Krzemin <pkrzemin@o2.pl>
+Copyright (C) 2008-2009 Krzemin <pkrzemin@o2.pl>
+http://krzemin.iglu.cz/qnapi
 .SH LICENCJA
-Program QNapi rozprowadzany jest na licencji GNU General Public License w wersji 2. lub kazdej pozniejszej.
+Program QNapi rozprowadzany jest na licencji GNU General Public License w wersji drugiej lub kazdej pozniejszej.
 .SH BLEDY
 Wszelkie zauwazone bledy w programie mozna zglaszac w trackerze na sourceforge.net: http://sourceforge.net/projects/qnapi

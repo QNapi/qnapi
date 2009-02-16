@@ -1,110 +1,112 @@
 QNapi
 =====
 
-Autor:			Krzemin <pkrzemin@o2.pl>
-Strona WWW:		http://krzemin.iglu.cz/qnapi
+Autor:                Krzemin <pkrzemin@o2.pl>
+Strona WWW:           http://krzemin.iglu.cz/qnapi
 
-Ten program rozprowadzany jest na licencji GNU General Public License.
+Ten program rozprowadzany jest na licencji GNU General Public License w wersji
+drugiej lub ka�dej p��niejszej.
 
-QNapi jest nieoficjalnym klonem programu NAPI-PROJEKT (http://napiprojekt.pl)
-napisanym w bibliotece Qt4 z myślą o użytkownikach Linuksa oraz innych
-systemów, pod które oryginalny NAPI-PROJEKT nie jest dostępny. Od wersji
-0.1.4 istnieje także port na systemy Windows. Po więcej informacji zapraszam
-na stronę WWW projektu.
+
+QNapi jest programem do automatycznego pobierania i dopasowywania napisow do
+filmow. Program korzysta z zasobow serwisow napiprojekt.pl i opensubtitles.com.
 
 
 Wymagania
 =========
- * Biblioteka Qt w wersji conajmniej 4.3.0. Jeśli w Twoim systemie jest starsza
-   wersja, musisz ją zaktualizować lub własnoręcznie skompilować źródła, pobrane
-   ze strony http://trolltech.com/developer/downloads/qt/x11
- * Program p7zip. Więcej informacji na stronie http://p7zip.sourceforge.net/
+ * Biblioteka Qt w wersji conajmniej 4.3.0.
+ * Program p7zip. Wiecej informacji na stronie http://p7zip.sourceforge.net
 
 
 Instalacja
 ==========
 
-Aby zainstalować program, skorzystaj z pakietów dla swojej dystrybucji,
-które możesz znależć na stronie programu: http://krzemin.iglu.cz/qnapi
+Aby zainstalowac program pod systemem Linux, skorzystaj z pakietow dla swojej
+dystrybucji, ktore mozesz znalezc w repozytoriach lub na stronie www programu:
+http://krzemin.iglu.cz/qnapi
 
-Jeśli na stronie nie ma pakietów pod Twoją dystrybucję, możesz zainstalować
-program ze źródeł. Do tego będą potrzebne biblioteki Qt4 (libqt4-core,
-libqt4-gui, a do kompilacji także libqt4-dev) oraz program 7z (który
-znajdziesz w pakiecie p7zip-full).
+Jesli pakiety pod Twoja dystrybucje nie sa dostepne, mozesz samodzielnie
+skompilowac program ze zrodel. Do tego potrzebne beda biblioteki deweloperskie
+Qt4 (w niektorych dystrucjach oznaczone jako libqt4-dev lub podobnie)
+i program 7zip (dostepny w pakiecie p7zip-full).
 
-Ściągnij i rozpakuj archiwum .tar.gz ze źródłami programu:
+Pobierz i rozpakuj archiwum .tar.gz z kodem zrodlowym programu:
 
 $ tar -zxvf qnapi-wersja.tar.gz
 
-Przejdź do katalogu ze źródłami:
+Przejdz do katalogu ze zrodlami programu:
 
 $ cd qnapi-wersja
 
-Aby skompilować program, wykonaj po kolei polecenia:
+Aby skompilowac program, wykonaj po kolei polecenia:
 
 $ qmake
-(lub qmake-qt4, jeśli masz zainstalowane również Qt3)
+(lub qmake-qt4)
 
 $ make
 
-Jeśli komenda make zakończy się niepowodzeniem, przejdź do sekcji
-'Błędy kompilacji' w tym dokumencie, aby zobaczyć możliwe przyczyny
-i rozwiązania.
+Jesli powyzsze polecenie zakonczy sie niepowodzeniem, przejdz do sekcji
+'Bledy kompilacji' w tym dokumencie, aby zobaczyc  mozliwe przyczyny
+i proponowane rozwiazania.
 
-Po prawidłowej kompilacji możesz zainstalować program:
+Po prawidlowej kompilacji mozesz zainstalowac program:
 
 $ sudo make install
 
-W tej chwili możesz uruchomić program poleceniem:
+Teraz mozesz uruchomic program poleceniem:
 
 $ qnapi
 
-Aby odinstalować program, wpisz:
+Aby odinstalowac program, wpisz w katalogu ze zrodlami:
 
 $ sudo make uninstall
 
 
-Błędy kompilacji
+Bledy kompilacji
 ================
 
-Jeśli polecenie make wyrzuci błąd podobny do tego:
+Jesli polecenie make zwroci blad podobny do tego:
 
-"make: *** Brak reguł do zrobienia obiektu"
+"make: *** Brak regul do zrobienia obiektu"
 
-Oznacza to, że trzeba ponownie wygenerowac plik Makefile.
+Oznacza to, ze trzeba wygenerowac plik Makefile.
 W tym celu wykonaj polecenie:
 
 $ qmake
-(lub qmake-qt4, jesli masz zainstalowane takze Qt3)
+(lub qmake-qt4; upewnij sie, ze uzywasz qmake w wersji dla Qt 4)
 
-Po prawidłowym uruchomieniu programu qmake, nowy plik Makefile powinien zostać
-wygenerowany. Wtedy możesz przystąpić do kompilacji programu. (Szczegóły w
+Po prawidlowym uruchomieniu programu qmake, nowy plik Makefile powinien zostac
+wygenerowany. Wtedy mozesz przystapic do kompilacji programu. (Szczegoly w
 sekcji 'Instalacja')
 
+W przypadku innych bledow kompilacji prosze o zwiezly raport o bledzie.
+(Szczegoly w sekcji 'Raportowanie bledow').
 
-Integracja z menedżerami plików
+
+Integracja z menedzerami plikow
 ===============================
 
-Jeśli chcesz zintegrować QNapi ze swoim menedżerem plików, aby po kliknięciu
-prawym przyciskiem myszy na plik z filmem, w menu pojawiła się opcja "Pobierz
-napisy do filmu z QNapi", wykonaj poniższe instrukcje, adekwatne do uzywanego
+Jesli chcesz zintegrowac QNapi ze swoim menedzerem plikow, aby po kliknieciu
+prawym przyciskiem myszy na plik z filmem, w menu pojawila sie opcja "Pobierz
+napisy do filmu z QNapi", wykonaj ponizsze instrukcje, adekwatne do uzywanego
 przez Ciebie programu.
 
 KDE (Dolphin/Konqueror)
 -----------------------
-UWAGA: Od wersji 0.1.4 QNapi powinien automatycznie integrować się z programami Dolphin
-oraz Konqueror. Jesli natomiast automatyczna integracja nie bedzie działać, możesz
-skorzystac z drugiego sposobu:
+UWAGA: Od wersji 0.1.4 QNapi powinien automatycznie integrowac sie z programami
+Dolphin oraz Konqueror. Jesli automatyczna integracja nie bedzie dzialala,
+mozesz skorzystac z alternatywnej metody:
 
-Będzie potrzebny plik qnapi-download.dekstop, który możesz znaleźć w katalogu
-/usr/share/doc/qnapi lub na stronie domowej programu (http://krzemin.iglu.cz/qnapi).
+Bedzie potrzebny plik qnapi-download.dekstop, ktory mozesz znalezc w podkatalogu
+doc/ archiwum zrodlowego, w /usr/share/doc/qnapi (po instalacji programu) lub
+na stronie www http://krzemin.iglu.cz/qnapi.
 
-Należy skopiować ów plik do katalogów:
+Nalezy skopiowac plik do katalogow:
  *  ~/.kde/share/apps/konqueror/servicemenus/
  *  ~/.kde/share/apps/d3lphin/servicemenus/
  *  ~/.kde/share/apps/dolphin/servicemenus/
 
-Lub globalnie (wymaga uprawnień administratora):
+Lub globalnie (wymaga uprawnien administratora):
  *  /usr/share/apps/konqueror/servicemenus/
  *  /usr/share/apps/d3lphin/servicemenus/
  *  /usr/share/apps/dolphin/servicemenus/
@@ -116,54 +118,55 @@ Dla KDE4:
 Globalnie dla KDE4:
  * /usr/lib/kde4/share/kde4/services/ServiceMenus/
 
-Powyższe katalogi mogą być nieco inne w Twojej dystrybucji, w zależności od tego, gdzie
-zostało zainstalowane KDE.
+Powyzsze katalogi moga byc nieco inne w Twojej dystrybucji, w zaleznosci od
+tego, gdzie zostalo zainstalowane KDE.
 
-Nautilus
---------
-UWAGA: Od wersji 0.1.5 QNapi powinien automatycznie integrować sie z Nautilusem po
-zainstalowaniu pakietu qnapi-gnome, wlaściwego dla Twojej dystrybucji oraz po
-ponownym uruchomieniu systemu (lub przeładowaniu demona gconfd).
+Nautilus (GNOME)
+----------------
+UWAGA: Od wersji 0.1.5 QNapi powinien automatycznie integrowac sie z Nautilusem
+po zainstalowaniu pakietu qnapi-gnome, wlasciwego dla Twojej dystrybucji oraz po
+ponownym uruchomieniu systemu (lub przeladowaniu demona gconfd).
 
-Jeśli automatyczna integracja nie zadziała, bądź nie chcesz (nie możesz) zainstalować
-dodatkowego pakietu, możesz skorzystać z alternatywnego spososbu na integrację QNapi
-z Nautilusem:
+Jesli automatyczna integracja nie zadziala, badz nie chcesz (nie mozesz)
+zainstalowac dodatkowego pakietu, mozesz skorzystac z alternatywnego spososbu na
+integracje QNapi z Nautilusem:
 
-Potrzebny bedzie zainstalowany pakiet nautilus-actions oraz plik qnapi-download.schemas,
-który znajdziesz w katalogu /usr/share/doc/qnapi lub na stronie domowej programu
-(http://krzemin.iglu.cz/qnapi).
+Potrzebny bedzie zainstalowany pakiet nautilus-actions oraz plik
+qnapi-download.schemas, ktory mozesz znalezc w podkatalogu doc/ archiwum
+zrodlowego, w /usr/share/doc/qnapi (po instalacji programu) lub na stronie www
+http://krzemin.iglu.cz/qnapi.
 
-Wystarczy skopiować plik qnapi-download.schemas do katalogu /usr/share/gconf/schemas/
-i wykonać polecenie:
+Wystarczy skopiowac plik qnapi-download.schemas do katalogu
+/usr/share/gconf/schemas/ i wykonac polecenie:
 
 $ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-download.schemas
 
-Jeśli to by nie zadziałało, można spróbować zaimportować plik qnapi-download.schemas
-narzędziem nautilus-actions-config.
+Jesli to by nie zadzialalo, mozna sprobowac zaimportowac plik
+qnapi-download.schemas narzedziem nautilus-actions-config.
 
-Thunar
-------
+Thunar (XFCE)
+-------------
 Integracja z Thunarem wymaga uruchomienia programu i wybrania opcji
 Edycja -> Konfiguruj akcje...
 
-Na zakładce "Podstawowe" należy ustawić:
+Na zakladce "Podstawowe" nalezy ustawic:
 
 Nazwa: "Pobierz napisy do filmu z QNapi"
 Opis: (dowolny)
 Polecenie: qnapi %F
 
-Można wybrać ikonę z pliku graficznego (np. /usr/share/icons/qnapi-48.png).
-Na zakładce "Warunki pokazywania" należy zaznaczyć tylko "Filmy wideo".
+Mozna wybrac ikone z pliku graficznego (np. /usr/share/icons/qnapi-48.png).
+Na zakladce "Warunki pokazywania" nalezy zaznaczyc tylko "Filmy wideo".
 Potem OK i gotowe.
 
 
-Raportowanie błędów
+Raportowanie bledow
 ====================
-Wszelkie znalezione błędy można raportować za pomocą bugtrackera na sourceforge.net:
-http://sourceforge.net/tracker/?group_id=218384&atid=1043757
+Wszelkie znalezione bledy mozna raportowac za pomoca bugtrackera na
+sourceforge.net: http://sourceforge.net/tracker2/?atid=1043757&group_id=218384
 
 Kontakt
 =======
 
-Jeśli chcesz przygotować pakiet dla swojej dystrybucji bądź masz inne
+Jesli chcesz przygotowac pakiet dla swojej dystrybucji badz masz inne
 uwagi/propozycje - napisz do mnie na pkrzemin@o2.pl

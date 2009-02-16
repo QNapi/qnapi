@@ -5,16 +5,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>470</height>
+    <width>620</width>
+    <height>460</height>
    </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>620</width>
+    <height>460</height>
+   </size>
   </property>
   <property name="windowTitle" >
    <string>QNapi - informacje o programie</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
+  <layout class="QGridLayout" >
    <item row="0" column="0" colspan="5" >
-    <layout class="QHBoxLayout" name="horizontalLayout" >
+    <layout class="QHBoxLayout" >
      <item>
       <widget class="QLabel" name="lbIcon" >
        <property name="sizePolicy" >
@@ -123,11 +129,11 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
     </widget>
    </item>
    <item row="5" column="0" >
-    <spacer name="horizontalSpacer_3" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>165</width>
        <height>20</height>
@@ -158,11 +164,11 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
     </widget>
    </item>
    <item row="5" column="4" >
-    <spacer name="horizontalSpacer_4" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>175</width>
        <height>20</height>
@@ -197,14 +203,14 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
     </widget>
    </item>
    <item row="8" column="0" colspan="5" >
-    <spacer name="verticalSpacer" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType" >
       <enum>QSizePolicy::Fixed</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>358</width>
        <height>20</height>
@@ -213,11 +219,11 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
     </spacer>
    </item>
    <item row="9" column="0" colspan="2" >
-    <spacer name="horizontalSpacer" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>217</width>
        <height>20</height>
@@ -233,11 +239,11 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
     </widget>
    </item>
    <item row="9" column="3" colspan="2" >
-    <spacer name="horizontalSpacer_2" >
+    <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>226</width>
        <height>20</height>
@@ -248,8 +254,6 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
   </layout>
  </widget>
  <resources>
-  <include location="../res/resources.qrc" />
-  <include location="../res/resources.qrc" />
   <include location="../res/resources.qrc" />
  </resources>
  <connections>

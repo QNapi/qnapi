@@ -1,24 +1,22 @@
 QNapi
 =====
 
-Author:			Krzemin <pkrzemin@o2.pl>
-WWW home page:	http://krzemin.iglu.cz/qnapi
+Author:                Krzemin <pkrzemin@o2.pl>
+WWW home page:         http://krzemin.iglu.cz/qnapi
 
 This program is distributed under the terms of GNU General Pulic License;
 either version 2 or (at your opinion) any later version.
 
-QNapi is unofficial clone of NAPI-PROJEKT program (http://napiprojekt.pl)
-written using Qt4. It's focused to be functional on GNU/Linux and other
-Unix-like systems, for which NAPI-PROJEKT is not available. Since 0.1.4
-version it has also Windows port. For more information visit project's
-website.
+
+QNapi is a tool designed for automatic downloading and matching subtitles for
+your movie files. It uses resources of napiprojekt.pl and opensubtitles.com
+web services.
 
 
 Requirements
 ============
  * Qt version 4.3.0, or higher.
- * p7zip. More info about this program can be found here:
-   http://p7zip.sourceforge.net/
+ * p7zip. More info you can find at the website http://p7zip.sourceforge.net
 
 
 Installation
@@ -29,28 +27,34 @@ http://krzemin.iglu.cz/qnapi
 
 If there's no package for your distro, you'll have to compile QNapi from
 source. To do this you'll need Qt4 libraries and 7z, which you can find in
-p7zip-full (see http://p7zip.sourceforge.net/ for more details).
+p7zip-full (see http://p7zip.sourceforge.net for more details).
 
 First off, fetch and unpack the tarball:
+
 $ tar -zxvf qnapi-XXX.tar.gz
 
 where XXX is a version of QNapi. Then enter the directory and build makefiles:
+
 $ cd qnapi-XXX
 $ qmake
 
-If you also have Qt3 installed, please type qmake-qt4 instead of qmake (which may be
-a symlink to qmake-qt3). Now build the program:
+If you also have Qt3 installed, please type qmake-qt4 instead of qmake (which
+may be a symlink to qmake-qt3). Now build the program:
+
 $ make
 
 If compilation fails, go to "Compilation Errors" section to look for possible
 reasons and solutions. If everything went fine, install QNapi:
+
 $ sudo make install
 
 Now you can run the program with the following command:
+
 $ qnapi
 
 If you will later want to uninstall QNapi, type the following command from
 QNapi's source directory:
+
 $ sudo make uninstall
 
 
@@ -65,6 +69,9 @@ It means that Makefile has to be regenerated. To do so run qmake/qmake-qt4
 again. Afterwards, if qmake did not throw any error, try to build the program
 one more time (see 'Installation' section above).
 
+For other compilation errors please report a bug. (see 'Bug Reporting' section
+below).
+
 
 Integration with file managers
 ==============================
@@ -75,10 +82,11 @@ presented below for your WM.
 KDE (Dolphin/Konqueror)
 -----------------------
 WARNING: Since version 0.1.4 QNapi should automatically integrate with Dolphin
-and Konqueror. However it does not integrate, to the following:
-
-You'll need qnapi-download.dekstop, which you can get from /usr/share/doc/qnapi
-or from http://krzemin.iglu.cz/qnapi
+and Konqueror. However it does not integrate, do the following:
+--------------------------------------------------------------------------------
+You'll need qnapi-download.dekstop, which you can get from doc/ subdirectory
+in source archive, from /usr/share/doc/qnapi after installing QNapi or from
+website http://krzemin.iglu.cz/qnapi
 
 Copy it to the following directories:
  * ~/.kde/share/apps/konqueror/servicemenus/
@@ -100,27 +108,29 @@ Globally for KDE4:
 Above-mentioned directories may differ in your distribution, depends on where
 KDE is installed.
 
-Nautilus
---------
+Nautilus (GNOME)
+----------------
 WARNING: Since 0.1.5 version QNapi should automatically integrate with Nautilus
-after you had installed qnapi-gnome package, proper for your distribution. Restart
-of the system (or reload gconfd daemon) is required.
+after you had installed qnapi-gnome package, proper for your distribution.
+Restart of the system (or reload gconfd daemon) is required.
 
-If automatic integration doesn't work or you don't want (can't) install additional
-package, you can use alternative way to integrate QNapi with Nautilus:
+If automatic integration doesn't work or you don't want (can't) install
+additional package, you can use alternative way to integrate QNapi with
+Nautilus:
 
 You need to install nautilus-actions package and qnapi-download.schemas file,
-which can be found in /usr/share/doc/qnapi or on QNapi's home page
-(http://krzemin.iglu.cz/qnapi). You only need to copy it to /usr/share/gconf/schemas/
-and execute following command:
+which you can get from doc/ subdirectory in source archive, from
+/usr/share/doc/qnapi after installing QNapi or from website
+http://krzemin.iglu.cz/qnapi. You only need to copy it to
+/usr/share/gconf/schemas/ and execute following command:
 
 $ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-download.schemas
 
-If this does not help, you can also try to import file qnapi-download.schemas
+If this does not help, you can also try to import qnapi-download.schemas file
 using nautilus-actions-config tool.
 
-Thunar
-------
+Thunar (XFCE)
+-------------
 
 Integration with Tunar requires to run the program choose
 "Edit" -> "Configure custom actions". In the dialog box press a "plus"
@@ -138,7 +148,7 @@ Then clink OK and it's done.
 Bugs Reporting
 ===============
 Any bugs found may be reported using sourceforge bugtracker:
-http://sourceforge.net/tracker/?group_id=218384&atid=1043757
+http://sourceforge.net/tracker2/?atid=1043757&group_id=218384
 
 Contact
 =======

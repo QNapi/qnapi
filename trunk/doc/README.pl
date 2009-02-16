@@ -5,7 +5,7 @@ Autor:                Krzemin <pkrzemin@o2.pl>
 Strona WWW:           http://krzemin.iglu.cz/qnapi
 
 Ten program rozprowadzany jest na licencji GNU General Public License w wersji
-drugiej lub ka˝dej póêniejszej.
+drugiej lub kazdej pozniejszej.
 
 
 QNapi jest programem do automatycznego pobierania i dopasowywania napisow do

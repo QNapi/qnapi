@@ -313,7 +313,7 @@ QNapiProjektEngine::UploadResult
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"l\"");
-	postData.addData(language);
+	postData.addData(npLangWrapper(language));
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"t\"");
@@ -421,7 +421,7 @@ QNapiProjektEngine::ReportResult
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"l\"");
-	postData.addData(language);
+	postData.addData(npLangWrapper(language));
 
 	postData.addBoundary();
 	postData.addContentDisposition("name=\"md5\"");

@@ -38,7 +38,7 @@ class QSyncXmlRpcClient : public xmlrpc::Client
 			connectSignals();
 		}
 
-		virtual ~QSyncXmlRpcClient() {};
+		~QSyncXmlRpcClient() {};
 
 
 		void connectSignals()

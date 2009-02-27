@@ -17,13 +17,11 @@
 
 QNapi::~QNapi()
 {
+	cleanup();
+
 	foreach(QNapiAbstractEngine *e, enginesList)
 	{
-		if(e)
-		{
-			e->cleanup();
-			delete e;
-		}
+		if(e) delete e;
 	}
 }
 
@@ -177,8 +175,8 @@ bool QNapi::needToShowList()
 		return true;
 	if(GlobalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)	
 		return false;
-	return !foundBestIdx;
 
+	return !foundBestIdx;
 }
 
 int QNapi::bestIdx()

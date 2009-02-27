@@ -39,6 +39,7 @@ public:
 private:
 
 	QStringList movieList;
+	QNapi napi;
 
 	enum CliMode {
 		CM_UNSET, CM_HELP, CM_HELP_LANGUAGES, CM_CONSOLE, CM_QUIET

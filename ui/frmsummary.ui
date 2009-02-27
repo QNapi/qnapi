@@ -30,7 +30,7 @@
      </property>
      <widget class="QWidget" name="tabSuccess" >
       <attribute name="title" >
-       <string>Pobrano napisy dla</string>
+       <string>Pobrano napisy</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
@@ -40,7 +40,7 @@
      </widget>
      <widget class="QWidget" name="tabFail" >
       <attribute name="title" >
-       <string>Nie udało się pobrać napisów</string>
+       <string>Nie pobrano napisów</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2" >
        <item>

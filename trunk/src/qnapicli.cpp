@@ -157,12 +157,10 @@ int QNapiCli::exec()
 		return 3;
 	}
 
-	QNapi *napi = new QNapi();
-
-	if(!napi->addEngines(GlobalConfig().enginesList()))
+	
+	if(!napi.addEngines(GlobalConfig().enginesList()))
 	{
-		printCli(QString("Blad: ") + napi->error());
-		delete napi;
+		printCli(QString("Blad: ") + napi.error());
 		return 4;
 	}
 
@@ -173,24 +171,24 @@ int QNapiCli::exec()
 	{
 		printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
 
-		napi->setMoviePath(movie);
+		napi.setMoviePath(movie);
 
-		if(!napi->checkWritePermissions())
+		if(!napi.checkWritePermissions())
 		{
 			printCli(QString("   Brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
 			continue;
 		}
 
 		printCli(QString(QString("   Obliczanie sum kontrolnych...")));
-		napi->checksum();
+		napi.checksum();
 
 		bool found = false;
 		SearchPolicy sp = GlobalConfig().searchPolicy();
 
-		foreach(QString e, napi->listLoadedEngines())
+		foreach(QString e, napi.listLoadedEngines())
 		{
 			printCli(QString(QString("   Szukanie napisow (%1)...").arg(e)));
-			found = napi->lookForSubtitles(lang, e) || found;
+			found = napi.lookForSubtitles(lang, e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;
@@ -205,7 +203,7 @@ int QNapiCli::exec()
 		int selIdx = 0;
 
 		bool showList = false;
-		bool napiShowList = napi->needToShowList();
+		bool napiShowList = napi.needToShowList();
 
 		if((mode != CM_QUIET) && (showPolicy != SLP_NEVER_SHOW))
 			showList = napiShowList;
@@ -222,7 +220,7 @@ int QNapiCli::exec()
 
 			int i = 1;
 
-			QList<QNapiSubtitleInfo> list = napi->listSubtitles();
+			QList<QNapiSubtitleInfo> list = napi.listSubtitles();
 
 
 			foreach(QNapiSubtitleInfo s, list)
@@ -267,43 +265,40 @@ int QNapiCli::exec()
 		}
 		else
 		{
-			selIdx = napi->bestIdx();
+			selIdx = napi.bestIdx();
 		}
 
 		if(selIdx == -1) continue;
 
 		printCli(QString(QString("   Pobieranie napisow z serwera...")));
-		if(!napi->download(selIdx))
+		if(!napi.download(selIdx))
 		{
 			printCli(QString(QString("   Nie udalo sie pobrac napisow!")));
 			continue;
 		}
 
 		printCli(QString(QString("   Rozpakowywanie napisow...")));
-		if(!napi->unpack())
+		if(!napi.unpack())
 		{
 			printCli(QString(QString("   Nie udało sie poprawnie rozpakowac napisow!")));
 			continue;
 		}
 
 		printCli(QString(QString("   Dopasowywanie napisow...")));
-		if(!napi->match())
+		if(!napi.match())
 		{
 			printCli(QString(QString("   Nie udalo sie dopasowac napisow!")));
-			delete napi;
 			continue;
 		}
 
-		if(napi->ppEnabled())
+		if(napi.ppEnabled())
 		{
 			printCli(QString(QString("   Przetwarzanie pobranych napisow...")));
-			napi->pp();
+			napi.pp();
 		}
 
-		napi->cleanup();
+		napi.cleanup();
 	}
-
-	delete napi;
 
 	return 0;
 }

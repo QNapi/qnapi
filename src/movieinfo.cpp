@@ -37,7 +37,7 @@ MovieInfo::MovieInfo(const QString & filename)
 	}
 
 	MainAVIHeader hdr;
-	
+
 	if(!file.seek(0x20))
 	{
 		isErr = true;

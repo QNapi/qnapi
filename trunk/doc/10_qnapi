@@ -3,7 +3,7 @@
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/icon		/usr/share/icons/qnapi.png
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path		qnapi
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/parameters	%M
-/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames	[*.avi,*.asf,*.divx,*.dat,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]
+/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames	[*.avi,*.asf,*.divx,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase 	false
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/mimetypes	[video/x-msvideo,video/x-ms-asf,video/mpeg,video/x-ms-wmv,video/mp4,video/quicktime,video/x-theora,video/x-matroska,video/3gpp,application/vnd.rn-realmedia,application/vnd.rn-realmedia-vbr]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isfile	true

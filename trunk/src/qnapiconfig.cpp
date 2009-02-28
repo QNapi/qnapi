@@ -396,7 +396,7 @@ void QNapiConfig::setPreviousDialogPath(const QString & path)
 QStringList QNapiConfig::scanFilters()
 {
 	QStringList defaultScanFilters;
-	defaultScanFilters << "*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg"
+	defaultScanFilters << "*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg"
 							" *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
 
 	return settings->value("scan/filters", defaultScanFilters).toStringList();

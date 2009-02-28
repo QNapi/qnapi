@@ -25,7 +25,7 @@
 #include "qnapiapp.h"
 #include "qnapicli.h"
 
-#include <csignal>
+#include <signal.h>
 
 QStringList parseArgs(int argc, char **argv);
 void regSignal();
@@ -176,6 +176,10 @@ QStringList parseArgs(int argc, char **argv)
 
 void regSignal()
 {
+#ifdef Q_OS_WIN
+	signal(SIGTERM, sigHandler);
+	signal(SIGINT, sigHandler);
+#else
 	struct sigaction sa;
 	memset(&sa, 0, sizeof(struct sigaction));
 	sigemptyset(&sa.sa_mask);	
@@ -184,6 +188,7 @@ void regSignal()
 	sa.sa_restorer = 0;
 	sigaction(SIGTERM,  &sa, 0);
 	sigaction(SIGINT,  &sa, 0);
+#endif
 }
 
 void sigHandler(int sig)

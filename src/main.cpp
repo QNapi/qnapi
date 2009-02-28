@@ -184,8 +184,6 @@ void regSignal()
 	memset(&sa, 0, sizeof(struct sigaction));
 	sigemptyset(&sa.sa_mask);	
 	sa.sa_handler = sigHandler;
-	sa.sa_flags = 0;
-	sa.sa_restorer = 0;
 	sigaction(SIGTERM,  &sa, 0);
 	sigaction(SIGINT,  &sa, 0);
 #endif

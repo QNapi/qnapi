@@ -141,5 +141,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>leNick</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmOpenSubtitlesConfig</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>235</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>179</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lePass</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmOpenSubtitlesConfig</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>235</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>179</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

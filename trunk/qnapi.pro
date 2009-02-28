@@ -33,7 +33,8 @@ SOURCES += src/main.cpp \
  src/xmlrpc/response.cpp \
  src/qnapi.cpp \
  src/qopensubtitlesengine.cpp \
- src/qnapilanguage.cpp
+ src/qnapilanguage.cpp \
+ src/forms/frmopensubtitlesconfig.cpp
 HEADERS += src/forms/frmprogress.h \
  src/forms/frmabout.h \
  src/forms/frmoptions.h \
@@ -69,7 +70,8 @@ HEADERS += src/forms/frmprogress.h \
  src/qnapi.h \
  src/qnapisubtitleinfo.h \
  src/qopensubtitlesengine.h \
- src/qnapilanguage.h
+ src/qnapilanguage.h \
+ src/forms/frmopensubtitlesconfig.h
 FORMS += ui/frmprogress.ui \
  ui/frmabout.ui \
  ui/frmoptions.ui \

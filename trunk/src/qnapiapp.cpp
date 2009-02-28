@@ -121,6 +121,9 @@ void QNapiApp::createTrayIcon()
 	osAddAction = new QAction(tr("Dodaj napisy"), 0);
 	connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
 
+	osCreateUserAction = new QAction(tr("Załóż konto"), 0);
+	connect(osCreateUserAction, SIGNAL(triggered()), this, SLOT(showOSCreateUser()));
+
 	settingsAction = new QAction(tr("Opcje"), 0);
 	connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
 
@@ -144,6 +147,8 @@ void QNapiApp::createTrayIcon()
 	osSubMenu->setTitle(tr("OpenSubtitles"));
 	osSubMenu->addAction(osGetAction);
 	osSubMenu->addAction(osAddAction);
+	osSubMenu->addSeparator();
+	osSubMenu->addAction(osCreateUserAction);
 
 	trayIconMenu = new QMenu(0);
 	trayIconMenu->addAction(getAction);
@@ -315,6 +320,11 @@ void QNapiApp::showOSGetDialog()
 void QNapiApp::showOSUploadDialog()
 {
 	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
+}
+
+void QNapiApp::showOSCreateUser()
+{
+	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/register"));
 }
 
 void QNapiApp::showSettings()

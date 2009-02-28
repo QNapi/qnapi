@@ -34,7 +34,6 @@ frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	connect(&uploadThread, SIGNAL(fileNameChange(QString)), this, SLOT(fileNameChange(QString)));
 	connect(&uploadThread, SIGNAL(checkingUserPass()), this, SLOT(checkingUserPass()));
 	connect(&uploadThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
-	
 
 	if(QFileInfo(GlobalConfig().previousDialogPath()).isDir())
 		ui.leSelectDirectory->setText(GlobalConfig().previousDialogPath());
@@ -239,7 +238,7 @@ void ScanThread::run()
 	fileList.clear();
 	visited.clear();
 	searchFilters.clear();
-	searchFilters << "*.avi" << "*.asf" << "*.divx" << "*.dat" << "*.mkv" << "*.mov" << "*.mp4"
+	searchFilters << "*.avi" << "*.asf" << "*.divx" << "*.mkv" << "*.mov" << "*.mp4"
 					<< "*.mpeg" << "*.mpg" << "*.ogm" << "*.rm" << "*.rmvb" << "*.wmv";
 
 	QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot

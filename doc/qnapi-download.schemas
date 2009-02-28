@@ -78,7 +78,7 @@ The parameters can contain some special tokens which are replaced by Nautilus in
         <short>The list of pattern to match the selected file(s)/folder(s)</short>
         <long>A list of strings with joker '*' or '?' to match the name of the selected file(s)/folder(s). Each selected items must match at least one of the filename patterns for the action to appear</long>
       </locale>
-      <default>[*.avi,*.asf,*.divx,*.dat,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]</default>
+      <default>[*.avi,*.asf,*.divx,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]</default>
     </schema>
     <schema>
       <key>/schemas/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase</key>

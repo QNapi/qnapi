@@ -25,41 +25,32 @@
 #include "qnapiapp.h"
 #include "qnapicli.h"
 
+#include <csignal>
+
+QStringList parseArgs(int argc, char **argv);
+void regSignal();
+void sigHandler(int);
+
 int main(int argc, char **argv)
 {
 	QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-	QStringList pathList;
-	for(int i = 1; i < argc; i++)
-	{
-		QString p = argv[i];
-
-		if(p.startsWith("file://"))
-			p = p.remove(0, 7);
-
-		if((pathList.size() == 0) && QFileInfo(p).isDir())
-		{
-			pathList << p;
-			break;
-		}
-
-		if(QFileInfo(p).isFile())
-			pathList << p;
-	}
-
 	bool useGui = !QNapiCli::isCliCall(argc, argv);
+
+	regSignal();
 
 	if(useGui)
 	{
 		QNapiApp app(argc, argv, true, "QNapi");
 
+		QStringList pathList = parseArgs(argc, argv);
+
 		QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 		QTranslator cuteTranslator;
 		cuteTranslator.load("qt_" + QLocale::system().name(), resourceDir);
 		app.installTranslator(&cuteTranslator);
-
 		app.setQuitOnLastWindowClosed(false);
 
 		if(!app.isInstanceAllowed())
@@ -157,4 +148,64 @@ int main(int argc, char **argv)
 		QNapiCli app(argc, argv);
 		return app.exec();
 	}
+}
+
+QStringList parseArgs(int argc, char **argv)
+{
+	QStringList pathList;
+
+	for(int i = 1; i < argc; i++)
+	{
+		QString p = argv[i];
+
+		if(p.startsWith("file://"))
+			p = p.remove(0, 7);
+
+		if((pathList.size() == 0) && QFileInfo(p).isDir())
+		{
+			pathList << p;
+			break;
+		}
+
+		if(QFileInfo(p).isFile())
+			pathList << p;
+	}
+
+	return pathList;
+}
+
+void regSignal()
+{
+	struct sigaction sa;
+	memset(&sa, 0, sizeof(struct sigaction));
+	sigemptyset(&sa.sa_mask);	
+	sa.sa_handler = sigHandler;
+	sa.sa_flags = 0;
+	sa.sa_restorer = 0;
+	sigaction(SIGTERM,  &sa, 0);
+	sigaction(SIGINT,  &sa, 0);
+}
+
+void sigHandler(int sig)
+{
+	Q_UNUSED(sig);
+
+	qDebug() << "\nQNapi: usuwanie plików tymczasowych...";
+
+	QString tmpPath = GlobalConfig().tmpPath();
+
+	QStringList filters;
+	filters << "QNapi-*-rc";
+	filters << "QNapi.*.tmp";
+
+	QDir dir(tmpPath);
+
+	QStringList files = dir.entryList(filters);
+
+	foreach(QString file, files)
+	{
+		QFile::remove(tmpPath + QDir::separator() + file);
+	}
+
+	exit(666);
 }

@@ -35,7 +35,14 @@
 
 class GetThread : public QNapiThread
 {
-	Q_OBJECT
+Q_OBJECT
+
+	public:
+		GetThread()
+		{
+			connect(this, SIGNAL(criticalError(const QString &)),
+					this, SLOT(setCriticalMessage(const QString &)));
+		}
 
 	signals:
 		void fileNameChange(const QString & newfileName);
@@ -52,15 +59,13 @@ class GetThread : public QNapiThread
 		void subtitlesSelected(int idx);
 
 	public:
-		GetThread()
-		{
-			connect(this, SIGNAL(criticalError(const QString &)),
-					this, SLOT(setCriticalMessage(const QString &)));
-		}
+
+		
 		void setEngines(QStringList enginesList) {engines = enginesList;}
 		void setLanguage(QString language){ lang = language; }
 		void run();
 
+		QNapi napi;
 		QStringList queue, gotList, failedList, engines;
 		QString lang;
 		int napiSuccess, napiFail;
@@ -75,7 +80,7 @@ class frmProgress: public QWidget
 
 	public:
 		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
-		~frmProgress(){};
+
 		void setEngines(QStringList enginesList)
 		{
 			getThread.setEngines(enginesList);
@@ -85,7 +90,6 @@ class frmProgress: public QWidget
 		void subtitlesSelected(int idx);
 
 	public slots:
-
 		void receiveRequest(const QString & request);
 		void enqueueFile(const QString &file);
 		void enqueueFiles(const QStringList &fileList);
@@ -105,7 +109,9 @@ class frmProgress: public QWidget
 
 		Ui::frmProgress ui;
 
-		GetThread getThread;
+		GetThread getThread;	
+		frmListSubtitles frmSelect;
+		frmSummary summary;
 
 		bool batchMode, showSummary, closeRequested;
 		QMutex mutex;

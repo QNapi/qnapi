@@ -29,7 +29,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 #else
 		setFilter
 #endif
-				(tr("Filmy (*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
+				(tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
 					"*.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
 	}
 	else if(filterMode == Subtitles)

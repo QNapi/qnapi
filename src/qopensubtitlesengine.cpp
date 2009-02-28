@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "qopensubtitlesengine.h"
+#include "forms/frmopensubtitlesconfig.h"
 
 // konstruktor klasy
 QOpenSubtitlesEngine::QOpenSubtitlesEngine(const QString & movieFile, const QString & subtitlesFile)
@@ -87,13 +88,14 @@ QIcon QOpenSubtitlesEngine::engineIcon()
 // zwraca czy silnik jest konfigurowalny
 bool QOpenSubtitlesEngine::isConfigurable()
 {
-	return false;
+	return true;
 }
 
 // wywoluje okienko konfiguracji
 void QOpenSubtitlesEngine::configure(QWidget * parent)
 {
-	QMessageBox::information(parent, "Konfiguracja", "OpenSubtitles");
+	frmOpenSubtitlesConfig config(parent);
+	config.exec();
 }
 
 // oblicza sume kontrolna dla pliku filmowego

@@ -65,6 +65,7 @@ class QNapiApp : public QSingleApplication
 
 		void showOSGetDialog();
 		void showOSUploadDialog();
+		void showOSCreateUser();
 		
 		void showSettings();
 		void showAbout();
@@ -81,8 +82,8 @@ class QNapiApp : public QSingleApplication
 		QMenu *trayIconMenu, *napiSubMenu, *osSubMenu;
 		QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
 				*napiCorrectAction, *napiReportAction, *napiCreateUserAction,
-				*osGetAction, *osAddAction, *settingsAction, *aboutAction,
-				*quitAction;
+				*osGetAction, *osAddAction, *osCreateUserAction,
+				*settingsAction, *aboutAction, *quitAction;
 
 		QNapiOpenDialog *openDialog;
 		

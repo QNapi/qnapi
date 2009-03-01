@@ -60,12 +60,10 @@ Q_OBJECT
 
 	public:
 
-		
 		void setEngines(QStringList enginesList) {engines = enginesList;}
 		void setLanguage(QString language){ lang = language; }
 		void run();
 
-		QNapi napi;
 		QStringList queue, gotList, failedList, engines;
 		QString lang;
 		int napiSuccess, napiFail;

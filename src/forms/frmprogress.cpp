@@ -241,7 +241,7 @@ void GetThread::subtitlesSelected(int idx)
 	waitForDlg.unlock();
 }
 
-#define ABORT_POINT {if(abort){ return;}}
+#define ABORT_POINT {if(abort){ delete napi; return;}}
 
 void GetThread::run()
 {
@@ -254,14 +254,16 @@ void GetThread::run()
 	gotList.clear();
 	failedList.clear();
 
+	QNapi *napi = new QNapi();
+
 	if(!engines.isEmpty())
 	{
-		napi.addEngines(engines);
+		napi->addEngines(engines);
 	}
-	else if(!napi.addEngines(GlobalConfig().enginesList()))
+	else if(!napi->addEngines(GlobalConfig().enginesList()))
 	{
-		emit criticalError(tr("Błąd: ") + napi.error());
-		//delete napi;
+		emit criticalError(tr("Błąd: ") + napi->error());
+		delete napi;
 		return;
 	}
 
@@ -276,33 +278,33 @@ void GetThread::run()
 		QFileInfo fi(queue[i]);
 		emit fileNameChange(fi.fileName());
 
-		napi.setMoviePath(queue[i]);
+		napi->setMoviePath(queue[i]);
 
 		emit progressChange(i, queue.size(), 0.1);
 		emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
 
-		if(!napi.checkWritePermissions())
+		if(!napi->checkWritePermissions())
 		{
 			emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
-			//delete napi;
+			delete napi;
 			return;
 		}
 
 		emit progressChange(i, queue.size(), 0.3);
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 
-		napi.checksum();
+		napi->checksum();
 
 		ABORT_POINT
 
 		bool found = false;
 		SearchPolicy sp = GlobalConfig().searchPolicy();		
 
-		foreach(QString e, napi.listLoadedEngines())
+		foreach(QString e, napi->listLoadedEngines())
 		{
 			emit progressChange(i, queue.size(), 0.4);
 			emit actionChange(tr("Szukanie napisów (%1)...").arg(e));
-			found = napi.lookForSubtitles(language, e) || found;
+			found = napi->lookForSubtitles(language, e) || found;
 
 			if(sp == SP_BREAK_IF_FOUND)
 				break;
@@ -318,10 +320,10 @@ void GetThread::run()
 		}
 
 		// jesli mozna i potrzeba, listujemy dostepne napisy
-		if(napi.needToShowList())
+		if(napi->needToShowList())
 		{
 			emit selectSubtitles(	QFileInfo(queue[i]).fileName(),
-									napi.listSubtitles());
+									napi->listSubtitles());
 
 			waitForDlg.lock();
 			waitForDlg.lock();
@@ -329,7 +331,7 @@ void GetThread::run()
 		}
 		else
 		{
-			selIdx = napi.bestIdx();
+			selIdx = napi->bestIdx();
 		}
 
 		ABORT_POINT
@@ -344,7 +346,7 @@ void GetThread::run()
 		emit progressChange(i, queue.size(), 0.5);
 		emit actionChange(tr("Pobieranie napisów dla pliku..."));
 
-		if(!napi.download(selIdx))
+		if(!napi->download(selIdx))
 		{
 			ABORT_POINT
 
@@ -358,7 +360,7 @@ void GetThread::run()
 		emit progressChange(i, queue.size(), 0.6);
 		emit actionChange(tr("Rozpakowywanie napisów..."));
 
-		if(!napi.unpack())
+		if(!napi->unpack())
 		{
 			++napiFail;
 			failedList << queue[i];
@@ -369,7 +371,7 @@ void GetThread::run()
 		emit progressChange(i, queue.size(), 0.75);
 		emit actionChange(tr("Dopasowywanie napisów..."));
 
-		if(!napi.match())
+		if(!napi->match())
 		{
 			ABORT_POINT
 
@@ -383,17 +385,19 @@ void GetThread::run()
 		++napiSuccess;
 		gotList << queue[i];
 
-		if(napi.ppEnabled())
+		if(napi->ppEnabled())
 		{
 			emit progressChange(i, queue.size(), 0.9);
 			emit actionChange(tr("Przetwarzanie napisów..."));
-			napi.pp();
+			napi->pp();
 		}
 
-		napi.cleanup();
+		napi->cleanup();
 
 		emit progressChange(i, queue.size(), 1);
 	}
 
 	emit progressChange(queue.size() - 1, queue.size(), 1);
+
+	delete napi;
 }

@@ -40,7 +40,6 @@ class QSyncXmlRpcClient : public xmlrpc::Client
 
 		~QSyncXmlRpcClient() {};
 
-
 		void connectSignals()
 		{
 			connect(this, SIGNAL(done(int, QVariant)), this, SLOT(requestDone(int, QVariant)));

@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 			for(int i = 1; i < argc; i++)
 			{
 				p = argv[i];
-				
+
 				if((p == "-l") || (p == "--language"))
 				{
 					++i;
@@ -182,10 +182,10 @@ void regSignal()
 #else
 	struct sigaction sa;
 	memset(&sa, 0, sizeof(struct sigaction));
-	sigemptyset(&sa.sa_mask);	
+	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = sigHandler;
-	sigaction(SIGTERM,  &sa, 0);
-	sigaction(SIGINT,  &sa, 0);
+	sigaction(SIGTERM, &sa, 0);
+	sigaction(SIGINT, &sa, 0);
 #endif
 }
 

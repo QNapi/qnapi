@@ -172,7 +172,6 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 			r = SUBTITLE_GOOD;
 		}
 
-
 		QString subtitleName = responseMap["MovieReleaseName"].toString();
 		if(subtitleName.isEmpty())
 			subtitleName = QFileInfo(movie).completeBaseName();
@@ -217,7 +216,6 @@ bool QOpenSubtitlesEngine::download(int idx)
 	if(idx >= subtitlesList.size())
 		return false;
 
-
 	QList<xmlrpc::Variant> paramsList;
 	QList<xmlrpc::Variant> requestList;
 
@@ -239,7 +237,6 @@ bool QOpenSubtitlesEngine::download(int idx)
 
 	if(responseList.size() == 0)
 		return false;
-
 
 	QByteArray subtitleContent = QByteArray::fromBase64(responseList.at(0).toMap()["data"].toByteArray());
 

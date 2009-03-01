@@ -88,7 +88,7 @@
        </property>
        <item>
         <property name="text" >
-         <string>*.avi *.asf *.divx *.dat *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv</string>
+         <string>*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv</string>
         </property>
        </item>
        <item>

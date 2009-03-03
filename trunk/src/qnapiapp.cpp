@@ -165,11 +165,7 @@ void QNapiApp::createTrayIcon()
 	trayIcon = new QSystemTrayIcon(0);
 	trayIcon->setContextMenu(trayIconMenu);
 
-#ifdef Q_WS_MAC
-	trayIcon->setIcon(QIcon(":/icon/qnapi-22-mono.png"));
-#else
 	trayIcon->setIcon(QIcon(":/icon/qnapi.png"));
-#endif
 
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 			this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));

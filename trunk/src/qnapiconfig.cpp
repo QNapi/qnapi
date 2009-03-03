@@ -64,7 +64,7 @@ QString QNapiConfig::p7zipPath()
 
 #ifdef Q_WS_MAC
 	// Pod MacOS X 7zip jest w zasobach aplikacji
-	paths << QApplication::applicationDirPath() + "/../Resources";
+	paths << QDir(QApplication::applicationDirPath() + "/../Resources").canonicalPath();
 #endif
 
 	QStringList binaries;

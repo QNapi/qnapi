@@ -168,6 +168,7 @@ void frmProgress::downloadFinished()
 		}
 		else if(queue.size() > 0)
 		{
+			frmSummary summary;
 			summary.setSuccessList(getThread.gotList);
 			summary.setFailedList(getThread.failedList);
 			summary.exec();

@@ -194,7 +194,7 @@ void frmProgress::closeEvent(QCloseEvent *event)
 			showSummary = false;
 			getThread.requestAbort();
 			ui.lbAction->setText(tr("Kończenie zadań..."));
-			ui.lbFileName->setText("...");
+			ui.lbFileName->setText("");
 			ui.pbCancel->setEnabled(false);
 			qApp->processEvents();
 			closeRequested = true;

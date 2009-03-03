@@ -186,13 +186,19 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const 
 		return false;
 
 	QByteArray fileContent = f.readAll();
+	
 	QString contentStr = QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
 	f.close();
 
-	if(to.compare("UTF-8", Qt::CaseInsensitive))
+	if(to.compare("UTF-8", Qt::CaseInsensitive) != 0)
 	{
 		fileContent = QTextCodec::codecForName(qPrintable(to))
 						->fromUnicode(contentStr.constData(), contentStr.size());
+	}
+	else
+	{
+		fileContent.clear();
+		fileContent.append(contentStr);
 	}
 
 	if(!f.open(QIODevice::WriteOnly))

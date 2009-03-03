@@ -55,24 +55,24 @@ bool QNapiAbstractEngine::match()
 
 	QFileInfo sf(subtitles);
 
+	if(!QFileInfo(sf.absolutePath()).isWritable())
+		return false;
+
 	if(QFile::exists(subtitles))
 	{
-		if(!sf.isWritable())
-			return false;
-		else if(!noBackup)
-			QFile::rename(subtitles, mf.path() + "/" + mf.completeBaseName() + "_kopia." + sf.suffix());
+		if(!noBackup)
+			QFile::rename(subtitles, mf.path() + QDir::separator() + mf.completeBaseName() + "_kopia." + sf.suffix());
 		else
 			QFile::remove(subtitles);
 	}
 
-	bool r;
+	bool r = false;
 
 #ifdef Q_WS_WIN
 	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
 	QFile f(subtitles), f2(subtitlesTmp);
 	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
 	{
-		r = false;
 		f.close();
 	}
 	else

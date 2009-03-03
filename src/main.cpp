@@ -53,13 +53,20 @@ int main(int argc, char **argv)
 		app.installTranslator(&cuteTranslator);
 		app.setQuitOnLastWindowClosed(false);
 
+		if(app.arguments().contains("-o") || app.arguments().contains("--options"))
+		{
+			app.setQuitOnLastWindowClosed(true);
+			app.showSettings();
+			return 0;
+		}
+
 		if(!app.isInstanceAllowed())
 		{
 			for(int i = 0; i < pathList.size(); i++)
 				app.sendRequest(pathList[i]);
 			return 0;
 		}
-
+		
 		if(GlobalConfig().firstRun())
 		{
 			if(QMessageBox::question(0, QObject::tr("Pierwsze uruchomienie"),

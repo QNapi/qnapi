@@ -31,12 +31,17 @@ bool QNapiCli::isCliCall(int argc, char **argv)
 	{
 		p = argv[i];
 
+		if(p == "--options")
+		{
+			return false;
+		}
+
 		if( (p == "--console") || (p == "-c") ||
-			(p == "--quiet") || (p == "-q") )
+		   (p == "--quiet") || (p == "-q") )
 		{
 			return true;
 		}
-
+		
 		if( (p == "--help") || (p == "-h") ||
 			(p == "--help-languages") || (p == "-hl"))
 		{
@@ -320,6 +325,7 @@ void QNapiCli::printHelp()
 	printCli(QString("    -s,  --show-list        pokazuj liste napisow (dziala tylko z -c)"));
 	printCli(QString("    -d,  --dont-show-list   nie pokazuj listy napisow (dziala tylko z -c)\n"));
 	printCli(QString("    -l,  --lang [jezyk]     pobieraj napisy w zadanym jezyku\n"));
+	printCli(QString("    -o,  --options          wywoluje okno konfiguracji programu (tylko GUI)\n"));
 	printCli(QString("    -h,  --help             pokazuje tekst pomocy"));
 	printCli(QString("    -hl, --help-languages   listuje jezyki, w jakich mozna pobierac napisy\n"));
 }

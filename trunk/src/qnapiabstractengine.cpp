@@ -57,10 +57,12 @@ bool QNapiAbstractEngine::match()
 
 	if(QFile::exists(subtitles))
 	{
-		if(!noBackup)
-			QFile::copy(subtitles, mf.path() + "/" + mf.completeBaseName() + "_kopia" + sf.suffix());
-
-		QFile::remove(subtitles);
+		if(!sf.isWritable())
+			return false;
+		else if(!noBackup)
+			QFile::rename(subtitles, mf.path() + "/" + mf.completeBaseName() + "_kopia." + sf.suffix());
+		else
+			QFile::remove(subtitles);
 	}
 
 	bool r;

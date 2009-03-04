@@ -1,6 +1,11 @@
 QNapi ChangeLog:
 ================
 
+2009-03-04 v0.1.6 (rc2):
+ * poprawki znalezionych bledow
+ * kompilacja z Qt 4.5 dla Mac OS X, dzieki czemu brak ikony w doku
+ * kosmetyczne poprawki interfejsu
+
 2009-02-16 v0.1.6 (rc1):
  * wsparcie dla roznych silnikow pobierania napisow, w tym eksperymentalna
    obsluga serwisu opensubtitles.org

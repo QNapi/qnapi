@@ -320,7 +320,7 @@ void QNapiApp::showOSUploadDialog()
 
 void QNapiApp::showOSCreateUser()
 {
-	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/register"));
+	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/newuser"));
 }
 
 void QNapiApp::showSettings()

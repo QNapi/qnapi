@@ -6,84 +6,84 @@ CONFIG += warn_on \
 TEMPLATE = app
 SOURCES += src/main.cpp \
  src/forms/frmprogress.cpp \
- src/forms/frmabout.cpp \
+ src/forms/frmlistsubtitles.cpp \
+ src/forms/frmsummary.cpp \
+ src/forms/frmscan.cpp \
  src/forms/frmoptions.cpp \
+ src/forms/frmabout.cpp \
+ src/forms/frmnapiprojektconfig.cpp \
  src/forms/frmupload.cpp \
  src/forms/frmcorrect.cpp \
  src/forms/frmreport.cpp \
- src/forms/frmscan.cpp \
  src/forms/frmcreateuser.cpp \
- src/forms/frmsummary.cpp \
- src/forms/frmnapiprojektconfig.cpp \
- src/forms/frmlistsubtitles.cpp \
- src/qnapiconfig.cpp \
- src/qnapiapp.cpp \
- src/movieinfo.cpp \
- src/qmultiparthttprequest.cpp \
+ src/forms/frmopensubtitlesconfig.cpp \
  src/qcumber/qmanagedrequest.cpp \
  src/qcumber/qmanagedsocket.cpp \
  src/qcumber/qsingleapplication.cpp \
- src/qnapiabstractengine.cpp \
- src/qnapiprojektengine.cpp \
- src/qnapicli.cpp \
- src/qnapiopendialog.cpp \
  src/xmlrpc/client.cpp \
  src/xmlrpc/request.cpp \
  src/xmlrpc/variant.cpp \
  src/xmlrpc/response.cpp \
+ src/qnapiconfig.cpp \
+ src/qnapiapp.cpp \
+ src/qnapicli.cpp \
  src/qnapi.cpp \
+ src/qnapiabstractengine.cpp \
+ src/qnapiprojektengine.cpp \
  src/qopensubtitlesengine.cpp \
- src/qnapilanguage.cpp \
- src/forms/frmopensubtitlesconfig.cpp
+ src/qmultiparthttprequest.cpp \
+ src/movieinfo.cpp \
+ src/qnapiopendialog.cpp \
+ src/qnapilanguage.cpp
 HEADERS += src/forms/frmprogress.h \
- src/forms/frmabout.h \
+ src/forms/frmlistsubtitles.h \
+ src/forms/frmsummary.h \
+ src/forms/frmscan.h \
  src/forms/frmoptions.h \
+ src/forms/frmabout.h \
+ src/forms/frmnapiprojektconfig.h \
  src/forms/frmupload.h \
  src/forms/frmcorrect.h \
  src/forms/frmreport.h \
- src/forms/frmscan.h \
  src/forms/frmcreateuser.h \
- src/forms/frmsummary.h \
- src/forms/frmnapiprojektconfig.h \
- src/forms/frmlistsubtitles.h \
- src/version.h \
- src/qnapiconfig.h \
- src/qnapiapp.h \
- src/movieinfo.h \
- src/qmultiparthttprequest.h \
- src/qnapithread.h \
- src/synchttp.h \
+ src/forms/frmopensubtitlesconfig.h \
  src/qcumber/qmanagedrequest.h \
  src/qcumber/qmanagedsocket.h \
  src/qcumber/qsingleapplication.h \
  src/qcumber/qcumber.h \
- src/qnapiabstractengine.h \
- src/qnapiprojektengine.h \
- src/qnapicli.h \
- src/qnapiopendialog.h \
  src/xmlrpc/qsyncxmlrpcclient.h \
  src/xmlrpc/variant.h \
  src/xmlrpc/client.h \
  src/xmlrpc/request.h \
  src/xmlrpc/response.h \
- src/qcheckedlistwidget.h \
+ src/qnapiconfig.h \
+ src/qnapiapp.h \
+ src/qnapicli.h \
  src/qnapi.h \
- src/qnapisubtitleinfo.h \
+ src/qnapiabstractengine.h \
+ src/qnapiprojektengine.h \
  src/qopensubtitlesengine.h \
+ src/movieinfo.h \
+ src/qnapiopendialog.h \
  src/qnapilanguage.h \
- src/forms/frmopensubtitlesconfig.h
+ src/qcheckedlistwidget.h \
+ src/qmultiparthttprequest.h \
+ src/qnapithread.h \
+ src/synchttp.h \
+ src/qnapisubtitleinfo.h \
+ src/version.h
 FORMS += ui/frmprogress.ui \
- ui/frmabout.ui \
+ ui/frmlistsubtitles.ui \
+ ui/frmsummary.ui \
+ ui/frmscan.ui \
  ui/frmoptions.ui \
+ ui/frmabout.ui \
+ ui/napiprojekt/frmnapiprojektconfig.ui \
  ui/frmupload.ui \
  ui/frmcorrect.ui \
  ui/frmreport.ui \
- ui/frmscan.ui \
  ui/frmcreateuser.ui \
- ui/frmsummary.ui \
- ui/napiprojekt/frmnapiprojektconfig.ui \
- ui/opensubtitles/frmopensubtitlesconfig.ui \
- ui/frmlistsubtitles.ui
+ ui/opensubtitles/frmopensubtitlesconfig.ui
 RESOURCES += res/resources.qrc
 QT += network gui core xml
 UI_DIR = tmp
@@ -120,23 +120,11 @@ unix {
  icons.files =  res/qnapi.png  res/qnapi-48.png  res/qnapi-128.png  res/qnapi-512.png
  desktop.path =  /usr/share/applications
  desktop.files =  doc/$${TARGET}.desktop
- dolphin_integration.path =  /usr/share/apps/dolphin/servicemenus
- dolphin_integration.files =  doc/$${TARGET}-download.desktop
- d3lphin_integration.path =  /usr/share/apps/d3lphin/servicemenus
- d3lphin_integration.files =  doc/$${TARGET}-download.desktop
- konqueror_integration.path =  /usr/share/apps/konqueror/servicemenus
- konqueror_integration.files =  doc/$${TARGET}-download.desktop
- kde4_integration.path =  /usr/lib/kde4/share/kde4/services/ServiceMenus
- kde4_integration.files =  doc/$${TARGET}-download.desktop
  INSTALLS =  target \
   doc \
   man \
   icons \
-  desktop \
-  dolphin_integration \
-  d3lphin_integration \
-  konqueror_integration \
-  kde4_integration
+  desktop
 }
 win32 {
  RC_FILE =  win32/qnapi.rc

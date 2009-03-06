@@ -75,10 +75,10 @@ class QNapiConfig
 #ifdef Q_OS_MAC
 		bool showDockIcon();
 		void setShowDockIcon(bool show);
-#endif
 
 		bool useBrushedMetal();
 		void setUseBrushedMetal(bool use);
+#endif
 
 		QList<QPair<QString, bool> > engines();
 		QStringList enginesList();

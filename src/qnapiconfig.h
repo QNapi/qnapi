@@ -25,6 +25,11 @@
 #include <QRegExp>
 #include <QList>
 #include <QPair>
+
+#ifdef Q_OS_MAC
+#include <QtXml>
+#endif
+
 #include "version.h"
 
 enum SearchPolicy
@@ -66,6 +71,11 @@ class QNapiConfig
 
 		bool noBackup();
 		void setNoBackup(bool noBackup);
+
+#ifdef Q_OS_MAC
+		bool showDockIcon();
+		void setShowDockIcon(bool show);
+#endif
 
 		bool useBrushedMetal();
 		void setUseBrushedMetal(bool use);

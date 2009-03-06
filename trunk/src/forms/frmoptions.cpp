@@ -39,7 +39,6 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	ui.sbUPerm->hide();
 #endif
 
-
 	QString tlcode;
 	foreach(QString lang, QNapiLanguage("").listLanguages())
 	{
@@ -131,13 +130,13 @@ void frmOptions::twEnginesSelectionChanged()
 {
 	QNapi n;
 	n.addEngines(n.enumerateEngines());
-	
+
 	if(ui.twEngines->selectedItems().size() < 1)
 		return;	
-	
+
 	QNapiAbstractEngine * e;
 	e = n.engineByName(ui.twEngines->selectedItems().at(0)->text());
-	
+
 	int currentRow = ui.twEngines->row(ui.twEngines->selectedItems().at(0));
 
 	ui.pbMoveUp->setEnabled(currentRow > 0);
@@ -156,21 +155,20 @@ void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
 		{
 			return;
 		}
-		
+
 		if(ui.twEngines->item(i, 0)->checkState() == Qt::Checked)
 		{
 			foundActive = true;
 			break;
 		}
 	}
-	
+
 	if(!foundActive)
 	{
 		item->setCheckState(Qt::Checked);
 		QMessageBox::warning(this,
 							"Ostrzeżenie",
 							"Przynajmniej jeden moduł pobierania musi pozostać aktywny!");
-
 	}
 	
 }
@@ -296,8 +294,11 @@ void frmOptions::writeConfig()
 	GlobalConfig().setTmpPath(ui.leTmpPath->text());
 	GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
+
+#ifdef Q_OS_MAC
 	GlobalConfig().setShowDockIcon(ui.cbShowDockIcon->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
+#endif
 
 	QList<QPair<QString, bool> > engines;
 	for(int i = 0; i < ui.twEngines->rowCount(); ++i)
@@ -338,8 +339,11 @@ void frmOptions::readConfig()
 	ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
 
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
+
+#ifdef Q_OS_MAC
 	ui.cbShowDockIcon->setChecked(GlobalConfig().showDockIcon());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
+#endif
 
 	QNapi n;
 	n.addEngines(n.enumerateEngines());
@@ -398,7 +402,12 @@ void frmOptions::restoreDefaults()
 	GlobalConfig().setTmpPath(QDir::tempPath());
 	GlobalConfig().setLanguage("pl");
 	GlobalConfig().setNoBackup(false);
+
+#ifdef Q_OS_MAC
+	GlobalConfig().setShowDockIcon(true);
 	GlobalConfig().setUseBrushedMetal(false);
+#endif
+
 	QList<QPair<QString, bool> > engines;
 	engines << QPair<QString, bool>("NapiProjekt", true)
 			<< QPair<QString, bool>("OpenSubtitles", true);

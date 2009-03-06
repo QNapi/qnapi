@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
+    <width>679</width>
     <height>404</height>
    </rect>
   </property>
@@ -100,7 +100,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="3" >
+       <item row="5" column="0" colspan="3" >
         <widget class="QCheckBox" name="cbUseBrushedMetal" >
          <property name="text" >
           <string>Używaj stylu BrushedMetal (Mac OS X)</string>
@@ -110,7 +110,17 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="3" >
+       <item row="4" column="0" colspan="3" >
+        <widget class="QCheckBox" name="cbShowDockIcon" >
+         <property name="text" >
+          <string>Pokazuj ikonę w doku systemowym (wymaga ponownego uruchomienia aplikacji)</string>
+         </property>
+         <property name="checked" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="3" >
         <spacer name="verticalSpacer" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -124,6 +134,18 @@
         </spacer>
        </item>
       </layout>
+      <zorder>lb7zPath</zorder>
+      <zorder>le7zPath</zorder>
+      <zorder>pb7zPathSelect</zorder>
+      <zorder>lbTmpPath</zorder>
+      <zorder>leTmpPath</zorder>
+      <zorder>pbTmpPathSelect</zorder>
+      <zorder>lbLang</zorder>
+      <zorder>cbLang</zorder>
+      <zorder>cbNoBackup</zorder>
+      <zorder>cbUseBrushedMetal</zorder>
+      <zorder>cbShowDockIcon</zorder>
+      <zorder>verticalSpacer</zorder>
      </widget>
      <widget class="QWidget" name="tabDownloadEngines" >
       <attribute name="title" >
@@ -618,6 +640,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>pbTmpPathSelect</tabstop>
   <tabstop>cbLang</tabstop>
   <tabstop>cbNoBackup</tabstop>
+  <tabstop>cbShowDockIcon</tabstop>
   <tabstop>cbUseBrushedMetal</tabstop>
   <tabstop>twEngines</tabstop>
   <tabstop>pbMoveUp</tabstop>

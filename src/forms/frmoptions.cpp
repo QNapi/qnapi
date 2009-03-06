@@ -28,6 +28,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
 #else
 	ui.cbUseBrushedMetal->hide();
+	ui.cbShowDockIcon->hide();
 #endif
 
 #ifdef Q_WS_WIN
@@ -295,6 +296,7 @@ void frmOptions::writeConfig()
 	GlobalConfig().setTmpPath(ui.leTmpPath->text());
 	GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
 	GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
+	GlobalConfig().setShowDockIcon(ui.cbShowDockIcon->isChecked());
 	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 
 	QList<QPair<QString, bool> > engines;
@@ -336,6 +338,7 @@ void frmOptions::readConfig()
 	ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
 
 	ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
+	ui.cbShowDockIcon->setChecked(GlobalConfig().showDockIcon());
 	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
 
 	QNapi n;

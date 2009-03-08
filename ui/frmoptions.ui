@@ -145,7 +145,6 @@
       <zorder>cbNoBackup</zorder>
       <zorder>cbUseBrushedMetal</zorder>
       <zorder>cbShowDockIcon</zorder>
-      <zorder>verticalSpacer</zorder>
      </widget>
      <widget class="QWidget" name="tabDownloadEngines" >
       <attribute name="title" >

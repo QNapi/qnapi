@@ -19,6 +19,7 @@
 
 #include <QDialog>
 #include <QHeaderView>
+#include <QDesktopWidget>
 
 #include "ui_frmlistsubtitles.h"
 

@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmListSubtitles</class>
- <widget class="QDialog" name="frmListSubtitles" >
-  <property name="geometry" >
+ <widget class="QDialog" name="frmListSubtitles">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,78 +10,26 @@
     <height>343</height>
    </rect>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>500</width>
     <height>300</height>
    </size>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QNapi - wybierz napisy z listy</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
     <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
-   <item row="0" column="0" colspan="3" >
-    <widget class="QLabel" name="lbSelectSubtitles" >
-     <property name="text" >
-      <string>Z poniższej listy wybierz napisy, które chcesz dopasować do pliku &lt;b>film.avi&lt;/b>:</string>
-     </property>
-     <property name="wordWrap" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3" >
-    <widget class="QTableWidget" name="twSubtitles" >
-     <property name="editTriggers" >
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="dragDropOverwriteMode" >
-      <bool>false</bool>
-     </property>
-     <property name="alternatingRowColors" >
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode" >
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior" >
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="verticalScrollMode" >
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="horizontalScrollMode" >
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="cornerButtonEnabled" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2" >
-    <widget class="QPushButton" name="pbDownload" >
-     <property name="text" >
-      <string>Pobierz napisy</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" >
-    <widget class="QPushButton" name="pbDontDownload" >
-     <property name="text" >
-      <string>Nie pobieraj napisów dla tego filmu</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" >
-    <spacer name="horizontalSpacer" >
-     <property name="orientation" >
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>176</width>
        <height>25</height>
@@ -88,29 +37,79 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="0" colspan="3" >
-    <widget class="QLabel" name="lbColorHint" >
-     <property name="text" >
-      <string>Kolorem zielonym podświetlone są napisy, które najprawdopodobniej pasują do Twojego pliku z filmem. Kolorem czerwonym podświetlono napisy, które prawdopodobnie nie pasją do Twojego pliku z filmem.</string>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="lbSelectSubtitles">
+     <property name="text">
+      <string>Z poniższej listy wybierz napisy, które chcesz dopasować do pliku &lt;b&gt;film.avi&lt;/b&gt;:</string>
      </property>
-     <property name="alignment" >
-      <set>Qt::AlignJustify|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap" >
+     <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>
    </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QTableWidget" name="twSubtitles">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="pbDownload">
+     <property name="text">
+      <string>Pobierz napisy</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="pbDontDownload">
+     <property name="text">
+      <string>Nie pobieraj napisów dla tego filmu</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="lbGreenHint">
+     <property name="text">
+      <string>Na zielono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; pasujące do Twojego filmu.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QLabel" name="lbRedHint">
+     <property name="text">
+      <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; nie pasujące do Twojego filmu.</string>
+     </property>
+    </widget>
+   </item>
   </layout>
-  <zorder>lbSelectSubtitles</zorder>
-  <zorder>twSubtitles</zorder>
-  <zorder>pbDownload</zorder>
-  <zorder>pbDontDownload</zorder>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>lbColorHint</zorder>
  </widget>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -119,11 +118,11 @@
    <receiver>frmListSubtitles</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>506</x>
      <y>317</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>286</x>
      <y>167</y>
     </hint>
@@ -135,11 +134,11 @@
    <receiver>frmListSubtitles</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>130</x>
      <y>317</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>286</x>
      <y>167</y>
     </hint>
@@ -151,11 +150,11 @@
    <receiver>pbDownload</receiver>
    <slot>click()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>166</x>
      <y>109</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>480</x>
      <y>320</y>
     </hint>

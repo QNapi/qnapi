@@ -25,10 +25,10 @@ frmAbout::frmAbout(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
 	setAttribute(Qt::WA_QuitOnClose, false);
 	ui.lbTitle->setText(QString("QNapi ") + QNAPI_DISPLAYABLE_VERSION);
 
-const QString www = tr("<a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a>");
-const QString author = tr("Copyright (C) 2008-2009 Krzemin &lt;<a href=\"mailto:pkrzemin@o2.pl\">pkrzemin@o2.pl</a>&gt;");
-const QString useos = tr("Program korzysta z bazy <a href=\"http://www.opensubtitles.org\">http://www.opensubtitles.org</a>");
-const QString usenp = tr("Program korzysta z bazy <a href=\"http://www.napiprojekt.pl\">http://www.napiprojekt.pl</a>");
+	const QString www = tr("<a href=\"http://krzemin.iglu.cz/qnapi\">http://krzemin.iglu.cz/qnapi</a>");
+	const QString author = tr("Copyright (C) 2008-2009 Krzemin &lt;<a href=\"mailto:pkrzemin@o2.pl\">pkrzemin@o2.pl</a>&gt;");
+	const QString useos = tr("Program korzysta z bazy <a href=\"http://www.opensubtitles.org\">http://www.opensubtitles.org</a>");
+	const QString usenp = tr("Program korzysta z bazy <a href=\"http://www.napiprojekt.pl\">http://www.napiprojekt.pl</a>");
 
 	ui.lbWWW->setText(www);
 	ui.lbAuthor->setText(author);

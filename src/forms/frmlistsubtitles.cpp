@@ -19,6 +19,10 @@ frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WFlags f)
 	: QDialog(parent, f)
 {
 	ui.setupUi(this);
+
+	// workaround dla compiza?
+	move((QApplication::desktop()->width() - width()) / 2,
+		(QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmListSubtitles::setFileName(const QString & name)
@@ -42,7 +46,7 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 	ui.twSubtitles->verticalHeader()->setDefaultSectionSize(20);
 	ui.twSubtitles->verticalHeader()->setResizeMode(QHeaderView::Fixed);
 
-	int i = 0;
+	int i = 0, good = 0, bad = 0;
 	foreach(QNapiSubtitleInfo s, list)
 	{
 		QTableWidgetItem *item;
@@ -50,6 +54,11 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 		bool highlight = (s.resolution != SUBTITLE_UNKNOWN);
 
 		QBrush brush((s.resolution == SUBTITLE_GOOD) ? QColor(qRgb(200, 255, 200)) : QColor(qRgb(255, 200, 200)));		
+
+		if(highlight && (s.resolution == SUBTITLE_GOOD))
+			++good;
+		else if(highlight && (s.resolution == SUBTITLE_GOOD))
+			++bad;
 
 		QString lang_path = QString(":/languages/") + s.lang + ".gif";
 		if(QFile::exists(lang_path))
@@ -88,6 +97,9 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 	}
 
 	ui.twSubtitles->resizeColumnsToContents();
+
+	if(good == 0) ui.lbGreenHint->hide();
+	if(bad == 0) ui.lbRedHint->hide();
 }
 
 int frmListSubtitles::getSelectedIndex()

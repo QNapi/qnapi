@@ -113,9 +113,9 @@ unix {
     doc.files = doc/ChangeLog \
         doc/changelog.gz \
         doc/README \
-        doc/README.pl \
+        doc/README-pl \
         doc/LICENSE \
-        doc/LICENSE.pl \
+        doc/LICENSE-pl \
         doc/COPYRIGHT \
         doc/qnapi-download.desktop \
         doc/qnapi-scan.desktop \

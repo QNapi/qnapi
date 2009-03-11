@@ -1,7 +1,7 @@
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/label	Pobierz napisy do filmu z QNapi
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/tooltip	Pobiera i dopasowuje napisy do filmu z bazy NAPI-PROJEKT
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/icon		/usr/share/icons/qnapi.png
-/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path		qnapi
+/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path		/usr/bin/qnapi
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/parameters	%M
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames	[*.avi,*.asf,*.divx,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase 	false
@@ -11,3 +11,16 @@
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/accept-multiple-files	true
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/schemes	[file]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/version	"1.1"
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/label	Przeskanuj katalog z QNapi
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/tooltip	Skanuje katalog w poszukiwaniu filmów i pobiera do nich napisy
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/icon		/usr/share/icons/qnapi.png
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/path		/usr/bin/qnapi
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/parameters	%f
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/basenames	[*]
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/matchcase 	false
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/mimetypes	[*/*]
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/isfile	false
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/isdir	true
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/accept-multiple-files	false
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/schemes	[file]
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/version	"1.1"

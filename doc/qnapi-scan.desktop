@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Actions=QNapiScan;
+Name=Przeskanuj katalog i pobierz napisy
+GenericName=Przeskanuj katalogu i pobierz napisy
+Icon=/usr/share/icons/qnapi-48.png
+ServiceTypes=inode/directory
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+Type=Service
+
+[Desktop Action QNapiScan]
+Name=Przeskanuj katalog i pobierz napisy
+Exec=qnapi %U
+Icon=/usr/share/icons/qnapi-48.png

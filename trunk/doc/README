@@ -22,11 +22,11 @@ Requirements
 Installation
 ===========
 
-First check if there's a package of QNapi for your distribution:
-http://krzemin.iglu.cz/qnapi
+First check if there's a package qnapi in your distrubution's repository or
+on the webpage http://krzemin.iglu.cz/qnapi
 
 If there's no package for your distro, you'll have to compile QNapi from
-source. To do this you'll need Qt4 libraries and 7z, which you can find in
+source. You'll need Qt4 libraries and 7z program, which you can find in
 p7zip-full (see http://p7zip.sourceforge.net for more details).
 
 First off, fetch and unpack the tarball:
@@ -79,55 +79,69 @@ Integration with file managers
 If you want to integrate QNapi with your window manager, follow instruction
 presented below for your WM.
 
-KDE (Dolphin/Konqueror)
------------------------
-WARNING: Since version 0.1.4 QNapi should automatically integrate with Dolphin
-and Konqueror. However it does not integrate, do the following:
---------------------------------------------------------------------------------
-You'll need qnapi-download.dekstop, which you can get from doc/ subdirectory
-in source archive, from /usr/share/doc/qnapi after installing QNapi or from
-website http://krzemin.iglu.cz/qnapi
+First, check if there's packages named qnapi-kde3, qnapi-kde4, qnapi-gnome
+in your distribution. Install them and they integrates QNapi with your
+environment for you. If no packages were made, follow the instructions below.
 
-Copy it to the following directories:
+
+KDE 3.x (Dolphin/Konqueror)
+---------------------------
+
+You'll need qnapi-download.dekstop and qnapi-scan.desktop files which you can
+get from doc/ subdirectory in source archive or /usr/share/doc/qnapi after
+you have QNapi installed.
+
+Copy files to the following directories:
  * ~/.kde/share/apps/konqueror/servicemenus/
  * ~/.kde/share/apps/d3lphin/servicemenus/
  * ~/.kde/share/apps/dolphin/servicemenus/
 
-Or globally (needs superuser priviledges):
+Or globally (needs a superuser privileges):
  * /usr/share/apps/konqueror/servicemenus/
  * /usr/share/apps/d3lphin/servicemenus/
  * /usr/share/apps/dolphin/servicemenus/
 
-For KDE4:
+Above-mentioned path may narrowly differ in different distribution.
 
-* ~/.kde4/share/kde4/services/ServiceMenus/
 
-Globally for KDE4:
- * /usr/lib/kde4/share/kde4/services/ServiceMenus/
+KDE4
+----
 
-Above-mentioned directories may differ in your distribution, depends on where
-KDE is installed.
+The command:
+
+$ kde4-config --path services
+
+will return a list of directories delimited by colon:
+
+/home/user/.kde4/share/kde4/services/:/usr/share/kde4/services/
+
+qnapi-download.desktop and qnapi-scan.desktop files must be copied to:
+
+/home/user/.kde4/share/kde4/services/ServiceMenus/
+
+or:
+
+/usr/share/kde4/services/ServiceMenus/
+
+(globally, needs a superuser privileges)
+
 
 Nautilus (GNOME)
 ----------------
-WARNING: Since 0.1.5 version QNapi should automatically integrate with Nautilus
-after you had installed qnapi-gnome package, proper for your distribution.
-Restart of the system (or reload gconfd daemon) is required.
-
-If automatic integration doesn't work or you don't want (can't) install
-additional package, you can use alternative way to integrate QNapi with
-Nautilus:
-
-You need to install nautilus-actions package and qnapi-download.schemas file,
-which you can get from doc/ subdirectory in source archive, from
-/usr/share/doc/qnapi after installing QNapi or from website
-http://krzemin.iglu.cz/qnapi. You only need to copy it to
-/usr/share/gconf/schemas/ and execute following command:
+You must have nautilus-actions package installed. You'll need
+qnapi-download.schemas and qnapi-scan.schemas files, which you can get from doc/
+subdirectory in source archive or /usr/share/doc/qnapi after you have QNapi
+installed. Copy files to /usr/share/gconf/schemas/ directory and execute
+following commands:
 
 $ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-download.schemas
+$ sudo gconf-schemas --register /usr/share/gconf/schemas/qnapi-scan.schemas
 
 If this does not help, you can also try to import qnapi-download.schemas file
-using nautilus-actions-config tool.
+using nautilus-actions-config tool:
+
+$ nautilus-actions-config
+
 
 Thunar (XFCE)
 -------------
@@ -136,6 +150,7 @@ Integration with Tunar requires to run the program choose
 "Edit" -> "Configure custom actions". In the dialog box press a "plus"
 button. New "Create Action" dialog will appear. In this dialog on "Basic"
 tab set:
+
 Name: "Fetch subtitles with QNapi"
 Description: (whatever)
 Command: qnapi %F
@@ -143,6 +158,10 @@ Command: qnapi %F
 You can choose icon from a file (e. g. /usr/share/icons/qnapi-48.png).
 On the "Appearance Conditions" tab you only have to check "Video Files".
 Then clink OK and it's done.
+
+If you want to have a "Scan directories with QNapi" under LMB, create another
+action, type "qnapi %f" as "Command" and on the "Appearance Conditions" check
+only "Directories".
 
 
 Bugs Reporting

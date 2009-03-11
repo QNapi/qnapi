@@ -1,6 +1,10 @@
 QNapi ChangeLog:
 ================
 
+2009-03-11 v0.1.6:
+ * usunieta automatyczna integracja z KDE
+ * kosmetyczne poprawki
+
 2009-03-04 v0.1.6 (rc2):
  * poprawki znalezionych bledow
  * kompilacja z Qt 4.5 dla Mac OS X, dzieki czemu brak ikony w doku

@@ -25,119 +25,31 @@ class QSyncXmlRpcClient : public xmlrpc::Client
 
 	public:
 
-		QSyncXmlRpcClient(QObject * parent = 0)
-			: xmlrpc::Client(parent)
-		{
-			timeout = 30000; // 30 s. timeoutu
-			connectSignals();
-		}
+		QSyncXmlRpcClient(QObject * parent = 0);
+		QSyncXmlRpcClient(	const QString & hostname, quint16 port = 80,
+							QObject * parent = 0L);
+		~QSyncXmlRpcClient();
 
-		QSyncXmlRpcClient(const QString & hostname, quint16 port = 80, QObject * parent = 0L)
-			: xmlrpc::Client(hostname, port, parent)
-		{
-			connectSignals();
-		}
+		void connectSignals();
+		void setRequestTimeout(int t);
 
-		~QSyncXmlRpcClient() {};
+		// sync requests; returns 1 if success or 0 if fails
+		int request(QList<xmlrpc::Variant> params, QString methodName);
+		int request(QString methodName);
+		int request(QString methodName, xmlrpc::Variant param1);
+		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2);
+		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
+					xmlrpc::Variant param3);
+		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
+					xmlrpc::Variant param3, xmlrpc::Variant param4);
 
-		void connectSignals()
-		{
-			connect(this, SIGNAL(done(int, QVariant)), this, SLOT(requestDone(int, QVariant)));
-			connect(this, SIGNAL(failed(int, int, QString)), this, SLOT(requestFailed(int, int, QString)));
-			connect(&timeoutTimer, SIGNAL(timeout()),  this, SLOT(abort()));
-		}
-
-		void setRequestTimeout(int t)
-		{
-			timeout = t;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QList<xmlrpc::Variant> params, QString methodName )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(params, methodName);
-			loop.exec();
-			return status;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QString methodName )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(methodName);
-			loop.exec();
-			return status;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QString methodName, xmlrpc::Variant param1 )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(methodName, param1);
-			loop.exec();
-			return status;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2  )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(methodName, param1, param2);
-			loop.exec();
-			return status;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2, xmlrpc::Variant param3  )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(methodName, param1, param2, param3);
-			loop.exec();
-			return status;
-		}
-
-		// sync request. returns 1 if success or 0 if fails
-		int request( QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2, xmlrpc::Variant param3, xmlrpc::Variant param4 )
-		{
-			timeoutTimer.start(timeout);
-			requestID = xmlrpc::Client::request(methodName, param1, param2, param3, param4);
-			loop.exec();
-			return status;
-		}
-
-		QVariant & result()
-		{
-			return resultVar;
-		}
+		QVariant & result();
 
 	protected slots:
 
-		void requestDone(int idx, QVariant res)
-		{
-			if(idx != requestID)
-				return;
-			status = 1;
-			resultVar = res;
-			loop.exit();
-		}
-
-		void requestFailed(int idx, int errorCode, QString errorString)
-		{
-			if(idx != requestID)
-				return;
-			errCode = errorCode;
-			errString = errorString;
-			status = 0;
-			loop.exit();
-		}
-		
-		void abort()
-		{
-			status = 0;
-			requestFailed(requestID, 0, "timeout");
-			loop.exit();
-		}
+		void requestDone(int idx, QVariant res);
+		void requestFailed(int idx, int errorCode, QString errorString);
+		void abort();
 
 	private:
 

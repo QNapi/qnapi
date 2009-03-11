@@ -118,7 +118,9 @@ unix {
         doc/LICENSE.pl \
         doc/COPYRIGHT \
         doc/qnapi-download.desktop \
-        doc/qnapi-download.schemas
+        doc/qnapi-scan.desktop \
+        doc/qnapi-download.schemas \
+        doc/qnapi-scan.schemas
     man.path = $${INSTALL_PREFIX}/share/man/man1
     man.files = doc/$${TARGET}.1.gz
     icons.path = /usr/share/icons

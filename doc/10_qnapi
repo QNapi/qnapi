@@ -3,9 +3,9 @@
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/icon		/usr/share/icons/qnapi.png
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/path		/usr/bin/qnapi
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/parameters	%M
-/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames	[*.avi,*.asf,*.divx,*.mkv,*.mov,*.mp4,*.mpeg,*.mpg,*.ogm,*.rm,*.rmvb,*.wmv]
+/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/basenames	[*.avi ; *.asf ; *.divx ; *.mkv ; *.mov ; *.mp4 ; *.mpeg ; *.mpg ; *.ogm ; *.rm ; *.rmvb ; *.wmv]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/matchcase 	false
-/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/mimetypes	[video/x-msvideo,video/x-ms-asf,video/mpeg,video/x-ms-wmv,video/mp4,video/quicktime,video/x-theora,video/x-matroska,video/3gpp,application/vnd.rn-realmedia,application/vnd.rn-realmedia-vbr]
+/apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/mimetypes	[video/x-msvideo ; video/x-ms-asf ; video/mpeg ; video/x-ms-wmv ; video/mp4 ; video/quicktime ; video/x-theora ; video/x-matroska ; video/3gpp ; application/vnd.rn-realmedia ; application/vnd.rn-realmedia-vbr]
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isfile	true
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/isdir	false
 /apps/nautilus-actions/configurations/12e76756-c203-4a27-830f-af5a1527869e/accept-multiple-files	true
@@ -15,7 +15,7 @@
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/tooltip	Skanuje katalog w poszukiwaniu filmów i pobiera do nich napisy
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/icon		/usr/share/icons/qnapi.png
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/path		/usr/bin/qnapi
-/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/parameters	%f
+/apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/parameters	%M
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/basenames	[*]
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/matchcase 	false
 /apps/nautilus-actions/configurations/7289a682-870f-4c4d-961e-ec358de196b6/mimetypes	[*/*]

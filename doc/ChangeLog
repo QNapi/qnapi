@@ -3,6 +3,7 @@ QNapi ChangeLog:
 
 2009-03-11 v0.1.6:
  * usunieta automatyczna integracja z KDE
+ * poprawiona integracja z GNOME
  * kosmetyczne poprawki
 
 2009-03-04 v0.1.6 (rc2):

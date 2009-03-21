@@ -61,7 +61,7 @@ Q_OBJECT
 
 	public:
 		frmScan(QWidget *parent = 0, Qt::WFlags f = 0);
-		~frmScan(){};
+        ~frmScan();
 
 		void setInitDir(const QString & dir);
 

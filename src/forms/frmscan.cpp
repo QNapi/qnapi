@@ -55,6 +55,21 @@ frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
 		(QApplication::desktop()->height() - height()) / 2);
 }
 
+frmScan::~frmScan()
+{
+    QList<QString> scanFilters;
+    for(int i = 0; i < ui.cbFilters->count(); i++)
+    {
+        scanFilters << ui.cbFilters->itemText(i);
+    }
+
+    GlobalConfig().setLastScanDir(ui.leDirectory->text());
+    GlobalConfig().setScanFilters(scanFilters);
+    GlobalConfig().setScanSkipFilters(ui.leSkipFilters->text());
+    GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
+    GlobalConfig().save();
+}
+
 void frmScan::setInitDir(const QString & dir)
 {
 	if(!dir.isEmpty() && QFileInfo(dir).isDir())
@@ -70,18 +85,6 @@ void frmScan::closeEvent(QCloseEvent *event)
 		scanThread.requestAbort();
 		scanThread.wait();
 	}
-
-	QList<QString> scanFilters;
-	for(int i = 0; i < ui.cbFilters->count(); i++)
-	{
-		scanFilters << ui.cbFilters->itemText(i);
-	}
-
-	GlobalConfig().setLastScanDir(ui.leDirectory->text());
-	GlobalConfig().setScanFilters(scanFilters);
-	GlobalConfig().setScanSkipFilters(ui.leSkipFilters->text());
-	GlobalConfig().setScanSkipIfSubtitlesExists(ui.cbSkipIfSubtitlesExists->isChecked());
-	GlobalConfig().save();
 
 	event->accept();
 }

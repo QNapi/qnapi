@@ -198,7 +198,14 @@ bool QNapiApp::showOpenDialog(QString engine)
 	if(openDialog->selectFiles())
 	{
 		fileList = openDialog->selectedFiles();
-		GlobalConfig().setPreviousDialogPath(openDialog->directory().path());
+
+        if(!fileList.isEmpty())
+        {
+            QString dialogPath = QFileInfo(fileList[0]).absolutePath();
+            QMessageBox::information(0, dialogPath, openDialog->directory().path());
+            GlobalConfig().setPreviousDialogPath(dialogPath);
+            GlobalConfig().save();
+        }
 	}
 
 	delete openDialog;

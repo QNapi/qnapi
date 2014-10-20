@@ -130,7 +130,7 @@ bool QNapiCli::analyze()
 int QNapiCli::exec()
 {
 	if(!analyze())
-		return -1;
+		return EC_CMD_LINE_ARG_PARSING_ERROR;
 
 	if(mode == CM_UNSET)
 		return 1;
@@ -141,32 +141,32 @@ int QNapiCli::exec()
 	if(mode == CM_HELP_LANGUAGES)
 	{
 		printHelpLanguages();
-		return 0;
+		return EC_OK;
 	}
 
 	if((mode == CM_HELP) || ((mode == CM_CONSOLE) && (movieList.isEmpty())))
 	{
 		printHelp();
-		return 0;
+		return EC_OK;
 	}
 
 	if(!QNapi::checkP7ZipPath())
 	{
 		printCli("Sciezka do programu p7zip jest nieprawidlowa! Sprawdz swoje ustawienia.");
-		return 2;
+		return EC_P7ZIP_UNAVAILABLE;
 	}
 
 	if(!QNapi::checkTmpPath())
 	{
 		printCli("Nie można pisac do katalogu tymczasowego! Sprawdz swoje ustawienia.");
-		return 3;
+		return EC_CANNOT_WRITE_TMP_DIR;
 	}
 
 	
 	if(!napi.addEngines(GlobalConfig().enginesList()))
 	{
 		printCli(QString("Blad: ") + napi.error());
-		return 4;
+		return EC_UNSUPPORTED_ENGINE;
 	}
 
 	if(lang.isEmpty())
@@ -181,7 +181,7 @@ int QNapiCli::exec()
 		if(!napi.checkWritePermissions())
 		{
 			printCli(QString("   Brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
-			continue;
+			return EC_NO_WRITE_PERMISSIONS;
 		}
 
 		printCli(QString(QString("   Obliczanie sum kontrolnych...")));
@@ -202,7 +202,7 @@ int QNapiCli::exec()
 		if(!found)
 		{
 			printCli(QString(QString("   Nie znaleziono napisow!")));
-			continue;
+			return EC_SUBTITLES_NOT_FOUND;
 		}
 
 		int selIdx = 0;
@@ -279,21 +279,21 @@ int QNapiCli::exec()
 		if(!napi.download(selIdx))
 		{
 			printCli(QString(QString("   Nie udalo sie pobrac napisow!")));
-			continue;
+			return EC_COULD_NOT_DOWNLOAD;
 		}
 
 		printCli(QString(QString("   Rozpakowywanie napisow...")));
 		if(!napi.unpack())
 		{
 			printCli(QString(QString("   Nie udało sie poprawnie rozpakowac napisow!")));
-			continue;
+			return EC_COULD_NOT_UNARCHIVE;
 		}
 
 		printCli(QString(QString("   Dopasowywanie napisow...")));
 		if(!napi.match())
 		{
 			printCli(QString(QString("   Nie udalo sie dopasowac napisow!")));
-			continue;
+			return EC_COULD_NOT_MATCH;
 		}
 
 		if(napi.ppEnabled())
@@ -305,7 +305,7 @@ int QNapiCli::exec()
 		napi.cleanup();
 	}
 
-	return 0;
+	return EC_OK;
 }
 
 void QNapiCli::printHeader()

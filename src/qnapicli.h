@@ -41,6 +41,20 @@ private:
 	QStringList movieList;
 	QNapi napi;
 
+	enum CliExitCode {
+		EC_CMD_LINE_ARG_PARSING_ERROR = -1,
+		EC_OK                         = 0,
+		EC_NON_CLI_MODE               = 1,
+		EC_P7ZIP_UNAVAILABLE          = 2,
+		EC_CANNOT_WRITE_TMP_DIR       = 3,
+		EC_UNSUPPORTED_ENGINE         = 4,
+		EC_NO_WRITE_PERMISSIONS       = 5,
+		EC_SUBTITLES_NOT_FOUND        = 6,
+		EC_COULD_NOT_DOWNLOAD         = 7,
+		EC_COULD_NOT_UNARCHIVE        = 8,
+		EC_COULD_NOT_MATCH            = 9
+	};
+
 	enum CliMode {
 		CM_UNSET, CM_HELP, CM_HELP_LANGUAGES, CM_CONSOLE, CM_QUIET
 	};

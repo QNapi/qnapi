@@ -341,6 +341,7 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 {
 	QList<QVariant> inList = settings->value("qnapi/engines").toList();
 	QList<QPair<QString, bool> > map;
+    QSet<QString> names;
 
 	foreach(QVariant v, inList)
 	{
@@ -350,13 +351,17 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 		QString key = sl.at(0);
 		bool value = (sl.at(1) == "1");
 		map << qMakePair(key, value);
+        names << key;
 	}
 
-	if(map.isEmpty())
-	{
-		map << QPair<QString,bool>("NapiProjekt", true)
-            << QPair<QString,bool>("OpenSubtitles", true)
-            << QPair<QString,bool>("Napisy24", true);
+    QStringList allNames;
+    allNames << "NapiProjekt" << "Napisy24" << "OpenSubtitles";
+
+    QString name;
+    foreach(name, allNames) {
+        if(!names.contains(name)) {
+          map << qMakePair(name, true);
+        }
     }
 
 	return map;

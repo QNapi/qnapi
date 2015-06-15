@@ -25,6 +25,7 @@
 #include <QRegExp>
 #include <QList>
 #include <QPair>
+#include <QSet>
 
 #ifdef Q_OS_MAC
 #include <QtXml>

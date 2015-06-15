@@ -124,6 +124,12 @@ void QNapiApp::createTrayIcon()
 	osCreateUserAction = new QAction(tr("Załóż konto"), 0);
 	connect(osCreateUserAction, SIGNAL(triggered()), this, SLOT(showOSCreateUser()));
 
+    napisy24GetAction = new QAction(tr("Pobierz napisy"), 0);
+    connect(napisy24GetAction, SIGNAL(triggered()), this, SLOT(showNapisy24GetDialog()));
+
+    napisy24CreateUserAction = new QAction(tr("Załóż konto"), 0);
+    connect(napisy24CreateUserAction, SIGNAL(triggered()), this, SLOT(showNapisy24CreateUser()));
+
 	settingsAction = new QAction(tr("Opcje"), 0);
 	connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
 
@@ -150,13 +156,20 @@ void QNapiApp::createTrayIcon()
 	osSubMenu->addSeparator();
 	osSubMenu->addAction(osCreateUserAction);
 
+    napisy24SubMenu = new QMenu(0);
+    napisy24SubMenu->setTitle(tr("Napisy24"));
+    napisy24SubMenu->addAction(napisy24GetAction);
+    napisy24SubMenu->addSeparator();
+    napisy24SubMenu->addAction(napisy24CreateUserAction);
+
 	trayIconMenu = new QMenu(0);
 	trayIconMenu->addAction(getAction);
 	trayIconMenu->addAction(scanAction);
 	trayIconMenu->addSeparator();
 	trayIconMenu->addMenu(napiSubMenu);
-	trayIconMenu->addMenu(osSubMenu);
-	trayIconMenu->addSeparator();
+    trayIconMenu->addMenu(osSubMenu);
+    trayIconMenu->addMenu(napisy24SubMenu);
+    trayIconMenu->addSeparator();
 	trayIconMenu->addAction(settingsAction);
 	trayIconMenu->addAction(aboutAction);
 	trayIconMenu->addSeparator();
@@ -328,6 +341,16 @@ void QNapiApp::showOSUploadDialog()
 void QNapiApp::showOSCreateUser()
 {
 	QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/newuser"));
+}
+
+void QNapiApp::showNapisy24GetDialog()
+{
+    showOpenDialog("Napisy24");
+}
+
+void QNapiApp::showNapisy24CreateUser()
+{
+    QDesktopServices::openUrl(QUrl("http://napisy24.pl/cb-registration/registers"));
 }
 
 void QNapiApp::showSettings()

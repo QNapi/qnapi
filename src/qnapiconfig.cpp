@@ -355,8 +355,9 @@ QList<QPair<QString, bool> > QNapiConfig::engines()
 	if(map.isEmpty())
 	{
 		map << QPair<QString,bool>("NapiProjekt", true)
-			<< QPair<QString,bool>("OpenSubtitles", true);
-	}
+            << QPair<QString,bool>("OpenSubtitles", true)
+            << QPair<QString,bool>("Napisy24", true);
+    }
 
 	return map;
 }
@@ -374,7 +375,7 @@ QStringList QNapiConfig::enginesList()
 
 	if(list.isEmpty())
 	{
-		list << "NapiProjekt" << "OpenSubtitles";
+        list << "NapiProjekt" << "OpenSubtitles" << "Napisy24";
 	}
 
 	return list;

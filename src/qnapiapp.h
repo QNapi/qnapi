@@ -67,6 +67,9 @@ class QNapiApp : public QSingleApplication
 		void showOSUploadDialog();
 		void showOSCreateUser();
 		
+        void showNapisy24GetDialog();
+        void showNapisy24CreateUser();
+
 		void showSettings();
 		void showAbout();
 		void tryQuit();
@@ -79,11 +82,12 @@ class QNapiApp : public QSingleApplication
 		bool event(QEvent *ev);
 
 		QSystemTrayIcon *trayIcon;
-		QMenu *trayIconMenu, *napiSubMenu, *osSubMenu;
+        QMenu *trayIconMenu, *napiSubMenu, *osSubMenu, *napisy24SubMenu;
 		QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
 				*napiCorrectAction, *napiReportAction, *napiCreateUserAction,
 				*osGetAction, *osAddAction, *osCreateUserAction,
-				*settingsAction, *aboutAction, *quitAction;
+                *napisy24GetAction, *napisy24CreateUserAction,
+                *settingsAction, *aboutAction, *quitAction;
 
 		QNapiOpenDialog *openDialog;
 		

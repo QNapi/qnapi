@@ -35,7 +35,8 @@ SOURCES += src/main.cpp \
     src/qmultiparthttprequest.cpp \
     src/movieinfo.cpp \
     src/qnapiopendialog.cpp \
-    src/qnapilanguage.cpp
+    src/qnapilanguage.cpp \
+    src/qnapisy24engine.cpp
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
     src/forms/frmsummary.h \
@@ -72,7 +73,8 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapithread.h \
     src/synchttp.h \
     src/qnapisubtitleinfo.h \
-    src/version.h
+    src/version.h \
+    src/qnapisy24engine.h
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
     ui/frmsummary.ui \

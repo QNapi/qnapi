@@ -22,6 +22,7 @@
 #include "qnapiabstractengine.h"
 #include "qnapiprojektengine.h"
 #include "qopensubtitlesengine.h"
+#include "qnapisy24engine.h"
 
 // globalny menedzer pobierania napisow
 class QNapi

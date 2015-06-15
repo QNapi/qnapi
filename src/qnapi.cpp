@@ -46,7 +46,8 @@ QStringList QNapi::enumerateEngines()
 	QStringList engines;
 	engines << "NapiProjekt";
 	engines << "OpenSubtitles";
-	return engines;
+    engines << "Napisy24";
+    return engines;
 }
 
 bool QNapi::addEngine(QString engine)
@@ -61,6 +62,11 @@ bool QNapi::addEngine(QString engine)
 		enginesList << (new QOpenSubtitlesEngine());
 		return true;
 	}
+    else if(engine == "Napisy24")
+    {
+        enginesList << (new QNapisy24Engine());
+        return true;
+    }
 	else
 	{
 		errorMsg = QString("Nieobsługiwany silnik pobierania: %1.").arg(engine);

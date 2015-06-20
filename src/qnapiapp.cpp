@@ -215,7 +215,7 @@ bool QNapiApp::showOpenDialog(QString engine)
         if(!fileList.isEmpty())
         {
             QString dialogPath = QFileInfo(fileList[0]).absolutePath();
-            QMessageBox::information(0, dialogPath, openDialog->directory().path());
+            //QMessageBox::information(0, dialogPath, openDialog->directory().path());
             GlobalConfig().setPreviousDialogPath(dialogPath);
             GlobalConfig().save();
         }

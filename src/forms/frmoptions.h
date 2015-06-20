@@ -34,7 +34,7 @@ class frmOptions: public QDialog
 {
 Q_OBJECT
 	public:
-		frmOptions(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmOptions(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmOptions();
 
 	public slots:

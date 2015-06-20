@@ -14,7 +14,7 @@
 
 #include "frmsummary.h"
 
-frmSummary::frmSummary(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

@@ -303,7 +303,7 @@ QIcon QNapisy24Engine::engineIcon()
     "BXVXCXZXAXSXDXFXGXHXJXKXLXPXIXUX"
     };
 
-    return QIcon(icon);
+    return QIcon(QPixmap(icon));
 }
 
 
@@ -345,7 +345,7 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     const QString host = QString("napisy24.pl");
     SyncHTTP http;
     http.setHost(host);
-    QUrl params;
+    QUrlQuery params;
     params.addQueryItem("postAction", "CheckSub");
     params.addQueryItem("ua", "tantalosus");
     params.addQueryItem("ap", "susolatnat");
@@ -353,7 +353,7 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     params.addQueryItem("fs", QString::number(fileSize));
     params.addQueryItem("fn", fileName);
     params.addQueryItem("nl", lang); // TODO: Add napiprojekt checksum
-    QByteArray data = params.encodedQuery();
+    QByteArray data = params.query().toUtf8();
     QBuffer respBuffer;
     QHttpRequestHeader header("POST", "/run/CheckSubAgent.php");
     header.setValue("Host", host);

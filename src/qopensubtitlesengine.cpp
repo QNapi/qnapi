@@ -82,7 +82,7 @@ QIcon QOpenSubtitlesEngine::engineIcon()
 		".##.##.##.##.##.",
 		".##.##.##.##.##.",
 		"................"};
-	return QIcon(icon);
+    return QIcon(QPixmap(icon));
 }
 
 // zwraca czy silnik jest konfigurowalny

@@ -75,7 +75,7 @@ class frmUpload: public QDialog
 {
 	Q_OBJECT
 	public:
-		frmUpload(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmUpload(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmUpload() {};
 
 	private:

@@ -57,7 +57,7 @@ class frmReport: public QDialog
 {
 Q_OBJECT
 	public:
-		frmReport(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmReport(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmReport() {};
 
 	private:

@@ -15,7 +15,7 @@
 #ifndef __QCHECKEDLISTWIDGET__H__
 #define __QCHECKEDLISTWIDGET__H__
 
-#include <QtGui>
+#include <QtWidgets>
 
 class QCheckedListWidget : public QListWidget
 {

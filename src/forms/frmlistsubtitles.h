@@ -18,7 +18,7 @@
 
 
 #include <QDialog>
-#include <QHeaderView>
+#include <QtWidgets/QHeaderView>
 #include <QDesktopWidget>
 
 #include "ui_frmlistsubtitles.h"
@@ -31,7 +31,7 @@ Q_OBJECT
 
 	public:
 
-		frmListSubtitles(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmListSubtitles(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmListSubtitles() {}
 
 	public slots:

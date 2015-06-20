@@ -15,7 +15,7 @@
 #include "frmprogress.h"
 #include "qnapiapp.h"
 
-frmProgress::frmProgress(QWidget * parent, Qt::WFlags f) : QWidget(parent, f)
+frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f) : QWidget(parent, f)
 {
 	qRegisterMetaType<QNapiSubtitleInfoList>("QNapiSubtitleInfoList");
 

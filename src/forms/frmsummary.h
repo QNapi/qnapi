@@ -27,7 +27,7 @@ class frmSummary: public QDialog
 {
 Q_OBJECT
 	public:
-		frmSummary(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmSummary() {};
 
 		void setSuccessList(const QStringList & list);

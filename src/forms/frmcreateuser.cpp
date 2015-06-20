@@ -14,7 +14,7 @@
 
 #include "frmcreateuser.h"
 
-frmCreateUser::frmCreateUser(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmCreateUser::frmCreateUser(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

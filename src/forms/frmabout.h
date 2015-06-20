@@ -27,7 +27,7 @@ class frmAbout: public QDialog
 {
 Q_OBJECT
 	public:
-		frmAbout(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmAbout(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmAbout() {};
 	private:
 		Ui::frmAbout ui;

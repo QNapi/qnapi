@@ -72,7 +72,7 @@ QIcon QNapiProjektEngine::engineIcon()
 		" .@@#@@#@####@@.",
 		" .@@#@@#@#@@@@@.",
 		" ..............."};
-	return QIcon(icon);
+    return QIcon(QPixmap(icon));
 }
 
 // zwraca czy silnik jest konfigurowalny
@@ -120,7 +120,7 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 	QUrl url(urlTxt);
 
 	http.setHost(url.host());
-	http.syncGet(url.path() + "?" + url.encodedQuery());
+    http.syncGet(url.path() + "?" +  url.query());
 
 	QByteArray buffer = http.readAll();
 
@@ -246,7 +246,7 @@ bool QNapiProjektEngine::checkUser(const QString & nick, const QString & pass)
 
 	QUrl url(urlTxt);
 	http.setHost(url.host());
-	http.syncGet(url.path() + "?" + url.encodedQuery());
+    http.syncGet(url.path() + "?" + url.query());
 
 	QString buffer = http.readAll();
 	if(buffer.indexOf("ok") == 0) return true;
@@ -374,7 +374,7 @@ QNapiProjektEngine::UploadResult
 
 	QUrl url(urlTxt);
 
-	QHttpRequestHeader header("POST", url.path() + "?" + url.encodedQuery());
+    QHttpRequestHeader header("POST", url.path() + "?" + url.query());
 
 	header.setValue("Host", url.host());
 	header.setValue("Accept", "text/html, */*");
@@ -502,7 +502,7 @@ QString QNapiProjektEngine::npFDigest(const QString & input)
 		m = mul[j];
 		i = idx[j];
 
-		tmp[0] = input[i].toAscii();
+        tmp[0] = input[i].toLatin1();
 		t = a + (int)(strtol(tmp, NULL, 16));
 		v = (int)(strtol(input.mid(t, 2).toLocal8Bit(), NULL, 16));
 

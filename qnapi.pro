@@ -90,8 +90,10 @@ FORMS += ui/frmprogress.ui \
 RESOURCES += res/resources.qrc
 QT += network \
     gui \
+    widgets \
     core \
-    xml
+    xml \
+    http
 UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp

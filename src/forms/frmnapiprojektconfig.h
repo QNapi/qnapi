@@ -27,7 +27,7 @@ Q_OBJECT
 
 	public:
 
-		frmNapiProjektConfig(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmNapiProjektConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmNapiProjektConfig() {}
 
 	public slots:

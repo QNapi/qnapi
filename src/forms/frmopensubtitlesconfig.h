@@ -27,7 +27,7 @@ Q_OBJECT
 
 	public:
 
-		frmOpenSubtitlesConfig(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmOpenSubtitlesConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmOpenSubtitlesConfig() {}
 
 	public slots:

@@ -26,12 +26,12 @@ void QMultipartHttpRequest::addEndingBoundary()
 
 void QMultipartHttpRequest::addContentDisposition(const QString & contentDisposition)
 {
-	addElement(requestElement::ET_CONTENT_DISPOSITION, contentDisposition.toAscii());
+    addElement(requestElement::ET_CONTENT_DISPOSITION, contentDisposition.toLatin1());
 }
 
 void QMultipartHttpRequest::addContentType(const QString & contentType)
 {
-	addElement(requestElement::ET_CONTENT_TYPE, contentType.toAscii());
+    addElement(requestElement::ET_CONTENT_TYPE, contentType.toLatin1());
 }
 
 void QMultipartHttpRequest::addData(const QByteArray & data)
@@ -41,7 +41,7 @@ void QMultipartHttpRequest::addData(const QByteArray & data)
 
 void QMultipartHttpRequest::addData(const QString & data)
 {
-	addElement(requestElement::ET_DATA, data.toAscii());
+    addElement(requestElement::ET_DATA, data.toLatin1());
 }
 
 QByteArray & QMultipartHttpRequest::requestStream()

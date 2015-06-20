@@ -14,7 +14,7 @@
 
 #include "frmscan.h"
 
-frmScan::frmScan(QWidget *parent, Qt::WFlags f) : QDialog(parent, f)
+frmScan::frmScan(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

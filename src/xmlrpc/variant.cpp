@@ -137,7 +137,7 @@ Variant::Variant( const QDomElement& node )
                 (*this) = Variant( tagText.toDouble(&ok) );
             } else 
             if ( tagName == "base64" ) {
-                (*this) = Variant( QByteArray::fromBase64( tagText.toAscii() ) );
+                (*this) = Variant( QByteArray::fromBase64( tagText.toLatin1() ) );
             } else 
             if ( tagName == "boolean" ) {
                 bool val = tagText.toInt(&ok) == 1;

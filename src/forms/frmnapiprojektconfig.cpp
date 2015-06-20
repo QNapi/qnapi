@@ -15,7 +15,7 @@
 #include "frmnapiprojektconfig.h"
 #include "../qnapi.h"
 
-frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WFlags f)
+frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
 	: QDialog(parent, f)
 {
 	ui.setupUi(this);

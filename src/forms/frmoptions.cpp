@@ -15,7 +15,7 @@
 #include "frmoptions.h"
 #include "qnapiapp.h"
 
-frmOptions::frmOptions(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 
@@ -365,7 +365,7 @@ void frmOptions::readConfig()
 	ui.twEngines->horizontalHeader()->hide();
 	ui.twEngines->verticalHeader()->hide();
 	ui.twEngines->verticalHeader()->setDefaultSectionSize(20);
-	ui.twEngines->verticalHeader()->setResizeMode(QHeaderView::Fixed);
+    ui.twEngines->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 	ui.twEngines->setColumnWidth(0, 300);
 
 
@@ -383,9 +383,9 @@ void frmOptions::readConfig()
 
 	QString permissions = GlobalConfig().ppPermissions();
 	unsigned short o, g, u;
-	o = permissions.at(0).toAscii() - '0';
-	g = permissions.at(1).toAscii() - '0';
-	u = permissions.at(2).toAscii() - '0';
+    o = permissions.at(0).toLatin1() - '0';
+    g = permissions.at(1).toLatin1() - '0';
+    u = permissions.at(2).toLatin1() - '0';
 	ui.sbUPerm->setValue((o <= 7) ? o : 6);
 	ui.sbGPerm->setValue((g <= 7) ? g : 4);
 	ui.sbOPerm->setValue((u <= 7) ? u : 4);

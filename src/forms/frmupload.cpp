@@ -14,7 +14,7 @@
 
 #include "frmupload.h"
 
-frmUpload::frmUpload(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmUpload::frmUpload(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

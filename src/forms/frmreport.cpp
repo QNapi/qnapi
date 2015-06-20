@@ -14,7 +14,7 @@
 
 #include "frmreport.h"
 
-frmReport::frmReport(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmReport::frmReport(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

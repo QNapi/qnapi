@@ -53,7 +53,7 @@ class frmCreateUser: public QDialog
 {
 Q_OBJECT
 	public:
-		frmCreateUser(QWidget *parent = 0, Qt::WFlags f = 0);
+		frmCreateUser(QWidget *parent = 0, Qt::WindowFlags f = 0);
 		~frmCreateUser() {};
 
 	private:

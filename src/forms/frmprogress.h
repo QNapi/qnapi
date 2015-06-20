@@ -77,7 +77,7 @@ class frmProgress: public QWidget
 	Q_OBJECT
 
 	public:
-		frmProgress(QWidget *parent = 0, Qt::WFlags f = 0);
+        frmProgress(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
 		void setEngines(QStringList enginesList)
 		{

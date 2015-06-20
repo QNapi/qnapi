@@ -14,7 +14,7 @@
 
 #include "frmcorrect.h"
 
-frmCorrect::frmCorrect(QWidget * parent, Qt::WFlags f) : QDialog(parent, f)
+frmCorrect::frmCorrect(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 

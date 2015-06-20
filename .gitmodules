@@ -1,0 +1,3 @@
+[submodule "deps/qthttp"]
+	path = deps/qthttp
+	url = git://qt.gitorious.org/qt/qthttp

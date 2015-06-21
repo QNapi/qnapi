@@ -1,5 +1,10 @@
 tmp
 *.pro.user
 build
-Makefile
+debug
+release
+Makefile*
 qnapi
+win32/out/*
+*.Debug
+*.Release

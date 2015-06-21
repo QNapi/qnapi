@@ -1,4 +1,6 @@
 #include "qnapisy24engine.h"
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 QNapisy24Engine::QNapisy24Engine(const QString & movieFile, const QString & subtitlesFile)
     : QNapiAbstractEngine(movieFile, subtitlesFile)
@@ -342,10 +344,9 @@ QString QNapisy24Engine::checksum(QString filename)
 bool QNapisy24Engine::lookForSubtitles(QString lang)
 {
     subtitlesList.clear();
-    const QString host = QString("napisy24.pl");
-    SyncHTTP http;
-    http.setHost(host);
-    QUrlQuery params;
+    const QUrl url = QUrl("http://napisy24.pl/run/CheckSubAgent.php");
+
+    QUrlQuery params(url);
     params.addQueryItem("postAction", "CheckSub");
     params.addQueryItem("ua", "tantalosus");
     params.addQueryItem("ap", "susolatnat");
@@ -354,13 +355,16 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     params.addQueryItem("fn", fileName);
     params.addQueryItem("nl", lang); // TODO: Add napiprojekt checksum
     QByteArray data = params.query().toUtf8();
-    QBuffer respBuffer;
-    QHttpRequestHeader header("POST", "/run/CheckSubAgent.php");
-    header.setValue("Host", host);
-    header.setValue("Content-Type", "application/x-www-form-urlencoded");
-    header.setValue("Content-Length", QString::number(data.length()));
-    http.syncRequest(header, data, &respBuffer);
-    QByteArray respData = respBuffer.data();
+
+    SyncHTTP http;
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QNetworkReply *reply = http.syncPost(req, data);
+    if(reply->error() != QNetworkReply::NoError)
+        return false;
+
+    QByteArray respData = reply->readAll();
     if (not respData.startsWith("OK-2"))
         return false;
 

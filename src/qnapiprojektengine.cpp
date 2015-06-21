@@ -14,6 +14,8 @@
 
 #include "qnapiprojektengine.h"
 #include "forms/frmnapiprojektconfig.h"
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 // konstruktor klasy
 QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile)
@@ -119,10 +121,12 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 
 	QUrl url(urlTxt);
 
-	http.setHost(url.host());
-    http.syncGet(url.path() + "?" +  url.query());
+    QNetworkReply *reply = http.syncGet(QNetworkRequest(url));
 
-	QByteArray buffer = http.readAll();
+    if(reply->error() != QNetworkReply::NoError)
+        return false;
+
+    QByteArray buffer = reply->readAll();
 
 	if(buffer.indexOf("NPc") == 0)
 		return false;
@@ -220,20 +224,16 @@ bool QNapiProjektEngine::createUser(const QString & nick, const QString & pass,
 
 	QUrl url(napiCreateUserUrlTpl);
 
-	QHttpRequestHeader header("POST", url.path());
-
-	header.setValue("Host", url.host());
-	header.setValue("Accept", "text/html, */*");
-	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
-	header.setValue("Connection", "keep-alive");
-	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, QString("QNapi ") + QNAPI_VERSION);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + postData.boundaryTxt());
 
 	SyncHTTP http;
-	http.setHost(url.host());
-	if(!http.syncRequest(header, data))
+    QNetworkReply *reply = http.syncPost(req, data);
+    if(!reply->error() != QNetworkReply::NoError)
 		return false;
 
-	*response = QTextCodec::codecForName("windows-1250")->toUnicode(http.readAll());
+    *response = QTextCodec::codecForName("windows-1250")->toUnicode(reply->readAll());
 
 	return true;
 }
@@ -245,10 +245,11 @@ bool QNapiProjektEngine::checkUser(const QString & nick, const QString & pass)
 	QString urlTxt = napiCheckUserUrlTpl.arg(nick).arg(pass);
 
 	QUrl url(urlTxt);
-	http.setHost(url.host());
-    http.syncGet(url.path() + "?" + url.query());
+    QNetworkReply *reply = http.syncGet(QNetworkRequest(url));
+    if(reply->error() != QNetworkReply::NoError)
+        return false;
 
-	QString buffer = http.readAll();
+    QString buffer = reply->readAll();
 	if(buffer.indexOf("ok") == 0) return true;
 	return false;
 }
@@ -373,21 +374,16 @@ QNapiProjektEngine::UploadResult
 	}
 
 	QUrl url(urlTxt);
-
-    QHttpRequestHeader header("POST", url.path() + "?" + url.query());
-
-	header.setValue("Host", url.host());
-	header.setValue("Accept", "text/html, */*");
-	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
-	header.setValue("Connection", "keep-alive");
-	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, QString("QNapi ") + QNAPI_VERSION);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + postData.boundaryTxt());
 
 	SyncHTTP http;
-	http.setHost(url.host());
-	if(!http.syncRequest(header, data))
+    QNetworkReply *reply = http.syncPost(req, data);
+    if(reply->error() != QNetworkReply::NoError)
 		return NAPI_FAIL;
 
-	QString response = http.readAll();
+    QString response = reply->readAll();
 
 	if(response.indexOf("NPc0") == 0)
 		return NAPI_ADDED_NEW;
@@ -435,21 +431,16 @@ QNapiProjektEngine::ReportResult
 	QByteArray data = postData.requestStream();
 
 	QUrl url(napiReportBadUrlTpl);
-
-	QHttpRequestHeader header("POST", url.path());
-
-	header.setValue("Host", url.host());
-	header.setValue("Accept", "text/html, */*");
-	header.setValue("Content-Type", "multipart/form-data; boundary=" + postData.boundaryTxt());
-	header.setValue("Connection", "keep-alive");
-	header.setValue("User-Agent", QString("QNapi ") + QNAPI_VERSION);
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::UserAgentHeader, QString("QNapi ") + QNAPI_VERSION);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + postData.boundaryTxt());
 
 	SyncHTTP http;
-	http.setHost(url.host());
-	if(!http.syncRequest(header, data))
+    QNetworkReply *reply = http.syncPost(req, data);
+    if(reply->error() != QNetworkReply::NoError)
 		return NAPI_NOT_REPORTED;
 
-	*response = QTextCodec::codecForName("windows-1250")->toUnicode(http.readAll());
+    *response = QTextCodec::codecForName("windows-1250")->toUnicode(reply->readAll());
 
 	return NAPI_REPORTED;
 }

@@ -102,6 +102,7 @@ INCLUDEPATH = src
 include(deps/libmaia/maia.pri)
 
 macx { 
+    DEFINES += Q_WS_MAC
     QMAKE_MAC_SDK = /Developer/SDKs/MacOSX10.4u.sdk
     CONFIG += x86 \
         ppc
@@ -149,6 +150,10 @@ win32 {
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
 
+    DEFINES += Q_WS_WIN
+
+    CONFIG += nostrip
+
     INSTALL_PREFIX = win32/out
 
     target.path = $${INSTALL_PREFIX}
@@ -156,11 +161,17 @@ win32 {
     dlls.files += $$[QT_INSTALL_BINS]/Qt5Network.dll
     dlls.files += $$[QT_INSTALL_BINS]/Qt5Gui.dll
     dlls.files += $$[QT_INSTALL_BINS]/Qt5Widgets.dll
+    dlls.files += $$[QT_INSTALL_BINS]/Qt5Xml.dll
+    dlls.files += $$[QT_INSTALL_BINS]/icuin53.dll
+    dlls.files += $$[QT_INSTALL_BINS]/icuuc53.dll
+    dlls.files += $$[QT_INSTALL_BINS]/icudt53.dll
     dlls.files += $$[QT_INSTALL_BINS]/libstd~1.dll
+    dlls.files += $$[QT_INSTALL_BINS]/libgcc~1.dll
+    dlls.files += $$[QT_INSTALL_BINS]/libwin~1.dll
     dlls.path = $${INSTALL_PREFIX}
 
-    7zip.files = "win32/contents/7za.exe"
-    7zip.path = $${INSTALL_PREFIX}
+    p7zip.files += win32/content/7za.exe
+    p7zip.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \
         doc/README \
@@ -169,7 +180,7 @@ win32 {
         doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}
 
-    INSTALLS = target dlls 7zip doc
+    INSTALLS = target dlls p7zip doc
 }
 
 !win32 { 

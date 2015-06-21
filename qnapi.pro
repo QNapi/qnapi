@@ -43,6 +43,7 @@ SOURCES += src/main.cpp \
     src/qnapisy24engine.cpp \
     src/synchttp.cpp \
     src/syncxmlrpc.cpp
+
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
     src/forms/frmsummary.h \
@@ -77,6 +78,7 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
     src/qnapisy24engine.h
+
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
     ui/frmsummary.ui \
@@ -89,6 +91,7 @@ FORMS += ui/frmprogress.ui \
     ui/frmreport.ui \
     ui/frmcreateuser.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui
+
 RESOURCES += res/resources.qrc
 UI_DIR = tmp
 MOC_DIR = tmp
@@ -109,6 +112,7 @@ macx {
     7ZIP_BINARY.path = Contents/Resources
     QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }
+
 unix { 
     INSTALL_PREFIX = /usr
     target.path = $${INSTALL_PREFIX}/bin
@@ -139,11 +143,13 @@ unix {
         icons \
         desktop
 }
+
 win32 { 
     RC_FILE = win32/qnapi.rc
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
 }
+
 !win32 { 
     SOURCES += src/qcumber/qinterprocesschannel.cpp
     HEADERS += src/qcumber/qinterprocesschannel.h

@@ -148,6 +148,28 @@ win32 {
     RC_FILE = win32/qnapi.rc
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
+
+    INSTALL_PREFIX = win32/out
+
+    target.path = $${INSTALL_PREFIX}
+    dlls.files += $$[QT_INSTALL_BINS]/Qt5Core.dll
+    dlls.files += $$[QT_INSTALL_BINS]/Qt5Network.dll
+    dlls.files += $$[QT_INSTALL_BINS]/Qt5Gui.dll
+    dlls.files += $$[QT_INSTALL_BINS]/Qt5Widgets.dll
+    dlls.files += $$[QT_INSTALL_BINS]/libstd~1.dll
+    dlls.path = $${INSTALL_PREFIX}
+
+    7zip.files = "win32/contents/7za.exe"
+    7zip.path = $${INSTALL_PREFIX}
+
+    doc.files = doc/ChangeLog \
+        doc/README \
+        doc/README-pl \
+        doc/LICENSE \
+        doc/LICENSE-pl
+    doc.path = $${INSTALL_PREFIX}
+
+    INSTALLS = target dlls 7zip doc
 }
 
 !win32 { 

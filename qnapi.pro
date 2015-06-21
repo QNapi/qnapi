@@ -103,6 +103,7 @@ include(deps/libmaia/maia.pri)
 
 macx { 
     DEFINES += Q_WS_MAC
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
     ICON = macx/qnapi.icns
     QMAKE_INFO_PLIST = macx/Info.plist
     TARGET = QNapi

@@ -21,24 +21,38 @@
 
 *************************************************************************/
 
-#ifndef SYNCHTTP_H
-#define SYNCHTTP_H
+#ifndef SYNCXMLRPC_H
+#define SYNCXMLRPC_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QEventLoop>
 #include <QObject>
+#include "maiaXmlRpcClient.h"
 
-class SyncHTTP : public QObject
+class SyncXmlRpc : public QObject
 {
-    Q_OBJECT
-	public:
-        QNetworkReply* syncGet(const QNetworkRequest & req);
-        QNetworkReply* syncPost(const QNetworkRequest & req, const QByteArray& data);
+Q_OBJECT
+    public:
+        SyncXmlRpc(const QUrl & endPoint);
+
+        bool request(const QString & method, const QVariantList & args);
+        QVariant getResponse() const;
+        QVariant getError() const;
+
+    private slots:
+
+        void whenResponse(QVariant & response);
+
+        void whenFault(int err, const QString & msg);
 
     private:
-		QEventLoop loop;
-        QNetworkAccessManager manager;
+        bool result;
+        int error;
+        QString message;
+        QVariant resp;
+        QEventLoop loop;
+        MaiaXmlRpcClient rpc;
 };
 
 #endif

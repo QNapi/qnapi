@@ -20,15 +20,12 @@
 #include <QMessageBox>
 
 #include "qnapiabstractengine.h"
-#include "xmlrpc/qsyncxmlrpcclient.h"
-#include "synchttp.h"
 #include "version.h"
 #include "qnapilanguage.h"
+#include "syncxmlrpc.h"
 
 
-const QString openSubtitlesXmlRpcHost  = "www.opensubtitles.org";
-const QString openSubtitlesXmlRpcPath  = "/xml-rpc";
-const int openSubtitlesXmlRpcPort  = 80;
+const QUrl openSubtitlesXmlRpcUrl = QUrl("http://api.opensubtitles.org/xml-rpc");
 
 class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {
@@ -66,7 +63,7 @@ private:
 	QString p7zipPath, lang, tmpPackedFile, subFileName;
 	quint64 fileSize;
 
-	QSyncXmlRpcClient rpc;
+    SyncXmlRpc rpc;
 	QString token;
 
 	QList<QNapiSubtitleInfo> subtitlesList;

@@ -1,9 +1,18 @@
+TEMPLATE = app
+
 CONFIG += warn_on \
     thread \
     qt \
     resources \
-    release
-TEMPLATE = app
+    release \
+    silent
+
+QT += network \
+    gui \
+    widgets \
+    core \
+    xml
+
 SOURCES += src/main.cpp \
     src/forms/frmprogress.cpp \
     src/forms/frmlistsubtitles.cpp \
@@ -20,11 +29,6 @@ SOURCES += src/main.cpp \
     src/qcumber/qmanagedrequest.cpp \
     src/qcumber/qmanagedsocket.cpp \
     src/qcumber/qsingleapplication.cpp \
-    src/xmlrpc/qsyncxmlrpcclient.cpp \
-    src/xmlrpc/client.cpp \
-    src/xmlrpc/request.cpp \
-    src/xmlrpc/variant.cpp \
-    src/xmlrpc/response.cpp \
     src/qnapiconfig.cpp \
     src/qnapiapp.cpp \
     src/qnapicli.cpp \
@@ -36,7 +40,9 @@ SOURCES += src/main.cpp \
     src/movieinfo.cpp \
     src/qnapiopendialog.cpp \
     src/qnapilanguage.cpp \
-    src/qnapisy24engine.cpp
+    src/qnapisy24engine.cpp \
+    src/synchttp.cpp \
+    src/syncxmlrpc.cpp
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
     src/forms/frmsummary.h \
@@ -53,11 +59,6 @@ HEADERS += src/forms/frmprogress.h \
     src/qcumber/qmanagedsocket.h \
     src/qcumber/qsingleapplication.h \
     src/qcumber/qcumber.h \
-    src/xmlrpc/qsyncxmlrpcclient.h \
-    src/xmlrpc/variant.h \
-    src/xmlrpc/client.h \
-    src/xmlrpc/request.h \
-    src/xmlrpc/response.h \
     src/qnapiconfig.h \
     src/qnapiapp.h \
     src/qnapicli.h \
@@ -72,6 +73,7 @@ HEADERS += src/forms/frmprogress.h \
     src/qmultiparthttprequest.h \
     src/qnapithread.h \
     src/synchttp.h \
+    src/syncxmlrpc.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
     src/qnapisy24engine.h
@@ -88,17 +90,14 @@ FORMS += ui/frmprogress.ui \
     ui/frmcreateuser.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui
 RESOURCES += res/resources.qrc
-QT += network \
-    gui \
-    widgets \
-    core \
-    xml \
-    http
 UI_DIR = tmp
 MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
 INCLUDEPATH = src
+
+include(deps/libmaia/maia.pri)
+
 macx { 
     QMAKE_MAC_SDK = /Developer/SDKs/MacOSX10.4u.sdk
     CONFIG += x86 \

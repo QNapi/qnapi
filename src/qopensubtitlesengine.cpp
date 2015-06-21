@@ -17,9 +17,9 @@
 
 // konstruktor klasy
 QOpenSubtitlesEngine::QOpenSubtitlesEngine(const QString & movieFile, const QString & subtitlesFile)
-	: QNapiAbstractEngine(movieFile, subtitlesFile)
+    : QNapiAbstractEngine(movieFile, subtitlesFile),
+      rpc(openSubtitlesXmlRpcUrl)
 {
-	rpc.setHost(openSubtitlesXmlRpcHost, openSubtitlesXmlRpcPort, openSubtitlesXmlRpcPath);
 	p7zipPath = GlobalConfig().p7zipPath();
 	lang = GlobalConfig().language();
 	noBackup = GlobalConfig().noBackup();
@@ -43,14 +43,13 @@ QString QOpenSubtitlesEngine::engineName()
 // zwraca informacje nt. modulu
 QString QOpenSubtitlesEngine::engineInfo()
 {
-	return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b><br />"
-			"Copyright (c) 2008-2009 by Krzemin";
+    return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b>";
 }
 
 // zwraca ikone w formacie XMP
 QIcon QOpenSubtitlesEngine::engineIcon()
 {
-	static const char *icon[]={
+    static const char *icon[]={
 		"16 16 14 1",
 		". c #000000",
 		"h c #111111",
@@ -127,24 +126,27 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 
 	subtitlesList.clear();
 
-	QMap<QString, xmlrpc::Variant> paramsMap;
-	QList<xmlrpc::Variant> requestList;
-
+    QVariantMap paramsMap;
 	paramsMap["sublanguageid"] = QNapiLanguage(lang).toTriLetter();
 	paramsMap["moviehash"] = checkSum;
-	paramsMap["moviebytesize"] = (uint) fileSize;
+    paramsMap["moviebytesize"] = (int) fileSize;
 
-	requestList << paramsMap;
+    QVariantList requestList;
+    requestList << paramsMap;
 
-	rpc.request("SearchSubtitles", token, requestList);
+    QVariantList args;
+    args << token << (QVariant)requestList;
 
-	QMap<QString, QVariant> responseMap = rpc.result().toMap();
+    if(!rpc.request("SearchSubtitles", args))
+        return false;
+
+    QVariantMap responseMap = rpc.getResponse().toMap();
 
 	if(!responseMap.contains("data"))
 		return false;
 
-	QList<QVariant> dataList = responseMap["data"].toList();
-	QList<QVariant>::iterator i;
+    QVariantList dataList = responseMap["data"].toList();
+    QVariantList::iterator i;
 
 	i = dataList.begin();
 	while(i != dataList.end())
@@ -216,24 +218,27 @@ bool QOpenSubtitlesEngine::download(int idx)
 	if(idx >= subtitlesList.size())
 		return false;
 
-    QList<xmlrpc::Variant> paramsList;
-	QList<xmlrpc::Variant> requestList;
+    QVariantList paramsList;
+    QVariantList requestList;
 
 	QNapiSubtitleInfo s = subtitlesList.at(idx);
 
 	subFileName = generateTmpFileName() + "." + s.format;
 	paramsList << s.url;
-	requestList << paramsList;
+    requestList << (QVariant)paramsList;
 
-	rpc.request("DownloadSubtitles", token, requestList);
+    QVariantList args;
+    args << token << requestList;
 
-	QMap<QString, QVariant> responseMap = rpc.result().toMap();
+    if(!rpc.request("DownloadSubtitles", args))
+        return false;
+
+    QVariantMap responseMap = rpc.getResponse().toMap();
 
 	if(!responseMap.contains("data"))
 		return false;
 
-	QVariantList responseList;
-	responseList << responseMap["data"].toList();
+    QVariantList responseList = responseMap["data"].toList();
 
 	if(responseList.size() == 0)
 		return false;
@@ -285,15 +290,19 @@ void QOpenSubtitlesEngine::cleanup()
 bool QOpenSubtitlesEngine::login()
 {
 	QString userAgent = QString("QNapi v%1").arg(QNAPI_VERSION);
-
-	rpc.request("LogIn", QString(""), QString(""),  lang.toLower(), userAgent);
-	token = (rpc.result().toMap())["token"].toString();
+    QVariantList args;
+    args << QString("") << QString("") << lang.toLower() << userAgent;
+    if(!rpc.request("LogIn", args))
+        return false;
+    token = (rpc.getResponse().toMap())["token"].toString();
 
 	return !token.isEmpty();
 }
 
 void QOpenSubtitlesEngine::logout()
 {
-	rpc.request("LogOut", token);
+    QVariantList args;
+    args << token;
+    rpc.request("LogOut", args);
 	token = "";
 }

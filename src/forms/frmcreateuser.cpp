@@ -18,9 +18,6 @@ frmCreateUser::frmCreateUser(QWidget * parent, Qt::WindowFlags f) : QDialog(pare
 {
 	ui.setupUi(this);
 
-#ifdef Q_WS_MAC
-	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
-#endif
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	connect(ui.pbCreate, SIGNAL(clicked()), this, SLOT(pbCreateClicked()));

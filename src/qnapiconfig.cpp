@@ -325,16 +325,6 @@ void QNapiConfig::setShowDockIcon(bool show)
 	
 }
 
-bool QNapiConfig::useBrushedMetal()
-{
-	return settings->value("qnapi/use_brushed_metal", false).toBool();
-}
-
-void QNapiConfig::setUseBrushedMetal(bool use)
-{
-	settings->setValue("qnapi/use_brushed_metal", use);
-}
-
 #endif
 
 QList<QPair<QString, bool> > QNapiConfig::engines()

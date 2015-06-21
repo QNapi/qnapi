@@ -1,131 +1,105 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmOptions</class>
- <widget class="QDialog" name="frmOptions" >
-  <property name="geometry" >
+ <widget class="QDialog" name="frmOptions">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>679</width>
-    <height>404</height>
+    <height>428</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QNapi - opcje programu</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
     <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QTabWidget" name="tabOptions" >
-     <property name="currentIndex" >
+    <widget class="QTabWidget" name="tabOptions">
+     <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tabGeneral" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabGeneral">
+      <attribute name="title">
        <string>Główne</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout" >
-       <item row="0" column="0" >
-        <widget class="QLabel" name="lb7zPath" >
-         <property name="text" >
-          <string>Ścieżka do programu 7z:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" >
-        <widget class="QLineEdit" name="le7zPath" >
-         <property name="text" >
-          <string>/usr/bin/7z</string>
-         </property>
-         <property name="cursorPosition" >
-          <number>0</number>
-         </property>
-         <property name="readOnly" >
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2" >
-        <widget class="QPushButton" name="pb7zPathSelect" >
-         <property name="text" >
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pb7zPathSelect">
+         <property name="text">
           <string/>
          </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" >
-        <widget class="QLabel" name="lbTmpPath" >
-         <property name="text" >
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbTmpPath">
+         <property name="text">
           <string>Ścieżka do katalogu tymczasowego:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1" >
-        <widget class="QLineEdit" name="leTmpPath" >
-         <property name="text" >
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="le7zPath">
+         <property name="text">
+          <string>/usr/bin/7z</string>
+         </property>
+         <property name="cursorPosition">
+          <number>11</number>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="lb7zPath">
+         <property name="text">
+          <string>Ścieżka do programu 7z:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="leTmpPath">
+         <property name="text">
           <string>/tmp</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2" >
-        <widget class="QPushButton" name="pbTmpPathSelect" >
-         <property name="text" >
-          <string/>
-         </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
-           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" >
-        <widget class="QLabel" name="lbLang" >
-         <property name="text" >
+       <item row="2" column="0">
+        <widget class="QLabel" name="lbLang">
+         <property name="text">
           <string>Preferowany jezyk napisów:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2" >
-        <widget class="QComboBox" name="cbLang" />
-       </item>
-       <item row="3" column="0" colspan="3" >
-        <widget class="QCheckBox" name="cbNoBackup" >
-         <property name="text" >
-          <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="pbTmpPathSelect">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="3" >
-        <widget class="QCheckBox" name="cbUseBrushedMetal" >
-         <property name="text" >
-          <string>Używaj stylu BrushedMetal (Mac OS X)</string>
-         </property>
-         <property name="checked" >
-          <bool>true</bool>
-         </property>
-        </widget>
+       <item row="2" column="1" colspan="2">
+        <widget class="QComboBox" name="cbLang"/>
        </item>
-       <item row="4" column="0" colspan="3" >
-        <widget class="QCheckBox" name="cbShowDockIcon" >
-         <property name="text" >
-          <string>Pokazuj ikonę w doku systemowym (wymaga ponownego uruchomienia aplikacji)</string>
-         </property>
-         <property name="checked" >
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="3" >
-        <spacer name="verticalSpacer" >
-         <property name="orientation" >
+       <item row="5" column="0" colspan="3">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>568</width>
            <height>172</height>
@@ -133,218 +107,224 @@
          </property>
         </spacer>
        </item>
+       <item row="4" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbShowDockIcon">
+         <property name="text">
+          <string>Pokazuj ikonę w doku systemowym (wymaga ponownego uruchomienia aplikacji)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbNoBackup">
+         <property name="text">
+          <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
+         </property>
+        </widget>
+       </item>
       </layout>
-      <zorder>lb7zPath</zorder>
-      <zorder>le7zPath</zorder>
-      <zorder>pb7zPathSelect</zorder>
-      <zorder>lbTmpPath</zorder>
-      <zorder>leTmpPath</zorder>
-      <zorder>pbTmpPathSelect</zorder>
-      <zorder>lbLang</zorder>
-      <zorder>cbLang</zorder>
-      <zorder>cbNoBackup</zorder>
-      <zorder>cbUseBrushedMetal</zorder>
-      <zorder>cbShowDockIcon</zorder>
      </widget>
-     <widget class="QWidget" name="tabDownloadEngines" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabDownloadEngines">
+      <attribute name="title">
        <string>Moduły pobierania napisów</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2" >
-       <item row="0" column="0" >
-        <widget class="QLabel" name="lbAvailableEngines" >
-         <property name="text" >
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbAvailableEngines">
+         <property name="text">
           <string>Dostępne moduły pobierania napisów:</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="0" >
-        <widget class="QLabel" name="lbDownloadPolicy" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Maximum" hsizetype="Preferred" >
+       <item row="10" column="0">
+        <widget class="QLabel" name="lbDownloadPolicy">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Polityka pobierania napisów:</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="0" colspan="2" >
-        <widget class="QComboBox" name="cbDownloadPolicy" >
-         <property name="currentIndex" >
+       <item row="11" column="0" colspan="2">
+        <widget class="QComboBox" name="cbDownloadPolicy">
+         <property name="currentIndex">
           <number>1</number>
          </property>
-         <property name="maxCount" >
+         <property name="maxCount">
           <number>3</number>
          </property>
          <item>
-          <property name="text" >
+          <property name="text">
            <string>Zawsze pokazuj listę dostępnych napisów</string>
           </property>
          </item>
          <item>
-          <property name="text" >
+          <property name="text">
            <string>Pokazuj listę dostępnych napisów tylko wtedy, gdy potrzeba</string>
           </property>
          </item>
          <item>
-          <property name="text" >
+          <property name="text">
            <string>Zawsze pobieraj pierwsze pasujące napisy i nigdy nie pokazuj listy</string>
           </property>
          </item>
         </widget>
        </item>
-       <item rowspan="7" row="1" column="0" >
-        <widget class="QTableWidget" name="twEngines" >
-         <property name="editTriggers" >
+       <item row="1" column="0" rowspan="7">
+        <widget class="QTableWidget" name="twEngines">
+         <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
-         <property name="dragDropMode" >
+         <property name="dragDropMode">
           <enum>QAbstractItemView::NoDragDrop</enum>
          </property>
-         <property name="selectionMode" >
+         <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>
-         <property name="selectionBehavior" >
+         <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
-         <property name="verticalScrollMode" >
+         <property name="verticalScrollMode">
           <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>
-         <property name="horizontalScrollMode" >
+         <property name="horizontalScrollMode">
           <enum>QAbstractItemView::ScrollPerPixel</enum>
          </property>
         </widget>
        </item>
-       <item row="1" column="1" >
-        <widget class="QPushButton" name="pbMoveUp" >
-         <property name="enabled" >
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pbMoveUp">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Przesuń w górę</string>
          </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/arrow_up.png</normaloff>:/ui/arrow_up.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2" >
-        <widget class="QComboBox" name="cbSearchPolicy" >
+       <item row="9" column="0" colspan="2">
+        <widget class="QComboBox" name="cbSearchPolicy">
          <item>
-          <property name="text" >
+          <property name="text">
            <string>Wyszukaj wszystkie dostępne napisy (wolniej)</string>
           </property>
          </item>
          <item>
-          <property name="text" >
+          <property name="text">
            <string>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</string>
           </property>
          </item>
         </widget>
        </item>
-       <item row="8" column="0" colspan="2" >
-        <widget class="QLabel" name="lbSearchPolicy" >
-         <property name="text" >
+       <item row="8" column="0" colspan="2">
+        <widget class="QLabel" name="lbSearchPolicy">
+         <property name="text">
           <string>Wyszukiwanie napisów:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1" >
-        <widget class="QPushButton" name="pbMoveDown" >
-         <property name="enabled" >
+       <item row="2" column="1">
+        <widget class="QPushButton" name="pbMoveDown">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Przesuń w dół</string>
          </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/arrow_down.png</normaloff>:/ui/arrow_down.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="4" column="1" >
-        <widget class="QPushButton" name="pbEngineInfo" >
-         <property name="enabled" >
+       <item row="4" column="1">
+        <widget class="QPushButton" name="pbEngineInfo">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Informacje</string>
          </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/information.png</normaloff>:/ui/information.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" >
-        <widget class="QPushButton" name="pbEngineConf" >
-         <property name="enabled" >
+       <item row="3" column="1">
+        <widget class="QPushButton" name="pbEngineConf">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Konfiguruj</string>
          </property>
-         <property name="icon" >
-          <iconset resource="../res/resources.qrc" >
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/wrench.png</normaloff>:/ui/wrench.png</iconset>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabPostProcessing" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabPostProcessing">
+      <attribute name="title">
        <string>Przetwarzanie napisów</string>
       </attribute>
-      <layout class="QVBoxLayout" >
+      <layout class="QVBoxLayout">
        <item>
-        <widget class="QGroupBox" name="gbPpEnable" >
-         <property name="title" >
+        <widget class="QGroupBox" name="gbPpEnable">
+         <property name="title">
           <string>Włącz przetwarzanie pobranych napisów</string>
          </property>
-         <property name="checkable" >
+         <property name="checkable">
           <bool>true</bool>
          </property>
-         <property name="checked" >
+         <property name="checked">
           <bool>true</bool>
          </property>
-         <layout class="QVBoxLayout" >
+         <layout class="QVBoxLayout">
           <item>
-           <widget class="QCheckBox" name="cbChangeEncoding" >
-            <property name="text" >
+           <widget class="QCheckBox" name="cbChangeEncoding">
+            <property name="text">
              <string>Zmień kodowanie znaków w pobranych napisach</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="cbAutoDetectEncoding" >
-            <property name="enabled" >
+           <widget class="QCheckBox" name="cbAutoDetectEncoding">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Próbuj automatycznie wykrywać kodowanie źródłowe</string>
             </property>
-            <property name="checked" >
+            <property name="checked">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" >
+           <layout class="QHBoxLayout">
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeType" >
+              <property name="sizeType">
                <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>30</width>
                 <height>20</height>
@@ -353,37 +333,37 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="lbConvertFrom" >
-              <property name="enabled" >
+             <widget class="QLabel" name="lbConvertFrom">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Z:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="cbEncFrom" >
-              <property name="enabled" >
+             <widget class="QComboBox" name="cbEncFrom">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <item>
-               <property name="text" >
+               <property name="text">
                 <string>Windows-1250</string>
                </property>
               </item>
@@ -391,13 +371,13 @@
             </item>
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeType" >
+              <property name="sizeType">
                <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>25</width>
                 <height>20</height>
@@ -406,37 +386,37 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="lbConvert" >
-              <property name="enabled" >
+             <widget class="QLabel" name="lbConvert">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Na:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="cbEncTo" >
-              <property name="enabled" >
+             <widget class="QComboBox" name="cbEncTo">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="sizePolicy" >
-               <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <item>
-               <property name="text" >
+               <property name="text">
                 <string>UTF-8</string>
                </property>
               </item>
@@ -444,13 +424,13 @@
             </item>
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeType" >
+              <property name="sizeType">
                <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>25</width>
                 <height>20</height>
@@ -461,19 +441,19 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout" >
-            <property name="topMargin" >
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="topMargin">
              <number>0</number>
             </property>
             <item>
-             <spacer name="horizontalSpacer" >
-              <property name="orientation" >
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeType" >
+              <property name="sizeType">
                <enum>QSizePolicy::Fixed</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>30</width>
                 <height>20</height>
@@ -482,11 +462,11 @@
              </spacer>
             </item>
             <item>
-             <widget class="QCheckBox" name="cbShowAllEncodings" >
-              <property name="enabled" >
+             <widget class="QCheckBox" name="cbShowAllEncodings">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Pokaż wszystkie dostępne kodowania znaków</string>
               </property>
              </widget>
@@ -494,87 +474,87 @@
            </layout>
           </item>
           <item>
-           <widget class="QCheckBox" name="cbRemoveLines" >
-            <property name="text" >
+           <widget class="QCheckBox" name="cbRemoveLines">
+            <property name="text">
              <string>Usuń z pliku z napisami linie, które zawierają następujące słowa:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="teRemoveWords" >
-            <property name="enabled" >
+           <widget class="QTextEdit" name="teRemoveWords">
+            <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="html" >
-             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+            <property name="html">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'DejaVu Sans';">movie info&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0; font-family:'DejaVu Sans';">synchro&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.Lucida Grande UI'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;movie info&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;synchro&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
-            <property name="acceptRichText" >
+            <property name="acceptRichText">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" >
-            <property name="topMargin" >
+           <layout class="QHBoxLayout">
+            <property name="topMargin">
              <number>0</number>
             </property>
             <item>
-             <widget class="QCheckBox" name="cbChangePermissions" >
-              <property name="text" >
+             <widget class="QCheckBox" name="cbChangePermissions">
+              <property name="text">
                <string>Zmień uprawnienia do pliku z napisami na: </string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbUPerm" >
-              <property name="enabled" >
+             <widget class="QSpinBox" name="sbUPerm">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="maximum" >
+              <property name="maximum">
                <number>7</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>6</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbGPerm" >
-              <property name="enabled" >
+             <widget class="QSpinBox" name="sbGPerm">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="maximum" >
+              <property name="maximum">
                <number>7</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>4</number>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="sbOPerm" >
-              <property name="enabled" >
+             <widget class="QSpinBox" name="sbOPerm">
+              <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="maximum" >
+              <property name="maximum">
                <number>7</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>4</number>
               </property>
              </widget>
             </item>
             <item>
              <spacer>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>130</width>
                 <height>20</height>
@@ -592,20 +572,20 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QPushButton" name="pbRestoreDefaults" >
-       <property name="text" >
+      <widget class="QPushButton" name="pbRestoreDefaults">
+       <property name="text">
         <string>Przywróć domyslne</string>
        </property>
       </widget>
      </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -614,15 +594,15 @@ p, li { white-space: pre-wrap; }
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pbCancel" >
-       <property name="text" >
+      <widget class="QPushButton" name="pbCancel">
+       <property name="text">
         <string>Anuluj</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbSave" >
-       <property name="text" >
+      <widget class="QPushButton" name="pbSave">
+       <property name="text">
         <string>Zapisz</string>
        </property>
       </widget>
@@ -640,7 +620,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>cbLang</tabstop>
   <tabstop>cbNoBackup</tabstop>
   <tabstop>cbShowDockIcon</tabstop>
-  <tabstop>cbUseBrushedMetal</tabstop>
   <tabstop>twEngines</tabstop>
   <tabstop>pbMoveUp</tabstop>
   <tabstop>pbMoveDown</tabstop>
@@ -665,7 +644,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>pbSave</tabstop>
  </tabstops>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -674,11 +653,11 @@ p, li { white-space: pre-wrap; }
    <receiver>frmOptions</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>607</x>
      <y>404</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>327</x>
      <y>211</y>
     </hint>
@@ -690,11 +669,11 @@ p, li { white-space: pre-wrap; }
    <receiver>frmOptions</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>528</x>
      <y>404</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>327</x>
      <y>211</y>
     </hint>
@@ -706,11 +685,11 @@ p, li { white-space: pre-wrap; }
    <receiver>teRemoveWords</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>145</x>
      <y>208</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>129</x>
      <y>251</y>
     </hint>
@@ -722,11 +701,11 @@ p, li { white-space: pre-wrap; }
    <receiver>sbUPerm</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>117</x>
      <y>338</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>348</x>
      <y>338</y>
     </hint>
@@ -738,11 +717,11 @@ p, li { white-space: pre-wrap; }
    <receiver>sbGPerm</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>162</x>
      <y>338</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>421</x>
      <y>343</y>
     </hint>
@@ -754,11 +733,11 @@ p, li { white-space: pre-wrap; }
    <receiver>sbOPerm</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>171</x>
      <y>336</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>503</x>
      <y>345</y>
     </hint>

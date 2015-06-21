@@ -19,15 +19,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 
-#ifdef Q_WS_MAC
-	if ( QSysInfo::MacintoshVersion == QSysInfo::MV_10_5) // bo na Leopardzie nie ma juz stylu BM
-	{
-		ui.cbUseBrushedMetal->setText(tr("Używaj ciemnego stylu (Mac OS X Leopard)"));
-	}
-
-	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
-#else
-	ui.cbUseBrushedMetal->hide();
+#ifndef Q_WS_MAC
 	ui.cbShowDockIcon->hide();
 #endif
 
@@ -66,7 +58,6 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 	connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
 	connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
 	connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
-	connect(ui.cbUseBrushedMetal, SIGNAL(clicked()), this, SLOT(useBrushedMetalClicked()));
 
 	connect(ui.pbRestoreDefaults, SIGNAL(clicked()), this, SLOT(restoreDefaults()));
 
@@ -283,11 +274,6 @@ void frmOptions::showAllEncodings()
 	}
 }
 
-void frmOptions::useBrushedMetalClicked()
-{
-	setAttribute(Qt::WA_MacBrushedMetal, ui.cbUseBrushedMetal->isChecked());
-}
-
 void frmOptions::writeConfig()
 {
 	GlobalConfig().setP7zipPath(ui.le7zPath->text());
@@ -297,7 +283,6 @@ void frmOptions::writeConfig()
 
 #ifdef Q_OS_MAC
 	GlobalConfig().setShowDockIcon(ui.cbShowDockIcon->isChecked());
-	GlobalConfig().setUseBrushedMetal(ui.cbUseBrushedMetal->isChecked());
 #endif
 
 	QList<QPair<QString, bool> > engines;
@@ -342,7 +327,6 @@ void frmOptions::readConfig()
 
 #ifdef Q_OS_MAC
 	ui.cbShowDockIcon->setChecked(GlobalConfig().showDockIcon());
-	ui.cbUseBrushedMetal->setChecked(GlobalConfig().useBrushedMetal());
 #endif
 
 	QNapi n;
@@ -405,7 +389,6 @@ void frmOptions::restoreDefaults()
 
 #ifdef Q_OS_MAC
 	GlobalConfig().setShowDockIcon(true);
-	GlobalConfig().setUseBrushedMetal(false);
 #endif
 
 	QList<QPair<QString, bool> > engines;

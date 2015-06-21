@@ -18,9 +18,6 @@ frmScan::frmScan(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 
-#ifdef Q_WS_MAC
-	setAttribute(Qt::WA_MacBrushedMetal, GlobalConfig().useBrushedMetal());
-#endif
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	connect(ui.pbDirectorySelect, SIGNAL(clicked()), this, SLOT(selectDirectory()));

@@ -57,7 +57,6 @@ Q_OBJECT
 		void changeEncodingClicked();
 		void autoDetectEncodingClicked();
 		void showAllEncodingsClicked();
-		void useBrushedMetalClicked();
 
 		void restoreDefaults();
 

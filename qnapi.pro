@@ -170,6 +170,9 @@ win32 {
     dlls.files += $$[QT_INSTALL_BINS]/libwin~1.dll
     dlls.path = $${INSTALL_PREFIX}
 
+    platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
+    platform.path = $${INSTALL_PREFIX}/platforms
+
     p7zip.files += win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
 
@@ -180,7 +183,7 @@ win32 {
         doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}
 
-    INSTALLS = target dlls p7zip doc
+    INSTALLS = target dlls platform p7zip doc
 }
 
 !win32 { 

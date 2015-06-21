@@ -229,7 +229,7 @@ bool QNapiProjektEngine::createUser(const QString & nick, const QString & pass,
 
 	SyncHTTP http;
     QNetworkReply *reply = http.syncPost(req, data);
-    if(!reply->error() != QNetworkReply::NoError)
+    if(reply->error() != QNetworkReply::NoError)
 		return false;
 
     *response = QTextCodec::codecForName("windows-1250")->toUnicode(reply->readAll());

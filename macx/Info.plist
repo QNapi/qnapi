@@ -23,10 +23,12 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>qnapi.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>QNapi supported file</string>
 			<key>CFBundleTypeRole</key>
-			<string>None</string>
+			<string>Viewer</string>
 			<key>LSUIElement</key>
-			<true/>
+			<false/>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

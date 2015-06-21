@@ -8,3 +8,6 @@ qnapi
 win32/out/*
 *.Debug
 *.Release
+QNapi.app
+.DS_Store
+.qmake.stash

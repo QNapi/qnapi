@@ -103,13 +103,10 @@ include(deps/libmaia/maia.pri)
 
 macx { 
     DEFINES += Q_WS_MAC
-    QMAKE_MAC_SDK = /Developer/SDKs/MacOSX10.4u.sdk
-    CONFIG += x86 \
-        ppc
     ICON = macx/qnapi.icns
     QMAKE_INFO_PLIST = macx/Info.plist
     TARGET = QNapi
-    7ZIP_BINARY.files = macx/7za
+    7ZIP_BINARY.files = macx/content/7za
     7ZIP_BINARY.path = Contents/Resources
     QMAKE_BUNDLE_DATA += 7ZIP_BINARY
 }

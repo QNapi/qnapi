@@ -19,7 +19,7 @@
 #include <QUrl>
 #include <QMessageBox>
 
-#ifdef Q_WS_WIN // for SetFileAttributes
+#ifdef Q_OS_WIN // for SetFileAttributes
 #include <windows.h>
 #endif
 

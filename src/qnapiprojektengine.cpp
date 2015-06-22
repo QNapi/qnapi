@@ -110,9 +110,9 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 										.arg(npFDigest(checkSum))
 										.arg(nick)
 										.arg(pass)
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 										.arg("Windows");
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
 										.arg("Mac OS X");
 #else
 										.arg("Linux/UNIX");
@@ -238,7 +238,7 @@ QNapiProjektEngine::UploadResult
 
 	QStringList args;
 	args << "a" << "-t7z" << "-bd" << "-y";
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	args << "-l";
 #endif
 	args << zipFileName << (QString("-p")+napiZipPassword) << newSubtitlesName;

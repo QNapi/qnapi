@@ -62,7 +62,7 @@ QString QNapiConfig::p7zipPath()
 	if(paths.size() == 0)
 		paths << "/usr/bin" << "/usr/local/bin";
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	// Pod MacOS X 7zip jest w zasobach aplikacji
 	paths << QDir(QApplication::applicationDirPath() + "/../Resources").canonicalPath();
 #endif
@@ -81,7 +81,7 @@ QString QNapiConfig::p7zipPath()
 	}
 
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 // Pod systemem Windows program 7za.exe musi byc w tym samym katalogu,
 // co qnapi.exe
 	p7z_path = QFileInfo(QApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();

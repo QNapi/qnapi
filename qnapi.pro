@@ -99,7 +99,6 @@ INCLUDEPATH = src
 include(deps/libmaia/maia.pri)
 
 macx { 
-    DEFINES += Q_WS_MAC
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
     ICON = macx/qnapi.icns
     QMAKE_INFO_PLIST = macx/Info.plist
@@ -144,8 +143,6 @@ win32 {
     RC_FILE = win32/qnapi.rc
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
-
-    DEFINES += Q_WS_WIN
 
     CONFIG += nostrip
 

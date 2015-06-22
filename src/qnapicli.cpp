@@ -16,11 +16,11 @@
 
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	return false;
 #else
 	
-	#ifdef Q_WS_X11
+    #ifdef Q_OS_UNIX || Q_OS_LINUX
 		if(getenv("DISPLAY") == 0)
 			return true;
 	#endif
@@ -76,7 +76,7 @@ bool QNapiCli::analyze()
 		{
 			if(mode == CM_UNSET)
 			{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 				mode = CM_QUIET;
 				showPolicy = SLP_NEVER_SHOW;
 #else

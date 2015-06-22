@@ -49,7 +49,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 
 	QStringList sideUrls;
 	
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 	sideUrls << "/Volumes";
 #endif
 
@@ -73,7 +73,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 
 bool QNapiOpenDialog::selectFile()
 {
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
 	files.clear();
 	QString file = getOpenFileName(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
@@ -96,7 +96,7 @@ bool QNapiOpenDialog::selectFile()
 
 bool QNapiOpenDialog::selectFiles()
 {
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
 	files = getOpenFileNames(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
 		nameFilters().join("\n")
@@ -115,7 +115,7 @@ bool QNapiOpenDialog::selectFiles()
 
 bool QNapiOpenDialog::selectDirectory()
 {
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
 	files.clear();
 	QString dir = getExistingDirectory(this, windowTitle(), directory().path());
 
@@ -134,7 +134,7 @@ bool QNapiOpenDialog::selectDirectory()
 #endif
 }
 
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
 QStringList QNapiOpenDialog::selectedFiles() const
 {
 	return files;

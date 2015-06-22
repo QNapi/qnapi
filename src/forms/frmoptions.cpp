@@ -19,11 +19,11 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	ui.setupUi(this);
 
-#ifndef Q_WS_MAC
+#ifndef Q_OS_MAC
 	ui.cbShowDockIcon->hide();
 #endif
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// Pod Windowsami chowamy kontrolki odpowiadajace za zmiane uprawnien - i tak sie nie przydadza
 	ui.cbChangePermissions->hide();
 	ui.sbOPerm->hide();

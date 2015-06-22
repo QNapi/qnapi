@@ -75,7 +75,7 @@ bool QNapiAbstractEngine::match()
 
 	bool r = false;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	// Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
 	QFile f(subtitles), f2(subtitlesTmp);
 	if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
@@ -118,7 +118,7 @@ void QNapiAbstractEngine::pp()
 		}
 	}
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 	// Zmiana uprawnien do pliku
 	if(GlobalConfig().ppChangePermissions())
 	{
@@ -290,7 +290,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 	return true;
 }
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 // Zmienia uprawnienia do pliku z napisami
 bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permissions)
 {

@@ -385,7 +385,7 @@ void QNapiApp::tryQuit()
 void QNapiApp::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	if(reason == QSystemTrayIcon::Trigger)
-#ifndef Q_WS_MAC
+#ifndef Q_OS_MAC
 		showOpenDialog()
 #endif
 	;

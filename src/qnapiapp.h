@@ -33,7 +33,6 @@
 #include "forms/frmcorrect.h"
 #include "forms/frmreport.h"
 #include "forms/frmscan.h"
-#include "forms/frmcreateuser.h"
 #include "forms/frmsummary.h"
 
 #include "qnapiconfig.h"
@@ -93,7 +92,6 @@ class QNapiApp : public QSingleApplication
 		
 		frmProgress *f_progress;
 		frmOptions *f_options;
-		frmCreateUser *f_createUser;
 		frmAbout *f_about;
 		frmScan *f_scan;
 		frmUpload *f_upload;

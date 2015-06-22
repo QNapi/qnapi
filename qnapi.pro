@@ -24,7 +24,6 @@ SOURCES += src/main.cpp \
     src/forms/frmupload.cpp \
     src/forms/frmcorrect.cpp \
     src/forms/frmreport.cpp \
-    src/forms/frmcreateuser.cpp \
     src/forms/frmopensubtitlesconfig.cpp \
     src/qcumber/qmanagedrequest.cpp \
     src/qcumber/qmanagedsocket.cpp \
@@ -54,7 +53,6 @@ HEADERS += src/forms/frmprogress.h \
     src/forms/frmupload.h \
     src/forms/frmcorrect.h \
     src/forms/frmreport.h \
-    src/forms/frmcreateuser.h \
     src/forms/frmopensubtitlesconfig.h \
     src/qcumber/qmanagedrequest.h \
     src/qcumber/qmanagedsocket.h \
@@ -89,7 +87,6 @@ FORMS += ui/frmprogress.ui \
     ui/frmupload.ui \
     ui/frmcorrect.ui \
     ui/frmreport.ui \
-    ui/frmcreateuser.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui
 
 RESOURCES += res/resources.qrc

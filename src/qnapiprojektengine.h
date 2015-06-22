@@ -43,7 +43,6 @@ const QString napiUploadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/upload.p
 const QString napiUploadUrlSimpleTpl = "http://www.napiprojekt.pl/unit_napisy/upload.php"
 				"?m_hash=%5&m_filesize=%6";
 const QString napiReportBadUrlTpl = "http://www.napiprojekt.pl/unit_napisy/zlenapisyadd.php";
-const QString napiCreateUserUrlTpl = "http://www.napiprojekt.pl/users_add.php";
 
 class QNapiProjektEngine : public QNapiAbstractEngine
 {
@@ -85,8 +84,6 @@ public:
 		return QString("NapiProjekt");
 	}
 
-	static bool createUser(const QString & nick, const QString & pass,
-							const QString & email, QString * response);
 	static bool checkUser(const QString & nick, const QString & pass);
 	UploadResult uploadSubtitles(const QString & language, const QString & nick,
 									const QString & pass, bool correct = false,

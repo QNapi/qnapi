@@ -26,7 +26,6 @@
 #include "ui_frmoptions.h"
 #include "qnapiconfig.h"
 
-#include "frmcreateuser.h"
 #include "qnapilanguage.h"
 
 

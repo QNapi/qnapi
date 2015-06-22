@@ -195,48 +195,6 @@ void QNapiProjektEngine::cleanup()
 		QFile::remove(subtitlesTmp);
 }
 
-// Tworzy konto uzytkownika na serwerze NAPI
-bool QNapiProjektEngine::createUser(const QString & nick, const QString & pass,
-									const QString & email, QString * response)
-{
-	QMultipartHttpRequest postData;
-
-	postData.addBoundary();
-	postData.addContentDisposition("name=\"login\"");
-	postData.addData(nick);
-
-	postData.addBoundary();
-	postData.addContentDisposition("name=\"haslo\"");
-	postData.addData(pass);
-
-	postData.addBoundary();
-	postData.addContentDisposition("name=\"mail\"");
-	postData.addData(email);
-
-	postData.addBoundary();
-	postData.addContentDisposition("name=\"z_programu\"");
-	postData.addData(QString("true"));
-
-	postData.addEndingBoundary();
-
-	QByteArray data = postData.requestStream();
-
-	QUrl url(napiCreateUserUrlTpl);
-
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::UserAgentHeader, QString("QNapi ") + QNAPI_VERSION);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + postData.boundaryTxt());
-
-	SyncHTTP http;
-    QNetworkReply *reply = http.syncPost(req, data);
-    if(reply->error() != QNetworkReply::NoError)
-		return false;
-
-    *response = QTextCodec::codecForName("windows-1250")->toUnicode(reply->readAll());
-
-	return true;
-}
-
 // Sprawdza uzytkownika w bazie
 bool QNapiProjektEngine::checkUser(const QString & nick, const QString & pass)
 {

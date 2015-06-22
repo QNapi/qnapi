@@ -21,7 +21,6 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
 
 	f_progress = 0;
 	f_options = 0;
-	f_createUser = 0;
 	f_about = 0;
 	f_scan = 0;
 	f_upload = 0;
@@ -53,7 +52,6 @@ QNapiApp::~QNapiApp()
 
 	if(f_progress) delete f_progress;
 	if(f_options) delete f_options;
-	if(f_createUser) delete f_createUser;
 	if(f_about) delete f_about;
 	if(f_scan) delete f_scan;
 	if(f_upload) delete f_upload;
@@ -316,15 +314,7 @@ void QNapiApp::showNPReportDialog()
 
 void QNapiApp::showNPCreateUser()
 {
-	if(!f_createUser) f_createUser = new frmCreateUser();
-	if(f_createUser->isVisible())
-	{
-		f_createUser->raise();
-		return;
-	}
-	f_createUser->exec();
-	delete f_createUser;
-	f_createUser = 0;
+    QDesktopServices::openUrl(QUrl("http://www.napiprojekt.pl/rejestracja"));
 }
 
 void QNapiApp::showOSGetDialog()

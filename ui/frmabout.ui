@@ -1,139 +1,124 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmAbout</class>
- <widget class="QDialog" name="frmAbout" >
-  <property name="geometry" >
+ <widget class="QDialog" name="frmAbout">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>460</height>
+    <width>700</width>
+    <height>462</height>
    </rect>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>620</width>
     <height>460</height>
    </size>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QNapi - informacje o programie</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" colspan="5" >
-    <layout class="QHBoxLayout" >
+  <layout class="QGridLayout">
+   <item row="0" column="0" colspan="5">
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QLabel" name="lbIcon" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Expanding" hsizetype="Maximum" >
+      <widget class="QLabel" name="lbIcon">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string/>
        </property>
-       <property name="pixmap" >
-        <pixmap resource="../res/resources.qrc" >:/icon/qnapi-48.png</pixmap>
+       <property name="pixmap">
+        <pixmap resource="../res/resources.qrc">:/icon/qnapi-48.png</pixmap>
        </property>
-       <property name="alignment" >
+       <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
-       <property name="margin" >
+       <property name="margin">
         <number>15</number>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lbTitle" >
-       <property name="font" >
+      <widget class="QLabel" name="lbTitle">
+       <property name="font">
         <font>
          <pointsize>16</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>QNapi version</string>
        </property>
-       <property name="alignment" >
+       <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="5" >
-    <widget class="QLabel" name="lbAbout" >
-     <property name="text" >
+   <item row="1" column="0" colspan="5">
+    <widget class="QLabel" name="lbAbout">
+     <property name="text">
       <string>QNapi jest programem do automatycznego pobierania i dopasowywania napisów do filmów. 
 
 Program rozprowadzany jest na licencji GNU General Public License w wersji drugiej lub późniejszej. </string>
      </property>
-     <property name="textFormat" >
+     <property name="textFormat">
       <enum>Qt::PlainText</enum>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="wordWrap" >
+     <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="5" >
-    <widget class="QLabel" name="lbWWW" >
-     <property name="text" >
-      <string>http://krzemin.iglu.cz</string>
+   <item row="2" column="0" colspan="5">
+    <widget class="QLabel" name="lbWWW">
+     <property name="text">
+      <string>http://github.com/QNapi/qnapi</string>
      </property>
-     <property name="textFormat" >
+     <property name="textFormat">
       <enum>Qt::AutoText</enum>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="openExternalLinks" >
+     <property name="openExternalLinks">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="5" >
-    <widget class="QLabel" name="lbAuthor" >
-     <property name="text" >
-      <string>Copyright (C) 2008-2009 Krzemin &lt;pkrzemin@o2.pl></string>
-     </property>
-     <property name="textFormat" >
-      <enum>Qt::AutoText</enum>
-     </property>
-     <property name="alignment" >
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="openExternalLinks" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="5" >
-    <widget class="QLabel" name="lbThanks" >
-     <property name="text" >
+   <item row="3" column="0" colspan="5">
+    <widget class="QLabel" name="lbThanks">
+     <property name="text">
       <string>Dziękuję wszystkim osobom, które w jakikolwiek sposób wsparły rozwój projektu.</string>
      </property>
-     <property name="textFormat" >
+     <property name="textFormat">
       <enum>Qt::PlainText</enum>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="wordWrap" >
+     <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" >
+   <item row="4" column="0">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>165</width>
        <height>20</height>
@@ -141,34 +126,34 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
      </property>
     </spacer>
    </item>
-   <item row="5" column="1" colspan="3" >
-    <widget class="QLabel" name="lbOS" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Maximum" >
+   <item row="4" column="1" colspan="3">
+    <widget class="QLabel" name="lbOS">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text" >
+     <property name="text">
       <string/>
      </property>
-     <property name="pixmap" >
-      <pixmap resource="../res/resources.qrc" >:/icon/opensubtitles.gif</pixmap>
+     <property name="pixmap">
+      <pixmap resource="../res/resources.qrc">:/icon/opensubtitles.gif</pixmap>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
      </property>
-     <property name="margin" >
+     <property name="margin">
       <number>10</number>
      </property>
     </widget>
    </item>
-   <item row="5" column="4" >
+   <item row="4" column="4">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>175</width>
        <height>20</height>
@@ -176,41 +161,35 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
      </property>
     </spacer>
    </item>
-   <item row="6" column="0" colspan="5" >
-    <widget class="QLabel" name="lbUseOS" >
-     <property name="text" >
+   <item row="9" column="2">
+    <widget class="QPushButton" name="pbClose">
+     <property name="text">
+      <string>Zamknij</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="5">
+    <widget class="QLabel" name="lbUseOS">
+     <property name="text">
       <string>Program korzysta z bazy www.opensubtitles.org</string>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="openExternalLinks" >
+     <property name="openExternalLinks">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="5" >
-    <widget class="QLabel" name="lbUseNP" >
-     <property name="text" >
-      <string>Program korzysta z bazy www.napiprojekt.pl</string>
-     </property>
-     <property name="alignment" >
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="openExternalLinks" >
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="5" >
+   <item row="8" column="0" colspan="5">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeType" >
+     <property name="sizeType">
       <enum>QSizePolicy::Fixed</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>358</width>
        <height>20</height>
@@ -218,12 +197,12 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
      </property>
     </spacer>
    </item>
-   <item row="9" column="0" colspan="2" >
+   <item row="9" column="0" colspan="2">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>217</width>
        <height>20</height>
@@ -231,19 +210,12 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
      </property>
     </spacer>
    </item>
-   <item row="9" column="2" >
-    <widget class="QPushButton" name="pbClose" >
-     <property name="text" >
-      <string>Zamknij</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="3" colspan="2" >
+   <item row="9" column="3" colspan="2">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>226</width>
        <height>20</height>
@@ -251,10 +223,36 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
      </property>
     </spacer>
    </item>
+   <item row="6" column="0" colspan="5">
+    <widget class="QLabel" name="lbUseNP">
+     <property name="text">
+      <string>Program korzysta z bazy www.napiprojekt.pl</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="5">
+    <widget class="QLabel" name="lbUseNP24">
+     <property name="text">
+      <string>Program korzysta z bazy www.napisy24.pl</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -263,11 +261,11 @@ Program rozprowadzany jest na licencji GNU General Public License w wersji drugi
    <receiver>frmAbout</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>298</x>
      <y>352</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>288</x>
      <y>187</y>
     </hint>

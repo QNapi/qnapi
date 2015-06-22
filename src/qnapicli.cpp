@@ -17,6 +17,8 @@
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
 #ifdef Q_OS_WIN
+    Q_UNUSED(argc)
+    Q_UNUSED(argv)
 	return false;
 #else
 	

@@ -20,7 +20,7 @@ bool QNapiCli::isCliCall(int argc, char **argv)
 	return false;
 #else
 	
-    #ifdef Q_OS_UNIX || Q_OS_LINUX
+    #if (defined(Q_OS_UNIX) || defined(Q_OS_LINUX))
 		if(getenv("DISPLAY") == 0)
 			return true;
 	#endif
@@ -119,7 +119,7 @@ bool QNapiCli::analyze()
 		}
 	}
 
-#ifdef Q_OS_UNIX || Q_OS_LINUX
+#if (defined(Q_OS_UNIX) || defined(Q_OS_LINUX))
 	if((getenv("DISPLAY") == 0) && (mode == CM_UNSET))
 		mode = CM_CONSOLE;
 #endif

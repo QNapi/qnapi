@@ -52,7 +52,8 @@ private:
 		EC_SUBTITLES_NOT_FOUND        = 6,
 		EC_COULD_NOT_DOWNLOAD         = 7,
 		EC_COULD_NOT_UNARCHIVE        = 8,
-		EC_COULD_NOT_MATCH            = 9
+        EC_COULD_NOT_MATCH            = 9,
+        EC_MOVIE_FILE_NOT_FOUND       = 10
 	};
 
 	enum CliMode {

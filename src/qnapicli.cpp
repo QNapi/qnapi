@@ -144,7 +144,12 @@ int QNapiCli::exec()
 		return EC_OK;
 	}
 
-	if((mode == CM_HELP) || ((mode == CM_CONSOLE) && (movieList.isEmpty())))
+    if((mode == CM_CONSOLE || mode == CM_QUIET) && (movieList.isEmpty())) {
+        printCli("Nie znaleziono pliku!");
+        return EC_MOVIE_FILE_NOT_FOUND;
+    }
+
+    if(mode == CM_HELP)
 	{
 		printHelp();
 		return EC_OK;
@@ -310,8 +315,9 @@ int QNapiCli::exec()
 
 void QNapiCli::printHeader()
 {
-	printCli(QString("QNapi %1, (C) 2008-2009 Krzemin, http://krzemin.iglu.cz/qnapi\n")
-				.arg(QNAPI_DISPLAYABLE_VERSION));
+    printCli(QString("QNapi %1, %2\n")
+                .arg(QNAPI_DISPLAYABLE_VERSION)
+                .arg(QNAPI_URL));
 }
 
 void QNapiCli::printHelp()

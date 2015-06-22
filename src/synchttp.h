@@ -26,6 +26,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QEventLoop>
 #include <QObject>
 
@@ -33,6 +34,8 @@ class SyncHTTP : public QObject
 {
     Q_OBJECT
 	public:
+        SyncHTTP();
+
         QNetworkReply* syncGet(const QNetworkRequest & req);
         QNetworkReply* syncPost(const QNetworkRequest & req, const QByteArray& data);
 

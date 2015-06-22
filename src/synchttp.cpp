@@ -14,11 +14,13 @@
 
 #include "synchttp.h"
 
+SyncHTTP::SyncHTTP() : manager(this) {}
+
 QNetworkReply* SyncHTTP::syncGet(const QNetworkRequest & req)
 {
     QNetworkReply *reply = manager.get(req);
-    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    connect(&manager, SIGNAL(error(QNetworkReply*)), &loop, SLOT(quit()));
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
     loop.exec();
     return reply;
 }
@@ -26,8 +28,8 @@ QNetworkReply* SyncHTTP::syncGet(const QNetworkRequest & req)
 QNetworkReply* SyncHTTP::syncPost(const QNetworkRequest & req, const QByteArray& data)
 {
     QNetworkReply *reply = manager.post(req, data);
-    connect(&manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    connect(&manager, SIGNAL(error(QNetworkReply*)), &loop, SLOT(quit()));
+    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
     loop.exec();
     return reply;
 }

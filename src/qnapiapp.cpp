@@ -204,7 +204,12 @@ bool QNapiApp::showOpenDialog(QString engine)
 	{
 		openDialog->raise();
 		return true;
-	}
+    }
+    else if(f_progress)
+    {
+        f_progress->raise();
+        return true;
+    }
 
 	if(openDialog->selectFiles())
 	{

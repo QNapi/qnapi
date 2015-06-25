@@ -109,6 +109,7 @@ class frmProgress: public QWidget
 
 		GetThread getThread;	
 		frmListSubtitles frmSelect;
+        frmSummary summary;
 
 		bool batchMode, showSummary, closeRequested;
 		QMutex mutex;

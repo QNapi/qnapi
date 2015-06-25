@@ -15,7 +15,8 @@
 #include "frmprogress.h"
 #include "qnapiapp.h"
 
-frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f) : QWidget(parent, f)
+frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
+    : QWidget(parent, f)
 {
 	qRegisterMetaType<QNapiSubtitleInfoList>("QNapiSubtitleInfoList");
 
@@ -71,6 +72,10 @@ void frmProgress::enqueueFiles(const QStringList & fileList)
 
 bool frmProgress::download()
 {
+    if(summary.isVisible()) {
+        summary.close();
+    }
+
 	if(!QNapi::checkP7ZipPath())
 	{
 		QMessageBox::warning(0, tr("Brak programu p7zip!"),
@@ -163,12 +168,12 @@ void frmProgress::downloadFinished()
 		{
 			QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
 		}
-		else if(queue.size() > 0)
+        else if(queue.size() > 0
+                && !(getThread.gotList.isEmpty() && !getThread.failedList.isEmpty()))
 		{
-			frmSummary summary;
-			summary.setSuccessList(getThread.gotList);
-			summary.setFailedList(getThread.failedList);
-			summary.exec();
+            summary.setSuccessList(getThread.gotList);
+            summary.setFailedList(getThread.failedList);
+            summary.exec();
 		}
 	}
 

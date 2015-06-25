@@ -283,7 +283,7 @@ void GetThread::run()
 
 		napi->setMoviePath(queue[i]);
 
-		emit progressChange(i, queue.size(), 0.1);
+        emit progressChange(i, queue.size(), 0.1f);
 		emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
 
 		if(!napi->checkWritePermissions())
@@ -293,7 +293,7 @@ void GetThread::run()
 			return;
 		}
 
-		emit progressChange(i, queue.size(), 0.3);
+        emit progressChange(i, queue.size(), 0.3f);
 		emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 
 		napi->checksum();
@@ -305,7 +305,7 @@ void GetThread::run()
 
 		foreach(QString e, napi->listLoadedEngines())
 		{
-			emit progressChange(i, queue.size(), 0.4);
+            emit progressChange(i, queue.size(), 0.4f);
 			emit actionChange(tr("Szukanie napisów (%1)...").arg(e));
 			found = napi->lookForSubtitles(language, e) || found;
 
@@ -360,7 +360,7 @@ void GetThread::run()
 
 		ABORT_POINT
 
-		emit progressChange(i, queue.size(), 0.6);
+        emit progressChange(i, queue.size(), 0.6f);
 		emit actionChange(tr("Rozpakowywanie napisów..."));
 
 		if(!napi->unpack())
@@ -390,14 +390,14 @@ void GetThread::run()
 
 		if(napi->ppEnabled())
 		{
-			emit progressChange(i, queue.size(), 0.9);
+            emit progressChange(i, queue.size(), 0.9f);
 			emit actionChange(tr("Przetwarzanie napisów..."));
 			napi->pp();
 		}
 
 		napi->cleanup();
 
-		emit progressChange(i, queue.size(), 1);
+        emit progressChange(i, queue.size(), 1.0f);
 	}
 
 	emit progressChange(queue.size() - 1, queue.size(), 1);

@@ -365,7 +365,7 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
         return false;
 
     QByteArray respData = reply->readAll();
-    if (not respData.startsWith("OK-2"))
+    if (!respData.startsWith("OK-2"))
         return false;
 
     QFile file(tmpPackedFile);

@@ -17,6 +17,14 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
+// This sadly has to be added in order to build under VS >= 2005
+#ifdef _MSC_VER
+    // from Visual Studio 2005 onwards
+    // https://msdn.microsoft.com/en-us/library/2ts7cx93%28v=vs.80%29.aspx
+    #include <stdio.h>
+    #define snprintf _snprintf_s
+#endif
+
 // konstruktor klasy
 QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile)
 	: QNapiAbstractEngine(movieFile, subtitlesFile)

@@ -22,7 +22,7 @@
 #include <QByteArray>
 #include <QApplication>
 
-#include <windows.h>
+#include <qt_windows.h>
 
 /*!
 	\file qinterprocesschannel.h

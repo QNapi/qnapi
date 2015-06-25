@@ -20,7 +20,7 @@
 #include <QMessageBox>
 
 #ifdef Q_OS_WIN // for SetFileAttributes
-#include <windows.h>
+#include <qt_windows.h>
 #endif
 
 #include <cmath>

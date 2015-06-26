@@ -17,6 +17,10 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
+#ifdef Q_OS_WIN // for SetFileAttributes
+#include <qt_windows.h>
+#endif
+
 // This sadly has to be added in order to build under VS >= 2005
 #ifdef _MSC_VER
     // from Visual Studio 2005 onwards

@@ -19,10 +19,6 @@
 #include <QUrl>
 #include <QMessageBox>
 
-#ifdef Q_OS_WIN // for SetFileAttributes
-#include <qt_windows.h>
-#endif
-
 #include <cmath>
 
 #include "qnapiabstractengine.h"

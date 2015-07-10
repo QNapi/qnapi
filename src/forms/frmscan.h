@@ -29,28 +29,28 @@
 
 class ScanFilesThread : public QNapiThread
 {
-	Q_OBJECT
-	public:
-		void run();
-		void setSearchPath(const QString & path) { searchPath = path; }
-		void setFilters(const QString & filters) { scanFilters = filters.split(" "); }
-		void setSkipFilters(const QString & filters) { skipFilters = filters.split(" "); }
-		void setSkipIfSubtitlesExists(bool skip) { skipIfSubtitlesExists = skip; }
-		void setFollowSymLinks(bool follow) { followSymLinks = follow; }
+    Q_OBJECT
+    public:
+        void run();
+        void setSearchPath(const QString & path) { searchPath = path; }
+        void setFilters(const QString & filters) { scanFilters = filters.split(" "); }
+        void setSkipFilters(const QString & filters) { skipFilters = filters.split(" "); }
+        void setSkipIfSubtitlesExists(bool skip) { skipIfSubtitlesExists = skip; }
+        void setFollowSymLinks(bool follow) { followSymLinks = follow; }
 
-		QStringList fileList;
+        QStringList fileList;
 
-	signals:
-		void addFile(const QString & fileName);
-		void scanFinished(bool result);
-		void folderChange(const QString & folder);
+    signals:
+        void addFile(const QString & fileName);
+        void scanFinished(bool result);
+        void folderChange(const QString & folder);
 
-	private:
-		bool doScan(const QString & path, QDir::Filters filters);
-		QString searchPath;
-		QStringList scanFilters, skipFilters;
-		bool skipIfSubtitlesExists, followSymLinks;
-		QSet<QString> visited;
+    private:
+        bool doScan(const QString & path, QDir::Filters filters);
+        QString searchPath;
+        QStringList scanFilters, skipFilters;
+        bool skipIfSubtitlesExists, followSymLinks;
+        QSet<QString> visited;
 };
 
 
@@ -59,47 +59,47 @@ class frmScan: public QDialog
 {
 Q_OBJECT
 
-	public:
+    public:
         frmScan(QWidget *parent = 0, Qt::WindowFlags f = 0);
         ~frmScan();
 
-		void setInitDir(const QString & dir);
+        void setInitDir(const QString & dir);
 
-		QStringList getSelectedFiles()
-		{
-			return selectedFiles;
-		}
+        QStringList getSelectedFiles()
+        {
+            return selectedFiles;
+        }
 
-	public slots:
+    public slots:
 
-		void accept();
+        void accept();
 
-	private:
+    private:
 
-		void closeEvent(QCloseEvent *event);
-		void keyPressEvent(QKeyEvent * event);
+        void closeEvent(QCloseEvent *event);
+        void keyPressEvent(QKeyEvent * event);
 
-		Ui::frmScan ui;
-		ScanFilesThread scanThread;
+        Ui::frmScan ui;
+        ScanFilesThread scanThread;
 
         QIcon iconFilm;
         QStringList selectedFiles;
 
-	private slots:
+    private slots:
 
-		void selectDirectory();
-		void leDirectoryTextChanged();
-		void pbScanClicked();
-		void addFile(const QString & fileName);
-		void folderChange(const QString & dirName);
-		void scanFinished();
-		void enableControlWidgets(bool enable);
-		void enableFilesWidgets(bool enable);
-		void lwMoviesClicked(QListWidgetItem * item);
-		void pbSelectAllClicked();
-		void pbUnselectAllClicked();
-		void pbInvertSelectionClicked();
-		void checkPbGetEnabled();
+        void selectDirectory();
+        void leDirectoryTextChanged();
+        void pbScanClicked();
+        void addFile(const QString & fileName);
+        void folderChange(const QString & dirName);
+        void scanFinished();
+        void enableControlWidgets(bool enable);
+        void enableFilesWidgets(bool enable);
+        void lwMoviesClicked(QListWidgetItem * item);
+        void pbSelectAllClicked();
+        void pbUnselectAllClicked();
+        void pbInvertSelectionClicked();
+        void checkPbGetEnabled();
 };
 
 #endif

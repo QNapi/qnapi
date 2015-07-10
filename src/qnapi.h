@@ -27,83 +27,83 @@
 // globalny menedzer pobierania napisow
 class QNapi
 {
-	public:
+    public:
 
-		QNapi() {}
-		~QNapi();
+        QNapi() {}
+        ~QNapi();
 
-		// sprawdza sciezke do 7zipa
-		static bool checkP7ZipPath();
-		// sprawdza katalog plikow tymczasowych
-		static bool checkTmpPath();
-		// sprawdza czy wlaczone jest przetwarzanie napisow
-		static bool ppEnabled();
+        // sprawdza sciezke do 7zipa
+        static bool checkP7ZipPath();
+        // sprawdza katalog plikow tymczasowych
+        static bool checkTmpPath();
+        // sprawdza czy wlaczone jest przetwarzanie napisow
+        static bool ppEnabled();
 
-		// listuje dostępne silniki pobierania
-		static QStringList enumerateEngines();
-		// wlacza silnik pobierania napisow o podanej nazwie
-		bool addEngine(QString engine);
-		// za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
-		bool addEngines(QStringList engines);
+        // listuje dostępne silniki pobierania
+        static QStringList enumerateEngines();
+        // wlacza silnik pobierania napisow o podanej nazwie
+        bool addEngine(QString engine);
+        // za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
+        bool addEngines(QStringList engines);
 
-		// ustawia sciezke do pliku z filmem
-		void setMoviePath(QString path);
-		// zwraca sciezke do pliku z filmem
-		QString moviePath();
-		// sprawdza uprawnienia zapisu do katalogu docelowego
-		bool checkWritePermissions();
-		// oblicza sume kontrolna pliku z filmem
-		void checksum();
-		// szuka napisow w podanym jezyku
-		bool lookForSubtitles(QString lang, QString engine = "");
-		// zwraca liste znalezionych napisow
-		QList<QNapiSubtitleInfo> listSubtitles();
+        // ustawia sciezke do pliku z filmem
+        void setMoviePath(QString path);
+        // zwraca sciezke do pliku z filmem
+        QString moviePath();
+        // sprawdza uprawnienia zapisu do katalogu docelowego
+        bool checkWritePermissions();
+        // oblicza sume kontrolna pliku z filmem
+        void checksum();
+        // szuka napisow w podanym jezyku
+        bool lookForSubtitles(QString lang, QString engine = "");
+        // zwraca liste znalezionych napisow
+        QList<QNapiSubtitleInfo> listSubtitles();
 
-		// decyduje (na podst. konfiguracji) czy pokazywac liste napisow
-		bool needToShowList();
-		// jesli nie potrzeba pokazywac listy, zwracamy najlepszy indeks napisow
-		int bestIdx();
+        // decyduje (na podst. konfiguracji) czy pokazywac liste napisow
+        bool needToShowList();
+        // jesli nie potrzeba pokazywac listy, zwracamy najlepszy indeks napisow
+        int bestIdx();
 
-		// pobiera napisy o i-tym indeksie z listy subtitlesList
-		bool download(int i);
-		// rozpakowuje pobrane napisy, a sciezke do nich zapisuje w subtitlesTmp
-		bool unpack();
-		// dopasowuje pobrane napisy
-		bool match();
-		// wykonuje przetwarzanie na dopasowanych napisach
-		void pp();
+        // pobiera napisy o i-tym indeksie z listy subtitlesList
+        bool download(int i);
+        // rozpakowuje pobrane napisy, a sciezke do nich zapisuje w subtitlesTmp
+        bool unpack();
+        // dopasowuje pobrane napisy
+        bool match();
+        // wykonuje przetwarzanie na dopasowanych napisach
+        void pp();
 
-		// czysci rozne smieci i pliki tymczasowe
-		void cleanup();
-		// zwraca komunikat o bledzie, w przypadku niepowodzenia
-		QString error();
+        // czysci rozne smieci i pliki tymczasowe
+        void cleanup();
+        // zwraca komunikat o bledzie, w przypadku niepowodzenia
+        QString error();
 
-		// zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
-		QNapiAbstractEngine * engineByName(QString name);
-		// na odwrot ;)
-		QString nameByEngine(QNapiAbstractEngine * engine);
+        // zwraca wskaznik do zaladowanego! silnika z napisami po nazwie
+        QNapiAbstractEngine * engineByName(QString name);
+        // na odwrot ;)
+        QString nameByEngine(QNapiAbstractEngine * engine);
 
-		// listuje zaladowane moduly pobierania
-		QStringList listLoadedEngines();
+        // listuje zaladowane moduly pobierania
+        QStringList listLoadedEngines();
 
-	private:
+    private:
 
-		// sciezka do pliku z filmem
-		QString movie;
-		// aktualny komunikat o bledzie
-		QString errorMsg;
-		// lista zaladowanych silnikow z napisami
-		QList<QNapiAbstractEngine*> enginesList;
-		// lista znalezionych napisow
-		QList<QNapiSubtitleInfo> subtitlesList;
-		// offsety w indeksach w powyzszej liscie napisow dla poszczegolnych silnikow
-		QHash<QString, int> offsetsList;
-		// wskaznik do obiektu silnika, na ktorym aktualnie pracujemy
-		// ustawiany po wykonaniu metody download()
-		QNapiAbstractEngine * currentEngine;
-		
-		// najlepszy indeks napisow
-		int theBestIdx;
+        // sciezka do pliku z filmem
+        QString movie;
+        // aktualny komunikat o bledzie
+        QString errorMsg;
+        // lista zaladowanych silnikow z napisami
+        QList<QNapiAbstractEngine*> enginesList;
+        // lista znalezionych napisow
+        QList<QNapiSubtitleInfo> subtitlesList;
+        // offsety w indeksach w powyzszej liscie napisow dla poszczegolnych silnikow
+        QHash<QString, int> offsetsList;
+        // wskaznik do obiektu silnika, na ktorym aktualnie pracujemy
+        // ustawiany po wykonaniu metody download()
+        QNapiAbstractEngine * currentEngine;
+        
+        // najlepszy indeks napisow
+        int theBestIdx;
 
 };
 

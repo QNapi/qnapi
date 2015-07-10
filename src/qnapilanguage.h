@@ -24,22 +24,22 @@ Q_OBJECT
 
 public:
 
-	QNapiLanguage(QString source = "");
+    QNapiLanguage(QString source = "");
 
-	void setLanguage(QString source);
+    void setLanguage(QString source);
 
-	QString toTwoLetter();
-	QString toTriLetter();
-	QString toFullName();
+    QString toTwoLetter();
+    QString toTriLetter();
+    QString toFullName();
 
-	QStringList listLanguages();
+    QStringList listLanguages();
 
 private:
 
-	QStringList codes2l, codes3l, names;
-	int idx;
+    QStringList codes2l, codes3l, names;
+    int idx;
 
-	void fill_tables();
+    void fill_tables();
 
 };
 

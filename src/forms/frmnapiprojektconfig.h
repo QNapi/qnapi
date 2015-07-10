@@ -25,21 +25,21 @@ class frmNapiProjektConfig : public QDialog
 {
 Q_OBJECT
 
-	public:
+    public:
 
-		frmNapiProjektConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
-		~frmNapiProjektConfig() {}
+        frmNapiProjektConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmNapiProjektConfig() {}
 
-	public slots:
-	
-		void accept();
-		void pbRegisterClicked();
+    public slots:
+    
+        void accept();
+        void pbRegisterClicked();
 
-	private:
-		Ui::frmNapiProjektConfig ui;
-		
-		void load();
-		
+    private:
+        Ui::frmNapiProjektConfig ui;
+        
+        void load();
+        
 };
 
 

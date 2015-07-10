@@ -31,49 +31,49 @@
 
 class PostThread : public QNapiThread
 {
-	Q_OBJECT
-	public:
-		void run();
-		void setPostParams(const QString & movie_file, const QString & subtitles_file,
-							const QString & comment_txt, const QString & lang)
-		{
-			movie = movie_file;
-			subtitles = subtitles_file;
-			comment = comment_txt;
-			language = lang;
-		}
+    Q_OBJECT
+    public:
+        void run();
+        void setPostParams(const QString & movie_file, const QString & subtitles_file,
+                            const QString & comment_txt, const QString & lang)
+        {
+            movie = movie_file;
+            subtitles = subtitles_file;
+            comment = comment_txt;
+            language = lang;
+        }
 
-		QNapiProjektEngine::UploadResult taskResult;
+        QNapiProjektEngine::UploadResult taskResult;
 
-	signals:
-		void postFinished(bool interrupted = false);
-		void invalidUserPass();
+    signals:
+        void postFinished(bool interrupted = false);
+        void invalidUserPass();
 
-	private:
-		QString movie, subtitles, comment, language;
+    private:
+        QString movie, subtitles, comment, language;
 };
 
 class frmCorrect: public QDialog
 {
 Q_OBJECT
-	public:
-		frmCorrect(QWidget *parent = 0, Qt::WindowFlags f = 0);
-		~frmCorrect() {};
+    public:
+        frmCorrect(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmCorrect() {};
 
-	private:
-		void closeEvent(QCloseEvent *event);
+    private:
+        void closeEvent(QCloseEvent *event);
 
-		Ui::frmCorrect ui;
+        Ui::frmCorrect ui;
 
-		PostThread postThread;
+        PostThread postThread;
 
-	private slots:
-		void selectMovie();
-		void selectSubtitles();
-		void checkPostEnable();
-		void pbPostClicked();
-		void postFinished(bool interrupt = false);
-		void invalidUserPass();
+    private slots:
+        void selectMovie();
+        void selectSubtitles();
+        void checkPostEnable();
+        void pbPostClicked();
+        void postFinished(bool interrupt = false);
+        void invalidUserPass();
 };
 
 #endif

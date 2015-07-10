@@ -16,109 +16,109 @@
 #include "frmlistsubtitles.h"
 
 frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
-	: QDialog(parent, f)
+    : QDialog(parent, f)
 {
-	ui.setupUi(this);
+    ui.setupUi(this);
 
-	// workaround dla compiza?
-	move((QApplication::desktop()->width() - width()) / 2,
-		(QApplication::desktop()->height() - height()) / 2);
+    // workaround dla compiza?
+    move((QApplication::desktop()->width() - width()) / 2,
+        (QApplication::desktop()->height() - height()) / 2);
 }
 
 void frmListSubtitles::setFileName(const QString & name)
 {
-	ui.lbSelectSubtitles->setText(QString(	"Z poniższej listy wybierz napisy, które"
-											" chcesz dopasować do pliku <b>%1</b>:")
-										.arg(name));
+    ui.lbSelectSubtitles->setText(QString(  "Z poniższej listy wybierz napisy, które"
+                                            " chcesz dopasować do pliku <b>%1</b>:")
+                                        .arg(name));
 }
 
 void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 {
-	QNapi n;
-	n.addEngines(n.enumerateEngines());	
+    QNapi n;
+    n.addEngines(n.enumerateEngines()); 
 
-	ui.twSubtitles->clear();
-	ui.twSubtitles->setColumnCount(4);
-	ui.twSubtitles->setRowCount(list.size());
+    ui.twSubtitles->clear();
+    ui.twSubtitles->setColumnCount(4);
+    ui.twSubtitles->setRowCount(list.size());
 
-	ui.twSubtitles->horizontalHeader()->hide();
-	ui.twSubtitles->verticalHeader()->hide();
-	ui.twSubtitles->verticalHeader()->setDefaultSectionSize(20);
+    ui.twSubtitles->horizontalHeader()->hide();
+    ui.twSubtitles->verticalHeader()->hide();
+    ui.twSubtitles->verticalHeader()->setDefaultSectionSize(20);
     ui.twSubtitles->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
-	int i = 0, good = 0, bad = 0;
-	foreach(QNapiSubtitleInfo s, list)
-	{
-		QTableWidgetItem *item;
+    int i = 0, good = 0, bad = 0;
+    foreach(QNapiSubtitleInfo s, list)
+    {
+        QTableWidgetItem *item;
 
-		bool highlight = (s.resolution != SUBTITLE_UNKNOWN);
+        bool highlight = (s.resolution != SUBTITLE_UNKNOWN);
 
-		QBrush brush((s.resolution == SUBTITLE_GOOD) ? QColor(qRgb(200, 255, 200)) : QColor(qRgb(255, 200, 200)));		
+        QBrush brush((s.resolution == SUBTITLE_GOOD) ? QColor(qRgb(200, 255, 200)) : QColor(qRgb(255, 200, 200)));      
 
-		if(highlight && (s.resolution == SUBTITLE_GOOD))
-			++good;
-		else if(highlight && (s.resolution == SUBTITLE_GOOD))
-			++bad;
+        if(highlight && (s.resolution == SUBTITLE_GOOD))
+            ++good;
+        else if(highlight && (s.resolution == SUBTITLE_GOOD))
+            ++bad;
 
-		QString lang_path = QString(":/languages/") + s.lang + ".gif";
-		if(QFile::exists(lang_path))
-		{
-			item = new QTableWidgetItem(QIcon(lang_path), "");
-		}
-		else
-		{
-			item = new QTableWidgetItem(s.lang);
-		}
+        QString lang_path = QString(":/languages/") + s.lang + ".gif";
+        if(QFile::exists(lang_path))
+        {
+            item = new QTableWidgetItem(QIcon(lang_path), "");
+        }
+        else
+        {
+            item = new QTableWidgetItem(s.lang);
+        }
 
-		if(highlight) item->setBackground(brush);
-		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 1, item);
+        if(highlight) item->setBackground(brush);
+        item->setToolTip(s.comment);
+        ui.twSubtitles->setItem(i, 1, item);
 
-		item = new QTableWidgetItem(s.name);
-		if(highlight) item->setBackground(brush);
-		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 2, item);
+        item = new QTableWidgetItem(s.name);
+        if(highlight) item->setBackground(brush);
+        item->setToolTip(s.comment);
+        ui.twSubtitles->setItem(i, 2, item);
 
-		item = new QTableWidgetItem(s.format);
-		if(highlight) item->setBackground(brush);
-		item->setToolTip(s.comment);
-		ui.twSubtitles->setItem(i, 3, item);
+        item = new QTableWidgetItem(s.format);
+        if(highlight) item->setBackground(brush);
+        item->setToolTip(s.comment);
+        ui.twSubtitles->setItem(i, 3, item);
 
-		QNapiAbstractEngine *e = n.engineByName(s.engine);
-		if(e)
-		{
-			item = new QTableWidgetItem(e->engineIcon(), "");
-			if(highlight) item->setBackground(brush);
-			item->setToolTip(s.comment);
-			ui.twSubtitles->setItem(i, 0, item);
-		}
+        QNapiAbstractEngine *e = n.engineByName(s.engine);
+        if(e)
+        {
+            item = new QTableWidgetItem(e->engineIcon(), "");
+            if(highlight) item->setBackground(brush);
+            item->setToolTip(s.comment);
+            ui.twSubtitles->setItem(i, 0, item);
+        }
 
-		++i;
-	}
+        ++i;
+    }
 
-	ui.twSubtitles->resizeColumnsToContents();
+    ui.twSubtitles->resizeColumnsToContents();
 
-	if(good == 0) ui.lbGreenHint->hide();
-	if(bad == 0) ui.lbRedHint->hide();
+    if(good == 0) ui.lbGreenHint->hide();
+    if(bad == 0) ui.lbRedHint->hide();
 }
 
 int frmListSubtitles::getSelectedIndex()
 {
-	return ui.twSubtitles->currentRow();
+    return ui.twSubtitles->currentRow();
 }
 
 void frmListSubtitles::accept()
 {
-	if(ui.twSubtitles->selectedItems().size() == 0)
-	{
-		QMessageBox::warning(	this,
-								"Nie wybrano napisów z listy",
-								"Musisz wybrać napisy z listy!");
-	}
-	else
-	{
-		QDialog::accept();
-	}
+    if(ui.twSubtitles->selectedItems().size() == 0)
+    {
+        QMessageBox::warning(   this,
+                                "Nie wybrano napisów z listy",
+                                "Musisz wybrać napisy z listy!");
+    }
+    else
+    {
+        QDialog::accept();
+    }
 }
 
 

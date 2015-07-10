@@ -21,196 +21,196 @@
 #include <QStringList>
 
 /*!
-	\brief Constructor
+    \brief Constructor
 */
 QSingleApplication::QSingleApplication(int& argc, char **argv, bool useGui, const QString & appName)
  : QApplication(argc, argv, useGui)
 {
-	setApplicationName(appName);
+    setApplicationName(appName);
 
-	pChannel = new QInterProcessChannel(this);
-	
-	connect(pChannel, SIGNAL( message(QString) ),
-			this	, SLOT  ( message(QString) ) );
-	
-	connect(pChannel, SIGNAL( request(QStringList) ),
-			this	, SLOT  ( request(QStringList) ) );
-	
-	setMessagingPolicy(Signals);
-	setInstanciationPolicy(None);
+    pChannel = new QInterProcessChannel(this);
+    
+    connect(pChannel, SIGNAL( message(QString) ),
+            this    , SLOT  ( message(QString) ) );
+    
+    connect(pChannel, SIGNAL( request(QStringList) ),
+            this    , SLOT  ( request(QStringList) ) );
+    
+    setMessagingPolicy(Signals);
+    setInstanciationPolicy(None);
 }
 
 /*!
-	\brief Destructor
+    \brief Destructor
 */
 QSingleApplication::~QSingleApplication()
 {
-	pChannel->close();
+    pChannel->close();
 }
 
 /*!
-	\return Wheter the creation of an instance is allowed.
+    \return Wheter the creation of an instance is allowed.
 */
 bool QSingleApplication::isInstanceAllowed() const
 {
-	return pChannel->isServer();
+    return pChannel->isServer();
 }
 
 /*!
-	\return The current messaging policy
+    \return The current messaging policy
 */
 QSingleApplication::MessagingPolicy QSingleApplication::messagingPolicy() const
 {
-	return m_messaging;
+    return m_messaging;
 }
 
 /*!
-	\brief Sets the messaging policy
-	
-	\see messagingPolicy()
+    \brief Sets the messaging policy
+    
+    \see messagingPolicy()
 */
 void QSingleApplication::setMessagingPolicy(MessagingPolicy p)
 {
-	m_messaging = p;
+    m_messaging = p;
 }
 
 /*!
-	\return The current instanciation policy
+    \return The current instanciation policy
 */
 QSingleApplication::InstanciationPolicy QSingleApplication::instanciationPolicy() const
 {
-	return m_instanciation;
+    return m_instanciation;
 }
 
 /*!
-	\brief Sets the instanciation policy
-	
-	\see instanciationPolicy()
+    \brief Sets the instanciation policy
+    
+    \see instanciationPolicy()
 */
 void QSingleApplication::setInstanciationPolicy(InstanciationPolicy p)
 {
-	m_instanciation = p;
+    m_instanciation = p;
 }
 
 /*!
-	\brief Launchs the application if allowed
-	
-	\see instanciationPolicy()
+    \brief Launchs the application if allowed
+    
+    \see instanciationPolicy()
 */
 int QSingleApplication::exec()
 {
-	int ret = -1;
-	
-	if ( isInstanceAllowed() )
-	{
-		ret = QApplication::exec();
-		
-	} else {
-		
-		switch ( instanciationPolicy() )
-		{
-			case ForwardArguments :
-				qWarning("QSingleApplication : forwarding parameters");
-				sendRequest(arguments());
-				break;
-				
-			default:
-				qWarning("QSingleApplication : all instances already occupied");
-				break;
-		}
-	}
-	
-	return ret;
+    int ret = -1;
+    
+    if ( isInstanceAllowed() )
+    {
+        ret = QApplication::exec();
+        
+    } else {
+        
+        switch ( instanciationPolicy() )
+        {
+            case ForwardArguments :
+                qWarning("QSingleApplication : forwarding parameters");
+                sendRequest(arguments());
+                break;
+                
+            default:
+                qWarning("QSingleApplication : all instances already occupied");
+                break;
+        }
+    }
+    
+    return ret;
 }
 
 /*!
-	\overload
+    \overload
 */
 void QSingleApplication::sendRequest(const QString& s)
 {
-	sendRequest(QStringList(s));
+    sendRequest(QStringList(s));
 }
 
 /*!
-	\brief sends a message to the running instance of the application
-	
-	\param l A list of arguments that make up a request to be sent.
+    \brief sends a message to the running instance of the application
+    
+    \param l A list of arguments that make up a request to be sent.
 */
 void QSingleApplication::sendRequest(const QStringList& l)
 {
-	if ( !pChannel || l.isEmpty() )
-		return;
-	
-	/*
-	qDebug("sending message to %s:%i over TCP/IP : \"%s\"",
-			qPrintable(pManager->address().toString()),
-			pManager->port(),
-			msg.constData());
-	*/
-	
-	pChannel->sendMessage(QManagedRequest::joinArguments("--request", l));
+    if ( !pChannel || l.isEmpty() )
+        return;
+    
+    /*
+    qDebug("sending message to %s:%i over TCP/IP : \"%s\"",
+            qPrintable(pManager->address().toString()),
+            pManager->port(),
+            msg.constData());
+    */
+    
+    pChannel->sendMessage(QManagedRequest::joinArguments("--request", l));
 }
 
 /*!
-	\internal
+    \internal
 */
 void QSingleApplication::message(const QString& s)
 {
-	if ( s.isEmpty() )
-		return;
-	
-	switch ( messagingPolicy() )
-	{
-		case Events :
-			
-			/*
-			QRequestEvent *e = new QRequestEvent(s);
-			postEvent(s);
-			*/
-			
-			break;
-			
-		case Signals :
-			emit request(s);
-			break;
-			
-		default:
-			break;
-	}
+    if ( s.isEmpty() )
+        return;
+    
+    switch ( messagingPolicy() )
+    {
+        case Events :
+            
+            /*
+            QRequestEvent *e = new QRequestEvent(s);
+            postEvent(s);
+            */
+            
+            break;
+            
+        case Signals :
+            emit request(s);
+            break;
+            
+        default:
+            break;
+    }
 }
 
 /*!
-	\internal
+    \internal
 */
 void QSingleApplication::request(const QStringList& l)
 {
-	if ( l.isEmpty() )
-		return;
-	
-	switch ( messagingPolicy() )
-	{
-		case Events :
-			
-			/*
-			QRequestEvent *e = new QRequestEvent(s);
-			postEvent(s);
-			*/
-			
-			break;
-			
-		case Signals :
-			emit request(l.join(" | "));
-			break;
-			
-		default:
-			break;
-	}
+    if ( l.isEmpty() )
+        return;
+    
+    switch ( messagingPolicy() )
+    {
+        case Events :
+            
+            /*
+            QRequestEvent *e = new QRequestEvent(s);
+            postEvent(s);
+            */
+            
+            break;
+            
+        case Signals :
+            emit request(l.join(" | "));
+            break;
+            
+        default:
+            break;
+    }
 }
 
 /*!
-	\internal
+    \internal
 */
 bool QSingleApplication::event(QEvent *e)
 {
-	return QApplication::event(e);
+    return QApplication::event(e);
 }

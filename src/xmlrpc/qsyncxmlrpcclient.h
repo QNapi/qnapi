@@ -21,44 +21,44 @@
 
 class QSyncXmlRpcClient : public xmlrpc::Client
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	public:
+    public:
 
-		QSyncXmlRpcClient(QObject * parent = 0);
-		QSyncXmlRpcClient(	const QString & hostname, quint16 port = 80,
-							QObject * parent = 0L);
-		~QSyncXmlRpcClient();
+        QSyncXmlRpcClient(QObject * parent = 0);
+        QSyncXmlRpcClient(  const QString & hostname, quint16 port = 80,
+                            QObject * parent = 0L);
+        ~QSyncXmlRpcClient();
 
-		void connectSignals();
-		void setRequestTimeout(int t);
+        void connectSignals();
+        void setRequestTimeout(int t);
 
-		// sync requests; returns 1 if success or 0 if fails
-		int request(QList<xmlrpc::Variant> params, QString methodName);
-		int request(QString methodName);
-		int request(QString methodName, xmlrpc::Variant param1);
-		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2);
-		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
-					xmlrpc::Variant param3);
-		int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
-					xmlrpc::Variant param3, xmlrpc::Variant param4);
+        // sync requests; returns 1 if success or 0 if fails
+        int request(QList<xmlrpc::Variant> params, QString methodName);
+        int request(QString methodName);
+        int request(QString methodName, xmlrpc::Variant param1);
+        int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2);
+        int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
+                    xmlrpc::Variant param3);
+        int request(QString methodName, xmlrpc::Variant param1, xmlrpc::Variant param2,
+                    xmlrpc::Variant param3, xmlrpc::Variant param4);
 
-		QVariant & result();
+        QVariant & result();
 
-	protected slots:
+    protected slots:
 
-		void requestDone(int idx, QVariant res);
-		void requestFailed(int idx, int errorCode, QString errorString);
-		void abort();
+        void requestDone(int idx, QVariant res);
+        void requestFailed(int idx, int errorCode, QString errorString);
+        void abort();
 
-	private:
+    private:
 
-		QEventLoop loop;
-		QTimer timeoutTimer;
-		int timeout;
-		int requestID, status, errCode;
-		QString errString;
-		QVariant resultVar;
+        QEventLoop loop;
+        QTimer timeoutTimer;
+        int timeout;
+        int requestID, status, errCode;
+        QString errString;
+        QVariant resultVar;
 
 };
 

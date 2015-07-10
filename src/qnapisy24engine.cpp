@@ -378,7 +378,7 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     if (!r)
         return false;
 
-    subtitlesList << QNapiSubtitleInfo(	lang,
+    subtitlesList << QNapiSubtitleInfo( lang,
                                         engineName(),
                                         tmpPackedFile,
                                         QFileInfo(movie).completeBaseName(),

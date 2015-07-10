@@ -16,32 +16,32 @@
 #include "../qnapi.h"
 
 frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags f)
-	: QDialog(parent, f)
+    : QDialog(parent, f)
 {
-	ui.setupUi(this);
-	QNapi q;
-	q.addEngines(q.enumerateEngines());
-	setWindowIcon(q.engineByName("OpenSubtitles")->engineIcon());
+    ui.setupUi(this);
+    QNapi q;
+    q.addEngines(q.enumerateEngines());
+    setWindowIcon(q.engineByName("OpenSubtitles")->engineIcon());
 
-	load();
+    load();
 
-	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+    connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 }
 
 void frmOpenSubtitlesConfig::accept()
 {
-	GlobalConfig().setNick("OpenSubtitles", ui.leNick->text());
-	GlobalConfig().setPass("OpenSubtitles", ui.lePass->text());
-	QDialog::accept();
+    GlobalConfig().setNick("OpenSubtitles", ui.leNick->text());
+    GlobalConfig().setPass("OpenSubtitles", ui.lePass->text());
+    QDialog::accept();
 }
 
 void frmOpenSubtitlesConfig::pbRegisterClicked()
 {
-	((QNapiApp*)qApp)->showOSCreateUser();
+    ((QNapiApp*)qApp)->showOSCreateUser();
 }
 
 void frmOpenSubtitlesConfig::load()
 {
-	ui.leNick->setText(GlobalConfig().nick("OpenSubtitles"));
-	ui.lePass->setText(GlobalConfig().pass("OpenSubtitles"));
+    ui.leNick->setText(GlobalConfig().nick("OpenSubtitles"));
+    ui.lePass->setText(GlobalConfig().pass("OpenSubtitles"));
 }

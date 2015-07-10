@@ -15,143 +15,143 @@
 #include "qnapiopendialog.h"
 
 QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
-									const QString & init_path,
-									FilterMode filterMode )
-							: QFileDialog(parent)
+                                    const QString & init_path,
+                                    FilterMode filterMode )
+                            : QFileDialog(parent)
 {
-	setAttribute(Qt::WA_QuitOnClose, false);
-	setWindowTitle(caption);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowTitle(caption);
 
-	if(filterMode == Movies)
-	{
+    if(filterMode == Movies)
+    {
 #if QT_VERSION >= 0x040400
-		setNameFilter
+        setNameFilter
 #else
-		setFilter
+        setFilter
 #endif
-				(tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
-					"*.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
-	}
-	else if(filterMode == Subtitles)
-	{
+                (tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
+                    "*.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
+    }
+    else if(filterMode == Subtitles)
+    {
 #if QT_VERSION >= 0x040400
-		setNameFilter
+        setNameFilter
 #else
-		setFilter
+        setFilter
 #endif
-				(tr("Napisy (*.txt);;Wszystkie pliki (*.*)"));
-	}
+                (tr("Napisy (*.txt);;Wszystkie pliki (*.*)"));
+    }
 
-	if(QFileInfo(init_path).isDir())
-		setDirectory(init_path);
-	else
-		setDirectory(QDir::currentPath());
+    if(QFileInfo(init_path).isDir())
+        setDirectory(init_path);
+    else
+        setDirectory(QDir::currentPath());
 
-	QStringList sideUrls;
-	
+    QStringList sideUrls;
+    
 #ifdef Q_OS_MAC
-	sideUrls << "/Volumes";
+    sideUrls << "/Volumes";
 #endif
 
-	sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")
-				<< QString(QDir::homePath() + "/Video") << QString(QDir::homePath() + "/video")
-				<< QString(QDir::homePath() + "/Filmy") << QString(QDir::homePath() + "/filmy")
-				<< QString(QDir::homePath() + "/Wideo") << QString(QDir::homePath() + "/wideo");
+    sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")
+                << QString(QDir::homePath() + "/Video") << QString(QDir::homePath() + "/video")
+                << QString(QDir::homePath() + "/Filmy") << QString(QDir::homePath() + "/filmy")
+                << QString(QDir::homePath() + "/Wideo") << QString(QDir::homePath() + "/wideo");
 
-	QList<QUrl> urls = sidebarUrls();
+    QList<QUrl> urls = sidebarUrls();
 
-	foreach(QString sideUrl, sideUrls)
-	{
-		if(!QDir().exists(sideUrl)) continue;
-		QUrl url = QUrl::fromLocalFile(sideUrl);
-		if(!urls.contains(url))
-			urls << url;
-	}
+    foreach(QString sideUrl, sideUrls)
+    {
+        if(!QDir().exists(sideUrl)) continue;
+        QUrl url = QUrl::fromLocalFile(sideUrl);
+        if(!urls.contains(url))
+            urls << url;
+    }
 
-	setSidebarUrls(urls);
+    setSidebarUrls(urls);
 }
 
 bool QNapiOpenDialog::selectFile()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-	files.clear();
-	QString file = getOpenFileName(this, windowTitle(), directory().path(),
+    files.clear();
+    QString file = getOpenFileName(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
-		nameFilters().join("\n")
+        nameFilters().join("\n")
 #else
-		filters().join("\n")
+        filters().join("\n")
 #endif
-					);
+                    );
 
-	if(!file.isEmpty())
-		files << file;
+    if(!file.isEmpty())
+        files << file;
 
-	return !file.isEmpty();
+    return !file.isEmpty();
 #else
-	if(!placeWindow()) return false;
-	setFileMode(QFileDialog::ExistingFile);
-	return exec();
+    if(!placeWindow()) return false;
+    setFileMode(QFileDialog::ExistingFile);
+    return exec();
 #endif
 }
 
 bool QNapiOpenDialog::selectFiles()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-	files = getOpenFileNames(this, windowTitle(), directory().path(),
+    files = getOpenFileNames(this, windowTitle(), directory().path(),
 #if QT_VERSION >= 0x040400
-		nameFilters().join("\n")
+        nameFilters().join("\n")
 #else
-		filters().join("\n")
+        filters().join("\n")
 #endif
-					);
+                    );
 
-	return !files.isEmpty();	
+    return !files.isEmpty();    
 #else
-	if(!placeWindow()) return false;
-	setFileMode(QFileDialog::ExistingFiles);
-	return exec();
+    if(!placeWindow()) return false;
+    setFileMode(QFileDialog::ExistingFiles);
+    return exec();
 #endif
 }
 
 bool QNapiOpenDialog::selectDirectory()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-	files.clear();
-	QString dir = getExistingDirectory(this, windowTitle(), directory().path());
+    files.clear();
+    QString dir = getExistingDirectory(this, windowTitle(), directory().path());
 
-	if(dir == directory().path())
-		dir = "";
+    if(dir == directory().path())
+        dir = "";
 
-	if(!dir.isEmpty())
-		files << dir;
+    if(!dir.isEmpty())
+        files << dir;
 
-	return !dir.isEmpty();
+    return !dir.isEmpty();
 #else
-	if(!placeWindow()) return false;
-	// QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks ?
-	setFileMode(QFileDialog::DirectoryOnly);
-	return exec();
+    if(!placeWindow()) return false;
+    // QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks ?
+    setFileMode(QFileDialog::DirectoryOnly);
+    return exec();
 #endif
 }
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
 QStringList QNapiOpenDialog::selectedFiles() const
 {
-	return files;
+    return files;
 }
 #endif
 
 bool QNapiOpenDialog::placeWindow()
 {
-	if(isVisible())
-	{
-		raise();
-		return false;
-	}
+    if(isVisible())
+    {
+        raise();
+        return false;
+    }
 
-	// workaround dla compiza
-	move((QApplication::desktop()->width() - width()) / 2, 
-		(QApplication::desktop()->height() - height()) / 2);
+    // workaround dla compiza
+    move((QApplication::desktop()->width() - width()) / 2, 
+        (QApplication::desktop()->height() - height()) / 2);
 
-	return true;
+    return true;
 }

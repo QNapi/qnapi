@@ -25,21 +25,21 @@ class frmOpenSubtitlesConfig : public QDialog
 {
 Q_OBJECT
 
-	public:
+    public:
 
-		frmOpenSubtitlesConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
-		~frmOpenSubtitlesConfig() {}
+        frmOpenSubtitlesConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmOpenSubtitlesConfig() {}
 
-	public slots:
-	
-		void accept();
-		void pbRegisterClicked();
+    public slots:
+    
+        void accept();
+        void pbRegisterClicked();
 
-	private:
-		Ui::frmOpenSubtitlesConfig ui;
-		
-		void load();
-		
+    private:
+        Ui::frmOpenSubtitlesConfig ui;
+        
+        void load();
+        
 };
 
 

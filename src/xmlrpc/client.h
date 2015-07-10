@@ -42,8 +42,8 @@ namespace  xmlrpc {
 class Client : public QObject {
 Q_OBJECT
 public:
-	Client(QObject * parent = 0);
-	Client(const QString & hostname, quint16 port = 80, QObject * parent = 0L);
+    Client(QObject * parent = 0);
+    Client(const QString & hostname, quint16 port = 80, QObject * parent = 0L);
 
     void setHost ( const QString & hostname, quint16 port = 80, QString path="/" );
     void setProxy ( const QString & host, int port, 
@@ -53,7 +53,7 @@ public:
 
     void setUserAgent( const QString & userAgent );
 
-	virtual ~Client();
+    virtual ~Client();
 
     int request( QList<Variant> params, QString methodName );
 
@@ -80,8 +80,8 @@ protected slots:
     void requestFinished(int id, bool error);
 
 private:
-	class Private;
-	Private *d;
+    class Private;
+    Private *d;
 }; 
 
 } // namespace

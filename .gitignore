@@ -6,6 +6,7 @@ release
 Makefile*
 qnapi
 win32/out/*
+win32/*.exe
 *.Debug
 *.Release
 QNapi.app

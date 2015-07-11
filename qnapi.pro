@@ -102,10 +102,16 @@ macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
     ICON = macx/qnapi.icns
     QMAKE_INFO_PLIST = macx/Info.plist
-    TARGET = QNapi
+    TARGET = macx/QNapi
     7ZIP_BINARY.files = macx/content/7za
     7ZIP_BINARY.path = Contents/Resources
     QMAKE_BUNDLE_DATA += 7ZIP_BINARY
+
+    macdeploy.commands = macdeployqt macx/QNapi.app
+    appdmg.depends = macdeploy
+    appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg
+
+    QMAKE_EXTRA_TARGETS += macdeploy appdmg
 }
 
 unix { 

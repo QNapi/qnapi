@@ -9,6 +9,7 @@ win32/out/*
 win32/*.exe
 *.Debug
 *.Release
-QNapi.app
+macx/QNapi.app
+macx/QNapi.dmg
 .DS_Store
 .qmake.stash

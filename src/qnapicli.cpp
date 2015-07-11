@@ -22,11 +22,6 @@ bool QNapiCli::isCliCall(int argc, char **argv)
     return false;
 #else
     
-    #if (defined(Q_OS_UNIX) || defined(Q_OS_LINUX))
-        if(getenv("DISPLAY") == 0)
-            return true;
-    #endif
-
     QString p;
 
     for(int i = 1; i < argc; i++)
@@ -51,7 +46,15 @@ bool QNapiCli::isCliCall(int argc, char **argv)
         }
     }
 
-    return false;
+    #if defined(Q_OS_MAC)
+        return false;
+    #elif (defined(Q_OS_UNIX) || defined(Q_OS_LINUX))
+        if(getenv("DISPLAY") == 0)
+            return true;
+        return false;
+    #else
+        return false;
+    #endif
 #endif
 }
 

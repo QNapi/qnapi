@@ -16,12 +16,12 @@
 
 void QMultipartHttpRequest::addBoundary()
 {
-	addElement(requestElement::ET_BOUNDARY);
+    addElement(requestElement::ET_BOUNDARY);
 }
 
 void QMultipartHttpRequest::addEndingBoundary()
 {
-	addElement(requestElement::ET_ENDING_BOUNDARY);
+    addElement(requestElement::ET_ENDING_BOUNDARY);
 }
 
 void QMultipartHttpRequest::addContentDisposition(const QString & contentDisposition)
@@ -36,7 +36,7 @@ void QMultipartHttpRequest::addContentType(const QString & contentType)
 
 void QMultipartHttpRequest::addData(const QByteArray & data)
 {
-	addElement(requestElement::ET_DATA, data);
+    addElement(requestElement::ET_DATA, data);
 }
 
 void QMultipartHttpRequest::addData(const QString & data)
@@ -46,74 +46,74 @@ void QMultipartHttpRequest::addData(const QString & data)
 
 QByteArray & QMultipartHttpRequest::requestStream()
 {
-	generateBoundary();
+    generateBoundary();
 
-	QVector<requestElement>::iterator el;
-	const char *endl = "\r\n";
-	buffer.clear();
+    QVector<requestElement>::iterator el;
+    const char *endl = "\r\n";
+    buffer.clear();
 
-	for(el = elements.begin(); el != elements.end(); el++)
-	{
-		switch((*el).type)
-		{
-			case requestElement::ET_CONTENT_DISPOSITION:
-				buffer += QString("Content-Disposition: form-data; ") + (*el).elementData + endl;
-			break;
+    for(el = elements.begin(); el != elements.end(); el++)
+    {
+        switch((*el).type)
+        {
+            case requestElement::ET_CONTENT_DISPOSITION:
+                buffer += QString("Content-Disposition: form-data; ") + (*el).elementData + endl;
+            break;
 
-			case requestElement::ET_CONTENT_TYPE:
-				buffer += QString("Content-Type: ") + (*el).elementData + endl;
-			break;
+            case requestElement::ET_CONTENT_TYPE:
+                buffer += QString("Content-Type: ") + (*el).elementData + endl;
+            break;
 
-			case requestElement::ET_BOUNDARY:
-				buffer += QString("--") + boundary + endl;
-			break;
+            case requestElement::ET_BOUNDARY:
+                buffer += QString("--") + boundary + endl;
+            break;
 
-			case requestElement::ET_ENDING_BOUNDARY:
-				buffer += endl + QString("--") + boundary + QString("--") + endl;
-			break;
+            case requestElement::ET_ENDING_BOUNDARY:
+                buffer += endl + QString("--") + boundary + QString("--") + endl;
+            break;
 
-			case requestElement::ET_DATA:
-				buffer += endl + (*el).elementData + endl;
-			break;
-		}
-	}
+            case requestElement::ET_DATA:
+                buffer += endl + (*el).elementData + endl;
+            break;
+        }
+    }
 
-	return buffer;
+    return buffer;
 }
 
 QString & QMultipartHttpRequest::boundaryTxt()
 {
-	return boundary;
+    return boundary;
 }
 
 void QMultipartHttpRequest::generateBoundary()
 {
-	bool binarySafe;
-	QVector<requestElement>::iterator el;
+    bool binarySafe;
+    QVector<requestElement>::iterator el;
 
-	QTime midnight(0, 0, 0);
-	qsrand(midnight.secsTo(QTime::currentTime()));
+    QTime midnight(0, 0, 0);
+    qsrand(midnight.secsTo(QTime::currentTime()));
 
-	do {
-		boundary = QString::number(qrand());
+    do {
+        boundary = QString::number(qrand());
 
-		binarySafe = true;
+        binarySafe = true;
 
-		for(el = elements.begin(); el != elements.end(); el++)
-		{
-			if((*el).elementData.indexOf(boundary) >= 0)
-			{
-				binarySafe = false;
-				break;
-			}
-		}
-	} while (!binarySafe);
+        for(el = elements.begin(); el != elements.end(); el++)
+        {
+            if((*el).elementData.indexOf(boundary) >= 0)
+            {
+                binarySafe = false;
+                break;
+            }
+        }
+    } while (!binarySafe);
 }
 
 void QMultipartHttpRequest::addElement(requestElement::elementType type, const QByteArray & data)
 {
-	requestElement el;
-	el.type = type;
-	el.elementData = data;
-	elements.push_back(el);
+    requestElement el;
+    el.type = type;
+    el.elementData = data;
+    elements.push_back(el);
 }

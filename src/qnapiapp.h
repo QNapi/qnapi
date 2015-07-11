@@ -41,66 +41,66 @@
 
 class QNapiApp : public QSingleApplication
 {
-	Q_OBJECT
-	public:
-		QNapiApp(int & argc, char **argv, bool useGui, const QString & appName);
-		~QNapiApp();
+    Q_OBJECT
+    public:
+        QNapiApp(int & argc, char **argv, bool useGui, const QString & appName);
+        ~QNapiApp();
 
-		void createTrayIcon();
-		void showTrayMessage(QString title, QString msg);
+        void createTrayIcon();
+        void showTrayMessage(QString title, QString msg);
 
-		frmProgress * progress();
+        frmProgress * progress();
 
-	public slots:
+    public slots:
 
-		bool showOpenDialog(QString engine = "");
-		bool showScanDialog(QString init_dir = "");
+        bool showOpenDialog(QString engine = "");
+        bool showScanDialog(QString init_dir = "");
 
-		void showNPGetDialog();
-		void showNPUploadDialog();
-		void showNPCorrectDialog();
-		void showNPReportDialog();
-		void showNPCreateUser();
+        void showNPGetDialog();
+        void showNPUploadDialog();
+        void showNPCorrectDialog();
+        void showNPReportDialog();
+        void showNPCreateUser();
 
-		void showOSGetDialog();
-		void showOSUploadDialog();
-		void showOSCreateUser();
-		
+        void showOSGetDialog();
+        void showOSUploadDialog();
+        void showOSCreateUser();
+        
         void showNapisy24GetDialog();
         void showNapisy24CreateUser();
 
-		void showSettings();
-		void showAbout();
-		void tryQuit();
+        void showSettings();
+        void showAbout();
+        void tryQuit();
 
-	signals:
-		void downloadFile(const QString & fileName);
+    signals:
+        void downloadFile(const QString & fileName);
 
-	private:
+    private:
 
-		bool event(QEvent *ev);
+        bool event(QEvent *ev);
 
-		QSystemTrayIcon *trayIcon;
+        QSystemTrayIcon *trayIcon;
         QMenu *trayIconMenu, *napiSubMenu, *osSubMenu, *napisy24SubMenu;
-		QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
-				*napiCorrectAction, *napiReportAction, *napiCreateUserAction,
-				*osGetAction, *osAddAction, *osCreateUserAction,
+        QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
+                *napiCorrectAction, *napiReportAction, *napiCreateUserAction,
+                *osGetAction, *osAddAction, *osCreateUserAction,
                 *napisy24GetAction, *napisy24CreateUserAction,
                 *settingsAction, *aboutAction, *quitAction;
 
-		QNapiOpenDialog *openDialog;
-		
-		frmProgress *f_progress;
-		frmOptions *f_options;
-		frmAbout *f_about;
-		frmScan *f_scan;
-		frmUpload *f_upload;
-		frmCorrect *f_correct;
-		frmReport *f_report;
+        QNapiOpenDialog *openDialog;
+        
+        frmProgress *f_progress;
+        frmOptions *f_options;
+        frmAbout *f_about;
+        frmScan *f_scan;
+        frmUpload *f_upload;
+        frmCorrect *f_correct;
+        frmReport *f_report;
 
-	private slots:
+    private slots:
 
-		void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+        void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
 };
 

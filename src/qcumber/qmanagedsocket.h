@@ -19,9 +19,9 @@
 #include "qcumber.h"
 
 /*!
-	\file qmanagedsocket.h
-	
-	\brief Definition of the QManagedSocket class.
+    \file qmanagedsocket.h
+    
+    \brief Definition of the QManagedSocket class.
 */
 
 #include <QObject>
@@ -30,23 +30,23 @@ class QTcpSocket;
 
 class QCUMBER_EXPORT QManagedSocket : public QObject
 {
-	Q_OBJECT
-	
-	public:
-		QManagedSocket(QTcpSocket *s, QObject *p = 0);
-		virtual ~QManagedSocket();
-		
-		virtual void send(const QByteArray& msg);
-		
-	signals:
-		void message(const QString& m);
-		void message(const QString& m, QManagedSocket *s);
-		
-	protected slots:
-		virtual void readyRead();
-		
-	private:
-		QTcpSocket *pSocket;
+    Q_OBJECT
+    
+    public:
+        QManagedSocket(QTcpSocket *s, QObject *p = 0);
+        virtual ~QManagedSocket();
+        
+        virtual void send(const QByteArray& msg);
+        
+    signals:
+        void message(const QString& m);
+        void message(const QString& m, QManagedSocket *s);
+        
+    protected slots:
+        virtual void readyRead();
+        
+    private:
+        QTcpSocket *pSocket;
 };
 
 #endif // _QMANAGED_SOCKET_H_

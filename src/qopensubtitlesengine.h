@@ -31,49 +31,49 @@ class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {
 public:
 
-	QOpenSubtitlesEngine(const QString & movieFile = "", const QString & subtitlesFile = "");
-	~QOpenSubtitlesEngine();
+    QOpenSubtitlesEngine(const QString & movieFile = "", const QString & subtitlesFile = "");
+    ~QOpenSubtitlesEngine();
 
-	// zwraca nazwe modulu
-	QString engineName();
-	// zwraca informacje nt. modulu
-	QString engineInfo();
-	// zwraca ikone silnika pobierania
-	QIcon engineIcon();
-	// zwraca czy silnik jest konfigurowalny
-	bool isConfigurable();
-	// wywoluje okienko konfiguracji
-	void configure(QWidget * parent);
+    // zwraca nazwe modulu
+    QString engineName();
+    // zwraca informacje nt. modulu
+    QString engineInfo();
+    // zwraca ikone silnika pobierania
+    QIcon engineIcon();
+    // zwraca czy silnik jest konfigurowalny
+    bool isConfigurable();
+    // wywoluje okienko konfiguracji
+    void configure(QWidget * parent);
 
-	// oblicza sume kontrolna pliku filmowego
-	QString checksum(QString filename = "");
-	// szuka napisow
-	bool lookForSubtitles(QString lang);
-	// wyniki wyszukiwania
-	QList<QNapiSubtitleInfo> listSubtitles();
-	// probuje pobrac napisy
-	bool download(int idx);
-	// probuje rozpakowac napisy
-	bool unpack();
-	// czysci smieci, pliki tymczasowe
-	void cleanup();
+    // oblicza sume kontrolna pliku filmowego
+    QString checksum(QString filename = "");
+    // szuka napisow
+    bool lookForSubtitles(QString lang);
+    // wyniki wyszukiwania
+    QList<QNapiSubtitleInfo> listSubtitles();
+    // probuje pobrac napisy
+    bool download(int idx);
+    // probuje rozpakowac napisy
+    bool unpack();
+    // czysci smieci, pliki tymczasowe
+    void cleanup();
 
 private:
 
-	QString p7zipPath, lang, tmpPackedFile, subFileName;
-	quint64 fileSize;
+    QString p7zipPath, lang, tmpPackedFile, subFileName;
+    quint64 fileSize;
 
     SyncXmlRpc rpc;
-	QString token;
+    QString token;
 
-	QList<QNapiSubtitleInfo> subtitlesList;
+    QList<QNapiSubtitleInfo> subtitlesList;
 
-	// sprawdza czy dana instancja klasy jest zalogowana na sewerze
-	bool isLogged() { return !token.isEmpty(); }
-	// loguje na serwer OpenSubtitles
-	bool login();
-	// wylogowuje z serwera
-	void logout();
+    // sprawdza czy dana instancja klasy jest zalogowana na sewerze
+    bool isLogged() { return !token.isEmpty(); }
+    // loguje na serwer OpenSubtitles
+    bool login();
+    // wylogowuje z serwera
+    void logout();
 
 };
 

@@ -16,33 +16,33 @@
 #include "../qnapi.h"
 
 frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
-	: QDialog(parent, f)
+    : QDialog(parent, f)
 {
-	ui.setupUi(this);
-	QNapi q;
-	q.addEngines(q.enumerateEngines());
-	setWindowIcon(q.engineByName("NapiProjekt")->engineIcon());
+    ui.setupUi(this);
+    QNapi q;
+    q.addEngines(q.enumerateEngines());
+    setWindowIcon(q.engineByName("NapiProjekt")->engineIcon());
 
-	load();
+    load();
 
-	connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+    connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 }
 
 void frmNapiProjektConfig::accept()
 {
-	GlobalConfig().setNick("NapiProjekt", ui.leNick->text());
-	GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
-	QDialog::accept();
+    GlobalConfig().setNick("NapiProjekt", ui.leNick->text());
+    GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
+    QDialog::accept();
 }
 
 void frmNapiProjektConfig::pbRegisterClicked()
 {
-	((QNapiApp*)qApp)->showNPCreateUser();
-	load();
+    ((QNapiApp*)qApp)->showNPCreateUser();
+    load();
 }
 
 void frmNapiProjektConfig::load()
 {
-	ui.leNick->setText(GlobalConfig().nick("NapiProjekt"));
-	ui.lePass->setText(GlobalConfig().pass("NapiProjekt"));
+    ui.leNick->setText(GlobalConfig().nick("NapiProjekt"));
+    ui.lePass->setText(GlobalConfig().pass("NapiProjekt"));
 }

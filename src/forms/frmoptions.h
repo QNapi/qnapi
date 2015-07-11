@@ -32,37 +32,37 @@
 class frmOptions: public QDialog
 {
 Q_OBJECT
-	public:
-		frmOptions(QWidget *parent = 0, Qt::WindowFlags f = 0);
-		~frmOptions();
+    public:
+        frmOptions(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmOptions();
 
-	public slots:
-		void writeConfig();
-		void readConfig();
+    public slots:
+        void writeConfig();
+        void readConfig();
 
-	private slots:
-		void le7zPathChanged();
-		void select7zPath();
-		void leTmpPathChanged();
-		void selectTmpPath();
+    private slots:
+        void le7zPathChanged();
+        void select7zPath();
+        void leTmpPathChanged();
+        void selectTmpPath();
 
-		void twEnginesSelectionChanged();
-		void twEnginesItemChanged(QTableWidgetItem * item);
-		void pbMoveUpClicked();
-		void pbMoveDownClicked();
-		void pbEngineConfClicked();
-		void pbEngineInfoClicked();	
+        void twEnginesSelectionChanged();
+        void twEnginesItemChanged(QTableWidgetItem * item);
+        void pbMoveUpClicked();
+        void pbMoveDownClicked();
+        void pbEngineConfClicked();
+        void pbEngineInfoClicked(); 
 
-		void changeEncodingClicked();
-		void autoDetectEncodingClicked();
-		void showAllEncodingsClicked();
+        void changeEncodingClicked();
+        void autoDetectEncodingClicked();
+        void showAllEncodingsClicked();
 
-		void restoreDefaults();
+        void restoreDefaults();
 
-	private:
-		Ui::frmOptions ui;
-		void showAllEncodings();
-		
+    private:
+        Ui::frmOptions ui;
+        void showAllEncodings();
+        
 };
 
 #endif

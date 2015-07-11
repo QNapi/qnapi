@@ -18,30 +18,30 @@
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
 enum QNapiSubtitleResolution
 {
-	// nie wiadomo (lub nie jestesmy pewni)
-	SUBTITLE_UNKNOWN,
-	// podejrzenie, ze napisy nie pasuja
-	// (np. zostaly oznaczone jako nieprawidlowe)
-	SUBTITLE_BAD,
-	// napisy prawdopodobnie pasuja (np. nazwa pliku czy releasu sie zgadza)
-	SUBTITLE_GOOD
+    // nie wiadomo (lub nie jestesmy pewni)
+    SUBTITLE_UNKNOWN,
+    // podejrzenie, ze napisy nie pasuja
+    // (np. zostaly oznaczone jako nieprawidlowe)
+    SUBTITLE_BAD,
+    // napisy prawdopodobnie pasuja (np. nazwa pliku czy releasu sie zgadza)
+    SUBTITLE_GOOD
 };
 
 // struktura opisujaca napisy
 struct QNapiSubtitleInfo
 {
-	QNapiSubtitleInfo(QString l = "", QString e = "", QString u = "",
-					  QString n = "", QString c = "", QString f = "",
-					  QNapiSubtitleResolution r = SUBTITLE_UNKNOWN)
-		: lang(l.toLower()), engine(e), url(u), name(n), comment(c), format(f),
-		  resolution(r) {}
-	QString lang;
-	QString engine;
-	QString url;
-	QString name;
-	QString comment;
-	QString format;
-	QNapiSubtitleResolution resolution;
+    QNapiSubtitleInfo(QString l = "", QString e = "", QString u = "",
+                      QString n = "", QString c = "", QString f = "",
+                      QNapiSubtitleResolution r = SUBTITLE_UNKNOWN)
+        : lang(l.toLower()), engine(e), url(u), name(n), comment(c), format(f),
+          resolution(r) {}
+    QString lang;
+    QString engine;
+    QString url;
+    QString name;
+    QString comment;
+    QString format;
+    QNapiSubtitleResolution resolution;
 };
 
 typedef QList<QNapiSubtitleInfo> QNapiSubtitleInfoList;

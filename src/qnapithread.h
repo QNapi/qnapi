@@ -20,11 +20,11 @@
 class QNapiThread : public QThread
 {
 Q_OBJECT
-	public:
-		QNapiThread() : abort(false) {}
-		void requestAbort() { abort = true; }
-	protected:
-		bool abort;
+    public:
+        QNapiThread() : abort(false) {}
+        void requestAbort() { abort = true; }
+    protected:
+        bool abort;
 };
 
 #endif

@@ -33,14 +33,14 @@
 class SyncHTTP : public QObject
 {
     Q_OBJECT
-	public:
+    public:
         SyncHTTP();
 
         QNetworkReply* syncGet(const QNetworkRequest & req);
         QNetworkReply* syncPost(const QNetworkRequest & req, const QByteArray& data);
 
     private:
-		QEventLoop loop;
+        QEventLoop loop;
         QNetworkAccessManager manager;
 };
 

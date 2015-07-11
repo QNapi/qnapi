@@ -22,12 +22,12 @@
 #include <QByteArray>
 #include <QApplication>
 
-#include <windows.h>
+#include <qt_windows.h>
 
 /*!
-	\file qinterprocesschannel.h
-	
-	\brief Definition of the QInterProcessChannel class.
+    \file qinterprocesschannel.h
+    
+    \brief Definition of the QInterProcessChannel class.
 */
 
 // buffer size for input/output pipes
@@ -35,40 +35,40 @@ static const int bufferSize = 2048;
 
 class QCUMBER_EXPORT QInterProcessChannel : public QThread
 {
-	Q_OBJECT
-	
-	public:
-		QInterProcessChannel(QObject *p = 0);
-		virtual ~QInterProcessChannel();
-		
-		bool isServer() const;
-		
-		QString messageBuffer() const;
-		
-	public slots:
-		void close();
-		
-		void sendMessage();
-		void sendMessage(const QString& s);
-		void sendMessage(const QByteArray& b);
-		
-		void setMessageBuffer(const QString& s);
-		
-	signals:
-		void message(const QString& s);
-		void request(const QStringList& l);
-		
-	protected:
-		virtual void run();
-		
-	private slots:
-		void init();
-		
-	private:
-		QString uniqPrefix, pipeName, globalMutexStr, blockerMutexStr;
-		QString sMsg;
-		bool serverMode;
-		
+    Q_OBJECT
+    
+    public:
+        QInterProcessChannel(QObject *p = 0);
+        virtual ~QInterProcessChannel();
+        
+        bool isServer() const;
+        
+        QString messageBuffer() const;
+        
+    public slots:
+        void close();
+        
+        void sendMessage();
+        void sendMessage(const QString& s);
+        void sendMessage(const QByteArray& b);
+        
+        void setMessageBuffer(const QString& s);
+        
+    signals:
+        void message(const QString& s);
+        void request(const QStringList& l);
+        
+    protected:
+        virtual void run();
+        
+    private slots:
+        void init();
+        
+    private:
+        QString uniqPrefix, pipeName, globalMutexStr, blockerMutexStr;
+        QString sMsg;
+        bool serverMode;
+        
 };
 
 #endif // _QINTER_PROCESS_CHANNEL_H_

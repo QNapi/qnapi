@@ -29,28 +29,28 @@ class QNapiOpenDialog : public QFileDialog
 Q_OBJECT
 public:
 
-	enum FilterMode {
-		None, Movies, Subtitles
-	};
+    enum FilterMode {
+        None, Movies, Subtitles
+    };
 
-	QNapiOpenDialog( QWidget * parent = 0, const QString & caption = QString(),
-						const QString & init_path = QString(),
-						FilterMode filterMode = None );
+    QNapiOpenDialog( QWidget * parent = 0, const QString & caption = QString(),
+                        const QString & init_path = QString(),
+                        FilterMode filterMode = None );
 
-	bool selectFile();
-	bool selectFiles();
-	bool selectDirectory();
-	
+    bool selectFile();
+    bool selectFiles();
+    bool selectDirectory();
+    
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-	QStringList selectedFiles() const;
+    QStringList selectedFiles() const;
 #endif
 
 private:
 
-	bool placeWindow();
+    bool placeWindow();
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-	QStringList files;
+    QStringList files;
 #endif
 
 };

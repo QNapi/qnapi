@@ -24,8 +24,8 @@ namespace  xmlrpc {
 class Variant : public QVariant {
 public:
     Variant();
-	Variant( const Variant& );
-	Variant( const QDomElement& );
+    Variant( const Variant& );
+    Variant( const QDomElement& );
 
     /*! Next constructors should be used to build xmlrpc::Variant
         values from users data, to be passed to the xmlrpc::Client::request call*/
@@ -43,7 +43,7 @@ public:
     //! this variable is casted to string XML-RPC type
     Variant ( const QChar & c );
 
-	virtual ~Variant();
+    virtual ~Variant();
 
     //! serialize Variant data to the QDomDocument, according to XML-RPC specification.
     QDomElement toDomElement( QDomDocument& ) const;
@@ -66,7 +66,7 @@ private:
      * This allows to perform the compile time checks
      * for variables types, passed to xml=rpc request.
      */
-	Variant( const QVariant& );
+    Variant( const QVariant& );
 
     QString pprint( int column );
 }; 

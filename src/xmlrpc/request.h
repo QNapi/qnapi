@@ -34,7 +34,7 @@ public:
 
 private:
     class Private;
-	QSharedDataPointer<Private> d;
+    QSharedDataPointer<Private> d;
 };
 
 } // namespace xmlrpc

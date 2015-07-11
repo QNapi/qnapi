@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** 	Created using Edyuk IDE 0.8.0
+**  Created using Edyuk IDE 0.8.0
 **
 ** File : qcumber.h
 ** Date : Fri Feb 2 21:07:45 2007
@@ -14,29 +14,29 @@
 #define _QCUMBER_H_
 
 //#ifdef _QCUMBER_BUILD_
-	//#if (defined(QT_DLL) || defined(QT_SHARED)) && !defined(QT_PLUGIN)
-		//#define QCUMBER_EXPORT Q_DECL_EXPORT
-	//#else
-		#define QCUMBER_EXPORT
-	//#endif
+    //#if (defined(QT_DLL) || defined(QT_SHARED)) && !defined(QT_PLUGIN)
+        //#define QCUMBER_EXPORT Q_DECL_EXPORT
+    //#else
+        #define QCUMBER_EXPORT
+    //#endif
 //#else
-		//#define QCUMBER_EXPORT Q_DECL_IMPORT
+        //#define QCUMBER_EXPORT Q_DECL_IMPORT
 //#endif
 
 #include <QEvent>
 
 namespace QCumber
 {
-	enum Events
-	{
-		FirstEvent = QEvent::User + 100,
-		
-		SystemRequestEvent = FirstEvent,
-		CustomRequestEvent,
-		
-		LastEvent
-	};
-	
+    enum Events
+    {
+        FirstEvent = QEvent::User + 100,
+        
+        SystemRequestEvent = FirstEvent,
+        CustomRequestEvent,
+        
+        LastEvent
+    };
+    
 }
 
 #include <QtDebug>

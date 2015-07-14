@@ -154,6 +154,8 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
 
     f.close();
 
+    int bestMatch = 0;
+
     foreach(QString codec, codecs)
     {
         QTextStream ts(testData);
@@ -166,11 +168,15 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
         {
             if(!encodedData.contains(chars[i], Qt::CaseInsensitive))
                 break;
+
+            if(i + 1 > bestMatch) {
+                bestMatch = i + 1;
+                from = codec;
+            }
         }
 
         if(i == chars.count())
         {
-            from = codec;
             break;
         }
     }
@@ -289,6 +295,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 
     return true;
 }
+
 
 #ifndef Q_OS_WIN
 // Zmienia uprawnienia do pliku z napisami

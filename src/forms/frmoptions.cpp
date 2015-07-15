@@ -217,7 +217,7 @@ void frmOptions::pbEngineInfoClicked()
 void frmOptions::encodingMethodChanged(int method)
 {
     ChangeEncodingMethod cemMethod = (ChangeEncodingMethod) method;
-    bool enableEncodingSettings = cemMethod == ChangeEncodingMethod::CEM_CHANGE;
+    bool enableEncodingSettings = cemMethod == CEM_CHANGE;
     ui.cbEncFrom->setEnabled(enableEncodingSettings);
     ui.lbConvert->setEnabled(enableEncodingSettings);
     ui.lbConvertFrom->setEnabled(enableEncodingSettings);
@@ -229,7 +229,7 @@ void frmOptions::encodingMethodChanged(int method)
 
 void frmOptions::autoDetectEncodingClicked()
 {
-    bool checkedCE = (ChangeEncodingMethod) ui.cbEncodingMethod->currentIndex() == ChangeEncodingMethod::CEM_CHANGE;
+    bool checkedCE = (ChangeEncodingMethod) ui.cbEncodingMethod->currentIndex() == CEM_CHANGE;
     bool checkedADE = ui.cbAutoDetectEncoding->isChecked();
     ui.cbEncFrom->setEnabled(checkedCE && !checkedADE);
     ui.lbConvertFrom->setEnabled(checkedCE && !checkedADE);
@@ -400,7 +400,7 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setDownloadPolicy(DP_SHOW_LIST_IF_NEEDED);
 
     GlobalConfig().setPpEnabled(false);
-    GlobalConfig().setPpEncodingMethod(ChangeEncodingMethod::CEM_ORIGINAL);
+    GlobalConfig().setPpEncodingMethod(CEM_ORIGINAL);
     GlobalConfig().setPpAutoDetectEncoding(false);
     GlobalConfig().setPpEncodingFrom("windows-1250");
     GlobalConfig().setPpEncodingTo("UTF-8");

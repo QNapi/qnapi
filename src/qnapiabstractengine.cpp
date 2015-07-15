@@ -15,6 +15,7 @@
 #include "qnapiabstractengine.h"
 
 #include <QFlags>
+#include <QDebug>
 
 // ustawia sciezke do pliku filmowego
 void QNapiAbstractEngine::setMoviePath(const QString & path)
@@ -145,13 +146,6 @@ void QNapiAbstractEngine::pp()
 
 QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int testBufferSize)
 {
-    QString from;
-    QStringList codecs;
-
-    // Tylko takie kodowania obsługuja polskie litery
-    codecs << "windows-1250" << "windows-1257" << "ISO-8859-2"
-            << "ISO-8859-13" << "ISO-8859-16" << "UTF-8";
-
     QFile f(fileName);
     if(!f.open(QIODevice::ReadOnly))
         return "";
@@ -160,61 +154,7 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
 
     f.close();
 
-    int bestMatch = 0;
-
-    foreach(QString codec, codecs)
-    {
-        QTextStream ts(testData);
-        ts.setCodec(qPrintable(codec));
-        QString encodedData = ts.readAll();
-        QStringList chars = QString::fromUtf8("ą/ś/ż/ć/ń/ł/ó/ę").split("/");
-
-        int i;
-        for (i = 0; i < chars.count(); i++)
-        {
-            if(!encodedData.contains(chars[i], Qt::CaseInsensitive))
-                break;
-
-            if(i + 1 > bestMatch) {
-                bestMatch = i + 1;
-                from = codec;
-            }
-        }
-
-        if(i == chars.count())
-        {
-            break;
-        }
-    }
-
-    return from;
-}
-
-QString replaceDiacriticsWithASCII(QString s) {
-    static QString diacritics =
-        QString::fromUtf8("ąćęłśżźĄĆĘŁŚŻŹŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ");
-    static QStringList replacements;
-    if(replacements.isEmpty()) {
-        replacements <<"a"<<"c"<<"e"<<"l"<<"s"<<"z"<<"z"<<"A"<<"C"<<"E"<<"L"<<"S"<<"Z"<<"Z"<<"S"<<"OE"
-            <<"Z"<<"s"<<"oe"<<"z"<<"Y"<<"Y"<<"u"<<"A"<<"A"<<"A"<<"A"<<"A"<<"A"<<"AE"<<"C"<<"E"<<"E"<<"E"<<"E"
-            <<"I"<<"I"<<"I"<<"I"<<"D"<<"N"<<"O"<<"O"<<"O"<<"O"<<"O"<<"O"<<"U"<<"U"<<"U"<<"U"<<"Y"<<"s"<<"a"
-            <<"a"<<"a"<<"a"<<"a"<<"a"<<"ae"<<"c"<<"e"<<"e"<<"e"<<"e"<<"i"<<"i"<<"i"<<"i"<<"o"<<"n"<<"o"<<"o"
-            <<"o"<<"o"<<"o"<<"o"<<"u"<<"u"<<"u"<<"u"<<"y"<<"y";
-    }
-
-    QString output;
-    for (int i = 0; i < s.length(); i++) {
-        QChar c = s[i];
-        int dIndex = diacritics.indexOf(c);
-        if (dIndex < 0) {
-            output.append(c);
-        } else {
-            QString replacement = replacements[dIndex];
-            output.append(replacement);
-        }
-    }
-
-    return output;
+    return encodingUtils.detectBufferEncoding(testData);
 }
 
 
@@ -239,7 +179,7 @@ bool QNapiAbstractEngine::ppReplaceDiacriticsWithASCII()
     f.close();
 
     fileContent.clear();
-    fileContent.append(replaceDiacriticsWithASCII(contentStr));
+    fileContent.append(encodingUtils.replaceDiacriticsWithASCII(contentStr));
 
     if(!f.open(QIODevice::WriteOnly))
         return false;

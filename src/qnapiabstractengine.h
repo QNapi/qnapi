@@ -27,6 +27,7 @@
 
 #include "qnapiconfig.h"
 #include "qnapisubtitleinfo.h"
+#include "encodingutils.h"
 
 class QNapiAbstractEngine
 {
@@ -119,6 +120,9 @@ protected:
 
     // generuje nazwe dla pliku tymczasowego
     QString generateTmpFileName();
+
+private:
+    EncodingUtils encodingUtils;
 
 };
 

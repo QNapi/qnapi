@@ -393,7 +393,7 @@ void QNapiConfig::setEngines(QList<QPair<QString, bool> > engines)
 
 SearchPolicy QNapiConfig::searchPolicy()
 {
-    return (SearchPolicy)settings->value("qnapi/search_policy", 0).toInt();
+    return (SearchPolicy) settings->value("qnapi/search_policy", 0).toInt();
 }
 
 void QNapiConfig::setSearchPolicy(SearchPolicy policy)
@@ -403,7 +403,7 @@ void QNapiConfig::setSearchPolicy(SearchPolicy policy)
 
 DownloadPolicy QNapiConfig::downloadPolicy()
 {
-    return (DownloadPolicy)settings->value("qnapi/download_policy", 1).toInt();
+    return (DownloadPolicy) settings->value("qnapi/download_policy", 1).toInt();
 }
 
 void QNapiConfig::setDownloadPolicy(DownloadPolicy policy)
@@ -421,19 +421,30 @@ void QNapiConfig::setPpEnabled(bool enable)
     settings->setValue("qnapi/post_processing", enable);
 }
 
-bool QNapiConfig::ppChangeEncoding()
-{
-    return settings->value("qnapi/change_encoding", false).toBool();
+ChangeEncodingMethod QNapiConfig::ppEncodingMethod() {
+    if(settings->contains("qnapi/change_encoding")) {
+        bool encodingEnabled = settings->value("qnapi/change_encoding", false).toBool();
+        settings->remove("qnapi/change_encoding");
+
+        ChangeEncodingMethod method = encodingEnabled
+                ? ChangeEncodingMethod::CEM_CHANGE
+                : ChangeEncodingMethod::CEM_ORIGINAL;
+
+        setPpEncodingMethod(method);
+        return method;
+    }
+
+    return (ChangeEncodingMethod) settings->value("qnapi/encoding_method", 0).toInt();
 }
 
-void QNapiConfig::setPpChangeEncoding(bool change)
-{
-    settings->setValue("qnapi/change_encoding", change);
+
+void QNapiConfig::setPpEncodingMethod(ChangeEncodingMethod method) {
+    settings->setValue("qnapi/encoding_method", method);
 }
 
 bool QNapiConfig::ppAutoDetectEncoding()
 {
-    return settings->value("qnapi/auto_detect_encoding", false).toBool();
+    return settings->value("qnapi/auto_detect_encoding", true).toBool();
 }
 
 void QNapiConfig::setPpAutoDetectEncoding(bool change)

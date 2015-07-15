@@ -46,6 +46,13 @@ enum DownloadPolicy
     DP_NEVER_SHOW_LIST  = 2
 };
 
+enum ChangeEncodingMethod
+{
+    CEM_ORIGINAL = 0,
+    CEM_CHANGE = 1,
+    CEM_REPLACE_DIACRITICS = 2
+};
+
 class QNapiConfig
 {
     public:
@@ -91,9 +98,9 @@ class QNapiConfig
         bool ppEnabled();
         void setPpEnabled(bool enable);
 
-        bool ppChangeEncoding();
-        void setPpChangeEncoding(bool change);
-
+        ChangeEncodingMethod ppEncodingMethod();
+        void setPpEncodingMethod(ChangeEncodingMethod method);
+        
         bool ppAutoDetectEncoding();
         void setPpAutoDetectEncoding(bool change);
 

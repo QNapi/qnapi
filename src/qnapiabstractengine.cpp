@@ -16,7 +16,6 @@
 
 #include <QFlags>
 
-
 // ustawia sciezke do pliku filmowego
 void QNapiAbstractEngine::setMoviePath(const QString & path)
 {
@@ -106,16 +105,23 @@ void QNapiAbstractEngine::pp()
     }
 
     // Zmiana kodowania pobranych napisow
-    if(GlobalConfig().ppChangeEncoding())
-    {
-        // Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
-        // zrodlowego uzywa kodowania wybranego przez uzytkownika
-        if (!GlobalConfig().ppAutoDetectEncoding()
-            || !ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingTo()))
-        {
-            ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingFrom(),
-                                        GlobalConfig().ppEncodingTo());
-        }
+    switch (GlobalConfig().ppEncodingMethod()) {
+        case CEM_REPLACE_DIACRITICS:
+            ppReplaceDiacriticsWithASCII();
+        break;
+        case CEM_CHANGE:
+            // Jesli automatycznie nie uda mu sie wykryc kodowania, to jako kodowania
+            // zrodlowego uzywa kodowania wybranego przez uzytkownika
+            if (!GlobalConfig().ppAutoDetectEncoding()
+                || !ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingTo()))
+            {
+                ppChangeSubtitlesEncoding(GlobalConfig().ppEncodingFrom(),
+                                            GlobalConfig().ppEncodingTo());
+            }
+        break;
+        case CEM_ORIGINAL:
+            // Nie ruszaj pobranych napisów!
+        break;
     }
 
 #ifndef Q_OS_WIN
@@ -183,6 +189,67 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
 
     return from;
 }
+
+QString replaceDiacriticsWithASCII(QString s) {
+    static QString diacritics =
+        QString::fromUtf8("ąćęłśżźĄĆĘŁŚŻŹŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ");
+    static QStringList replacements;
+    if(replacements.isEmpty()) {
+        replacements <<"a"<<"c"<<"e"<<"l"<<"s"<<"z"<<"z"<<"A"<<"C"<<"E"<<"L"<<"S"<<"Z"<<"Z"<<"S"<<"OE"
+            <<"Z"<<"s"<<"oe"<<"z"<<"Y"<<"Y"<<"u"<<"A"<<"A"<<"A"<<"A"<<"A"<<"A"<<"AE"<<"C"<<"E"<<"E"<<"E"<<"E"
+            <<"I"<<"I"<<"I"<<"I"<<"D"<<"N"<<"O"<<"O"<<"O"<<"O"<<"O"<<"O"<<"U"<<"U"<<"U"<<"U"<<"Y"<<"s"<<"a"
+            <<"a"<<"a"<<"a"<<"a"<<"a"<<"ae"<<"c"<<"e"<<"e"<<"e"<<"e"<<"i"<<"i"<<"i"<<"i"<<"o"<<"n"<<"o"<<"o"
+            <<"o"<<"o"<<"o"<<"o"<<"u"<<"u"<<"u"<<"u"<<"y"<<"y";
+    }
+
+    QString output;
+    for (int i = 0; i < s.length(); i++) {
+        QChar c = s[i];
+        int dIndex = diacritics.indexOf(c);
+        if (dIndex < 0) {
+            output.append(c);
+        } else {
+            QString replacement = replacements[dIndex];
+            output.append(replacement);
+        }
+    }
+
+    return output;
+}
+
+
+// zamienia znaki diakrytyczne na ASCII
+bool QNapiAbstractEngine::ppReplaceDiacriticsWithASCII()
+{
+    if(!QFileInfo(subtitles).exists())
+        return false;
+
+    QString from = ppDetectEncoding(subtitles);
+
+    if(from.isEmpty())
+        return false;
+
+    QFile f(subtitles);
+    if(!f.open(QIODevice::ReadOnly))
+        return false;
+
+    QByteArray fileContent = f.readAll();
+
+    QString contentStr = QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
+    f.close();
+
+    fileContent.clear();
+    fileContent.append(replaceDiacriticsWithASCII(contentStr));
+
+    if(!f.open(QIODevice::WriteOnly))
+        return false;
+
+    f.write(fileContent);
+    f.close();
+
+    return true;
+}
+
 
 // Konwertuje napisy z jednego kodowania na inne
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const QString & to)
@@ -295,7 +362,6 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 
     return true;
 }
-
 
 #ifndef Q_OS_WIN
 // Zmienia uprawnienia do pliku z napisami

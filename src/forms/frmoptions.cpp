@@ -55,7 +55,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     connect(ui.pbEngineConf, SIGNAL(clicked()), this, SLOT(pbEngineConfClicked()));
     connect(ui.pbEngineInfo, SIGNAL(clicked()), this, SLOT(pbEngineInfoClicked()));
 
-    connect(ui.cbChangeEncoding, SIGNAL(clicked()), this, SLOT(changeEncodingClicked()));
+    connect(ui.cbEncodingMethod, SIGNAL(currentIndexChanged(int)), this, SLOT(encodingMethodChanged(int)));
     connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
     connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
 
@@ -208,27 +208,28 @@ void frmOptions::pbEngineInfoClicked()
     QString engineName = ui.twEngines->selectedItems().at(0)->text();
     QString engineInfo = n.engineByName(engineName)->engineInfo();
     
-    QMessageBox::information(   this,
-                                QString("Informacje o silniku %1").arg(engineName),
-                                engineInfo);
+    QMessageBox::information(this,
+                             QString("Informacje o silniku %1").arg(engineName),
+                             engineInfo);
 }
 
 
-void frmOptions::changeEncodingClicked()
+void frmOptions::encodingMethodChanged(int method)
 {
-    bool checked = ui.cbChangeEncoding->isChecked();
-    ui.cbEncFrom->setEnabled(checked);
-    ui.lbConvert->setEnabled(checked);
-    ui.lbConvertFrom->setEnabled(checked);
-    ui.cbEncTo->setEnabled(checked);
-    ui.cbAutoDetectEncoding->setEnabled(checked);
-    ui.cbShowAllEncodings->setEnabled(checked);
+    ChangeEncodingMethod cemMethod = (ChangeEncodingMethod) method;
+    bool enableEncodingSettings = cemMethod == ChangeEncodingMethod::CEM_CHANGE;
+    ui.cbEncFrom->setEnabled(enableEncodingSettings);
+    ui.lbConvert->setEnabled(enableEncodingSettings);
+    ui.lbConvertFrom->setEnabled(enableEncodingSettings);
+    ui.cbEncTo->setEnabled(enableEncodingSettings);
+    ui.cbAutoDetectEncoding->setEnabled(enableEncodingSettings);
+    ui.cbShowAllEncodings->setEnabled(enableEncodingSettings);
     autoDetectEncodingClicked();
 }
 
 void frmOptions::autoDetectEncodingClicked()
 {
-    bool checkedCE = ui.cbChangeEncoding->isChecked();
+    bool checkedCE = (ChangeEncodingMethod) ui.cbEncodingMethod->currentIndex() == ChangeEncodingMethod::CEM_CHANGE;
     bool checkedADE = ui.cbAutoDetectEncoding->isChecked();
     ui.cbEncFrom->setEnabled(checkedCE && !checkedADE);
     ui.lbConvertFrom->setEnabled(checkedCE && !checkedADE);
@@ -294,11 +295,11 @@ void frmOptions::writeConfig()
 
     GlobalConfig().setEngines(engines);
     
-    GlobalConfig().setSearchPolicy((SearchPolicy)ui.cbSearchPolicy->currentIndex());
-    GlobalConfig().setDownloadPolicy((DownloadPolicy)ui.cbDownloadPolicy->currentIndex());
+    GlobalConfig().setSearchPolicy((SearchPolicy) ui.cbSearchPolicy->currentIndex());
+    GlobalConfig().setDownloadPolicy((DownloadPolicy) ui.cbDownloadPolicy->currentIndex());
 
     GlobalConfig().setPpEnabled(ui.gbPpEnable->isChecked());
-    GlobalConfig().setPpChangeEncoding(ui.cbChangeEncoding->isChecked());
+    GlobalConfig().setPpEncodingMethod((ChangeEncodingMethod) ui.cbEncodingMethod->currentIndex());
     GlobalConfig().setPpAutoDetectEncoding(ui.cbAutoDetectEncoding->isChecked());
     GlobalConfig().setPpEncodingFrom(ui.cbEncFrom->currentText());
     GlobalConfig().setPpEncodingTo(ui.cbEncTo->currentText());
@@ -356,7 +357,7 @@ void frmOptions::readConfig()
     ui.cbSearchPolicy->setCurrentIndex(GlobalConfig().searchPolicy());
     ui.cbDownloadPolicy->setCurrentIndex(GlobalConfig().downloadPolicy());
 
-    ui.cbChangeEncoding->setChecked(GlobalConfig().ppChangeEncoding());
+    ui.cbEncodingMethod->setCurrentIndex(GlobalConfig().ppEncodingMethod());
     ui.cbAutoDetectEncoding->setChecked(GlobalConfig().ppAutoDetectEncoding());
     ui.cbEncFrom->setCurrentIndex(ui.cbEncFrom->findText(GlobalConfig().ppEncodingFrom()));
     ui.cbEncTo->setCurrentIndex(ui.cbEncTo->findText(GlobalConfig().ppEncodingTo()));
@@ -374,7 +375,7 @@ void frmOptions::readConfig()
     ui.sbGPerm->setValue((g <= 7) ? g : 4);
     ui.sbOPerm->setValue((u <= 7) ? u : 4);
 
-    changeEncodingClicked();
+    encodingMethodChanged((int) GlobalConfig().ppEncodingMethod());
     showAllEncodingsClicked();
 
     ui.gbPpEnable->setChecked(GlobalConfig().ppEnabled());
@@ -399,7 +400,7 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setDownloadPolicy(DP_SHOW_LIST_IF_NEEDED);
 
     GlobalConfig().setPpEnabled(false);
-    GlobalConfig().setPpChangeEncoding(false);
+    GlobalConfig().setPpEncodingMethod(ChangeEncodingMethod::CEM_ORIGINAL);
     GlobalConfig().setPpAutoDetectEncoding(false);
     GlobalConfig().setPpEncodingFrom("windows-1250");
     GlobalConfig().setPpEncodingTo("UTF-8");

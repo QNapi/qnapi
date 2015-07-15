@@ -52,12 +52,16 @@ public:
 
     // probuje wykrywac (polskie) kodowanie znakow w pliku tekstowym
     QString ppDetectEncoding(const QString & fileName, int testBufferSize = 10240);
+    // zamienia znaki diakrytyczne na ASCII
+    bool ppReplaceDiacriticsWithASCII();
     // zmienia kodowanie znakow w pobranych napisach
     bool ppChangeSubtitlesEncoding(const QString & from, const QString & to);
     // zmienia kodowanie znakow w napisach na podane, dokonujac autodetekcji kodowania zrodlowgo
     bool ppChangeSubtitlesEncoding(const QString & to);
     // usuwa linie z pliku zawierajace conajmniej jedno z podanej listy slow
     bool ppRemoveLinesContainingWords(QStringList wordList);
+    // usuwa polskie znaki diakrytyczne ze stringa
+    QString removePolishDiacritics(const QString & str);
 #ifndef Q_OS_WIN
     // zmienia uprawnienia do pliku z napisami
     bool ppChangeSubtitlesPermissions(QFile::Permissions permissions);

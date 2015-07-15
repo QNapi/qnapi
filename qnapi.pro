@@ -121,9 +121,6 @@ unix {
     target.path = $${INSTALL_PREFIX}/bin
     doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
     doc.files = doc/ChangeLog \
-        doc/changelog.gz \
-        doc/README \
-        doc/README-pl \
         doc/LICENSE \
         doc/LICENSE-pl \
         doc/COPYRIGHT \
@@ -177,8 +174,6 @@ win32 {
     p7zip.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \
-        doc/README \
-        doc/README-pl \
         doc/LICENSE \
         doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}

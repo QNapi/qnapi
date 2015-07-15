@@ -1,10 +1,11 @@
 QNapi ChangeLog:
 ================
 
-2009-03-12 v0.1.6:
- * usunieta automatyczna integracja z KDE
- * poprawiona integracja z GNOME
- * kosmetyczne poprawki
+2015-07-?? v0.1.7:
+ * silnik dla Napisy24
+ * migracja do Qt5
+ * zamiana znaków diakrytycznych na odpowiedniki ASCII
+ * poprawki interfejsu w trybach GUI i CLI
 
 2009-03-04 v0.1.6 (rc2):
  * poprawki znalezionych bledow

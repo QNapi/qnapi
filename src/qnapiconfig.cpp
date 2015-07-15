@@ -426,9 +426,7 @@ ChangeEncodingMethod QNapiConfig::ppEncodingMethod() {
         bool encodingEnabled = settings->value("qnapi/change_encoding", false).toBool();
         settings->remove("qnapi/change_encoding");
 
-        ChangeEncodingMethod method = encodingEnabled
-                ? ChangeEncodingMethod::CEM_CHANGE
-                : ChangeEncodingMethod::CEM_ORIGINAL;
+        ChangeEncodingMethod method = encodingEnabled ? CEM_CHANGE : CEM_ORIGINAL;
 
         setPpEncodingMethod(method);
         return method;

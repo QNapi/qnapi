@@ -168,12 +168,11 @@ win32 {
     icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
     icudlls.path = $${INSTALL_PREFIX}
 
-    deploywin.commands = windeployqt --no-plugins --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
+    deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
 
     platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms
     platform.depends = deploywin
-
 
     QMAKE_EXTRA_TARGETS += icudlls deploywin platform
 

@@ -163,15 +163,21 @@ win32 {
         doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}
 
+    icudlls.files += $$[QT_INSTALL_BINS]/icuin54.dll
+    icudlls.files += $$[QT_INSTALL_BINS]/icuuc54.dll
+    icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
+    icudlls.path = $${INSTALL_PREFIX}
+
     deploywin.commands = windeployqt --no-plugins --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
 
     platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms
     platform.depends = deploywin
 
-    QMAKE_EXTRA_TARGETS += deploywin platform
 
-    INSTALLS = target p7zip doc platform
+    QMAKE_EXTRA_TARGETS += icudlls deploywin platform
+
+    INSTALLS = target p7zip doc icudlls platform
 }
 
 !win32 { 

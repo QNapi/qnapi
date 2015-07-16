@@ -154,21 +154,6 @@ win32 {
     INSTALL_PREFIX = win32/out
 
     target.path = $${INSTALL_PREFIX}
-    dlls.files += $$[QT_INSTALL_BINS]/Qt5Core.dll
-    dlls.files += $$[QT_INSTALL_BINS]/Qt5Network.dll
-    dlls.files += $$[QT_INSTALL_BINS]/Qt5Gui.dll
-    dlls.files += $$[QT_INSTALL_BINS]/Qt5Widgets.dll
-    dlls.files += $$[QT_INSTALL_BINS]/Qt5Xml.dll
-    dlls.files += $$[QT_INSTALL_BINS]/icuin53.dll
-    dlls.files += $$[QT_INSTALL_BINS]/icuuc53.dll
-    dlls.files += $$[QT_INSTALL_BINS]/icudt53.dll
-    dlls.files += $$[QT_INSTALL_BINS]/libstd~1.dll
-    dlls.files += $$[QT_INSTALL_BINS]/libgcc~1.dll
-    dlls.files += $$[QT_INSTALL_BINS]/libwin~1.dll
-    dlls.path = $${INSTALL_PREFIX}
-
-    platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
-    platform.path = $${INSTALL_PREFIX}/platforms
 
     p7zip.files += win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
@@ -178,7 +163,15 @@ win32 {
         doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}
 
-    INSTALLS = target dlls platform p7zip doc
+    deploywin.commands = windeployqt --no-plugins --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
+
+    platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
+    platform.path = $${INSTALL_PREFIX}/platforms
+    platform.depends = deploywin
+
+    QMAKE_EXTRA_TARGETS += deploywin platform
+
+    INSTALLS = target p7zip doc platform
 }
 
 !win32 { 

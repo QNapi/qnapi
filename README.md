@@ -55,4 +55,32 @@ After you locate your binaries, you can run the application.
 > Linux users have to install 7zip binary package from distribution repositories or compile on its own.
 > For Windows and OSX there are pre-build binaries included in this repository, in `win32` and `macx` directories appropriately and should be automatically detected by the application.
 
+## Making redistributable package
 
+### OSX
+
+#### Prerequisites
+
+You need `appdmg` script installed. You can found it at https://github.com/LinusU/node-appdmg
+
+#### Building .dmg image
+
+To build .dmg image for OSX with nice, drag&drop installer, you have to execute:
+
+`$ make appdmg`
+
+`QNapi-x.y.z.dmg` will appear in `macx` directory when command is completed.
+
+### Windows
+
+#### Prerequisites
+
+You need to have **NSIS** 2.x installed. You can found it at http://nsis.sourceforge.net
+
+#### Building Windows installer
+
+Installer script is placed at `win32/QNapi-setup.nsi`. You can build binary exe package using NSIS user interface (by `right mouse button -> compile NSIS script`) or from command line:
+
+`$ C:\Path\To\makensis.exe QNapi-setup.nsi`
+
+After a while, `QNapi-x.y.z-setup.exe` file will appear in `win32` directory.

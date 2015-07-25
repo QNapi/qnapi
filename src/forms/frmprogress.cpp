@@ -169,7 +169,7 @@ void frmProgress::downloadFinished()
             QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
         }
         else if(queue.size() > 0
-                && !(getThread.gotList.isEmpty() && !getThread.failedList.isEmpty()))
+                && !(getThread.gotList.isEmpty() && getThread.failedList.isEmpty()))
         {
             summary.setSuccessList(getThread.gotList);
             summary.setFailedList(getThread.failedList);

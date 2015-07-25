@@ -1,11 +1,12 @@
 QNapi ChangeLog:
 ================
 
-2015-07-?? v0.1.7:
+2015-07-25 v0.1.7:
  * silnik dla Napisy24
  * migracja do Qt5
- * zamiana znaków diakrytycznych na odpowiedniki ASCII
+ * zamiana znakow diakrytycznych na odpowiedniki ASCII
  * poprawki interfejsu w trybach GUI i CLI
+ * poprawki wielu innych znalezionych bledow
 
 2009-03-04 v0.1.6 (rc2):
  * poprawki znalezionych bledow

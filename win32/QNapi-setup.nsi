@@ -1,9 +1,9 @@
 ; Define your application name
 !define APPNAME "QNapi"
-!define APPVER "0.1.7"
+!define APPVER "0.1.8-snapshot"
 !define APPNAMEANDVERSION "${APPNAME} ${APPVER}"
 
-!include "MUI.nsh"
+!include "MUI2.nsh"
 !include "nsProcess.nsh"
 
 ; Main Install settings

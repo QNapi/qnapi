@@ -1,6 +1,10 @@
 QNapi ChangeLog:
 ================
 
+2015-??-?? v0.1.8:
+ * poprawki błędów w silniku Napisy24 dla Windows
+ ?
+
 2015-07-25 v0.1.7:
  * silnik dla Napisy24
  * migracja do Qt5

@@ -3,6 +3,7 @@ QNapi ChangeLog:
 
 2015-??-?? v0.1.8:
  * poprawki błędów w silniku Napisy24 dla Windows
+ * poprawiona integracja z menu kontekstowym na Windows
  ?
 
 2015-07-25 v0.1.7:

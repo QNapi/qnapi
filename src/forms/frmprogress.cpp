@@ -50,13 +50,13 @@ void frmProgress::receiveRequest(const QString & request)
     activateWindow();
 }
 
-void frmProgress::enqueueFile(const QString & file)
+void frmProgress::enqueueFile(const QString & filePath)
 {
     static QMutex locker;
     locker.lock();
-    if(QFile::exists(file))
+    if(QFile::exists(filePath))
     {
-        getThread.queue << file;
+        getThread.queue << filePath;
         updateProgress(-1, getThread.queue.size(), -1);
     }
     locker.unlock();

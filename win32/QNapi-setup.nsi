@@ -51,52 +51,7 @@ SectionEnd
 
 Section -FinishSection
 
-    WriteRegStr HKLM "Software\${APPNAME}" "" "$INSTDIR"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
-    WriteUninstaller "$INSTDIR\uninstall.exe"
-
-    WriteRegStr HKCR ASFFile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR ASFFile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR AVIFile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR AVIFile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR divxfile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR divxfile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR mkvfile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR mkvfile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR mpegfile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR mpegfile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR mpgfile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR mpgfile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR RealPlayer.RA.6\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR RealPlayer.RA.6\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR RealPlayer.RAM.6\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR RealPlayer.RAM.6\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR RealPlayer.RM.6\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR RealPlayer.RM.6\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR RealPlayer.RMVB.6\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR RealPlayer.RMVB.6\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR rmvbfile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR rmvbfile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR WMP11.AssocFile.ASF\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR WMP11.AssocFile.ASF\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR WMP11.AssocFile.AVI\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR WMP11.AssocFile.AVI\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR WMP11.AssocFile.MPEG\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR WMP11.AssocFile.MPEG\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR WMP11.AssocFile.WMV\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR WMP11.AssocFile.WMV\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-    WriteRegStr HKCR WMVFile\shell\qnapi-pobierz "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
-    WriteRegStr HKCR WMVFile\shell\qnapi-pobierz\command "" '"$INSTDIR\qnapi.exe" "%1"'
-
-SectionEnd
-
-;Uninstall section
-Section Uninstall
-
-    ${nsProcess::KillProcess} "qnapi.exe" $R0
-    ${nsProcess::Unload}
-
+    ; clean up registry keys from qnapi <= 0.1.7
     DeleteRegKey HKCR ASFFile\shell\qnapi-pobierz
     DeleteRegKey HKCR AVIFile\shell\qnapi-pobierz
     DeleteRegKey HKCR divxfile\shell\qnapi-pobierz
@@ -113,6 +68,67 @@ Section Uninstall
     DeleteRegKey HKCR WMP11.AssocFile.MPEG\shell\qnapi-pobierz
     DeleteRegKey HKCR WMP11.AssocFile.WMV\shell\qnapi-pobierz
     DeleteRegKey HKCR WMVFile\shell\qnapi-pobierz
+
+
+    WriteRegStr HKLM "Software\${APPNAME}" "" "$INSTDIR"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$INSTDIR\uninstall.exe"
+    WriteUninstaller "$INSTDIR\uninstall.exe"
+
+
+    WriteRegStr HKCR SystemFileAssociations\.asf\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.asf\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.avi\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.avi\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.divx\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.divx\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.mkv\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.mkv\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.mov\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.mov\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.mp4\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.mp4\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.mpeg\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.mpeg\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.mpg\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.mpg\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.ogg\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.ogg\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.ogm\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.ogm\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.ogv\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.ogv\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.rm\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.rm\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.rmvb\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.rmvb\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+    WriteRegStr HKCR SystemFileAssociations\.wmv\shell\qnapi "" 'Pobierz i dopasuj napisy do filmu z QNapi...'
+    WriteRegStr HKCR SystemFileAssociations\.wmv\shell\qnapi\command "" '"$INSTDIR\qnapi.exe" "%1"'
+
+SectionEnd
+
+;Uninstall section
+Section Uninstall
+
+    ${nsProcess::KillProcess} "qnapi.exe" $R0
+    ${nsProcess::Unload}
+
+    DeleteRegKey HKCR SystemFileAssociations\.asf\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.avi\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.divx\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.mkv\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.mov\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.mp4\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.mpeg\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.mpg\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.ogg\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.ogm\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.ogv\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.rm\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.rmvb\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.wmv\shell\qnapi
+    DeleteRegKey HKCR SystemFileAssociations\.asf\shell\qnapi
+
 
     ;Remove from registry...
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"

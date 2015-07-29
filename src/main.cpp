@@ -58,8 +58,11 @@ int main(int argc, char **argv)
 
         if(!app.isInstanceAllowed())
         {
-            for(int i = 0; i < pathList.size(); i++)
-                app.sendRequest(pathList[i]);
+            for(int i = 0; i < pathList.size(); i++) {
+                QString & fileName = pathList[i];
+                QFileInfo fi(fileName);
+                app.sendRequest(fi.absoluteFilePath());
+            }
             return 0;
         }
         

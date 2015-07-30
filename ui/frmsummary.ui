@@ -1,66 +1,69 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmSummary</class>
- <widget class="QDialog" name="frmSummary" >
-  <property name="windowModality" >
+ <widget class="QDialog" name="frmSummary">
+  <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>610</width>
-    <height>290</height>
+    <width>419</width>
+    <height>333</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QNapi - rezultat dopasowania napisów</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
     <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" >
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="tabPosition" >
-      <enum>QTabWidget::North</enum>
+    <widget class="QLabel" name="lbSuccess">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>24</height>
+      </size>
      </property>
-     <property name="currentIndex" >
-      <number>0</number>
+     <property name="text">
+      <string>Pobrano napisy dla 5 plików</string>
      </property>
-     <widget class="QWidget" name="tabSuccess" >
-      <attribute name="title" >
-       <string>Pobrano napisy</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout" >
-       <item>
-        <widget class="QListWidget" name="lwSuccess" />
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabFail" >
-      <attribute name="title" >
-       <string>Nie pobrano napisów</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2" >
-       <item>
-        <widget class="QListWidget" name="lwFail" />
-       </item>
-      </layout>
-     </widget>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
+     </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
-     <property name="topMargin" >
+    <widget class="QLabel" name="lbFail">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Nie udało się znaleźć napisów dla 3 plików</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="lwSummary"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <property name="topMargin">
       <number>0</number>
      </property>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -69,24 +72,24 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pbOK" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+      <widget class="QPushButton" name="pbOK">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>OK</string>
        </property>
       </widget>
      </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -99,7 +102,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -108,11 +111,11 @@
    <receiver>frmSummary</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>348</x>
      <y>308</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>348</x>
      <y>164</y>
     </hint>

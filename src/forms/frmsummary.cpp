@@ -25,45 +25,30 @@ frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
         (QApplication::desktop()->height() - height()) / 2);
 }
 
-void frmSummary::setSuccessList(const QStringList & list)
+void frmSummary::setSummaryList(const QStringList & listSuccess, const QStringList & listFailures)
 {
-    if(list.isEmpty())
+    ui.lwSummary->clear();
+
+    ui.lbSuccess->setVisible(!listSuccess.isEmpty());
+    ui.lbFail->setVisible(!listFailures.isEmpty());
+
+    QIcon succIcon(":/ui/accept.png"), failIcon(":/ui/exclamation.png");
+
+    foreach(QString successItem, listSuccess)
     {
-        ui.tabWidget->removeTab(ui.tabWidget->indexOf(ui.tabSuccess));
-        return;
+        ui.lwSummary->addItem(new QListWidgetItem(succIcon, QFileInfo(successItem).fileName()));
     }
 
-    ui.lwSuccess->clear();
-    foreach(QString item, list)
+    foreach(QString failureItem, listFailures)
     {
-        ui.lwSuccess->addItem(new QListWidgetItem(QIcon(":/ui/accept.png"),
-                                                QFileInfo(item).fileName()));
-    }
-    ui.lwSuccess->sortItems();
-    ui.tabWidget->setTabText(ui.tabWidget->indexOf(ui.tabSuccess),
-                                tr("Pobrano napisy dla %1 %2")
-                                .arg(list.size())
-                                .arg(tr(list.size() > 1 ? "plików" : "pliku")));
-}
-
-void frmSummary::setFailedList(const QStringList & list)
-{
-    if(list.isEmpty())
-    {
-        ui.tabWidget->removeTab(ui.tabWidget->indexOf(ui.tabFail));
-        return;
+        ui.lwSummary->addItem(new QListWidgetItem(failIcon, QFileInfo(failureItem).fileName()));
     }
 
-    ui.lwFail->clear();
-    foreach(QString item, list)
-    {
-        ui.lwFail->addItem(new QListWidgetItem(QIcon(":/ui/exclamation.png"),
-                                                QFileInfo(item).fileName()));
-    }
-    ui.lwFail->sortItems();
+    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2")
+                          .arg(listSuccess.size())
+                          .arg(tr(listSuccess.size() > 1 ? "plików" : "pliku")));
 
-    ui.tabWidget->setTabText(ui.tabWidget->indexOf(ui.tabFail),
-                                tr("Nie pobrano napisów dla %1 %2")
-                                .arg(list.size())
-                                .arg(tr(list.size() > 1 ? "plików" : "pliku")));
+    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2")
+                       .arg(listFailures.size())
+                       .arg(tr(listFailures.size() > 1 ? "plików" : "pliku")));
 }

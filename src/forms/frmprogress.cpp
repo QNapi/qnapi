@@ -171,8 +171,7 @@ void frmProgress::downloadFinished()
         else if(queue.size() > 0
                 && !(getThread.gotList.isEmpty() && getThread.failedList.isEmpty()))
         {
-            summary.setSuccessList(getThread.gotList);
-            summary.setFailedList(getThread.failedList);
+            summary.setSummaryList(getThread.gotList, getThread.failedList);
             summary.exec();
         }
     }

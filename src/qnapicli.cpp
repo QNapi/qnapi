@@ -16,14 +16,17 @@
 
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
-#ifdef Q_OS_WIN
-    Q_UNUSED(argc)
-    Q_UNUSED(argv)
-    return false;
-#else
-    
     QString p;
 
+#ifdef Q_OS_WIN
+    for(int i = 1; i < argc; i++)
+    {
+        p = argv[i];
+        if((p == "--quiet") || (p == "-q"))
+            return true;
+    }
+    return false;
+#else
     for(int i = 1; i < argc; i++)
     {
         p = argv[i];

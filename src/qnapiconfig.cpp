@@ -16,7 +16,7 @@
 
 QNapiConfig::QNapiConfig()
 {
-    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "qnapi");
+    reload();
 }
 
 QNapiConfig::~QNapiConfig()
@@ -27,7 +27,17 @@ QNapiConfig::~QNapiConfig()
 void QNapiConfig::reload()
 {
     if(settings) delete settings;
-    settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "qnapi");
+
+    QString localQNapiIniPath = QCoreApplication::applicationDirPath() + QDir::separator() + "qnapi.ini";
+
+    if(QFileInfo(localQNapiIniPath).exists())
+    {
+        settings = new QSettings(localQNapiIniPath, QSettings::IniFormat);
+    }
+    else
+    {
+        settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "qnapi");
+    }
 }
 
 void QNapiConfig::save()

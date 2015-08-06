@@ -29,8 +29,9 @@ void QNapiConfig::reload()
     if(settings) delete settings;
 
     QString localQNapiIniPath = QCoreApplication::applicationDirPath() + QDir::separator() + "qnapi.ini";
+    isPortableMode = QFileInfo(localQNapiIniPath).exists();
 
-    if(QFileInfo(localQNapiIniPath).exists())
+    if(isPortableMode)
     {
         settings = new QSettings(localQNapiIniPath, QSettings::IniFormat);
     }
@@ -110,7 +111,13 @@ void QNapiConfig::setP7zipPath(const QString & path)
 
 QString QNapiConfig::tmpPath()
 {
-    return settings->value("qnapi/tmp_path", QDir::tempPath()).toString();
+    QString tmpPath = settings->value("qnapi/tmp_path", QDir::tempPath()).toString();
+    if(!QFileInfo(tmpPath).exists() || !QFileInfo(tmpPath).isWritable()) {
+        if(isPortableMode) {
+            tmpPath = QDir::tempPath();
+        }
+    }
+    return tmpPath;
 }
 
 void QNapiConfig::setTmpPath(const QString & path)

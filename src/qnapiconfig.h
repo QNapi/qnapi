@@ -146,6 +146,7 @@ class QNapiConfig
         ~QNapiConfig();
 
         QSettings *settings;
+        bool isPortableMode;
 
     friend QNapiConfig& GlobalConfig();
 };

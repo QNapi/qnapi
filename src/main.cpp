@@ -82,14 +82,14 @@ int main(int argc, char **argv)
         {
             app.progress()->setBatchMode(true);
 
-            QString batchLang, p;
-            bool invalidLang = false;
+            QString batchLang, batchLangBackup, p;
+            bool invalidLang = false, batchLangBackupPassed = false;
 
             for(int i = 1; i < argc; i++)
             {
                 p = argv[i];
 
-                if((p == "-l") || (p == "--language"))
+                if((p == "-l") || (p == "--lang"))
                 {
                     ++i;
                     if(i < argc)
@@ -98,6 +98,16 @@ int main(int argc, char **argv)
                         if(batchLang.isEmpty())
                             invalidLang = true;
                     } else invalidLang = true;
+
+                }
+                else if((p == "-lb") || (p == "--lang-backup"))
+                {
+                    ++i;
+                    if(i < argc)
+                    {
+                        batchLangBackup = QNapiLanguage(argv[i]).toTwoLetter();
+                        batchLangBackupPassed = true;
+                    }
                     break;
                 }
             }
@@ -113,7 +123,7 @@ int main(int argc, char **argv)
                 }
             }
 
-            app.progress()->setBatchLanguage(batchLang);
+            app.progress()->setBatchLanguages(batchLang, batchLangBackup, batchLangBackupPassed);
 
             if(QFileInfo(pathList.at(0)).isDir())
             {

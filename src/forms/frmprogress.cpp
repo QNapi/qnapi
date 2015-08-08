@@ -272,6 +272,7 @@ void GetThread::run()
     emit progressChange(0, queue.size(), 0.0f);
 
     QString language = !lang.isEmpty() ? lang : GlobalConfig().language();
+    QString languageBackup = langBackupPassed ? langBackup : GlobalConfig().languageBackup();
 
     for(int i = 0; i < queue.size(); i++)
     {
@@ -305,13 +306,27 @@ void GetThread::run()
         foreach(QString e, napi->listLoadedEngines())
         {
             emit progressChange(i, queue.size(), 0.4f);
-            emit actionChange(tr("Szukanie napisów (%1)...").arg(e));
+            emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
             found = napi->lookForSubtitles(language, e) || found;
 
             if(sp == SP_BREAK_IF_FOUND)
                 break;
 
             ABORT_POINT
+        }
+
+        if(!found && !languageBackup.isEmpty()) {
+            foreach(QString e, napi->listLoadedEngines())
+            {
+                emit progressChange(i, queue.size(), 0.45f);
+                emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
+                found = napi->lookForSubtitles(languageBackup, e) || found;
+
+                if(sp == SP_BREAK_IF_FOUND)
+                    break;
+
+                ABORT_POINT
+            }
         }
 
         if(!found)

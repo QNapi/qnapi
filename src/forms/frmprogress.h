@@ -60,12 +60,15 @@ Q_OBJECT
 
     public:
 
-        void setEngines(QStringList enginesList) {engines = enginesList;}
-        void setLanguage(QString language){ lang = language; }
+        void setEngines(QStringList enginesList) { engines = enginesList; }
+        void setLanguages(QString language, QString languageBackup, bool languageBackupPassed){
+            lang = language; langBackup = languageBackup; langBackupPassed = languageBackupPassed;
+        }
         void run();
 
         QStringList queue, gotList, failedList, engines;
-        QString lang;
+        QString lang, langBackup;
+        bool langBackupPassed;
         int napiSuccess, napiFail;
         QString criticalMessage;
         QMutex waitForDlg;
@@ -97,7 +100,9 @@ class frmProgress: public QWidget
         void downloadFinished();
 
         void setBatchMode(bool value) { batchMode = value; }
-        void setBatchLanguage(QString lang) { getThread.setLanguage(lang); }
+        void setBatchLanguages(QString lang, QString langBackup, bool langBackupPassed) {
+            getThread.setLanguages(lang, langBackup, langBackupPassed);
+        }
         bool isBatchMode() { return batchMode; }
 
     private:

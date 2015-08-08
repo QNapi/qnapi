@@ -181,7 +181,7 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
         subtitlesList << QNapiSubtitleInfo( responseMap["ISO639"].toString(),
                                             engineName(),
                                             responseMap["IDSubtitleFile"].toString(),
-                                            subtitleName,
+                                            subtitleName.trimmed(),
                                             responseMap["SubAuthorComment"].toString(),
                                             QFileInfo(responseMap["SubFileName"].toString()).suffix(),
                                             r);

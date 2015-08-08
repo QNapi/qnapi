@@ -69,6 +69,7 @@ private:
 
     QString lang;
     QString langBackup;
+    bool langBackupPassed;
 
     bool analyze();
     void printHeader();

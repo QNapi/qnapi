@@ -121,6 +121,7 @@ bool QNapiCli::analyze()
             p = args[i];
 
             langBackup = QNapiLanguage(p).toTwoLetter();
+            langBackupPassed = true;
         }
         else if((p == "--show-list") || (p == "-s"))
         {
@@ -195,7 +196,7 @@ int QNapiCli::exec()
     if(lang.isEmpty())
         lang = GlobalConfig().language();
 
-    if(langBackup.isEmpty())
+    if(!langBackupPassed)
         langBackup = GlobalConfig().languageBackup();
 
     foreach(QString movie, movieList)

@@ -121,11 +121,6 @@ bool QNapiCli::analyze()
             p = args[i];
 
             langBackup = QNapiLanguage(p).toTwoLetter();
-            if(langBackup.isEmpty())
-            {
-                printCli(QString("Niepoprawny kod jezykowy: %1").arg(p));
-                return false;
-            }
         }
         else if((p == "--show-list") || (p == "-s"))
         {

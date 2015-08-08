@@ -280,6 +280,7 @@ void frmOptions::writeConfig()
     GlobalConfig().setP7zipPath(ui.le7zPath->text());
     GlobalConfig().setTmpPath(ui.leTmpPath->text());
     GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
+    GlobalConfig().setLanguageBackup(ui.cbLangBackup->itemData(ui.cbLangBackup->currentIndex()).toString());
     GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
 
 #ifdef Q_OS_MAC
@@ -323,6 +324,7 @@ void frmOptions::readConfig()
     ui.le7zPath->setText(GlobalConfig().p7zipPath());
     ui.leTmpPath->setText(GlobalConfig().tmpPath());
     ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
+    ui.cbLangBackup->setCurrentIndex(ui.cbLangBackup->findData(QNapiLanguage(GlobalConfig().languageBackup()).toTwoLetter()));
 
     ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
 
@@ -386,6 +388,7 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setP7zipPath("");
     GlobalConfig().setTmpPath(QDir::tempPath());
     GlobalConfig().setLanguage("pl");
+    GlobalConfig().setLanguageBackup("en");
     GlobalConfig().setNoBackup(false);
 
 #ifdef Q_OS_MAC

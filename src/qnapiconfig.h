@@ -77,6 +77,9 @@ class QNapiConfig
         QString language();
         void setLanguage(const QString & language);
 
+        QString languageBackup();
+        void setLanguageBackup(const QString & language);
+
         bool noBackup();
         void setNoBackup(bool noBackup);
 

@@ -182,6 +182,16 @@ void QNapiConfig::setLanguage(const QString & language)
     settings->setValue("qnapi/language", language);
 }
 
+QString QNapiConfig::languageBackup()
+{
+    return settings->value("qnapi/language_backup", "en").toString();
+}
+
+void QNapiConfig::setLanguageBackup(const QString & language)
+{
+    settings->setValue("qnapi/language_backup", language);
+}
+
 bool QNapiConfig::noBackup()
 {
     return settings->value("qnapi/no_backup", false).toBool();

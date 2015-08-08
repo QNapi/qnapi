@@ -68,6 +68,7 @@ private:
     ShowListPolicy showPolicy;
 
     QString lang;
+    QString langBackup;
 
     bool analyze();
     void printHeader();

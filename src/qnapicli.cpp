@@ -112,6 +112,21 @@ bool QNapiCli::analyze()
                 return false;
             }
         }
+        else if((p == "--lang-backup") || (p == "-lb"))
+        {
+            ++i;
+            if(i >= args.size())
+                return false;
+
+            p = args[i];
+
+            langBackup = QNapiLanguage(p).toTwoLetter();
+            if(langBackup.isEmpty())
+            {
+                printCli(QString("Niepoprawny kod jezykowy: %1").arg(p));
+                return false;
+            }
+        }
         else if((p == "--show-list") || (p == "-s"))
         {
             if(mode != CM_QUIET)
@@ -185,6 +200,9 @@ int QNapiCli::exec()
     if(lang.isEmpty())
         lang = GlobalConfig().language();
 
+    if(langBackup.isEmpty())
+        langBackup = GlobalConfig().languageBackup();
+
     foreach(QString movie, movieList)
     {
         printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
@@ -205,11 +223,22 @@ int QNapiCli::exec()
 
         foreach(QString e, napi.listLoadedEngines())
         {
-            printCli(QString(QString("   Szukanie napisow (%1)...").arg(e)));
+            printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
             found = napi.lookForSubtitles(lang, e) || found;
 
             if(sp == SP_BREAK_IF_FOUND)
                 break;
+        }
+
+        if(!found && !langBackup.isEmpty()) {
+            foreach(QString e, napi.listLoadedEngines())
+            {
+                printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
+                found = napi.lookForSubtitles(langBackup, e) || found;
+
+                if(sp == SP_BREAK_IF_FOUND)
+                    break;
+            }
         }
 
         if(!found)
@@ -338,7 +367,8 @@ void QNapiCli::printHelp()
     printCli(QString("                            ani nie pokazujac zadnych okien (implikuje -d)\n"));
     printCli(QString("    -s,  --show-list        pokazuj liste napisow (dziala tylko z -c)"));
     printCli(QString("    -d,  --dont-show-list   nie pokazuj listy napisow (dziala tylko z -c)\n"));
-    printCli(QString("    -l,  --lang [jezyk]     pobieraj napisy w zadanym jezyku\n"));
+    printCli(QString("    -l,  --lang [jezyk]     preferowany jezyk napisow\n"));
+    printCli(QString("    -lb, --lang-backup      zapasowy jezyk napisow\n"));
     printCli(QString("    -o,  --options          wywoluje okno konfiguracji programu (tylko GUI)\n"));
     printCli(QString("    -h,  --help             pokazuje tekst pomocy"));
     printCli(QString("    -hl, --help-languages   listuje jezyki, w jakich mozna pobierac napisy\n"));

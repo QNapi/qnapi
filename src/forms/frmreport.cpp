@@ -32,9 +32,9 @@ frmReport::frmReport(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     ui.cbProblem->setCurrentIndex(4);
     cbProblemChanged();
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmReport::closeEvent(QCloseEvent *event)

@@ -20,9 +20,9 @@ frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 
     setAttribute(Qt::WA_QuitOnClose, false);
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmSummary::setSummaryList(const QStringList & listSuccess, const QStringList & listFailures)

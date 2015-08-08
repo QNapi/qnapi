@@ -26,6 +26,10 @@ frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags 
     load();
 
     connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmOpenSubtitlesConfig::accept()

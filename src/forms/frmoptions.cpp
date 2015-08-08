@@ -63,9 +63,9 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 
     showAllEncodings();
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2,
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 frmOptions::~frmOptions()

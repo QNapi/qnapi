@@ -47,9 +47,9 @@ frmScan::frmScan(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
 
     iconFilm = QIcon(":/ui/film.png");
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 frmScan::~frmScan()

@@ -35,9 +35,9 @@ frmUpload::frmUpload(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     if(QFileInfo(GlobalConfig().previousDialogPath()).isDir())
         ui.leSelectDirectory->setText(GlobalConfig().previousDialogPath());
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmUpload::closeEvent(QCloseEvent *event)

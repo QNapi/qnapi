@@ -29,9 +29,9 @@ frmCorrect::frmCorrect(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     connect(&postThread, SIGNAL(postFinished(bool)), this, SLOT(postFinished(bool)));
     connect(&postThread, SIGNAL(invalidUserPass()), this, SLOT(invalidUserPass()));
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmCorrect::closeEvent(QCloseEvent *event)

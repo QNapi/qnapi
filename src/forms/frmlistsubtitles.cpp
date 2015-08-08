@@ -20,9 +20,9 @@ frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
 {
     ui.setupUi(this);
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2,
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmListSubtitles::setFileName(const QString & name)

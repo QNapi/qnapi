@@ -39,6 +39,10 @@ frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
             &getThread, SLOT(subtitlesSelected(int)));
     connect(&getThread, SIGNAL(finished()),
             this, SLOT(downloadFinished()));
+
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }
 
 void frmProgress::receiveRequest(const QString & request)
@@ -99,8 +103,9 @@ bool frmProgress::download()
 
     if(!isVisible())
     {
-        move((QApplication::desktop()->width() - width()) / 2, 
-            (QApplication::desktop()->height() - height()) / 2);
+        QRect position = frameGeometry();
+        position.moveCenter(QDesktopWidget().availableGeometry().center());
+        move(position.topLeft());
         show();
     }
 

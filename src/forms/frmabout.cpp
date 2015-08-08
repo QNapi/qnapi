@@ -21,7 +21,7 @@ frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     setAttribute(Qt::WA_QuitOnClose, false);
     ui.lbTitle->setText(QString("QNapi ") + QNAPI_DISPLAYABLE_VERSION);
 
-    // workaround dla compiza?
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 }

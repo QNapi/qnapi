@@ -1,10 +1,13 @@
 QNapi ChangeLog:
 ================
 
-2015-??-?? v0.1.8:
- * poprawki błędów w silniku Napisy24 dla Windows
+2015-08-08 v0.1.8:
+ * mozliwosc wskazania zapasowego jezyka pobierania napisow
+ * poprawki bledow w silniku Napisy24 dla Windows
  * poprawiona integracja z menu kontekstowym na Windows
- ?
+ * wersja przenosna nie wymagajaca instalacji (archiwum zip dla Windows)
+ * tryb cichy (-q) dostepny takze pod Windows
+ * poprawiony blad z rozmieszczeniem okien przy wielu ekranach
 
 2015-07-25 v0.1.7:
  * silnik dla Napisy24

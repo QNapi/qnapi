@@ -358,16 +358,16 @@ void QNapiCli::printHelp()
     printCli(QString("QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.\n"));
     printCli(QString("Skladnia: %1 [opcje] [lista plikow]").arg(QFileInfo(arguments().at(0)).fileName()));
     printCli(QString("Dostepne opcje:"));
-    printCli(QString("    -c,  --console          pobieranie napisow z konsoli"));
-    printCli(QString("    -q,  --quiet            pobiera napisy nie wypisujac zadnych komunikatow"));
-    printCli(QString("                            ani nie pokazujac zadnych okien (implikuje -d)\n"));
-    printCli(QString("    -s,  --show-list        pokazuj liste napisow (dziala tylko z -c)"));
-    printCli(QString("    -d,  --dont-show-list   nie pokazuj listy napisow (dziala tylko z -c)\n"));
-    printCli(QString("    -l,  --lang [jezyk]     preferowany jezyk napisow\n"));
-    printCli(QString("    -lb, --lang-backup      zapasowy jezyk napisow\n"));
-    printCli(QString("    -o,  --options          wywoluje okno konfiguracji programu (tylko GUI)\n"));
-    printCli(QString("    -h,  --help             pokazuje tekst pomocy"));
-    printCli(QString("    -hl, --help-languages   listuje jezyki, w jakich mozna pobierac napisy\n"));
+    printCli(QString("   -c, --console              pobieranie napisow z konsoli"));
+    printCli(QString("   -q, --quiet                pobiera napisy nie wypisujac zadnych komunikatow"));
+    printCli(QString("                              ani nie pokazujac zadnych okien (implikuje -d)\n"));
+    printCli(QString("   -s, --show-list            pokazuj liste napisow (dziala tylko z -c)"));
+    printCli(QString("   -d, --dont-show-list       nie pokazuj listy napisow (dziala tylko z -c)\n"));
+    printCli(QString("   -l, --lang [jezyk]         preferowany jezyk napisow"));
+    printCli(QString("   -lb,--lang-backup [jezyk]  zapasowy jezyk napisow\n"));
+    printCli(QString("   -o, --options              wywoluje okno konfiguracji programu (tylko GUI)\n"));
+    printCli(QString("   -h, --help                 pokazuje tekst pomocy"));
+    printCli(QString("   -hl,--help-languages       listuje jezyki, w jakich mozna pobierac napisy\n"));
 }
 
 void QNapiCli::printHelpLanguages()
@@ -375,7 +375,7 @@ void QNapiCli::printHelpLanguages()
     printCli(QString("Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym"));
     printCli(QString("im dwuliterowych kodow:\n"));
 
-    QNapiLanguage L;
+    QNapiLanguage L, LB;
     QStringList langs = L.listLanguages();
 
     foreach(QString lang, langs)
@@ -385,10 +385,17 @@ void QNapiCli::printHelpLanguages()
     }
 
     L.setLanguage(GlobalConfig().language());
+    LB.setLanguage(GlobalConfig().languageBackup());
 
-    printCli(QString("\nAktualnie ustawiony, domyslny jezyk napisow: %1 (%2)")
+    printCli(QString("\nAktualnie ustawiony domyslny jezyk napisow: %1 (%2)")
                 .arg(L.toFullName()).arg(L.toTwoLetter()));
 
+    if(LB.toFullName().isEmpty()) {
+        printCli(QString("Brak ustawionego zapasowego jezyka napisow"));
+    } else {
+        printCli(QString("Aktualnie ustawiony zapasowy jezyk napisow: %1 (%2)")
+                    .arg(LB.toFullName()).arg(LB.toTwoLetter()));
+    }
 }
 
 void QNapiCli::printCli(const QString & string)

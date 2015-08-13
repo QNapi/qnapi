@@ -26,7 +26,7 @@
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
-#include "qnapiprojektengine.h"
+#include "engines/qnapiprojektengine.h"
 #include "qnapiopendialog.h"
 
 class ScanThread : public QNapiThread
@@ -71,12 +71,12 @@ class UploadThread : public QNapiThread
         QStringList movieList;
 };
 
-class frmUpload: public QDialog
+class frmNapiProjektUpload: public QDialog
 {
     Q_OBJECT
     public:
-        frmUpload(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmUpload() {};
+        frmNapiProjektUpload(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmNapiProjektUpload() {};
 
     private:
         void closeEvent(QCloseEvent *event);

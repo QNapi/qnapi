@@ -29,9 +29,9 @@
 #include "forms/frmprogress.h"
 #include "forms/frmabout.h"
 #include "forms/frmoptions.h"
-#include "forms/frmupload.h"
-#include "forms/frmcorrect.h"
-#include "forms/frmreport.h"
+#include "forms/frmnapiprojektupload.h"
+#include "forms/frmnapiprojektcorrect.h"
+#include "forms/frmnapiprojektreport.h"
 #include "forms/frmscan.h"
 #include "forms/frmsummary.h"
 
@@ -94,9 +94,9 @@ class QNapiApp : public QSingleApplication
         frmOptions *f_options;
         frmAbout *f_about;
         frmScan *f_scan;
-        frmUpload *f_upload;
-        frmCorrect *f_correct;
-        frmReport *f_report;
+        frmNapiProjektUpload *f_napiProjektUpload;
+        frmNapiProjektCorrect *f_napiProjektCorrect;
+        frmNapiProjektReport *f_napiProjektReport;
 
     private slots:
 

@@ -12,9 +12,9 @@
 **
 *****************************************************************************/
 
-#include "frmreport.h"
+#include "frmnapiprojektreport.h"
 
-frmReport::frmReport(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
+frmNapiProjektReport::frmNapiProjektReport(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
     ui.setupUi(this);
 
@@ -37,7 +37,7 @@ frmReport::frmReport(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmReport::closeEvent(QCloseEvent *event)
+void frmNapiProjektReport::closeEvent(QCloseEvent *event)
 {
     if(reportThread.isRunning())
     {
@@ -52,7 +52,7 @@ void frmReport::closeEvent(QCloseEvent *event)
         event->accept();
 }
 
-void frmReport::selectMovie()
+void frmNapiProjektReport::selectMovie()
 {
     QString fileName;
     QNapiOpenDialog openDialog(this, tr("Wskaż plik z filmem"),
@@ -68,7 +68,7 @@ void frmReport::selectMovie()
         ui.leMovieSelect->setText(fileName);
 }
 
-void frmReport::checkReportEnable()
+void frmNapiProjektReport::checkReportEnable()
 {
     ui.pbReport->setEnabled(
             QFile::exists(ui.leMovieSelect->text()) &&
@@ -81,13 +81,13 @@ void frmReport::checkReportEnable()
                             : tr("Wskaż plik z filmem oraz opisz problem."));
 }
 
-void frmReport::cbProblemChanged()
+void frmNapiProjektReport::cbProblemChanged()
 {
     ui.leProblem->setEnabled(ui.cbProblem->currentIndex() == 4);
     checkReportEnable();
 }
 
-void frmReport::pbReportClicked()
+void frmNapiProjektReport::pbReportClicked()
 {
     if(!reportThread.isRunning())
     {
@@ -125,7 +125,7 @@ void frmReport::pbReportClicked()
     }
 }
 
-void frmReport::reportFinished(bool interrupted)
+void frmNapiProjektReport::reportFinished(bool interrupted)
 {
     ui.leMovieSelect->setEnabled(true);
     ui.pbMovieSelect->setEnabled(true);
@@ -156,7 +156,7 @@ void frmReport::reportFinished(bool interrupted)
     }
 }
 
-void frmReport::serverMessage(QString msg)
+void frmNapiProjektReport::serverMessage(QString msg)
 {
     if(msg.indexOf("NPc0") == 0)
         msg = tr("Zgłoszono raport do serwera.");
@@ -166,7 +166,7 @@ void frmReport::serverMessage(QString msg)
     QMessageBox::information(this, tr("Raport wysłany"), msg);
 }
 
-void frmReport::invalidUserPass()
+void frmNapiProjektReport::invalidUserPass()
 {
     QMessageBox::information(this, tr("Błąd!"), QString(tr("Nazwa użytkownika lub hasło jest niepoprawne.")));
 }

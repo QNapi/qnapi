@@ -23,9 +23,9 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
     f_options = 0;
     f_about = 0;
     f_scan = 0;
-    f_upload = 0;
-    f_correct = 0;
-    f_report = 0;
+    f_napiProjektUpload = 0;
+    f_napiProjektCorrect = 0;
+    f_napiProjektReport = 0;
 
     getAction = 0;
     scanAction = 0;
@@ -54,9 +54,9 @@ QNapiApp::~QNapiApp()
     if(f_options) delete f_options;
     if(f_about) delete f_about;
     if(f_scan) delete f_scan;
-    if(f_upload) delete f_upload;
-    if(f_correct) delete f_correct;
-    if(f_report) delete f_report;
+    if(f_napiProjektUpload) delete f_napiProjektUpload;
+    if(f_napiProjektCorrect) delete f_napiProjektCorrect;
+    if(f_napiProjektReport) delete f_napiProjektReport;
 
     if(getAction) delete getAction;
     if(scanAction) delete scanAction;
@@ -280,41 +280,41 @@ void QNapiApp::showNPGetDialog()
 
 void QNapiApp::showNPUploadDialog()
 {
-    if(!f_upload) f_upload = new frmUpload();
-    if(f_upload->isVisible())
+    if(!f_napiProjektUpload) f_napiProjektUpload = new frmNapiProjektUpload();
+    if(f_napiProjektUpload->isVisible())
     {
-        f_upload->raise();
+        f_napiProjektUpload->raise();
         return;
     }
-    f_upload->exec();
-    delete f_upload;
-    f_upload = 0;
+    f_napiProjektUpload->exec();
+    delete f_napiProjektUpload;
+    f_napiProjektUpload = 0;
 }
 
 void QNapiApp::showNPCorrectDialog()
 {
-    if(!f_correct) f_correct = new frmCorrect();
-    if(f_correct->isVisible())
+    if(!f_napiProjektCorrect) f_napiProjektCorrect = new frmNapiProjektCorrect();
+    if(f_napiProjektCorrect->isVisible())
     {
-        f_correct->raise();
+        f_napiProjektCorrect->raise();
         return;
     }
-    f_correct->exec();
-    delete f_correct;
-    f_correct = 0;
+    f_napiProjektCorrect->exec();
+    delete f_napiProjektCorrect;
+    f_napiProjektCorrect = 0;
 }
 
 void QNapiApp::showNPReportDialog()
 {
-    if(!f_report) f_report = new frmReport();
-    if(f_report->isVisible())
+    if(!f_napiProjektReport) f_napiProjektReport = new frmNapiProjektReport();
+    if(f_napiProjektReport->isVisible())
     {
-        f_report->raise();
+        f_napiProjektReport->raise();
         return;
     }
-    f_report->exec();
-    delete f_report;
-    f_report = 0;
+    f_napiProjektReport->exec();
+    delete f_napiProjektReport;
+    f_napiProjektReport = 0;
 }
 
 void QNapiApp::showNPCreateUser()

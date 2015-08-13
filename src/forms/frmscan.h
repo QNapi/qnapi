@@ -21,7 +21,6 @@
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
-#include "qnapiprojektengine.h"
 #include "qnapiopendialog.h"
 
 #include "frmsummary.h"

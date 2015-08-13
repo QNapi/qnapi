@@ -12,9 +12,9 @@
 **
 *****************************************************************************/
 
-#include "frmupload.h"
+#include "frmnapiprojektupload.h"
 
-frmUpload::frmUpload(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
+frmNapiProjektUpload::frmNapiProjektUpload(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
     ui.setupUi(this);
 
@@ -40,7 +40,7 @@ frmUpload::frmUpload(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmUpload::closeEvent(QCloseEvent *event)
+void frmNapiProjektUpload::closeEvent(QCloseEvent *event)
 {
     if(scanThread.isRunning())
     {
@@ -72,7 +72,7 @@ void frmUpload::closeEvent(QCloseEvent *event)
         event->accept();
 }
 
-void frmUpload::selectDirectory()
+void frmNapiProjektUpload::selectDirectory()
 {
     QString dir = QFileInfo(ui.leSelectDirectory->text()).path();
     dir = QDir().exists(dir) ? dir : GlobalConfig().previousDialogPath();
@@ -87,14 +87,14 @@ void frmUpload::selectDirectory()
         ui.leSelectDirectory->setText(dir);
 }
 
-void frmUpload::leSelectDirectoryChanged()
+void frmNapiProjektUpload::leSelectDirectoryChanged()
 {
     ui.pbScan->setEnabled(!ui.leSelectDirectory->text().isEmpty()
                             ? QDir().exists(ui.leSelectDirectory->text())
                             : false);
 }
 
-void frmUpload::pbScanClicked()
+void frmNapiProjektUpload::pbScanClicked()
 {
     if(!scanThread.isRunning())
     {
@@ -129,7 +129,7 @@ void frmUpload::pbScanClicked()
     }
 }
 
-void frmUpload::scanFinished(bool result)
+void frmNapiProjektUpload::scanFinished(bool result)
 {
     ui.leSelectDirectory->setEnabled(true);
     ui.pbSelectDirectory->setEnabled(true);
@@ -162,7 +162,7 @@ void frmUpload::scanFinished(bool result)
     }
 }
 
-void frmUpload::pbUploadClicked()
+void frmNapiProjektUpload::pbUploadClicked()
 {
     if(!uploadThread.isRunning())
     {
@@ -185,22 +185,22 @@ void frmUpload::pbUploadClicked()
     }
 }
 
-void frmUpload::folderChange(const QString & folder)
+void frmNapiProjektUpload::folderChange(const QString & folder)
 {
     ui.lbAction->setText(tr("Skanowanie katalogu <b>") + folder + "</b>");
 }
 
-void frmUpload::fileNameChange(const QString & filename)
+void frmNapiProjektUpload::fileNameChange(const QString & filename)
 {
     ui.lbAction->setText(tr("Wysyłanie napisów dla <b>") + filename + "</b>");
 }
 
-void frmUpload::checkingUserPass()
+void frmNapiProjektUpload::checkingUserPass()
 {
     ui.lbAction->setText(tr("Sprawdzanie nazwy użytkownika i hasła..."));
 }
 
-void frmUpload::uploadFinished()
+void frmNapiProjektUpload::uploadFinished()
 {
     ui.lbSelectDirectory->setEnabled(true);
     ui.leSelectDirectory->setEnabled(true);
@@ -222,7 +222,7 @@ void frmUpload::uploadFinished()
     }
 }
 
-void frmUpload::invalidUserPass()
+void frmNapiProjektUpload::invalidUserPass()
 {
     ui.lbAction->setText(tr("Nazwa użytkownika lub hasło jest niepoprawne."));
     QMessageBox::information(this, tr("Błąd!"), QString(tr("Nazwa użytkownika lub hasło jest niepoprawne.")));

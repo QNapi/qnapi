@@ -14,6 +14,10 @@ QT += network \
     xml
 
 SOURCES += src/main.cpp \
+    src/engines/qnapiabstractengine.cpp \
+    src/engines/qnapiprojektengine.cpp \
+    src/engines/qnapisy24engine.cpp \
+    src/engines/qopensubtitlesengine.cpp \
     src/forms/frmprogress.cpp \
     src/forms/frmlistsubtitles.cpp \
     src/forms/frmsummary.cpp \
@@ -21,9 +25,6 @@ SOURCES += src/main.cpp \
     src/forms/frmoptions.cpp \
     src/forms/frmabout.cpp \
     src/forms/frmnapiprojektconfig.cpp \
-    src/forms/frmupload.cpp \
-    src/forms/frmcorrect.cpp \
-    src/forms/frmreport.cpp \
     src/forms/frmopensubtitlesconfig.cpp \
     src/qcumber/qmanagedrequest.cpp \
     src/qcumber/qmanagedsocket.cpp \
@@ -32,28 +33,29 @@ SOURCES += src/main.cpp \
     src/qnapiapp.cpp \
     src/qnapicli.cpp \
     src/qnapi.cpp \
-    src/qnapiabstractengine.cpp \
-    src/qnapiprojektengine.cpp \
-    src/qopensubtitlesengine.cpp \
     src/qmultiparthttprequest.cpp \
     src/qnapiopendialog.cpp \
     src/qnapilanguage.cpp \
-    src/qnapisy24engine.cpp \
     src/synchttp.cpp \
     src/syncxmlrpc.cpp \
     src/encodingutils.cpp \
-    src/ffprobemovieinfoparser.cpp
+    src/ffprobemovieinfoparser.cpp \
+    src/forms/frmnapiprojektupload.cpp \
+    src/forms/frmnapiprojektcorrect.cpp \
+    src/forms/frmnapiprojektreport.cpp
 
-HEADERS += src/forms/frmprogress.h \
+
+HEADERS += src/engines/qnapiabstractengine.h \
+    src/engines/qnapiprojektengine.h \
+    src/engines/qnapisy24engine.h \
+    src/engines/qopensubtitlesengine.h \
+    src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
     src/forms/frmsummary.h \
     src/forms/frmscan.h \
     src/forms/frmoptions.h \
     src/forms/frmabout.h \
     src/forms/frmnapiprojektconfig.h \
-    src/forms/frmupload.h \
-    src/forms/frmcorrect.h \
-    src/forms/frmreport.h \
     src/forms/frmopensubtitlesconfig.h \
     src/qcumber/qmanagedrequest.h \
     src/qcumber/qmanagedsocket.h \
@@ -63,9 +65,6 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapiapp.h \
     src/qnapicli.h \
     src/qnapi.h \
-    src/qnapiabstractengine.h \
-    src/qnapiprojektengine.h \
-    src/qopensubtitlesengine.h \
     src/movieinfo.h \
     src/qnapiopendialog.h \
     src/qnapilanguage.h \
@@ -76,9 +75,11 @@ HEADERS += src/forms/frmprogress.h \
     src/syncxmlrpc.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
-    src/qnapisy24engine.h \
     src/encodingutils.h \
-    src/ffprobemovieinfoparser.h
+    src/ffprobemovieinfoparser.h \
+    src/forms/frmnapiprojektupload.h \
+    src/forms/frmnapiprojektcorrect.h \
+    src/forms/frmnapiprojektreport.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -87,10 +88,10 @@ FORMS += ui/frmprogress.ui \
     ui/frmoptions.ui \
     ui/frmabout.ui \
     ui/napiprojekt/frmnapiprojektconfig.ui \
-    ui/frmupload.ui \
-    ui/frmcorrect.ui \
-    ui/frmreport.ui \
-    ui/opensubtitles/frmopensubtitlesconfig.ui
+    ui/opensubtitles/frmopensubtitlesconfig.ui \
+    ui/frmnapiprojektupload.ui \
+    ui/frmnapiprojektcorrect.ui \
+    ui/frmnapiprojektreport.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

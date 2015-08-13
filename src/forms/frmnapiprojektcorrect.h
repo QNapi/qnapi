@@ -12,11 +12,11 @@
 **
 *****************************************************************************/
 
-#ifndef __FRMREPORT__H__
-#define __FRMREPORT__H__
+#ifndef __FRMCORRECT__H__
+#define __FRMCORRECT__H__
 
-#include "ui_frmreport.h"
-#include <QFileDialog>
+#include "ui_frmcorrect.h"
+#include <QFileInfo>
 #include <QFile>
 #include <QDir>
 #include <QStringList>
@@ -26,54 +26,53 @@
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
-#include "qnapiprojektengine.h"
+#include "engines/qnapiprojektengine.h"
 #include "qnapiopendialog.h"
 
-class ReportThread : public QNapiThread
+class PostThread : public QNapiThread
 {
-Q_OBJECT
+    Q_OBJECT
     public:
         void run();
-        void setReportParams(const QString & movie_file, const QString & lang,
-                                const QString & comment_txt)
+        void setPostParams(const QString & movie_file, const QString & subtitles_file,
+                            const QString & comment_txt, const QString & lang)
         {
             movie = movie_file;
-            language = lang;
+            subtitles = subtitles_file;
             comment = comment_txt;
+            language = lang;
         }
 
-        QNapiProjektEngine::ReportResult taskResult;
+        QNapiProjektEngine::UploadResult taskResult;
 
     signals:
-        void reportFinished(bool interrupt = false);
-        void serverMessage(QString msg);
+        void postFinished(bool interrupted = false);
         void invalidUserPass();
 
     private:
-        QString movie, language, comment;
+        QString movie, subtitles, comment, language;
 };
 
-class frmReport: public QDialog
+class frmNapiProjektCorrect: public QDialog
 {
 Q_OBJECT
     public:
-        frmReport(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmReport() {};
+        frmNapiProjektCorrect(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmNapiProjektCorrect() {};
 
     private:
         void closeEvent(QCloseEvent *event);
 
-        Ui::frmReport ui;
+        Ui::frmCorrect ui;
 
-        ReportThread reportThread;
+        PostThread postThread;
 
     private slots:
         void selectMovie();
-        void checkReportEnable();
-        void cbProblemChanged();
-        void pbReportClicked();
-        void reportFinished(bool interrupt = false);
-        void serverMessage(QString msg);
+        void selectSubtitles();
+        void checkPostEnable();
+        void pbPostClicked();
+        void postFinished(bool interrupt = false);
         void invalidUserPass();
 };
 

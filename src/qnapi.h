@@ -18,11 +18,11 @@
 
 #include <QtCore>
 #include "qnapiconfig.h"
+#include "engines/qnapiabstractengine.h"
+#include "engines/qnapiprojektengine.h"
+#include "engines/qnapisy24engine.h"
+#include "engines/qopensubtitlesengine.h"
 #include "qnapisubtitleinfo.h"
-#include "qnapiabstractengine.h"
-#include "qnapiprojektengine.h"
-#include "qopensubtitlesengine.h"
-#include "qnapisy24engine.h"
 
 // globalny menedzer pobierania napisow
 class QNapi

@@ -12,9 +12,9 @@
 **
 *****************************************************************************/
 
-#include "frmcorrect.h"
+#include "frmnapiprojektcorrect.h"
 
-frmCorrect::frmCorrect(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
+frmNapiProjektCorrect::frmNapiProjektCorrect(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
     ui.setupUi(this);
 
@@ -34,7 +34,7 @@ frmCorrect::frmCorrect(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmCorrect::closeEvent(QCloseEvent *event)
+void frmNapiProjektCorrect::closeEvent(QCloseEvent *event)
 {
     if(postThread.isRunning())
     {
@@ -49,7 +49,7 @@ void frmCorrect::closeEvent(QCloseEvent *event)
         event->accept();
 }
 
-void frmCorrect::selectMovie()
+void frmNapiProjektCorrect::selectMovie()
 {
     QString fileName;
     QNapiOpenDialog openDialog(this, tr("Wskaż plik z filmem"),
@@ -71,7 +71,7 @@ void frmCorrect::selectMovie()
         ui.leSubtitlesSelect->setText(propSubtitleFile);
 }
 
-void frmCorrect::selectSubtitles()
+void frmNapiProjektCorrect::selectSubtitles()
 {
     QString fileName;
     QNapiOpenDialog openDialog(this, tr("Wskaż plik z napisami"),
@@ -87,7 +87,7 @@ void frmCorrect::selectSubtitles()
         ui.leSubtitlesSelect->setText(fileName);
 }
 
-void frmCorrect::checkPostEnable()
+void frmNapiProjektCorrect::checkPostEnable()
 {
     ui.pbPost->setEnabled(
             QFile::exists(ui.leMovieSelect->text()) &&
@@ -99,7 +99,7 @@ void frmCorrect::checkPostEnable()
                             : tr("Wypełnij wszystkie pola, aby wysłać poprawkę"));
 }
 
-void frmCorrect::pbPostClicked()
+void frmNapiProjektCorrect::pbPostClicked()
 {
     if(!postThread.isRunning())
     {
@@ -126,7 +126,7 @@ void frmCorrect::pbPostClicked()
     }
 }
 
-void frmCorrect::postFinished(bool interrupted)
+void frmNapiProjektCorrect::postFinished(bool interrupted)
 {
     ui.leMovieSelect->setEnabled(true);
     ui.pbMovieSelect->setEnabled(true);
@@ -150,7 +150,7 @@ void frmCorrect::postFinished(bool interrupted)
     }
 }
 
-void frmCorrect::invalidUserPass()
+void frmNapiProjektCorrect::invalidUserPass()
 {
     QMessageBox::information(this, tr("Błąd!"), QString(tr("Nazwa użytkownika lub hasło jest niepoprawne.")));
 }

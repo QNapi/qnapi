@@ -12,11 +12,11 @@
 **
 *****************************************************************************/
 
-#ifndef __FRMCORRECT__H__
-#define __FRMCORRECT__H__
+#ifndef __FRMREPORT__H__
+#define __FRMREPORT__H__
 
-#include "ui_frmcorrect.h"
-#include <QFileInfo>
+#include "ui_frmreport.h"
+#include <QFileDialog>
 #include <QFile>
 #include <QDir>
 #include <QStringList>
@@ -26,53 +26,54 @@
 
 #include "qnapithread.h"
 #include "qnapiconfig.h"
-#include "qnapiprojektengine.h"
+#include "engines/qnapiprojektengine.h"
 #include "qnapiopendialog.h"
 
-class PostThread : public QNapiThread
-{
-    Q_OBJECT
-    public:
-        void run();
-        void setPostParams(const QString & movie_file, const QString & subtitles_file,
-                            const QString & comment_txt, const QString & lang)
-        {
-            movie = movie_file;
-            subtitles = subtitles_file;
-            comment = comment_txt;
-            language = lang;
-        }
-
-        QNapiProjektEngine::UploadResult taskResult;
-
-    signals:
-        void postFinished(bool interrupted = false);
-        void invalidUserPass();
-
-    private:
-        QString movie, subtitles, comment, language;
-};
-
-class frmCorrect: public QDialog
+class ReportThread : public QNapiThread
 {
 Q_OBJECT
     public:
-        frmCorrect(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmCorrect() {};
+        void run();
+        void setReportParams(const QString & movie_file, const QString & lang,
+                                const QString & comment_txt)
+        {
+            movie = movie_file;
+            language = lang;
+            comment = comment_txt;
+        }
+
+        QNapiProjektEngine::ReportResult taskResult;
+
+    signals:
+        void reportFinished(bool interrupt = false);
+        void serverMessage(QString msg);
+        void invalidUserPass();
+
+    private:
+        QString movie, language, comment;
+};
+
+class frmNapiProjektReport: public QDialog
+{
+Q_OBJECT
+    public:
+        frmNapiProjektReport(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        ~frmNapiProjektReport() {};
 
     private:
         void closeEvent(QCloseEvent *event);
 
-        Ui::frmCorrect ui;
+        Ui::frmReport ui;
 
-        PostThread postThread;
+        ReportThread reportThread;
 
     private slots:
         void selectMovie();
-        void selectSubtitles();
-        void checkPostEnable();
-        void pbPostClicked();
-        void postFinished(bool interrupt = false);
+        void checkReportEnable();
+        void cbProblemChanged();
+        void pbReportClicked();
+        void reportFinished(bool interrupt = false);
+        void serverMessage(QString msg);
         void invalidUserPass();
 };
 

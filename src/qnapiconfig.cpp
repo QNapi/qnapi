@@ -565,6 +565,26 @@ void QNapiConfig::setPpRemoveLines(bool remove)
     settings->setValue("qnapi/remove_lines", remove);
 }
 
+SubFormatChange QNapiConfig::ppSubFormat()
+{
+    return (SubFormatChange) settings->value("qnapi/sub_format", SFC_ORIGINAL).toInt();
+}
+
+void QNapiConfig::setPpSubFormat(SubFormatChange subFormat)
+{
+    settings->setValue("qnapi/sub_format", subFormat);
+}
+
+SubExtensionChange QNapiConfig::ppSubExtension()
+{
+    return (SubExtensionChange) settings->value("qnapi/sub_ext", SEC_ORIGINAL).toInt();
+}
+
+void QNapiConfig::setPpSubExtension(SubExtensionChange subExtension)
+{
+    settings->setValue("qnapi/sub_ext", subExtension);
+}
+
 QStringList QNapiConfig::ppRemoveWords()
 {
     QStringList defaultRemoveWords;

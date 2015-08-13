@@ -335,6 +335,8 @@ void frmOptions::writeConfig()
     GlobalConfig().setPpShowAllEncodings(ui.cbShowAllEncodings->isChecked());
     GlobalConfig().setPpRemoveLines(ui.cbRemoveLines->isChecked());
     GlobalConfig().setPpRemoveWords(ui.teRemoveWords->toPlainText().split("\n"));
+    GlobalConfig().setPpSubFormat((SubFormatChange) ui.cbSubFormat->currentIndex());
+    GlobalConfig().setPpSubExtension((SubExtensionChange) ui.cbSubExtension->currentIndex());
     GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
 
     QString permissions = QString("%1%2%3").arg(ui.sbUPerm->value())
@@ -395,6 +397,8 @@ void frmOptions::readConfig()
     ui.cbShowAllEncodings->setChecked(GlobalConfig().ppShowAllEncodings());
     ui.cbRemoveLines->setChecked(GlobalConfig().ppRemoveLines());
     ui.teRemoveWords->setText(GlobalConfig().ppRemoveWords().join("\n"));
+    ui.cbSubFormat->setCurrentIndex(GlobalConfig().ppSubFormat());
+    ui.cbSubExtension->setCurrentIndex(GlobalConfig().ppSubExtension());
     ui.cbChangePermissions->setChecked(GlobalConfig().ppChangePermissions());
 
     QString permissions = GlobalConfig().ppPermissions();
@@ -442,6 +446,8 @@ void frmOptions::restoreDefaults()
     QStringList words;
     words << "movie info" << "synchro";
     GlobalConfig().setPpRemoveWords(words);
+    GlobalConfig().setPpSubFormat(SFC_ORIGINAL);
+    GlobalConfig().setPpSubExtension(SEC_ORIGINAL);
     GlobalConfig().setPpChangePermissions(false);
     GlobalConfig().setPpPermissions("644");
 

@@ -43,6 +43,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     setAttribute(Qt::WA_QuitOnClose, false);
 
     connect(ui.le7zPath, SIGNAL(textChanged(const QString &)), this, SLOT(le7zPathChanged()));
+    connect(ui.leFfprobePath, SIGNAL(textChanged(const QString &)), this, SLOT(leFfProbePathChanged()));
     connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
     connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
     connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
@@ -82,6 +83,17 @@ void frmOptions::le7zPathChanged()
         );
 }
 
+void frmOptions::leFfProbePathChanged()
+{
+    QFileInfo f(ui.leFfprobePath->text());
+    ui.leFfprobePath->setStyleSheet(
+        f.isFile() && f.isExecutable()
+            ? ""
+            : "color:red;"
+        );
+}
+
+
 void frmOptions::select7zPath()
 {
     QString path7z = QFileDialog::getOpenFileName(this, tr("Wskaż ścieżkę do programu 7z"),
@@ -94,6 +106,21 @@ void frmOptions::select7zPath()
                     "odnaleźć programu 7z, spróbuj zainstalować pakiet p7zip-full."));
         else
             ui.le7zPath->setText(path7z);
+    }
+}
+
+void frmOptions::selectFfProbePath()
+{
+    QString pathFFProbe = QFileDialog::getOpenFileName(this, tr("Wskaż ścieżkę do programu ffprobe"),
+                                                    QFileInfo(ui.leFfprobePath->text()).path());
+    if(!pathFFProbe.isEmpty())
+    {
+        if(!QFileInfo(pathFFProbe).isExecutable())
+            QMessageBox::warning(this, tr("Niepoprawna ścieżka"),
+                tr("Wskazana przez Ciebie ścieżka do programu ffprobe jest niepoprawna. Jeśli nie możesz "
+                    "odnaleźć programu ffprobe, spróbuj zainstalować pakiet ffmpeg."));
+        else
+            ui.leFfprobePath->setText(pathFFProbe);
     }
 }
 
@@ -278,6 +305,7 @@ void frmOptions::showAllEncodings()
 void frmOptions::writeConfig()
 {
     GlobalConfig().setP7zipPath(ui.le7zPath->text());
+    GlobalConfig().setFFProbePath(ui.leFfprobePath->text());
     GlobalConfig().setTmpPath(ui.leTmpPath->text());
     GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
     GlobalConfig().setLanguageBackup(ui.cbLangBackup->itemData(ui.cbLangBackup->currentIndex()).toString());
@@ -322,6 +350,7 @@ void frmOptions::readConfig()
     GlobalConfig().reload();
 
     ui.le7zPath->setText(GlobalConfig().p7zipPath());
+    ui.leFfprobePath->setText(GlobalConfig().ffProbePath());
     ui.leTmpPath->setText(GlobalConfig().tmpPath());
     ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
     ui.cbLangBackup->setCurrentIndex(ui.cbLangBackup->findData(QNapiLanguage(GlobalConfig().languageBackup()).toTwoLetter()));
@@ -386,6 +415,7 @@ void frmOptions::readConfig()
 void frmOptions::restoreDefaults()
 {
     GlobalConfig().setP7zipPath("");
+    GlobalConfig().setFFProbePath("");
     GlobalConfig().setTmpPath(QDir::tempPath());
     GlobalConfig().setLanguage("pl");
     GlobalConfig().setLanguageBackup("en");

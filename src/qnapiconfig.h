@@ -65,6 +65,9 @@ class QNapiConfig
         QString p7zipPath();
         void setP7zipPath(const QString & path);
 
+        QString ffProbePath();
+        void setFFProbePath(const QString & path);
+
         QString tmpPath();
         void setTmpPath(const QString & path);
 

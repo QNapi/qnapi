@@ -42,7 +42,9 @@ Q_OBJECT
 
     private slots:
         void le7zPathChanged();
+        void leFfProbePathChanged();
         void select7zPath();
+        void selectFfProbePath();
         void leTmpPathChanged();
         void selectTmpPath();
 

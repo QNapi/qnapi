@@ -16,6 +16,7 @@
 #include "forms/frmnapiprojektconfig.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "ffprobemovieinfoparser.h"
 
 #ifdef Q_OS_WIN // for SetFileAttributes
 #include <qt_windows.h>
@@ -231,7 +232,8 @@ QNapiProjektEngine::UploadResult
     if(!QFile::exists(movie) || !QFile::exists(subtitles))
         return NAPI_FAIL;
 
-    MovieInfo movieInfo(movie);
+    FFProbeMovieInfoParser mip("/usr/bin/ffprobe");
+    MovieInfo movieInfo = mip.parseFile(movie);
 
     unsigned long movie_size = QFileInfo(movie).size();
     QString movie_md5 = checksum(movie);
@@ -326,18 +328,18 @@ QNapiProjektEngine::UploadResult
 
     QByteArray data = postData.requestStream();
 
-    QString movie_fps = QString::number((int)ceil(movieInfo.fps * 100));
+    QString movie_fps = QString::number((int)ceil(movieInfo.frameRate * 100));
     movie_fps.insert(2, ',');
 
     QString urlTxt;
     
-    if(movieInfo.isErr)
+    if(!movieInfo.isFilled)
     {
         urlTxt = napiUploadUrlSimpleTpl.arg(movie_md5).arg(movie_size);
     }
     else
     {
-        urlTxt = napiUploadUrlTpl.arg(movieInfo.time).arg(movieInfo.width)
+        urlTxt = napiUploadUrlTpl.arg(movieInfo.durationSecs).arg(movieInfo.width)
                                     .arg(movieInfo.height).arg(movie_fps)
                                     .arg(movie_md5).arg(movie_size);
     }

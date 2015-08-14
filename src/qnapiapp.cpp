@@ -23,12 +23,14 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
     f_options = 0;
     f_about = 0;
     f_scan = 0;
+    f_convert = 0;
     f_napiProjektUpload = 0;
     f_napiProjektCorrect = 0;
     f_napiProjektReport = 0;
 
     getAction = 0;
     scanAction = 0;
+    convertAction = 0;
     napiGetAction = 0;
     napiAddAction = 0;
     napiCorrectAction = 0;
@@ -54,12 +56,14 @@ QNapiApp::~QNapiApp()
     if(f_options) delete f_options;
     if(f_about) delete f_about;
     if(f_scan) delete f_scan;
+    if(f_convert) delete f_convert;
     if(f_napiProjektUpload) delete f_napiProjektUpload;
     if(f_napiProjektCorrect) delete f_napiProjektCorrect;
     if(f_napiProjektReport) delete f_napiProjektReport;
 
     if(getAction) delete getAction;
     if(scanAction) delete scanAction;
+    if(convertAction) delete convertAction;
     if(napiGetAction) delete napiGetAction;
     if(napiAddAction) delete napiAddAction;
     if(napiCorrectAction) delete napiCorrectAction;
@@ -97,6 +101,9 @@ void QNapiApp::createTrayIcon()
 
     scanAction = new QAction(tr("Skanuj katalogi"), 0);
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
+
+    convertAction = new QAction(tr("Konwertuj napisy"), 0);
+    connect(convertAction, SIGNAL(triggered()), this, SLOT(showConvertDialog()));
 
     napiGetAction = new QAction(tr("Pobierz napisy"), 0);
     connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showNPGetDialog()));
@@ -163,6 +170,7 @@ void QNapiApp::createTrayIcon()
     trayIconMenu = new QMenu(0);
     trayIconMenu->addAction(getAction);
     trayIconMenu->addAction(scanAction);
+    trayIconMenu->addAction(convertAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addMenu(napiSubMenu);
     trayIconMenu->addMenu(osSubMenu);
@@ -272,6 +280,21 @@ bool QNapiApp::showScanDialog(QString init_dir)
     return result;
 }
 
+void QNapiApp::showConvertDialog()
+{
+    if(!f_convert) f_convert = new frmConvert();
+
+    if(f_convert->isVisible())
+    {
+        f_convert->raise();
+        return;
+    }
+
+    f_convert->exec();
+
+    delete f_scan;
+    f_scan = 0;
+}
 
 void QNapiApp::showNPGetDialog()
 {

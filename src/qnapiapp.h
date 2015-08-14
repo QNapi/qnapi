@@ -34,6 +34,7 @@
 #include "forms/frmnapiprojektreport.h"
 #include "forms/frmscan.h"
 #include "forms/frmsummary.h"
+#include "forms/frmconvert.h"
 
 #include "qnapiconfig.h"
 #include "qnapiopendialog.h"
@@ -55,6 +56,7 @@ class QNapiApp : public QSingleApplication
 
         bool showOpenDialog(QString engine = "");
         bool showScanDialog(QString init_dir = "");
+        void showConvertDialog();
 
         void showNPGetDialog();
         void showNPUploadDialog();
@@ -82,11 +84,12 @@ class QNapiApp : public QSingleApplication
 
         QSystemTrayIcon *trayIcon;
         QMenu *trayIconMenu, *napiSubMenu, *osSubMenu, *napisy24SubMenu;
-        QAction *getAction, *scanAction, *napiGetAction, *napiAddAction,
-                *napiCorrectAction, *napiReportAction, *napiCreateUserAction,
-                *osGetAction, *osAddAction, *osCreateUserAction,
-                *napisy24GetAction, *napisy24CreateUserAction,
-                *settingsAction, *aboutAction, *quitAction;
+        QAction *getAction, *scanAction, *convertAction, *napiGetAction,
+                *napiAddAction, *napiCorrectAction, *napiReportAction,
+                *napiCreateUserAction, *osGetAction, *osAddAction,
+                *osCreateUserAction, *napisy24GetAction,
+                *napisy24CreateUserAction, *settingsAction,
+                *aboutAction, *quitAction;
 
         QNapiOpenDialog *openDialog;
         
@@ -94,6 +97,7 @@ class QNapiApp : public QSingleApplication
         frmOptions *f_options;
         frmAbout *f_about;
         frmScan *f_scan;
+        frmConvert *f_convert;
         frmNapiProjektUpload *f_napiProjektUpload;
         frmNapiProjektCorrect *f_napiProjektCorrect;
         frmNapiProjektReport *f_napiProjektReport;

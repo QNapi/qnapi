@@ -14,7 +14,8 @@
 
 #include "frmabout.h"
 
-frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
+frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f)
+    : QDialog(parent, f)
 {
     ui.setupUi(this);
 

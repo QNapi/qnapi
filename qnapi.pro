@@ -45,7 +45,8 @@ SOURCES += src/main.cpp \
     src/forms/frmnapiprojektreport.cpp \
     src/forms/frmconvert.cpp \
     src/subconvert/subtitleformatsregistry.cpp \
-    src/subconvert/subtitleconverter.cpp
+    src/subconvert/subtitleconverter.cpp \
+    src/subconvert/formats/microdvd.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \

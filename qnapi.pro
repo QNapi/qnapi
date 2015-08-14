@@ -42,7 +42,10 @@ SOURCES += src/main.cpp \
     src/ffprobemovieinfoparser.cpp \
     src/forms/frmnapiprojektupload.cpp \
     src/forms/frmnapiprojektcorrect.cpp \
-    src/forms/frmnapiprojektreport.cpp
+    src/forms/frmnapiprojektreport.cpp \
+    src/forms/frmconvert.cpp \
+    src/subconvert/subtitleformatsregistry.cpp \
+    src/subconvert/subtitleconverter.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -79,7 +82,13 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/ffprobemovieinfoparser.h \
     src/forms/frmnapiprojektupload.h \
     src/forms/frmnapiprojektcorrect.h \
-    src/forms/frmnapiprojektreport.h
+    src/forms/frmnapiprojektreport.h \
+    src/forms/frmconvert.h \
+    src/subconvert/subfile.h \
+    src/subconvert/subtitleformat.h \
+    src/subconvert/formats/microdvd.h \
+    src/subconvert/subtitleformatsregistry.h \
+    src/subconvert/subtitleconverter.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -91,7 +100,8 @@ FORMS += ui/frmprogress.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
     ui/frmnapiprojektupload.ui \
     ui/frmnapiprojektcorrect.ui \
-    ui/frmnapiprojektreport.ui
+    ui/frmnapiprojektreport.ui \
+    ui/frmconvert.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

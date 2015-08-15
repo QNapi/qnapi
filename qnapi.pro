@@ -105,10 +105,10 @@ FORMS += ui/frmprogress.ui \
     ui/frmoptions.ui \
     ui/frmabout.ui \
     ui/napiprojekt/frmnapiprojektconfig.ui \
+    ui/napiprojekt/frmnapiprojektcorrect.ui \
+    ui/napiprojekt/frmnapiprojektreport.ui \
+    ui/napiprojekt/frmnapiprojektupload.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
-    ui/frmnapiprojektupload.ui \
-    ui/frmnapiprojektcorrect.ui \
-    ui/frmnapiprojektreport.ui \
     ui/frmconvert.ui
 
 RESOURCES += res/resources.qrc

@@ -15,7 +15,7 @@
 #ifndef __FRMUPLOAD__H__
 #define __FRMUPLOAD__H__
 
-#include "ui_frmupload.h"
+#include "ui_frmnapiprojektupload.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QStringList>

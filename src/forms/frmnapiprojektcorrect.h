@@ -15,7 +15,7 @@
 #ifndef __FRMCORRECT__H__
 #define __FRMCORRECT__H__
 
-#include "ui_frmcorrect.h"
+#include "ui_frmnapiprojektcorrect.h"
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>

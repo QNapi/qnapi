@@ -15,7 +15,7 @@
 #ifndef __FRMREPORT__H__
 #define __FRMREPORT__H__
 
-#include "ui_frmreport.h"
+#include "ui_frmnapiprojektreport.h"
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>

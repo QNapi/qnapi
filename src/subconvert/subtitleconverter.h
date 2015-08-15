@@ -3,15 +3,33 @@
 
 #include <QString>
 #include <QStringList>
+#include <functional>
 
 class SubtitleConverter
 {
 public:
-    SubtitleConverter();
-
     QString detectFormat(const QStringList &subtitleLines);
 
-    bool convertFormat(QString movieFile, QString subtitleFile, QString targetFormatName, double fpsRatio = 1.0);
+    bool convertSubtitles(QString subtitleFile,
+                          QString targetFormatName,
+                          QString targetFileName,
+                          double movieFPS,
+                          double fpsRatio = 1.0);
+
+    bool convertSubtitles(QString subtitleFile,
+                          QString targetFormatName,
+                          QString targetExt,
+                          QString movieFile);
+
+    bool convertSubtitles(QString subtitleFile,
+                          QString targetFormatName,
+                          QString targetFileName,
+                          std::function<double ()> determineFPS,
+                          double fpsRatio = 1.0);
+
+private:
+    QStringList readFile(const QString & filename);
+    void writeFile(const QString & filename, const QStringList & lines);
 
 };
 

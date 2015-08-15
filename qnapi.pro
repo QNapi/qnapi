@@ -5,7 +5,8 @@ CONFIG += warn_on \
     qt \
     resources \
     release \
-    silent
+    silent \
+    c++11
 
 QT += network \
     gui \

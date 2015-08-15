@@ -7,9 +7,11 @@
 class MicroDVDSubtitleFormat : public SubtitleFormat
 {
 public:
+    virtual ~MicroDVDSubtitleFormat() {}
+
     bool isTimeBased() { return false; }
     QString formatName() { return "mDVD"; }
-    QString defaultExtension() { return "txt"; }
+    QString defaultExtension() { return "sub"; }
 
     bool detect(const QStringList &lines);
     SubFile decode(const QStringList &lines);

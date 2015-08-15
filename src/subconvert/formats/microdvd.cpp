@@ -15,6 +15,7 @@ SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
     // match each trimmed non-empty line to regexp {\d}{\d}(.*)
     // extract SubEntry, add to sf.entries
     //sf.entries
+    return sf;
 }
 
 QStringList MicroDVDSubtitleFormat::encode(const SubFile & subFile)

@@ -7,6 +7,7 @@
 class SubtitleFormat
 {
 public:
+    virtual ~SubtitleFormat() {}
     virtual bool isTimeBased() = 0;
     virtual QString formatName() = 0;
     virtual QString defaultExtension() = 0;

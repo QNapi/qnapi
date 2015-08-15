@@ -46,7 +46,10 @@ SOURCES += src/main.cpp \
     src/forms/frmconvert.cpp \
     src/subconvert/subtitleformatsregistry.cpp \
     src/subconvert/subtitleconverter.cpp \
-    src/subconvert/formats/microdvd.cpp
+    src/subconvert/formats/microdvd.cpp \
+    src/subconvert/formats/tmplayer.cpp \
+    src/subconvert/formats/subrip.cpp \
+    src/subconvert/formats/mpl2.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -89,7 +92,10 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/subtitleformat.h \
     src/subconvert/formats/microdvd.h \
     src/subconvert/subtitleformatsregistry.h \
-    src/subconvert/subtitleconverter.h
+    src/subconvert/subtitleconverter.h \
+    src/subconvert/formats/tmplayer.h \
+    src/subconvert/formats/subrip.h \
+    src/subconvert/formats/mpl2.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

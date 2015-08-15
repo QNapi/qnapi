@@ -12,7 +12,7 @@ private:
     QMap<QString, SubtitleFormat*> formats;
 public:
     SubtitleFormatsRegistry();
-    virtual ~SubtitleFormatsRegistry();
+    ~SubtitleFormatsRegistry();
 
     void registerFormat(SubtitleFormat *format);
     QStringList enumerateFormats() const;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>317</height>
+    <width>596</width>
+    <height>354</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="1" column="0">
     <widget class="QLineEdit" name="leSrcSubFile">
      <property name="text">
       <string/>
@@ -34,7 +34,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="1" column="1">
     <widget class="QPushButton" name="pbSrcSubFileSelect">
      <property name="text">
       <string/>
@@ -45,7 +45,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="topMargin">
       <number>4</number>
@@ -95,81 +95,233 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" rowspan="2">
-    <widget class="QLabel" name="lbTargetFormat">
-     <property name="text">
-      <string>Docelowy format napisów:</string>
-     </property>
-    </widget>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QLabel" name="lbTargetFormat">
+       <property name="text">
+        <string>Docelowy format napisów:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbTargetFormat">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>180</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>mDVD</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MPL2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SRT</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TMP</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="lbMovieFPS">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Liczba klatek na sekundę filmu (FPS):</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbMovieFPS">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>23.976</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>24</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>25</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>29.97</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>30</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>50</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>59.94</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>60</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item row="4" column="1">
-    <widget class="QComboBox" name="cbTargetFormat">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QPushButton" name="pbMovieFPSSelect">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
-     <item>
-      <property name="text">
-       <string>mDVD</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>MPL2</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>SRT</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>TMP</string>
-      </property>
-     </item>
+     <property name="toolTip">
+      <string>Wykryj docelowy FPS z pliku</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/resources.qrc">
+       <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
+     </property>
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="lbTargetExtension">
-     <property name="text">
-      <string>Docelowe rozszerzenie napisów:</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="lbTargetExtension">
+       <property name="text">
+        <string>Docelowe rozszerzenie napisów:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cbTargetExtension">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>0</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Domyślne</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>.txt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>.sub</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>.srt</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="cbTargetExtension">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <item>
-      <property name="text">
-       <string>Domyślne</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>.txt</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>.sub</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>.srt</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
+   <item row="6" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="cbChangeFPS">
@@ -328,8 +480,8 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="2">
-    <widget class="QPushButton" name="pbTargetFileNameSelect_2">
+   <item row="6" column="1">
+    <widget class="QPushButton" name="pbTargetMovieFPSSelect">
      <property name="toolTip">
       <string>Wykryj docelowy FPS z pliku</string>
      </property>
@@ -349,7 +501,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="2">
+   <item row="8" column="0">
     <widget class="QLineEdit" name="leTargetFileName">
      <property name="text">
       <string/>
@@ -362,7 +514,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="2">
+   <item row="8" column="1">
     <widget class="QPushButton" name="pbTargetFileNameSelect">
      <property name="text">
       <string/>
@@ -373,7 +525,7 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0" colspan="2">
+   <item row="9" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -386,7 +538,7 @@
      </property>
     </spacer>
    </item>
-   <item row="10" column="0" colspan="2">
+   <item row="10" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="lbDone">

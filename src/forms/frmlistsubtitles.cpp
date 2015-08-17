@@ -57,7 +57,7 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
 
         if(highlight && (s.resolution == SUBTITLE_GOOD))
             ++good;
-        else if(highlight && (s.resolution == SUBTITLE_GOOD))
+        else if(highlight && (s.resolution == SUBTITLE_BAD))
             ++bad;
 
         QString lang_path = QString(":/languages/") + s.lang + ".gif";

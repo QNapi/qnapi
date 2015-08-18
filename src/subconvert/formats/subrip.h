@@ -16,6 +16,9 @@ public:
     SubFile decode(const QStringList &lines);
     QStringList encode(const SubFile & subFile);
 
+private:
+    QStringList encodeEntry(const SubEntry & entry, int i);
+    QString encodeToken(const SubToken & entry);
 };
 
 #endif // SUBRIPSUBTITLEFORMAT_H

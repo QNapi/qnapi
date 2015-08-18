@@ -16,6 +16,9 @@ public:
     SubFile decode(const QStringList &lines);
     QStringList encode(const SubFile & subFile);
 
+private:
+    QString encodeEntry(const SubEntry & entry);
+    QString encodeToken(const SubToken & entry);
 };
 
 #endif // TMPLAYERSUBTITLEFORMAT_H

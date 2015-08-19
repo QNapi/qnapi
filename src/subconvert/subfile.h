@@ -35,7 +35,6 @@ struct SubEntry
 
 struct SubFile
 {
-    bool isTimeBased;
     QVector<SubEntry> entries;
 };
 

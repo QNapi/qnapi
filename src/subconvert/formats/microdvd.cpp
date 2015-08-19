@@ -11,7 +11,6 @@ bool MicroDVDSubtitleFormat::detect(const QStringList &lines)
 SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
 {
     SubFile sf;
-    sf.isTimeBased = false;
     // match each trimmed non-empty line to regexp {\d}{\d}(.*)
     // extract SubEntry, add to sf.entries
     //sf.entries

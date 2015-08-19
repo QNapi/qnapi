@@ -87,8 +87,6 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFor
                 se.frameStart = (long)floor(frameRate * se.frameStart / 1000.0);
                 se.frameStop = (long)floor(frameRate * se.frameStop / 1000.0);
             }
-
-            /// TODO: fix 0 frameStop
         }
     }
 

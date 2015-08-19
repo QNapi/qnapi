@@ -431,7 +431,6 @@ bool QNapisy24Engine::unpack()
     QStringList args;
     args << "e" << "-y" << ("-o" + tmpPath) << tmpPackedFile;
 
-    // QProcess p7zip;
     p7zip.start(p7zipPath, args);
 
     // Rozpakowujemy napisy max w ciagu 5 sekund

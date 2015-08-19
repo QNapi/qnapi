@@ -17,6 +17,7 @@ public:
     QStringList encode(const SubFile & subFile);
 
 private:
+    QVector<SubToken> decodeTokenStream(QString tokenStream);
     QString encodeEntry(const SubEntry & entry);
     QString encodeToken(const SubToken & entry);
 };

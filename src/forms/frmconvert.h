@@ -3,6 +3,7 @@
 
 #include "ui_frmconvert.h"
 #include <QDialog>
+#include "subconvert/subtitleconverter.h"
 
 class frmConvert : public QDialog
 {
@@ -12,6 +13,26 @@ public:
     ~frmConvert() {}
 private:
     Ui::frmConvert ui;
+    SubtitleConverter subConverter;
+    QString srcFormat, targetFormat;
+    bool targetFileNameSelected;
+
+    void anyFormatChanged();
+    void determineMovieFPS(const QString & defaultMovieFilePath);
+    void generateTargetFileName();
+
+private slots:
+
+    void srcSubSelectClicked();
+    void srcSubFileLoaded(const QString & srcSubFileName);
+    void targetFormatChanged(int targetFormatIdx);
+    void movieFPSSelectClicked();
+    void changeFPSChanged(bool changeFPS);
+    void targetMovieFPSSelectClicked();
+    void targetExtensionChanged();
+    void targetFileNameChanged(const QString & targetFormat);
+    void targetFileNameSelectClicked();
+    void convertClicked();
 };
 
 #endif // __FRMCONVERT_H__

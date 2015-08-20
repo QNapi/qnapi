@@ -149,9 +149,9 @@ bool QNapiOpenDialog::placeWindow()
         return false;
     }
 
-    // workaround dla compiza
-    move((QApplication::desktop()->width() - width()) / 2, 
-        (QApplication::desktop()->height() - height()) / 2);
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 
     return true;
 }

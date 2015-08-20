@@ -8,6 +8,7 @@
 class SubtitleConverter
 {
 public:
+    QString detectFormat(const QString &subtitleFile);
     QString detectFormat(const QStringList &subtitleLines);
 
     bool convertSubtitles(QString subtitleFile,
@@ -28,8 +29,8 @@ public:
                           double fpsRatio = 1.0);
 
 private:
-    QStringList readFile(const QString & filename);
-    void writeFile(const QString & filename, const QStringList & lines);
+    QStringList readFile(const QString & filename, long atMostLines = 0);
+    bool writeFile(const QString & filename, const QStringList & lines);
 
 };
 

@@ -4,9 +4,16 @@
 #include "ffprobemovieinfoparser.h"
 #include "movieinfo.h"
 #include <cmath>
+#include <QTextStream>
+#include <QDebug>
 
+QString SubtitleConverter::detectFormat(const QString &subtitleFile)
+{
+    const QStringList & lines = readFile(subtitleFile, 15);
+    return detectFormat(lines);
+}
 
-QString SubtitleConverter::detectFormat(const QStringList &subtitleLines)
+QString SubtitleConverter::detectFormat(const QStringList & subtitleLines)
 {
     foreach(QString format, GlobalFormatsRegistry().enumerateFormats())
     {
@@ -64,6 +71,8 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFor
 
     SubFile sf = inputFormat->decode(subtitleLines);
 
+    qDebug() << "ENTRIES:" << sf.entries.size();
+
     if(inputFormat->isTimeBased() != targetFormat->isTimeBased())
     {
         double frameRate = determineFPS();
@@ -101,17 +110,40 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFor
 
     QStringList targetLines = targetFormat->encode(sf);
 
-    writeFile(targetFileName, targetLines);
-
-    return true;
+    return writeFile(targetFileName, targetLines);
 }
 
-QStringList SubtitleConverter::readFile(const QString & filename)
+QStringList SubtitleConverter::readFile(const QString & filename, long atMostLines)
 {
     QStringList buff;
+    long current = 0;
+    QFile inputFile(filename);
+    if (inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd() || current < atMostLines)
+       {
+          buff += in.readLine();
+          ++current;
+       }
+       inputFile.close();
+    }
     return buff;
 }
 
-void SubtitleConverter::writeFile(const QString & filename, const QStringList & lines)
+bool SubtitleConverter::writeFile(const QString & filename, const QStringList & lines)
 {
+    QFile outputFile(filename);
+    if(outputFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream out(&outputFile);
+        foreach(QString line, lines)
+        {
+            out << line;
+        }
+        outputFile.close();
+        return true;
+    } else {
+        return false;
+    }
 }

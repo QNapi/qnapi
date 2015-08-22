@@ -55,7 +55,11 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
     });
 }
 
-bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFormatName, QString targetFileName, std::function<double ()> determineFPS, double fpsRatio)
+bool SubtitleConverter::convertSubtitles(QString subtitleFile,
+                                         QString targetFormatName,
+                                         QString targetFileName,
+                                         std::function<double ()> determineFPS,
+                                         double fpsRatio)
 {
     QStringList subtitleLines = readFile(subtitleFile);
 
@@ -66,8 +70,6 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFor
     SubtitleFormat * inputFormat = GlobalFormatsRegistry().select(detectedFormat);
     SubtitleFormat * targetFormat = GlobalFormatsRegistry().select(targetFormatName);
 
-    if(inputFormat == targetFormat)
-        return true;
 
     SubFile sf = inputFormat->decode(subtitleLines);
 

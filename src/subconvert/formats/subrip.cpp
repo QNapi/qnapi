@@ -3,7 +3,23 @@
 
 bool SubRipSubtitleFormat::detect(const QStringList &lines)
 {
-    return false;
+    QStringList lines2 = lines;
+    while(!lines2.isEmpty() && lines2.first().trimmed().isEmpty())
+    {
+        lines2.pop_front();
+    }
+
+    QString firstEntryBuff;
+
+    foreach(QString line, lines2)
+    {
+        if(line.isEmpty()) break;
+        firstEntryBuff += line + "\r\n";
+    }
+
+    QRegExp r("^(\\d+)(\\n|\\r\\n|\\s+)(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})\\s+\\-\\->\\s+(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})(.*)");
+
+    return r.exactMatch(firstEntryBuff);
 }
 
 SubFile SubRipSubtitleFormat::decode(const QStringList &lines)

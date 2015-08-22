@@ -1,9 +1,9 @@
 [Desktop Entry]
 Exec=qnapi
 Name=QNapi
-Icon=/usr/share/icons/qnapi-48.png
+Icon=qnapi-48
 Type=Application
-Categories=AudioVideo
+Categories=AudioVideo;
 Comment=Program do pobierania napisów do filmów
 GenericName=Program do pobierania napisów do filmów
 Terminal=false

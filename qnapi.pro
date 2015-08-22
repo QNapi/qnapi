@@ -151,12 +151,12 @@ unix {
         doc/qnapi-scan.schemas
     man.path = $${INSTALL_PREFIX}/share/man/man1
     man.files = doc/$${TARGET}.1.gz
-    icons.path = /usr/share/icons
+    icons.path = $${INSTALL_PREFIX}/share/icons
     icons.files = res/qnapi.png \
         res/qnapi-48.png \
         res/qnapi-128.png \
         res/qnapi-512.png
-    desktop.path = /usr/share/applications
+    desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/$${TARGET}.desktop
     INSTALLS = target \
         doc \

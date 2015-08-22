@@ -1,5 +1,6 @@
 #include "tmplayer.h"
 #include <QMap>
+#include <QDebug>
 
 bool TMPlayerSubtitleFormat::detect(const QStringList &lines)
 {
@@ -7,7 +8,7 @@ bool TMPlayerSubtitleFormat::detect(const QStringList &lines)
     {
         if(!line.trimmed().isEmpty())
         {
-            QRegExp r("^(\\d){1,2}:(\\d){1,2}:(\\d){1,2}:(.*)");
+            QRegExp r("^(0\\d|\\d\\d):(0\\d|\\d\\d):(0\\d|\\d\\d):(.*)");
             r.setPatternSyntax(QRegExp::RegExp2);
             return r.indexIn(line) == 0;
         }
@@ -24,14 +25,16 @@ SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines)
     {
         if(!line.trimmed().isEmpty())
         {
-            QRegExp r("^(\\d){1,2}:(\\d){1,2}:(\\d){1,2}:(.*)");
+            QRegExp r("^(0\\d|\\d\\d):(0\\d|\\d\\d):(0\\d|\\d\\d):(.*)");
             r.setPatternSyntax(QRegExp::RegExp2);
-            if(r.indexIn(line))
+            if(r.exactMatch(line))
             {
                 int h = r.cap(1).toInt();
                 int m = r.cap(2).toInt();
                 int s = r.cap(3).toInt();
                 QString tokenStream = r.cap(4);
+
+                qDebug() << h << m << s << tokenStream;
 
                 SubEntry se;
                 se.frameStart = 1000L * (3600L * h + 60L * m + s);
@@ -42,10 +45,14 @@ SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines)
         }
     }
 
-    for(int i = 0; i < sf.entries.size() - 1; ++i)
+    for(int i = 0; i < sf.entries.size(); ++i)
     {
-        long plus4s = sf.entries[i].frameStart + 4000L;
-        sf.entries[i].frameStop = std::min(sf.entries[i + 1].frameStart - 1, plus4s);
+        long plus5s = sf.entries[i].frameStart + 5000L;
+        sf.entries[i].frameStop = plus5s;
+        if(i < sf.entries.size() - 1)
+        {
+            sf.entries[i].frameStop = std::min(plus5s, sf.entries[i + 1].frameStart - 1);
+        }
     }
 
     return sf;
@@ -81,6 +88,8 @@ QVector<SubToken> TMPlayerSubtitleFormat::decodeTokenStream(QString tokenStream)
 
     while(!tokenStream.isEmpty())
     {
+//        qDebug() << tokenStream;
+
         tok.payload.clear();
 
         bool matched = false;
@@ -120,7 +129,7 @@ QVector<SubToken> TMPlayerSubtitleFormat::decodeTokenStream(QString tokenStream)
                 tokenStream.remove(0, colorR2.cap(0).size());
                 matched = true;
             } else if(tokenStream[0].isSpace()) {
-                while(tokenStream.isEmpty() || !tokenStream[0].isSpace())
+                while(!tokenStream.isEmpty() && tokenStream[0].isSpace())
                     tokenStream.remove(0, 1);
                 tok.type = STT_WS;
                 matched = true;
@@ -151,6 +160,14 @@ QVector<SubToken> TMPlayerSubtitleFormat::decodeTokenStream(QString tokenStream)
         wordTok.payload = wordBuff;
         tokens.push_back(wordTok);
     }
+
+    if(!tokens.isEmpty() && tokens[0].type == STT_WS)
+    {
+        while(tokens[0].type == STT_WS)
+            tokens.pop_front();
+    }
+
+    qDebug() << wordBuff << tok.type;
 
     return tokens;
 }

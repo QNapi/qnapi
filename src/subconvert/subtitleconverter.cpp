@@ -80,21 +80,21 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile, QString targetFor
             return false;
 
         if(targetFormat->isTimeBased())
-        { // but input not
-            // we have to convert frames to times
-            foreach(SubEntry se, sf.entries)
+        {
+            // convert frames to timestamps
+            for(int i = 0; i < sf.entries.size(); ++i)
             {
-                se.frameStart = (long)floor(1000.0 * se.frameStart / frameRate);
-                se.frameStop = (long)floor(1000.0 * se.frameStop / frameRate);
+                sf.entries[i].frameStart = (long)floor(1000.0 * sf.entries[i].frameStart / frameRate);
+                sf.entries[i].frameStop = (long)floor(1000.0 * sf.entries[i].frameStop / frameRate);
             }
         }
         else
         {
-            // we have to convert times to frames
-            foreach(SubEntry se, sf.entries)
+            // convert timestamps to frames
+            for(int i = 0; i < sf.entries.size(); ++i)
             {
-                se.frameStart = (long)floor(frameRate * se.frameStart / 1000.0);
-                se.frameStop = (long)floor(frameRate * se.frameStop / 1000.0);
+                sf.entries[i].frameStart = (long)floor(frameRate * sf.entries[i].frameStart / 1000.0);
+                sf.entries[i].frameStop = (long)floor(frameRate * sf.entries[i].frameStop / 1000.0);
             }
         }
     }
@@ -139,7 +139,7 @@ bool SubtitleConverter::writeFile(const QString & filename, const QStringList & 
         QTextStream out(&outputFile);
         foreach(QString line, lines)
         {
-            out << line;
+            out << line << "\r\n";
         }
         outputFile.close();
         return true;

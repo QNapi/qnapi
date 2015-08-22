@@ -34,7 +34,7 @@ QString MicroDVDSubtitleFormat::encodeEntry(const SubEntry & entry)
     {
         tokensBuff += encodeToken(token);
     }
-    return QString("{%1}{%2}%3\r\n")
+    return QString("{%1}{%2}%3")
             .arg(entry.frameStart)
             .arg(entry.frameStop)
             .arg(tokensBuff);

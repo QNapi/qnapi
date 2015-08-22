@@ -28,7 +28,7 @@ QString MPL2SubtitleFormat::encodeEntry(const SubEntry & entry)
     {
         tokensBuff += encodeToken(token);
     }
-    return QString("[%1][%2]%3\r\n")
+    return QString("[%1][%2]%3")
             .arg(entry.frameStart / 100)
             .arg(entry.frameStop / 100)
             .arg(tokensBuff);

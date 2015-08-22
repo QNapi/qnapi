@@ -19,6 +19,7 @@ QStringList SubRipSubtitleFormat::encode(const SubFile & subFile)
     foreach(const SubEntry & entry, subFile.entries)
     {
         lines << encodeEntry(entry, i++);
+        lines << "";
     }
     return lines;
 }

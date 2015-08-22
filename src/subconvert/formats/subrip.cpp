@@ -1,5 +1,5 @@
 #include "subrip.h"
-
+#include <QDebug>
 
 bool SubRipSubtitleFormat::detect(const QStringList &lines)
 {
@@ -25,6 +25,62 @@ bool SubRipSubtitleFormat::detect(const QStringList &lines)
 SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
 {
     SubFile sf;
+
+    QRegExp r1("^(\\d+)\\s+(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})\\s+\\-\\->\\s+(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})(.*)");
+    QRegExp r2("^(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})\\s+\\-\\->\\s+(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})(.*)");
+    QRegExp rNumLine("^\\d+");
+
+    QString tokensBuff = "", numsBuff;
+    SrtTimestamps tss;
+
+    foreach(QString line, lines)
+    {
+        qDebug() << line;
+        if(r1.exactMatch(line))
+        {
+            if(!tokensBuff.isEmpty())
+                addEntry(sf.entries, tokensBuff, tss);
+            tss.h1 = r1.cap(2).toInt();
+            tss.m1 = r1.cap(3).toInt();
+            tss.s1 = r1.cap(4).toInt();
+            tss.ms1 = r1.cap(5).toInt();
+            tss.h2 = r1.cap(6).toInt();
+            tss.m2 = r1.cap(7).toInt();
+            tss.s2 = r1.cap(8).toInt();
+            tss.ms2 = r1.cap(9).toInt();
+            numsBuff.clear();
+        }
+        else if(r2.exactMatch(line))
+        {
+            if(!tokensBuff.isEmpty())
+                addEntry(sf.entries, tokensBuff, tss);
+            tss.h1 = r2.cap(1).toInt();
+            tss.m1 = r2.cap(2).toInt();
+            tss.s1 = r2.cap(3).toInt();
+            tss.ms1 = r2.cap(4).toInt();
+            tss.h2 = r2.cap(5).toInt();
+            tss.m2 = r2.cap(6).toInt();
+            tss.s2 = r2.cap(7).toInt();
+            tss.ms2 = r2.cap(8).toInt();
+            numsBuff.clear();
+        }
+        else if(rNumLine.exactMatch(line))
+        {
+            numsBuff += line + "\r\n";
+        }
+        else if (!line.trimmed().isEmpty()) {
+            if(!numsBuff.isEmpty())
+            {
+                tokensBuff += numsBuff;
+                numsBuff.clear();
+            }
+            tokensBuff += line + "\r\n";
+        }
+    }
+
+    if(!tokensBuff.isEmpty())
+        addEntry(sf.entries, tokensBuff, tss);
+
     return sf;
 }
 
@@ -38,6 +94,20 @@ QStringList SubRipSubtitleFormat::encode(const SubFile & subFile)
         lines << "";
     }
     return lines;
+}
+
+void SubRipSubtitleFormat::addEntry(QVector<SubEntry> & entries, QString & tokensBuff, SrtTimestamps & timestamps)
+{
+    SubEntry se;
+    se.frameStart = 3600000L * timestamps.h1 + 60000L * timestamps.m1 + 1000L * timestamps.s1 + timestamps.ms1;
+    se.frameStop = 3600000L * timestamps.h2 + 60000L * timestamps.m2 + 1000L * timestamps.s2 + timestamps.ms2;
+    se.tokens = decodeTokenStream(tokensBuff);
+
+    while(!se.tokens.isEmpty() && se.tokens.back().type == STT_NEWLINE)
+        se.tokens.pop_back();
+
+    entries.push_back(se);
+    tokensBuff.clear();
 }
 
 QStringList SubRipSubtitleFormat::encodeEntry(const SubEntry & entry, int i)

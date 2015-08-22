@@ -17,6 +17,19 @@ public:
     QStringList encode(const SubFile & subFile);
 
 private:
+    struct SrtTimestamps
+    {
+        int h1;
+        int m1;
+        int s1;
+        int ms1;
+        int h2;
+        int m2;
+        int s2;
+        int ms2;
+    };
+
+    void addEntry(QVector<SubEntry> & entries, QString & tokensBuff, SrtTimestamps & timestamps);
     QStringList encodeEntry(const SubEntry & entry, int i);
     QString encodeToken(const SubToken & entry);
 };

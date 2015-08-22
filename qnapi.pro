@@ -50,7 +50,8 @@ SOURCES += src/main.cpp \
     src/subconvert/formats/microdvd.cpp \
     src/subconvert/formats/tmplayer.cpp \
     src/subconvert/formats/subrip.cpp \
-    src/subconvert/formats/mpl2.cpp
+    src/subconvert/formats/mpl2.cpp \
+    src/subconvert/subtitleformat.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \

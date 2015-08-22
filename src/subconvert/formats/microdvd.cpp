@@ -1,19 +1,47 @@
 #include "microdvd.h"
+#include <QDebug>
 
 bool MicroDVDSubtitleFormat::detect(const QStringList &lines)
 {
-    // find first trimmed non-empty line
-    // result = does it match to regexp {\d}{\d}(.*)
-    //
+    foreach(QString line, lines)
+    {
+        if(!line.trimmed().isEmpty())
+        {
+            QRegExp r("^\\{(\\d+)\\}\\{(\\d+)\\}(.*)");
+            r.setPatternSyntax(QRegExp::RegExp2);
+            return r.exactMatch(line);
+        }
+    }
+
     return false;
 }
 
 SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
 {
     SubFile sf;
-    // match each trimmed non-empty line to regexp {\d}{\d}(.*)
-    // extract SubEntry, add to sf.entries
-    //sf.entries
+
+    foreach(QString line, lines)
+    {
+        if(!line.trimmed().isEmpty())
+        {
+            QRegExp r("^\\{(\\d+)\\}\\{(\\d+)\\}(.*)");
+            r.setPatternSyntax(QRegExp::RegExp2);
+            if(r.exactMatch(line))
+            {
+                SubEntry se;
+                se.frameStart = r.cap(1).toLong();
+                se.frameStop = r.cap(2).toLong();
+                QString tokenStream = r.cap(3);
+
+                qDebug() << se.frameStart << se.frameStop << tokenStream;
+
+                se.tokens = decodeTokenStream(tokenStream);
+
+                sf.entries.push_back(se);
+            }
+        }
+    }
+
     return sf;
 }
 

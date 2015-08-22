@@ -1,13 +1,47 @@
 #include "mpl2.h"
+#include <QDebug>
 
 bool MPL2SubtitleFormat::detect(const QStringList &lines)
 {
+    foreach(QString line, lines)
+    {
+        if(!line.trimmed().isEmpty())
+        {
+            QRegExp r("^\\[(\\d+)\\]\\[(\\d+)\\](.*)");
+            r.setPatternSyntax(QRegExp::RegExp2);
+            return r.exactMatch(line);
+        }
+    }
+
     return false;
 }
 
 SubFile MPL2SubtitleFormat::decode(const QStringList &lines)
 {
     SubFile sf;
+
+    foreach(QString line, lines)
+    {
+        if(!line.trimmed().isEmpty())
+        {
+            QRegExp r("^\\[(\\d+)\\]\\[(\\d+)\\](.*)");
+            r.setPatternSyntax(QRegExp::RegExp2);
+            if(r.exactMatch(line))
+            {
+                SubEntry se;
+                se.frameStart = 100L * r.cap(1).toLong();
+                se.frameStop = 100L * r.cap(2).toLong();
+                QString tokenStream = r.cap(3);
+
+                qDebug() << se.frameStart << se.frameStop << tokenStream;
+
+                se.tokens = decodeTokenStream(tokenStream);
+
+                sf.entries.push_back(se);
+            }
+        }
+    }
+
     return sf;
 }
 

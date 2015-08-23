@@ -53,23 +53,6 @@ enum ChangeEncodingMethod
     CEM_REPLACE_DIACRITICS = 2
 };
 
-enum SubFormatChange
-{
-    SFC_ORIGINAL = 0,
-    SFC_MICRO_DVD = 1,
-    SFC_MPL2 = 2,
-    SFC_SRT = 3,
-    SFC_TMP = 4
-};
-
-enum SubExtensionChange
-{
-    SEC_ORIGINAL = 0,
-    SEC_TXT = 1,
-    SEC_SUB = 2,
-    SEC_SRT = 3
-};
-
 class QNapiConfig
 {
     public:
@@ -139,11 +122,11 @@ class QNapiConfig
         bool ppRemoveLines();
         void setPpRemoveLines(bool remove);
 
-        SubFormatChange ppSubFormat();
-        void setPpSubFormat(SubFormatChange subFormat);
+        QString ppSubFormat();
+        void setPpSubFormat(const QString & subFormat);
 
-        SubExtensionChange ppSubExtension();
-        void setPpSubExtension(SubExtensionChange subExtension);
+        QString ppSubExtension();
+        void setPpSubExtension(const QString & subExtension);
 
         QStringList ppRemoveWords();
         void setPpRemoveWords(const QStringList & words);

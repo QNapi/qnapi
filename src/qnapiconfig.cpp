@@ -565,22 +565,22 @@ void QNapiConfig::setPpRemoveLines(bool remove)
     settings->setValue("qnapi/remove_lines", remove);
 }
 
-SubFormatChange QNapiConfig::ppSubFormat()
+QString QNapiConfig::ppSubFormat()
 {
-    return (SubFormatChange) settings->value("qnapi/sub_format", SFC_ORIGINAL).toInt();
+    return settings->value("qnapi/sub_format", "").toString();
 }
 
-void QNapiConfig::setPpSubFormat(SubFormatChange subFormat)
+void QNapiConfig::setPpSubFormat(const QString & subFormat)
 {
     settings->setValue("qnapi/sub_format", subFormat);
 }
 
-SubExtensionChange QNapiConfig::ppSubExtension()
+QString QNapiConfig::ppSubExtension()
 {
-    return (SubExtensionChange) settings->value("qnapi/sub_ext", SEC_ORIGINAL).toInt();
+    return settings->value("qnapi/sub_ext", "").toString();
 }
 
-void QNapiConfig::setPpSubExtension(SubExtensionChange subExtension)
+void QNapiConfig::setPpSubExtension(const QString & subExtension)
 {
     settings->setValue("qnapi/sub_ext", subExtension);
 }

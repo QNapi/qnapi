@@ -1,5 +1,4 @@
 #include "mpl2.h"
-#include <QDebug>
 
 bool MPL2SubtitleFormat::detect(const QStringList &lines)
 {
@@ -32,8 +31,6 @@ SubFile MPL2SubtitleFormat::decode(const QStringList &lines)
                 se.frameStart = 100L * r.cap(1).toLong();
                 se.frameStop = 100L * r.cap(2).toLong();
                 QString tokenStream = r.cap(3);
-
-                qDebug() << se.frameStart << se.frameStop << tokenStream;
 
                 se.tokens = decodeTokenStream(tokenStream);
 

@@ -1,5 +1,4 @@
 #include "microdvd.h"
-#include <QDebug>
 
 bool MicroDVDSubtitleFormat::detect(const QStringList &lines)
 {
@@ -32,8 +31,6 @@ SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
                 se.frameStart = r.cap(1).toLong();
                 se.frameStop = r.cap(2).toLong();
                 QString tokenStream = r.cap(3);
-
-                qDebug() << se.frameStart << se.frameStop << tokenStream;
 
                 se.tokens = decodeTokenStream(tokenStream);
 

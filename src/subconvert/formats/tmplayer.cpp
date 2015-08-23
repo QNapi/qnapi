@@ -1,5 +1,4 @@
 #include "tmplayer.h"
-#include <QDebug>
 
 bool TMPlayerSubtitleFormat::detect(const QStringList &lines)
 {
@@ -32,8 +31,6 @@ SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines)
                 int m = r.cap(2).toInt();
                 int s = r.cap(3).toInt();
                 QString tokenStream = r.cap(4);
-
-                qDebug() << h << m << s << tokenStream;
 
                 SubEntry se;
                 se.frameStart = 1000L * (3600L * h + 60L * m + s);

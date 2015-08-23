@@ -1,5 +1,4 @@
 #include "subrip.h"
-#include <QDebug>
 
 bool SubRipSubtitleFormat::detect(const QStringList &lines)
 {
@@ -35,7 +34,6 @@ SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
 
     foreach(QString line, lines)
     {
-        qDebug() << line;
         if(r1.exactMatch(line))
         {
             if(!tokensBuff.isEmpty())

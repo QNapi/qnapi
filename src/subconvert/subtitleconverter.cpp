@@ -6,7 +6,6 @@
 #include "version.h"
 #include <cmath>
 #include <QTextStream>
-#include <QDebug>
 
 QString SubtitleConverter::detectFormat(const QString &subtitleFile)
 {
@@ -68,8 +67,6 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
 
     SubFile sf = inputFormat->decode(subtitleLines);
-
-    qDebug() << "ENTRIES:" << sf.entries.size();
 
     if(inputFormat->isTimeBased() != targetFormat->isTimeBased())
     {

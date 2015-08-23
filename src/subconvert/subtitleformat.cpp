@@ -1,6 +1,5 @@
 #include "subtitleformat.h"
 #include <QMap>
-#include <QDebug>
 
 QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
 {
@@ -22,8 +21,6 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
 
     while(!tokenStream.isEmpty())
     {
-//        qDebug() << tokenStream;
-
         tok.payload.clear();
 
         bool matched = false;
@@ -100,8 +97,6 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
         while(tokens[0].type == STT_WS)
             tokens.pop_front();
     }
-
-    qDebug() << wordBuff << tok.type;
 
     return tokens;
 }

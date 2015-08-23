@@ -8,7 +8,6 @@
 #include "subconvert/subtitleformatsregistry.h"
 #include "ffprobemovieinfoparser.h"
 #include "qnapiconfig.h"
-#include <QDebug>
 
 frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f), targetFileNameSelected(false)
@@ -52,8 +51,6 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
 {
     bool fileExists = QFileInfo(srcSubFileName).exists();
 
-    qDebug() << fileExists;
-
     ui.lbDetectedFormat->setEnabled(fileExists);
     ui.lbDetectedFormatValue->setVisible(fileExists);
 
@@ -73,8 +70,6 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
         srcFormat = "";
     }
 
-    qDebug() << srcFormat;
-
     ui.lbTargetFormat->setEnabled(!srcFormat.isEmpty());
     ui.cbTargetFormat->setEnabled(!srcFormat.isEmpty());
     ui.lbTargetExtension->setEnabled(!srcFormat.isEmpty());
@@ -91,7 +86,6 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
 
 void frmConvert::targetFormatChanged(int targetFormatIdx)
 {
-    qDebug() << targetFormatIdx;
     targetFormat = GlobalFormatsRegistry().enumerateFormats().at(targetFormatIdx);
     anyFormatChanged();
 }
@@ -119,7 +113,6 @@ void frmConvert::anyFormatChanged()
     if(fpsNeeded) {
         QFileInfo srcSubFI(ui.leSrcSubFile->text());
         QString defaultMovieFilePath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + ".avi";
-        qDebug() << defaultMovieFilePath;
         if(QFileInfo(defaultMovieFilePath).exists())
         {
             determineMovieFPS(defaultMovieFilePath);

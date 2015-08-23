@@ -43,8 +43,9 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     setAttribute(Qt::WA_QuitOnClose, false);
 
     connect(ui.le7zPath, SIGNAL(textChanged(const QString &)), this, SLOT(le7zPathChanged()));
-    connect(ui.leFfprobePath, SIGNAL(textChanged(const QString &)), this, SLOT(leFfProbePathChanged()));
     connect(ui.pb7zPathSelect, SIGNAL(clicked()), this, SLOT(select7zPath()));
+    connect(ui.leFfprobePath, SIGNAL(textChanged(const QString &)), this, SLOT(leFfProbePathChanged()));
+    connect(ui.pbFfprobePathSelect, SIGNAL(clicked()), this, SLOT(selectFfProbePath()));
     connect(ui.leTmpPath, SIGNAL(textChanged(const QString &)), this, SLOT(leTmpPathChanged()));
     connect(ui.pbTmpPathSelect, SIGNAL(clicked()), this, SLOT(selectTmpPath()));
 

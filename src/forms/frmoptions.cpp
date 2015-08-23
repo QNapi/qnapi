@@ -362,6 +362,7 @@ void frmOptions::writeConfig()
     GlobalConfig().setPpSubFormat(targetFormat);
     QString targetExt = ui.cbSubExtension->currentIndex() == 0 ? "" : ui.cbSubExtension->currentText();
     GlobalConfig().setPpSubExtension(targetExt);
+    GlobalConfig().setPpSkipConvertAds(ui.cbSkipConvertAds->isChecked());
     GlobalConfig().setChangePermissions(ui.cbChangePermissions->isChecked());
 
     QString permissions = QString("%1%2%3").arg(ui.sbUPerm->value())
@@ -433,8 +434,9 @@ void frmOptions::readConfig()
     }
 
     ui.cbSubExtension->setCurrentText(GlobalConfig().ppSubExtension());
-    ui.cbChangePermissions->setChecked(GlobalConfig().changePermissions());
+    ui.cbSkipConvertAds->setChecked(GlobalConfig().ppSkipConvertAds());
 
+    ui.cbChangePermissions->setChecked(GlobalConfig().changePermissions());
     QString permissions = GlobalConfig().changePermissionsTo();
     unsigned short o, g, u;
     o = permissions.at(0).toLatin1() - '0';
@@ -485,6 +487,7 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setPpRemoveWords(words);
     GlobalConfig().setPpSubFormat("");
     GlobalConfig().setPpSubExtension("");
+    GlobalConfig().setPpSkipConvertAds(false);
 
     GlobalConfig().save();
 

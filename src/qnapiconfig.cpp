@@ -585,6 +585,16 @@ void QNapiConfig::setPpSubExtension(const QString & subExtension)
     settings->setValue("qnapi/sub_ext", subExtension);
 }
 
+bool QNapiConfig::ppSkipConvertAds()
+{
+    return settings->value("qnapi/skip_convert_ads", false).toBool();
+}
+
+void QNapiConfig::setPpSkipConvertAds(bool skip)
+{
+    settings->setValue("qnapi/skip_convert_ads", skip);
+}
+
 QStringList QNapiConfig::ppRemoveWords()
 {
     QStringList defaultRemoveWords;

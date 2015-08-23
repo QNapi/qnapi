@@ -674,12 +674,12 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="7" column="0" colspan="4">
-           <widget class="QCheckBox" name="cbSkipConvertedWithQNapi">
+           <widget class="QCheckBox" name="cbSkipConvertAds">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Nie dodawaj informacji o programie do napisów przy konwersji pomiędzy formatami</string>
+             <string>Nie dodawaj informacji o QNapi przy konwersji pomiędzy formatami</string>
             </property>
            </widget>
           </item>
@@ -711,8 +711,7 @@ p, li { white-space: pre-wrap; }
          <zorder>cbSubFormat</zorder>
          <zorder>lbSubExtension</zorder>
          <zorder>cbSubExtension</zorder>
-         <zorder>cbShowAllEncodings</zorder>
-         <zorder>cbSkipConvertedWithQNapi</zorder>
+         <zorder>cbSkipConvertAds</zorder>
         </widget>
        </item>
       </layout>

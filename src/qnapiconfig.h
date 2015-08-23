@@ -128,6 +128,9 @@ class QNapiConfig
         QString ppSubExtension();
         void setPpSubExtension(const QString & subExtension);
 
+        bool ppSkipConvertAds();
+        void setPpSkipConvertAds(bool skip);
+
         QStringList ppRemoveWords();
         void setPpRemoveWords(const QStringList & words);
 

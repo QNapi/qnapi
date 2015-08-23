@@ -14,6 +14,8 @@
 
 #include "frmoptions.h"
 #include "qnapiapp.h"
+#include "subconvert/subtitleformatsregistry.h"
+
 
 frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
@@ -57,6 +59,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     connect(ui.pbEngineConf, SIGNAL(clicked()), this, SLOT(pbEngineConfClicked()));
     connect(ui.pbEngineInfo, SIGNAL(clicked()), this, SLOT(pbEngineInfoClicked()));
 
+    connect(ui.cbSubFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(subFormatChanged(int)));
     connect(ui.cbEncodingMethod, SIGNAL(currentIndexChanged(int)), this, SLOT(encodingMethodChanged(int)));
     connect(ui.cbAutoDetectEncoding, SIGNAL(clicked()), this, SLOT(autoDetectEncodingClicked()));
     connect(ui.cbShowAllEncodings, SIGNAL(clicked()), this, SLOT(showAllEncodingsClicked()));
@@ -64,6 +67,11 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     connect(ui.pbRestoreDefaults, SIGNAL(clicked()), this, SLOT(restoreDefaults()));
 
     showAllEncodings();
+
+    foreach(QString format, GlobalFormatsRegistry().enumerateFormats())
+    {
+        ui.cbSubFormat->addItem(format);
+    }
 
     QRect position = frameGeometry();
     position.moveCenter(QDesktopWidget().availableGeometry().center());
@@ -241,6 +249,20 @@ void frmOptions::pbEngineInfoClicked()
                              engineInfo);
 }
 
+void frmOptions::subFormatChanged(int format)
+{
+    if(format == 0)
+    {
+        ui.cbSubExtension->setItemText(0, tr("Domyślne"));
+    }
+    else
+    {
+        QString targetFormatName = ui.cbSubFormat->currentText();
+        SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormatName);
+        QString targetDefaultExt = targetSF->defaultExtension();
+        ui.cbSubExtension->setItemText(0, tr("Domyślne (.%1)").arg(targetDefaultExt));
+    }
+}
 
 void frmOptions::encodingMethodChanged(int method)
 {
@@ -336,8 +358,10 @@ void frmOptions::writeConfig()
     GlobalConfig().setPpShowAllEncodings(ui.cbShowAllEncodings->isChecked());
     GlobalConfig().setPpRemoveLines(ui.cbRemoveLines->isChecked());
     GlobalConfig().setPpRemoveWords(ui.teRemoveWords->toPlainText().split("\n"));
-    GlobalConfig().setPpSubFormat((SubFormatChange) ui.cbSubFormat->currentIndex());
-    GlobalConfig().setPpSubExtension((SubExtensionChange) ui.cbSubExtension->currentIndex());
+    QString targetFormat = ui.cbSubFormat->currentIndex() == 0 ? "" : GlobalFormatsRegistry().enumerateFormats().at(ui.cbSubFormat->currentIndex() - 1);
+    GlobalConfig().setPpSubFormat(targetFormat);
+    QString targetExt = ui.cbSubExtension->currentIndex() == 0 ? "" : ui.cbSubExtension->currentText();
+    GlobalConfig().setPpSubExtension(targetExt);
     GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
 
     QString permissions = QString("%1%2%3").arg(ui.sbUPerm->value())
@@ -387,7 +411,6 @@ void frmOptions::readConfig()
     ui.twEngines->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui.twEngines->setColumnWidth(0, 300);
 
-
     ui.cbSearchPolicy->setCurrentIndex(GlobalConfig().searchPolicy());
     ui.cbDownloadPolicy->setCurrentIndex(GlobalConfig().downloadPolicy());
 
@@ -398,8 +421,18 @@ void frmOptions::readConfig()
     ui.cbShowAllEncodings->setChecked(GlobalConfig().ppShowAllEncodings());
     ui.cbRemoveLines->setChecked(GlobalConfig().ppRemoveLines());
     ui.teRemoveWords->setText(GlobalConfig().ppRemoveWords().join("\n"));
-    ui.cbSubFormat->setCurrentIndex(GlobalConfig().ppSubFormat());
-    ui.cbSubExtension->setCurrentIndex(GlobalConfig().ppSubExtension());
+
+    int formatIdx = 1;
+    foreach(QString format, GlobalFormatsRegistry().enumerateFormats())
+    {
+        if(GlobalConfig().ppSubFormat() == format)
+        {
+            ui.cbSubFormat->setCurrentIndex(formatIdx);
+        }
+        ++formatIdx;
+    }
+
+    ui.cbSubExtension->setCurrentText(GlobalConfig().ppSubExtension());
     ui.cbChangePermissions->setChecked(GlobalConfig().ppChangePermissions());
 
     QString permissions = GlobalConfig().ppPermissions();
@@ -447,8 +480,8 @@ void frmOptions::restoreDefaults()
     QStringList words;
     words << "movie info" << "synchro";
     GlobalConfig().setPpRemoveWords(words);
-    GlobalConfig().setPpSubFormat(SFC_ORIGINAL);
-    GlobalConfig().setPpSubExtension(SEC_ORIGINAL);
+    GlobalConfig().setPpSubFormat("");
+    GlobalConfig().setPpSubExtension("");
     GlobalConfig().setPpChangePermissions(false);
     GlobalConfig().setPpPermissions("644");
 

@@ -55,6 +55,7 @@ Q_OBJECT
         void pbEngineConfClicked();
         void pbEngineInfoClicked(); 
 
+        void subFormatChanged(int format);
         void encodingMethodChanged(int method);
         void autoDetectEncodingClicked();
         void showAllEncodingsClicked();

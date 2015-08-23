@@ -8,6 +8,7 @@
 #include "subconvert/subtitleformatsregistry.h"
 #include "ffprobemovieinfoparser.h"
 #include "qnapiconfig.h"
+#include "qnapiopendialog.h"
 
 frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f), targetFileNameSelected(false)
@@ -27,23 +28,39 @@ frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     {
         ui.cbTargetFormat->addItem(format);
     }
-    targetFormat = GlobalFormatsRegistry().enumerateFormats().first();
 
     connect(ui.pbSrcSubFileSelect, SIGNAL(clicked()), this, SLOT(srcSubSelectClicked()));
     connect(ui.leSrcSubFile, SIGNAL(textChanged(const QString &)), this, SLOT(srcSubFileLoaded(const QString &)));
     connect(ui.cbTargetFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(targetFormatChanged(int)));
     connect(ui.cbTargetExtension, SIGNAL(currentIndexChanged(int)), this, SLOT(targetExtensionChanged()));
-
+    connect(ui.pbMovieFPSSelect, SIGNAL(clicked()), this, SLOT(movieFPSSelectClicked()));
+    connect(ui.pbTargetMovieFPSSelect, SIGNAL(clicked()), this, SLOT(targetMovieFPSSelectClicked()));
     connect(ui.pbConvert, SIGNAL(clicked()), this, SLOT(convertClicked()));
+
+    if(GlobalConfig().ppSubFormat().isEmpty())
+    {
+        targetFormat = GlobalFormatsRegistry().enumerateFormats().first();
+    }
+    else
+    {
+        targetFormat = GlobalConfig().ppSubFormat();
+        ui.cbTargetFormat->setCurrentText(targetFormat);
+    }
+
+    if(!GlobalConfig().ppSubExtension().isEmpty())
+    {
+        ui.cbTargetExtension->setCurrentText(GlobalConfig().ppSubExtension());
+    }
 }
 
 void frmConvert::srcSubSelectClicked()
 {
-    QString pathSrcSubFile = QFileDialog::getOpenFileName(this, tr("Wybierz plik z napisami"),
-                                                    QFileInfo(ui.leSrcSubFile->text()).path());
-    if(!pathSrcSubFile.isEmpty())
+    QNapiOpenDialog openSubtitle(this, tr("Wybierz plik z napisami"),
+                                 QFileInfo(ui.leSrcSubFile->text()).path(),
+                                 QNapiOpenDialog::Subtitles);
+    if(openSubtitle.selectFile())
     {
-        ui.leSrcSubFile->setText(pathSrcSubFile);
+        ui.leSrcSubFile->setText(openSubtitle.selectedFiles().first());
     }
 }
 
@@ -75,6 +92,7 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
     ui.lbTargetExtension->setEnabled(!srcFormat.isEmpty());
     ui.cbTargetExtension->setEnabled(!srcFormat.isEmpty());
     ui.cbChangeFPS->setEnabled(!srcFormat.isEmpty());
+    ui.pbMovieFPSSelect->setEnabled(!srcFormat.isEmpty());
     ui.lbTargetFileName->setEnabled(!srcFormat.isEmpty());
     ui.leTargetFileName->setEnabled(!srcFormat.isEmpty());
     ui.pbConvert->setEnabled(!srcFormat.isEmpty());
@@ -102,7 +120,7 @@ void frmConvert::anyFormatChanged()
         fpsNeeded = srcSF->isTimeBased() != targetSF->isTimeBased();
 
         QString targetDefaultExt = targetSF->defaultExtension();
-        ui.cbTargetExtension->setItemText(0, tr("Domyślne (.%1)").arg(targetDefaultExt));
+        ui.cbTargetExtension->setItemText(0, tr("Domyślne (%1)").arg(targetDefaultExt));
         generateTargetFileName();
     }
 
@@ -115,32 +133,44 @@ void frmConvert::anyFormatChanged()
         QString defaultMovieFilePath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + ".avi";
         if(QFileInfo(defaultMovieFilePath).exists())
         {
-            determineMovieFPS(defaultMovieFilePath);
+            QString fps = determineMovieFPS(defaultMovieFilePath);
+            ui.cbMovieFPS->setCurrentText(fps);
+            ui.cbFPSTo->setCurrentText(fps);
         }
     }
 }
 
 void frmConvert::movieFPSSelectClicked()
 {
-
+    QNapiOpenDialog openMovie(this, tr("Wybierz plik z filmem"),
+                              QFileInfo(ui.leSrcSubFile->text()).path(),
+                              QNapiOpenDialog::Movies);
+    if(openMovie.selectFile())
+    {
+        QString moviePath = openMovie.selectedFiles().first();
+        QString fps = determineMovieFPS(moviePath);
+        ui.cbMovieFPS->setCurrentText(fps);
+    }
 }
 
-void frmConvert::determineMovieFPS(const QString & movieFilePath)
+QString frmConvert::determineMovieFPS(const QString & movieFilePath)
 {
     FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
     MovieInfo mi = mip.parseFile(movieFilePath);
-    QString fpsStr = QString::number(mi.frameRate, 'f', 3);
-    ui.cbMovieFPS->setCurrentText(fpsStr);
-}
-
-void frmConvert::changeFPSChanged(bool changeFPS)
-{
-
+    return QString::number(mi.frameRate, 'f', 3);
 }
 
 void frmConvert::targetMovieFPSSelectClicked()
 {
-
+    QNapiOpenDialog openMovie(this, tr("Wybierz plik z filmem"),
+                              QFileInfo(ui.leSrcSubFile->text()).path(),
+                              QNapiOpenDialog::Movies);
+    if(openMovie.selectFile())
+    {
+        QString moviePath = openMovie.selectedFiles().first();
+        QString fps = determineMovieFPS(moviePath);
+        ui.cbFPSTo->setCurrentText(fps);
+    }
 }
 
 void frmConvert::targetExtensionChanged()
@@ -158,32 +188,31 @@ void frmConvert::generateTargetFileName()
         if(ui.cbTargetExtension->currentIndex() == 0)
         {
             SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormat);
-            extension = "." + targetSF->defaultExtension();
+            extension = targetSF->defaultExtension();
         } else {
             extension = ui.cbTargetExtension->currentText();
         }
 
-        QString defaultTargetPath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + extension;
+        QString defaultTargetPath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + "." + extension;
         ui.leTargetFileName->setText(defaultTargetPath);
     }
 }
 
-void frmConvert::targetFileNameChanged(const QString & targetFormat)
-{
-
-}
-
-void frmConvert::targetFileNameSelectClicked()
-{
-
-}
-
 void frmConvert::convertClicked()
 {
+    double fpsRatio = 1.0;
+    if(ui.cbChangeFPS->isChecked())
+    {
+        double fpsFrom = ui.cbFPSFrom->currentText().toDouble();
+        double fpsTo = ui.cbFPSTo->currentText().toDouble();
+        fpsRatio = fpsTo / fpsFrom;
+    }
+
     if(subConverter.convertSubtitles(ui.leSrcSubFile->text(),
                                      targetFormat,
                                      ui.leTargetFileName->text(),
-                                     ui.cbMovieFPS->currentText().toDouble()))
+                                     ui.cbMovieFPS->currentText().toDouble(),
+                                     fpsRatio))
     {
         QMessageBox::information(this, tr("Przekonwertowano napisy"),
                                  tr("Poprawnie zmieniono format napisów z '%1' na '%2'").arg(srcFormat, targetFormat));

@@ -18,7 +18,7 @@ private:
     bool targetFileNameSelected;
 
     void anyFormatChanged();
-    void determineMovieFPS(const QString & defaultMovieFilePath);
+    QString determineMovieFPS(const QString & defaultMovieFilePath);
     void generateTargetFileName();
 
 private slots:
@@ -27,11 +27,8 @@ private slots:
     void srcSubFileLoaded(const QString & srcSubFileName);
     void targetFormatChanged(int targetFormatIdx);
     void movieFPSSelectClicked();
-    void changeFPSChanged(bool changeFPS);
     void targetMovieFPSSelectClicked();
     void targetExtensionChanged();
-    void targetFileNameChanged(const QString & targetFormat);
-    void targetFileNameSelectClicked();
     void convertClicked();
 };
 

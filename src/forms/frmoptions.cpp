@@ -260,7 +260,7 @@ void frmOptions::subFormatChanged(int format)
         QString targetFormatName = ui.cbSubFormat->currentText();
         SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormatName);
         QString targetDefaultExt = targetSF->defaultExtension();
-        ui.cbSubExtension->setItemText(0, tr("Domyślne (.%1)").arg(targetDefaultExt));
+        ui.cbSubExtension->setItemText(0, tr("Domyślne (%1)").arg(targetDefaultExt));
     }
 }
 

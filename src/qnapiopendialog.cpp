@@ -14,9 +14,10 @@
 
 #include "qnapiopendialog.h"
 
-QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
-                                    const QString & init_path,
-                                    FilterMode filterMode )
+QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
+                                 const QString & caption,
+                                 const QString & init_path,
+                                 FilterMode filterMode)
                             : QFileDialog(parent)
 {
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -29,8 +30,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 #else
         setFilter
 #endif
-                (tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm "
-                    "*.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
+        (tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
     }
     else if(filterMode == Subtitles)
     {
@@ -39,7 +39,7 @@ QNapiOpenDialog::QNapiOpenDialog( QWidget * parent, const QString & caption,
 #else
         setFilter
 #endif
-                (tr("Napisy (*.txt);;Wszystkie pliki (*.*)"));
+        (tr("Napisy (*.srt *.sub *.txt);;Wszystkie pliki (*.*)"));
     }
 
     if(QFileInfo(init_path).isDir())

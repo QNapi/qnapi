@@ -33,9 +33,10 @@ public:
         None, Movies, Subtitles
     };
 
-    QNapiOpenDialog( QWidget * parent = 0, const QString & caption = QString(),
-                        const QString & init_path = QString(),
-                        FilterMode filterMode = None );
+    QNapiOpenDialog(QWidget * parent = 0,
+                    const QString & caption = QString(),
+                    const QString & init_path = QString(),
+                    FilterMode filterMode = None);
 
     bool selectFile();
     bool selectFiles();

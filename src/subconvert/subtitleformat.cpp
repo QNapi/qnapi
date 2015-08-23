@@ -14,7 +14,7 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
         {"{/y:i}", STT_ITALIC_END}, {"{/i}", STT_ITALIC_END}, {"</i>", STT_ITALIC_END},
         {"{/y:u}", STT_UNDERLINE_END}, {"{/u}", STT_UNDERLINE_END}, {"</u>", STT_UNDERLINE_END},
         {"{/c}", STT_FONTCOLOR_END}, {"</font>", STT_FONTCOLOR_END},
-        {"/", STT_ITALIC}, {"|", STT_NEWLINE}, {"\r\n", STT_NEWLINE}, {"\n", STT_NEWLINE}
+        {"|", STT_NEWLINE}, {"\r\n", STT_NEWLINE}, {"\n", STT_NEWLINE}
     };
 
     QString wordBuff;
@@ -53,18 +53,29 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
                 tok.payload = colorR1.cap(2);
                 tokenStream.remove(0, colorR1.cap(0).size());
                 matched = true;
-            } else if(colorR2.indexIn(tokenStream) == 0)
+            }
+            else if(colorR2.indexIn(tokenStream) == 0)
             {
                 tok.type = STT_FONTCOLOR;
                 tok.payload = colorR2.cap(2);
                 tokenStream.remove(0, colorR2.cap(0).size());
                 matched = true;
-            } else if(tokenStream[0].isSpace()) {
+            }
+            else if(tokenStream[0] == '/' && wordBuff.isEmpty())
+            {
+                tok.type = STT_ITALIC;
+                tokenStream.remove(0, 1);
+                matched = true;
+            }
+            else if(tokenStream[0].isSpace())
+            {
                 while(!tokenStream.isEmpty() && tokenStream[0].isSpace())
                     tokenStream.remove(0, 1);
                 tok.type = STT_WS;
                 matched = true;
-            } else {
+            }
+            else
+            {
                 wordBuff += tokenStream[0];
                 tokenStream.remove(0, 1);
             }

@@ -28,12 +28,10 @@ Linux/UNIX users will have such binaries as separate packages.
 Statically compiled 7zip binaries are provided in this repository for Windows/OSX
 users at `win32/content/7za.exe` and `macx/content/7za`, respectively.
 
-For Windows or OSX users it is required to manually download and unpack ffprobe binary.
-
-* Windows - `ffprobe.exe` static binary is available at http://ffmpeg.zeranoe.com/builds/win32/static/
-  and should be unpacked to `win32/content/`
-* OSX - `ffprobe` static binary is available at https://evermeet.cx/pub/ffprobe/ and should be unpacked
-  to `macx/content`
+> **Important!** For Windows or OSX users it is required to manually download and unpack ffprobe binary.
+>
+> * Windows - `ffprobe.exe` static binary is available at http://ffmpeg.zeranoe.com/builds/win32/static/ and should be unpacked to `win32/content/`
+> * OSX - `ffprobe` static binary is available at https://evermeet.cx/pub/ffprobe/ and should be unpacked to `macx/content`
 
 
 #### Cloning the source code

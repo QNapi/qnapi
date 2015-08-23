@@ -65,7 +65,7 @@ public:
     QString removePolishDiacritics(const QString & str);
 #ifndef Q_OS_WIN
     // zmienia uprawnienia do pliku z napisami
-    bool ppChangeSubtitlesPermissions(QFile::Permissions permissions);
+    bool changeSubtitlesPermissions(QFile::Permissions permissions);
 #endif
 
     // powinna zwracac nazwe modulu

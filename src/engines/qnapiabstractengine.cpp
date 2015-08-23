@@ -13,6 +13,8 @@
 *****************************************************************************/
 
 #include "qnapiabstractengine.h"
+#include "subconvert/subtitleconverter.h"
+#include "subconvert/subtitleformatsregistry.h"
 
 #include <QFlags>
 #include <QDebug>
@@ -49,9 +51,20 @@ bool QNapiAbstractEngine::match()
     if(!stf.exists())
         return false;
 
+    QString targetExtension = stf.suffix();
+
+    if(!GlobalConfig().ppSubFormat().isEmpty() && GlobalConfig().ppSubExtension().isEmpty())
+    {
+        targetExtension = GlobalFormatsRegistry().select(GlobalConfig().ppSubFormat())->defaultExtension();
+    }
+    else if(!GlobalConfig().ppSubExtension().isEmpty())
+    {
+        targetExtension = GlobalConfig().ppSubExtension();
+    }
+
     QFileInfo mf(movie);
 
-    subtitles = mf.path() + "/" + mf.completeBaseName() + "." + stf.suffix();
+    subtitles = mf.path() + "/" + mf.completeBaseName() + "." + targetExtension;
 
     QFileInfo sf(subtitles);
 
@@ -91,6 +104,22 @@ bool QNapiAbstractEngine::match()
 #else
     // pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
     r = QFile::copy(subtitlesTmp, subtitles);
+
+    // Zmiana uprawnien do pliku
+    if(GlobalConfig().ppChangePermissions())
+    {
+        bool validPermissions;
+        int permInt = GlobalConfig().ppPermissions().toInt(&validPermissions, 8);
+
+        if(validPermissions)
+        {
+            int perm = 0;
+            perm |= (permInt & 0700) << 2;
+            perm |= (permInt & 0070) << 1;
+            perm |= (permInt & 0007);
+            changeSubtitlesPermissions(QFile::Permissions(perm));
+        }
+    }
 #endif
 
     return r;
@@ -125,23 +154,12 @@ void QNapiAbstractEngine::pp()
         break;
     }
 
-#ifndef Q_OS_WIN
-    // Zmiana uprawnien do pliku
-    if(GlobalConfig().ppChangePermissions())
+    if(!GlobalConfig().ppSubFormat().isEmpty())
     {
-        bool validPermissions;
-        int permInt = GlobalConfig().ppPermissions().toInt(&validPermissions, 8);
-
-        if(validPermissions)
-        {
-            int perm = 0;
-            perm |= (permInt & 0700) << 2;
-            perm |= (permInt & 0070) << 1;
-            perm |= (permInt & 0007);
-            ppChangeSubtitlesPermissions(QFile::Permissions(perm));
-        }
+        SubtitleConverter sc;
+        QString targetFormat = GlobalConfig().ppSubFormat();
+        sc.convertSubtitles(subtitlesTmp, targetFormat, subtitlesTmp, movie);
     }
-#endif
 }
 
 QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int testBufferSize)
@@ -161,15 +179,15 @@ QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int test
 // zamienia znaki diakrytyczne na ASCII
 bool QNapiAbstractEngine::ppReplaceDiacriticsWithASCII()
 {
-    if(!QFileInfo(subtitles).exists())
+    if(!QFileInfo(subtitlesTmp).exists())
         return false;
 
-    QString from = ppDetectEncoding(subtitles);
+    QString from = ppDetectEncoding(subtitlesTmp);
 
     if(from.isEmpty())
         return false;
 
-    QFile f(subtitles);
+    QFile f(subtitlesTmp);
     if(!f.open(QIODevice::ReadOnly))
         return false;
 
@@ -194,7 +212,7 @@ bool QNapiAbstractEngine::ppReplaceDiacriticsWithASCII()
 // Konwertuje napisy z jednego kodowania na inne
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const QString & to)
 {
-    QFile f(subtitles);
+    QFile f(subtitlesTmp);
     if(!f.open(QIODevice::ReadOnly))
         return false;
 
@@ -227,10 +245,10 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & from, const 
 // kodowania zrodlowego
 bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 {
-    if(!QFileInfo(subtitles).exists())
+    if(!QFileInfo(subtitlesTmp).exists())
         return false;
 
-    QString from = ppDetectEncoding(subtitles);
+    QString from = ppDetectEncoding(subtitlesTmp);
 
     if(from.isEmpty())
         return false;
@@ -241,17 +259,17 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
 // Usuwanie linii zawierajacych podane slowa z pliku z napisami
 bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 {
-    if(!QFileInfo(subtitles).exists())
+    if(!QFileInfo(subtitlesTmp).exists())
         return false;
 
     wordList = wordList.filter(QRegExp("^(.+)$"));
 
-    QString fromCodec = ppDetectEncoding(subtitles);
+    QString fromCodec = ppDetectEncoding(subtitlesTmp);
 
     if(fromCodec.isEmpty())
         fromCodec = GlobalConfig().ppEncodingFrom();
 
-    QFile f(subtitles);
+    QFile f(subtitlesTmp);
     if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
         return false;
 
@@ -305,7 +323,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 
 #ifndef Q_OS_WIN
 // Zmienia uprawnienia do pliku z napisami
-bool QNapiAbstractEngine::ppChangeSubtitlesPermissions(QFile::Permissions permissions)
+bool QNapiAbstractEngine::changeSubtitlesPermissions(QFile::Permissions permissions)
 {
     if(!QFileInfo(subtitles).exists())
         return false;

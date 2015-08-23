@@ -327,17 +327,17 @@ int QNapiCli::exec()
             return EC_COULD_NOT_UNARCHIVE;
         }
 
+        if(napi.ppEnabled())
+        {
+            printCli(QString(QString("   Przetwarzanie pobranych napisow...")));
+            napi.pp();
+        }
+
         printCli(QString(QString("   Dopasowywanie napisow...")));
         if(!napi.match())
         {
             printCli(QString(QString("   Nie udalo sie dopasowac napisow!")));
             return EC_COULD_NOT_MATCH;
-        }
-
-        if(napi.ppEnabled())
-        {
-            printCli(QString(QString("   Przetwarzanie pobranych napisow...")));
-            napi.pp();
         }
 
         napi.cleanup();

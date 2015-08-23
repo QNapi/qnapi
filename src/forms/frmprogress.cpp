@@ -379,18 +379,25 @@ void GetThread::run()
 
         ABORT_POINT
 
-        emit progressChange(i, queue.size(), 0.6f);
+        emit progressChange(i, queue.size(), 0.65);
         emit actionChange(tr("Rozpakowywanie napisów..."));
 
         if(!napi->unpack())
         {
             ++napiFail;
             failedList << queue[i];
-
             continue;
         }
 
-        emit progressChange(i, queue.size(), 0.75);
+        if(napi->ppEnabled())
+        {
+            emit progressChange(i, queue.size(), 0.8f);
+            emit actionChange(tr("Przetwarzanie napisów..."));
+            napi->pp();
+        }
+
+
+        emit progressChange(i, queue.size(), 0.9);
         emit actionChange(tr("Dopasowywanie napisów..."));
 
         if(!napi->match())
@@ -406,13 +413,6 @@ void GetThread::run()
 
         ++napiSuccess;
         gotList << queue[i];
-
-        if(napi->ppEnabled())
-        {
-            emit progressChange(i, queue.size(), 0.9f);
-            emit actionChange(tr("Przetwarzanie napisów..."));
-            napi->pp();
-        }
 
         napi->cleanup();
 

@@ -129,7 +129,9 @@ macx {
     TARGET = macx/QNapi
     7ZIP_BINARY.files = macx/content/7za
     7ZIP_BINARY.path = Contents/Resources
-    QMAKE_BUNDLE_DATA += 7ZIP_BINARY
+    FFPROBE_BINARY.files = macx/content/ffprobe
+    FFPROBE_BINARY.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += 7ZIP_BINARY FFPROBE_BINARY
 
     macdeploy.commands = macdeployqt macx/QNapi.app
     appdmg.depends = macdeploy
@@ -179,6 +181,8 @@ win32 {
 
     p7zip.files += win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
+    ffprobe.files += win32/content/ffprobe.exe
+    ffprobe.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \
         doc/LICENSE \
@@ -198,7 +202,7 @@ win32 {
 
     QMAKE_EXTRA_TARGETS += icudlls deploywin platform
 
-    INSTALLS = target p7zip doc icudlls platform
+    INSTALLS = target p7zip ffprobe doc icudlls platform
 }
 
 !win32 { 

@@ -472,7 +472,7 @@ void frmOptions::restoreDefaults()
 
     GlobalConfig().setPpEnabled(false);
     GlobalConfig().setPpEncodingMethod(CEM_ORIGINAL);
-    GlobalConfig().setPpAutoDetectEncoding(false);
+    GlobalConfig().setPpAutoDetectEncoding(true);
     GlobalConfig().setPpEncodingFrom("windows-1250");
     GlobalConfig().setPpEncodingTo("UTF-8");
     GlobalConfig().setPpShowAllEncodings(false);

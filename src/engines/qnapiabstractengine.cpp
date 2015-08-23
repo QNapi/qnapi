@@ -106,10 +106,10 @@ bool QNapiAbstractEngine::match()
     r = QFile::copy(subtitlesTmp, subtitles);
 
     // Zmiana uprawnien do pliku
-    if(GlobalConfig().ppChangePermissions())
+    if(GlobalConfig().changePermissions())
     {
         bool validPermissions;
-        int permInt = GlobalConfig().ppPermissions().toInt(&validPermissions, 8);
+        int permInt = GlobalConfig().changePermissionsTo().toInt(&validPermissions, 8);
 
         if(validPermissions)
         {

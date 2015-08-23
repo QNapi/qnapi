@@ -598,17 +598,17 @@ void QNapiConfig::setPpRemoveWords(const QStringList & words)
     settings->setValue("qnapi/remove_words", words);
 }
 
-bool QNapiConfig::ppChangePermissions()
+bool QNapiConfig::changePermissions()
 {
     return settings->value("qnapi/change_permissions", false).toBool();
 }
 
-void QNapiConfig::setPpChangePermissions(bool change)
+void QNapiConfig::setChangePermissions(bool change)
 {
     settings->setValue("qnapi/change_permissions", change);
 }
 
-QString QNapiConfig::ppPermissions()
+QString QNapiConfig::changePermissionsTo()
 {
     bool ok;
     int perm = settings->value("qnapi/permissions", 644).toInt(&ok);
@@ -620,7 +620,7 @@ QString QNapiConfig::ppPermissions()
     return str;
 }
 
-void QNapiConfig::setPpPermissions(const QString & permissions)
+void QNapiConfig::setChangePermissionsTo(const QString & permissions)
 {
     bool ok;
     int perm = permissions.toInt(&ok);

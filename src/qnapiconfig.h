@@ -131,11 +131,11 @@ class QNapiConfig
         QStringList ppRemoveWords();
         void setPpRemoveWords(const QStringList & words);
 
-        bool ppChangePermissions();
-        void setPpChangePermissions(bool change);
+        bool changePermissions();
+        void setChangePermissions(bool change);
 
-        QString ppPermissions();
-        void setPpPermissions(const QString & permissions);
+        QString changePermissionsTo();
+        void setChangePermissionsTo(const QString & permissions);
 
         QString previousDialogPath();
         void setPreviousDialogPath(const QString & path);

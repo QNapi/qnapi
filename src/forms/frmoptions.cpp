@@ -362,12 +362,12 @@ void frmOptions::writeConfig()
     GlobalConfig().setPpSubFormat(targetFormat);
     QString targetExt = ui.cbSubExtension->currentIndex() == 0 ? "" : ui.cbSubExtension->currentText();
     GlobalConfig().setPpSubExtension(targetExt);
-    GlobalConfig().setPpChangePermissions(ui.cbChangePermissions->isChecked());
+    GlobalConfig().setChangePermissions(ui.cbChangePermissions->isChecked());
 
     QString permissions = QString("%1%2%3").arg(ui.sbUPerm->value())
                                            .arg(ui.sbGPerm->value())
                                            .arg(ui.sbOPerm->value());
-    GlobalConfig().setPpPermissions(permissions);
+    GlobalConfig().setChangePermissionsTo(permissions);
 
     GlobalConfig().save();
 }
@@ -433,9 +433,9 @@ void frmOptions::readConfig()
     }
 
     ui.cbSubExtension->setCurrentText(GlobalConfig().ppSubExtension());
-    ui.cbChangePermissions->setChecked(GlobalConfig().ppChangePermissions());
+    ui.cbChangePermissions->setChecked(GlobalConfig().changePermissions());
 
-    QString permissions = GlobalConfig().ppPermissions();
+    QString permissions = GlobalConfig().changePermissionsTo();
     unsigned short o, g, u;
     o = permissions.at(0).toLatin1() - '0';
     g = permissions.at(1).toLatin1() - '0';
@@ -458,6 +458,8 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setLanguage("pl");
     GlobalConfig().setLanguageBackup("en");
     GlobalConfig().setNoBackup(false);
+    GlobalConfig().setChangePermissions(false);
+    GlobalConfig().setChangePermissionsTo("644");
 
 #ifdef Q_OS_MAC
     GlobalConfig().setShowDockIcon(true);
@@ -465,7 +467,8 @@ void frmOptions::restoreDefaults()
 
     QList<QPair<QString, bool> > engines;
     engines << QPair<QString, bool>("NapiProjekt", true)
-            << QPair<QString, bool>("OpenSubtitles", true);
+            << QPair<QString, bool>("OpenSubtitles", true)
+            << QPair<QString, bool>("Napisy24", true);
     GlobalConfig().setEngines(engines);
     GlobalConfig().setSearchPolicy(SP_SEARCH_ALL);
     GlobalConfig().setDownloadPolicy(DP_SHOW_LIST_IF_NEEDED);
@@ -482,8 +485,6 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setPpRemoveWords(words);
     GlobalConfig().setPpSubFormat("");
     GlobalConfig().setPpSubExtension("");
-    GlobalConfig().setPpChangePermissions(false);
-    GlobalConfig().setPpPermissions("644");
 
     GlobalConfig().save();
 

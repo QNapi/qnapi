@@ -37,14 +37,9 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
 bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString targetFormatName,
-                                         QString targetExt,
+                                         QString targetFileName,
                                          QString movieFile)
 {
-    if(targetExt.isEmpty())
-        targetExt = GlobalFormatsRegistry().select(targetFormatName)->defaultExtension();
-
-    QString targetFileName = QFileInfo(subtitleFile).completeBaseName() + "." + targetExt;
-
     return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [&]() -> double {
         FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
         MovieInfo mfm = mip.parseFile(movieFile);

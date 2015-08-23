@@ -19,7 +19,7 @@ public:
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,
-                          QString targetExt,
+                          QString targetFileName,
                           QString movieFile);
 
     bool convertSubtitles(QString subtitleFile,

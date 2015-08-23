@@ -15,7 +15,7 @@ public:
                           QString targetFormatName,
                           QString targetFileName,
                           double movieFPS,
-                          double fpsRatio = 1.0);
+                          double fpsRatio);
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,

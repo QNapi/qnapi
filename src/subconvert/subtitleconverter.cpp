@@ -31,7 +31,6 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          double movieFPS,
                                          double fpsRatio)
 {
-
     return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [=]() -> double { return movieFPS; }, fpsRatio);
 }
 
@@ -71,7 +70,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
     if(inputFormat->isTimeBased() != targetFormat->isTimeBased())
     {
         double frameRate = determineFPS();
-        if(frameRate == 0.0)
+        if(frameRate <= 0.0)
             return false;
 
         if(targetFormat->isTimeBased())
@@ -96,10 +95,10 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
     if(fpsRatio != 1.0)
     {
-        foreach(SubEntry se, sf.entries)
+        for(int i = 0; i < sf.entries.size(); ++i)
         {
-            se.frameStart = (long)floor(fpsRatio * se.frameStart);
-            se.frameStop = (long)floor(fpsRatio * se.frameStop);
+            sf.entries[i].frameStart = (long)floor(fpsRatio * sf.entries[i].frameStart);
+            sf.entries[i].frameStop = (long)floor(fpsRatio * sf.entries[i].frameStop);
         }
     }
 

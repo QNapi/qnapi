@@ -1,4 +1,4 @@
-# Thanks to custity of https://gist.github.com/jreese/6207161
+# Thanks to courtesy of https://gist.github.com/jreese/6207161
 
 before_install:
     - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa

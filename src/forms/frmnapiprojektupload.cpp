@@ -235,9 +235,10 @@ void ScanThread::run()
     fileList.clear();
     visited.clear();
     searchFilters.clear();
-    searchFilters << "*.avi" << "*.asf" << "*.divx" << "*.mkv" << "*.mov" << "*.mp4"
-                    << "*.mpeg" << "*.mpg" << "*.ogm" << "*.rm" << "*.rmvb" << "*.wmv";
-
+    foreach(QString ext, GlobalConfig().movieExtensions())
+    {
+        searchFilters << "*." + ext;
+    }
     QDir::Filters filters = QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot
                             | QDir::Readable | QDir::Hidden;
 

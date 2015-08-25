@@ -76,7 +76,7 @@ class frmNapiProjektUpload: public QDialog
     Q_OBJECT
     public:
         frmNapiProjektUpload(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmNapiProjektUpload() {};
+        ~frmNapiProjektUpload() {}
 
     private:
         void closeEvent(QCloseEvent *event);

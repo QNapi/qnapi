@@ -130,12 +130,19 @@ void frmConvert::anyFormatChanged()
 
     if(fpsNeeded) {
         QFileInfo srcSubFI(ui.leSrcSubFile->text());
-        QString defaultMovieFilePath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + ".avi";
-        if(QFileInfo(defaultMovieFilePath).exists())
+
+        QString movieFilePathBase = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName();
+
+        foreach(QString movieExt, GlobalConfig().movieExtensions())
         {
-            QString fps = determineMovieFPS(defaultMovieFilePath);
-            ui.cbMovieFPS->setCurrentText(fps);
-            ui.cbFPSTo->setCurrentText(fps);
+            QString movieFilePath = movieFilePathBase + "." + movieExt;
+            if(QFileInfo(movieFilePath).exists())
+            {
+                QString fps = determineMovieFPS(movieFilePath);
+                ui.cbMovieFPS->setCurrentText(fps);
+                ui.cbFPSTo->setCurrentText(fps);
+                break;
+            }
         }
     }
 }

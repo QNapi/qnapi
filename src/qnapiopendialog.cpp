@@ -25,21 +25,11 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
 
     if(filterMode == Movies)
     {
-#if QT_VERSION >= 0x040400
-        setNameFilter
-#else
-        setFilter
-#endif
-        (tr("Filmy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
+        setNameFilter(tr("Filmy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
     }
     else if(filterMode == Subtitles)
     {
-#if QT_VERSION >= 0x040400
-        setNameFilter
-#else
-        setFilter
-#endif
-        (tr("Napisy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
+        setNameFilter(tr("Napisy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
     }
 
     if(QFileInfo(init_path).isDir())
@@ -75,13 +65,7 @@ bool QNapiOpenDialog::selectFile()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     files.clear();
-    QString file = getOpenFileName(this, windowTitle(), directory().path(),
-#if QT_VERSION >= 0x040400
-        nameFilters().join("\n")
-#else
-        filters().join("\n")
-#endif
-                    );
+    QString file = getOpenFileName(this, windowTitle(), directory().path(),nameFilters().join("\n"));
 
     if(!file.isEmpty())
         files << file;
@@ -97,14 +81,7 @@ bool QNapiOpenDialog::selectFile()
 bool QNapiOpenDialog::selectFiles()
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    files = getOpenFileNames(this, windowTitle(), directory().path(),
-#if QT_VERSION >= 0x040400
-        nameFilters().join("\n")
-#else
-        filters().join("\n")
-#endif
-                    );
-
+    files = getOpenFileNames(this, windowTitle(), directory().path(),nameFilters().join("\n"));
     return !files.isEmpty();    
 #else
     if(!placeWindow()) return false;

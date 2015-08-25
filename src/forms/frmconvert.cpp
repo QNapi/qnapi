@@ -131,7 +131,7 @@ void frmConvert::anyFormatChanged()
     if(fpsNeeded) {
         QFileInfo srcSubFI(ui.leSrcSubFile->text());
 
-        QString movieFilePathBase = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName();
+        QString movieFilePathBase = srcSubFI.absolutePath() + "/" + srcSubFI.completeBaseName();
 
         foreach(QString movieExt, GlobalConfig().movieExtensions())
         {
@@ -200,7 +200,7 @@ void frmConvert::generateTargetFileName()
             extension = ui.cbTargetExtension->currentText();
         }
 
-        QString defaultTargetPath = srcSubFI.absolutePath() + QDir::separator() + srcSubFI.completeBaseName() + "." + extension;
+        QString defaultTargetPath = srcSubFI.absolutePath() + "/" + srcSubFI.completeBaseName() + "." + extension;
         ui.leTargetFileName->setText(defaultTargetPath);
     }
 }

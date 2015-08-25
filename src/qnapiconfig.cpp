@@ -657,8 +657,8 @@ void QNapiConfig::setPreviousDialogPath(const QString & path)
 QStringList QNapiConfig::scanFilters()
 {
     QStringList defaultScanFilters;
-    defaultScanFilters << "*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg"
-                            " *.mpg *.ogm *.rm *.rmvb *.wmv" << "*.*";
+
+    defaultScanFilters << movieExtensionsFilter() << "*.*";
 
     return settings->value("scan/filters", defaultScanFilters).toStringList();
 }
@@ -696,6 +696,43 @@ QString QNapiConfig::lastScanDir()
 void QNapiConfig::setLastScanDir(const QString & dir)
 {
     settings->setValue("scan/last_scan_dir", dir);
+}
+
+QStringList QNapiConfig::movieExtensions()
+{
+    QStringList exts = {
+        "avi", "asf", "divx", "mkv", "mov", "mp4", "mpeg", "mpg", "ogm", "rm", "rmvb", "wmv"
+    };
+    return exts;
+}
+
+QString QNapiConfig::movieExtensionsFilter()
+{
+    QStringList moviePatterns;
+    foreach(QString ext, movieExtensions())
+    {
+        moviePatterns << "*." + ext;
+    }
+    return moviePatterns.join(" ");
+}
+
+
+QStringList QNapiConfig::subtitleExtensions()
+{
+    QStringList exts = {
+        "srt", "sub", "txt"
+    };
+    return exts;
+}
+
+QString QNapiConfig::subtitleExtensionsFilter()
+{
+    QStringList subtitlePatterns;
+    foreach(QString ext, subtitleExtensions())
+    {
+        subtitlePatterns << "*." + ext;
+    }
+    return subtitlePatterns.join(" ");
 }
 
 

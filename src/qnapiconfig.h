@@ -155,6 +155,11 @@ class QNapiConfig
         QString lastScanDir();
         void setLastScanDir(const QString & dir);
 
+        QStringList movieExtensions();
+        QString movieExtensionsFilter();
+        QStringList subtitleExtensions();
+        QString subtitleExtensionsFilter();
+
     private:
         QNapiConfig();
         QNapiConfig(const QNapiConfig &);

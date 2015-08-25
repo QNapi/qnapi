@@ -101,10 +101,12 @@ void frmScan::selectDirectory()
                                 dir, QNapiOpenDialog::None);
 
     if(openDialog.selectDirectory())
+    {
         dir = openDialog.selectedFiles().first();
 
-    if(!dir.isEmpty() && QDir().exists(dir))
-        ui.leDirectory->setText(dir);
+        if(QDir().exists(dir))
+            ui.leDirectory->setText(dir);
+    }
 }
 
 void frmScan::leDirectoryTextChanged()

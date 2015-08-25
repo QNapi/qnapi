@@ -231,7 +231,7 @@ QNapiProjektEngine::UploadResult
     if(!QFile::exists(movie) || !QFile::exists(subtitles))
         return NAPI_FAIL;
 
-    FFProbeMovieInfoParser mip("/usr/bin/ffprobe");
+    FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
     MovieInfo movieInfo = mip.parseFile(movie);
 
     unsigned long movie_size = QFileInfo(movie).size();
@@ -327,8 +327,7 @@ QNapiProjektEngine::UploadResult
 
     QByteArray data = postData.requestStream();
 
-    QString movie_fps = QString::number((int)ceil(movieInfo.frameRate * 100));
-    movie_fps.insert(2, ',');
+    QString movie_fps = QString::number((int)ceil(movieInfo.frameRate * 100)).replace(".", ",");
 
     QString urlTxt;
     

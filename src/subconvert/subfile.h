@@ -22,6 +22,11 @@ enum SubTokenType
 struct SubToken {
     SubTokenType type;
     QString payload;
+
+    bool operator==(const SubToken & other) const
+    {
+        return type == other.type && payload == other.payload;
+    }
 };
 
 struct SubEntry

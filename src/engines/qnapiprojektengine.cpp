@@ -196,7 +196,6 @@ bool QNapiProjektEngine::unpack()
     // Rozpakowujemy napisy max w ciagu 5 sekund
     if(!p7zip.waitForFinished(5000)) return false;
 
-    subtitlesTmp = tmpPath + "/" + checkSum + ".txt";
     return QFile::exists(subtitlesTmp);
 }
 

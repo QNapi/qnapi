@@ -30,7 +30,7 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
 #else
         setFilter
 #endif
-        (tr("Filmy (*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv);;Wszystkie pliki (*.*)"));
+        (tr("Filmy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
     }
     else if(filterMode == Subtitles)
     {
@@ -39,7 +39,7 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
 #else
         setFilter
 #endif
-        (tr("Napisy (*.srt *.sub *.txt);;Wszystkie pliki (*.*)"));
+        (tr("Napisy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
     }
 
     if(QFileInfo(init_path).isDir())

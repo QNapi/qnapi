@@ -300,8 +300,19 @@ bool ScanFilesThread::doScan(const QString & path, QDir::Filters filters)
         {
             if(!QFile::exists((*p).absoluteFilePath())) continue;
 
-            if(skipIfSubtitlesExists &&
-                QFile::exists((*p).absolutePath() + "/" + (*p).completeBaseName() + ".txt"))
+            bool subtitleFileFound = false;
+            if(skipIfSubtitlesExists) {
+                foreach(QString subExt, GlobalConfig().subtitleExtensions())
+                {
+                    if(QFile::exists((*p).absolutePath() + "/" + (*p).completeBaseName() + "." + subExt))
+                    {
+                        subtitleFileFound = true;
+                        break;
+                    }
+                }
+            }
+
+            if(subtitleFileFound)
             {
                 continue;
             }

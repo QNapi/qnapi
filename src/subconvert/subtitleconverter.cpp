@@ -104,24 +104,31 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
     if(!GlobalConfig().ppSkipConvertAds() && !sf.entries.isEmpty())
     {
-        SubEntry adEntry;
-        if(targetFormat->isTimeBased())
+        SubToken stQNapi;
+        stQNapi.type = STT_WORD;
+        stQNapi.payload = "QNapi";
+
+        if(!sf.entries.last().tokens.contains(stQNapi))
         {
-            adEntry.frameStart = sf.entries.back().frameStop + 2000L;
-            adEntry.frameStop = adEntry.frameStart + 8000L;
+            SubEntry adEntry;
+            if(targetFormat->isTimeBased())
+            {
+                adEntry.frameStart = sf.entries.back().frameStop + 2000L;
+                adEntry.frameStop = adEntry.frameStart + 8000L;
+            }
+            else
+            {
+                adEntry.frameStart = sf.entries.back().frameStop + 50L;
+                adEntry.frameStop = adEntry.frameStart + 200L;
+            }
+            QString ad = QString("Napisy pobrane i przetworzone programem QNapi|");
+            adEntry.tokens = targetFormat->decodeTokenStream(ad);
+            SubToken urlToken;
+            urlToken.type = STT_WORD;
+            urlToken.payload = QNAPI_URL;
+            adEntry.tokens.push_back(urlToken);
+            sf.entries.push_back(adEntry);
         }
-        else
-        {
-            adEntry.frameStart = sf.entries.back().frameStop + 50L;
-            adEntry.frameStop = adEntry.frameStart + 200L;
-        }
-        QString ad = QString("Napisy pobrane i przetworzone programem QNapi|");
-        adEntry.tokens = targetFormat->decodeTokenStream(ad);
-        SubToken urlToken;
-        urlToken.type = STT_WORD;
-        urlToken.payload = QNAPI_URL;
-        adEntry.tokens.push_back(urlToken);
-        sf.entries.push_back(adEntry);
     }
 
     QStringList targetLines = targetFormat->encode(sf);

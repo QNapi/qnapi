@@ -1,7 +1,7 @@
 QNapi ChangeLog:
 ================
 
-2015-08-?? v0.1.9:
+2015-08-26 v0.1.9:
  * obsluga konwersji pomiedzy formatami napisow: SRT, mDVD, TMP, MPL2
    (wymagany jest program ffprobe) - #10
  * mozliwosc wyboru rozszerzenia dopasowanych napisow

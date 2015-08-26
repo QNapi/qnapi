@@ -15,7 +15,8 @@ public:
                           QString targetFormatName,
                           QString targetFileName,
                           double movieFPS,
-                          double fpsRatio);
+                          double fpsRatio,
+                          double delayOffset);
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,
@@ -26,9 +27,13 @@ public:
                           QString targetFormatName,
                           QString targetFileName,
                           std::function<double ()> determineFPS,
-                          double fpsRatio = 1.0);
+                          double fpsRatio = 1.0,
+                          double delayOffset = 0.0);
 
 private:
+    long ts2frame(long ts, double frameRate);
+    long frame2ts(long frame, double frameRate);
+
     QStringList readFile(const QString & filename, long atMostLines = 0);
     bool writeFile(const QString & filename, const QStringList & lines);
 

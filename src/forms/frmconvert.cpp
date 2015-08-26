@@ -35,6 +35,7 @@ frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     connect(ui.cbTargetExtension, SIGNAL(currentIndexChanged(int)), this, SLOT(targetExtensionChanged()));
     connect(ui.pbMovieFPSSelect, SIGNAL(clicked()), this, SLOT(movieFPSSelectClicked()));
     connect(ui.pbTargetMovieFPSSelect, SIGNAL(clicked()), this, SLOT(targetMovieFPSSelectClicked()));
+    connect(ui.cbDelaySubtitles, SIGNAL(toggled(bool)), this, SLOT(subDelayToggled()));
     connect(ui.pbConvert, SIGNAL(clicked()), this, SLOT(convertClicked()));
 
     if(GlobalConfig().ppSubFormat().isEmpty())
@@ -92,12 +93,13 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
     ui.lbTargetExtension->setEnabled(!srcFormat.isEmpty());
     ui.cbTargetExtension->setEnabled(!srcFormat.isEmpty());
     ui.cbChangeFPS->setEnabled(!srcFormat.isEmpty());
+    ui.cbDelaySubtitles->setEnabled(!srcFormat.isEmpty());
     ui.pbMovieFPSSelect->setEnabled(!srcFormat.isEmpty());
     ui.lbTargetFileName->setEnabled(!srcFormat.isEmpty());
     ui.leTargetFileName->setEnabled(!srcFormat.isEmpty());
     ui.pbConvert->setEnabled(!srcFormat.isEmpty());
 
-    anyFormatChanged();
+    checkFPSNeeded();
     generateTargetFileName();
 }
 
@@ -105,10 +107,10 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
 void frmConvert::targetFormatChanged(int targetFormatIdx)
 {
     targetFormat = GlobalFormatsRegistry().enumerateFormats().at(targetFormatIdx);
-    anyFormatChanged();
+    checkFPSNeeded();
 }
 
-void frmConvert::anyFormatChanged()
+void frmConvert::checkFPSNeeded()
 {
     bool fpsNeeded;
     if(srcFormat.isEmpty() || targetFormat.isEmpty())
@@ -117,7 +119,7 @@ void frmConvert::anyFormatChanged()
     } else {
         SubtitleFormat * srcSF = GlobalFormatsRegistry().select(srcFormat);
         SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormat);
-        fpsNeeded = srcSF->isTimeBased() != targetSF->isTimeBased();
+        fpsNeeded = (srcSF->isTimeBased() != targetSF->isTimeBased()) || (ui.cbDelaySubtitles->isChecked() && !targetSF->isTimeBased());
 
         QString targetDefaultExt = targetSF->defaultExtension();
         ui.cbTargetExtension->setItemText(0, tr("Domyślne (%1)").arg(targetDefaultExt));
@@ -205,9 +207,15 @@ void frmConvert::generateTargetFileName()
     }
 }
 
+void frmConvert::subDelayToggled()
+{
+    checkFPSNeeded();
+}
+
 void frmConvert::convertClicked()
 {
-    double fpsRatio = 1.0;
+    double fpsRatio = 1.0, delayOffset = 0.0;
+
     if(ui.cbChangeFPS->isChecked())
     {
         double fpsFrom = ui.cbFPSFrom->currentText().toDouble();
@@ -215,11 +223,17 @@ void frmConvert::convertClicked()
         fpsRatio = fpsTo / fpsFrom;
     }
 
+    if(ui.cbDelaySubtitles->isChecked())
+    {
+        delayOffset = ui.sbDelayOffset->value();
+    }
+
     if(subConverter.convertSubtitles(ui.leSrcSubFile->text(),
                                      targetFormat,
                                      ui.leTargetFileName->text(),
                                      ui.cbMovieFPS->currentText().toDouble(),
-                                     fpsRatio))
+                                     fpsRatio,
+                                     delayOffset))
     {
         QMessageBox::information(this, tr("Przekonwertowano napisy"),
                                  tr("Poprawnie zmieniono format napisów z '%1' na '%2'").arg(srcFormat, targetFormat));

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>596</width>
-    <height>354</height>
+    <width>584</width>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -512,6 +512,70 @@
     </widget>
    </item>
    <item row="7" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QCheckBox" name="cbDelaySubtitles">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Przesuń napisy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="sbDelayOffset">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>180</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>180</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="prefix">
+        <string>o </string>
+       </property>
+       <property name="suffix">
+        <string> sekund</string>
+       </property>
+       <property name="minimum">
+        <double>-999999999.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="0">
     <widget class="QLabel" name="lbTargetFileName">
      <property name="enabled">
       <bool>false</bool>
@@ -521,7 +585,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QLineEdit" name="leTargetFileName">
      <property name="enabled">
       <bool>false</bool>
@@ -537,7 +601,7 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -550,7 +614,7 @@
      </property>
     </spacer>
    </item>
-   <item row="10" column="0">
+   <item row="11" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <spacer name="horizontalSpacer">
@@ -666,6 +730,22 @@
     <hint type="destinationlabel">
      <x>560</x>
      <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbDelaySubtitles</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sbDelayOffset</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>475</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>

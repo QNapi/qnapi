@@ -29,9 +29,10 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString targetFormatName,
                                          QString targetFileName,
                                          double movieFPS,
-                                         double fpsRatio)
+                                         double fpsRatio,
+                                         double delayOffset)
 {
-    return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [=]() -> double { return movieFPS; }, fpsRatio);
+    return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [=]() -> double { return movieFPS; }, fpsRatio, delayOffset);
 }
 
 bool SubtitleConverter::convertSubtitles(QString subtitleFile,
@@ -53,7 +54,8 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString targetFormatName,
                                          QString targetFileName,
                                          std::function<double ()> determineFPS,
-                                         double fpsRatio)
+                                         double fpsRatio,
+                                         double delayOffset)
 {
     QStringList subtitleLines = readFile(subtitleFile);
 
@@ -66,10 +68,11 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
 
     SubFile sf = inputFormat->decode(subtitleLines);
+    double frameRate = 0.0;
 
     if(inputFormat->isTimeBased() != targetFormat->isTimeBased())
     {
-        double frameRate = determineFPS();
+        frameRate = determineFPS();
         if(frameRate <= 0.0)
             return false;
 
@@ -78,8 +81,8 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
             // convert frames to timestamps
             for(int i = 0; i < sf.entries.size(); ++i)
             {
-                sf.entries[i].frameStart = (long)floor(1000.0 * sf.entries[i].frameStart / frameRate);
-                sf.entries[i].frameStop = (long)floor(1000.0 * sf.entries[i].frameStop / frameRate);
+                sf.entries[i].frameStart = frame2ts(sf.entries[i].frameStart, frameRate);
+                sf.entries[i].frameStop = frame2ts(sf.entries[i].frameStop, frameRate);
             }
         }
         else
@@ -87,8 +90,8 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
             // convert timestamps to frames
             for(int i = 0; i < sf.entries.size(); ++i)
             {
-                sf.entries[i].frameStart = (long)floor(frameRate * sf.entries[i].frameStart / 1000.0);
-                sf.entries[i].frameStop = (long)floor(frameRate * sf.entries[i].frameStop / 1000.0);
+                sf.entries[i].frameStart = ts2frame(sf.entries[i].frameStart, frameRate);
+                sf.entries[i].frameStop = ts2frame(sf.entries[i].frameStop, frameRate);
             }
         }
     }
@@ -99,6 +102,31 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
         {
             sf.entries[i].frameStart = (long)floor(fpsRatio * sf.entries[i].frameStart);
             sf.entries[i].frameStop = (long)floor(fpsRatio * sf.entries[i].frameStop);
+        }
+    }
+
+    if(delayOffset != 0.0)
+    {
+        long offset = (long)(delayOffset * 1000.0);
+
+        if(targetFormat->isTimeBased())
+        {
+            for(int i = 0; i < sf.entries.size(); ++i)
+            {
+                sf.entries[i].frameStart = std::max(0L, sf.entries[i].frameStart + offset);
+                sf.entries[i].frameStop = std::max(0L, sf.entries[i].frameStop + offset);
+            }
+        } else {
+            if(frameRate <= 0.0)
+                frameRate = determineFPS();
+            if(frameRate <= 0.0)
+                return false;
+
+            for(int i = 0; i < sf.entries.size(); ++i)
+            {
+                sf.entries[i].frameStart = std::max(0L, ts2frame(frame2ts(sf.entries[i].frameStart, frameRate) + offset, frameRate));
+                sf.entries[i].frameStop = std::max(0L, ts2frame(frame2ts(sf.entries[i].frameStop, frameRate) + offset, frameRate));
+            }
         }
     }
 
@@ -134,6 +162,16 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
     QStringList targetLines = targetFormat->encode(sf);
 
     return writeFile(targetFileName, targetLines);
+}
+
+long SubtitleConverter::ts2frame(long ts, double frameRate)
+{
+    return (long)floor(frameRate * ts / 1000.0);
+}
+
+long SubtitleConverter::frame2ts(long frame, double frameRate)
+{
+    return (long)floor(1000.0 * frame / frameRate);
 }
 
 QStringList SubtitleConverter::readFile(const QString & filename, long atMostLines)

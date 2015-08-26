@@ -17,7 +17,7 @@ private:
     QString srcFormat, targetFormat;
     bool targetFileNameSelected;
 
-    void anyFormatChanged();
+    void checkFPSNeeded();
     QString determineMovieFPS(const QString & defaultMovieFilePath);
     void generateTargetFileName();
 
@@ -29,6 +29,7 @@ private slots:
     void movieFPSSelectClicked();
     void targetMovieFPSSelectClicked();
     void targetExtensionChanged();
+    void subDelayToggled();
     void convertClicked();
 };
 

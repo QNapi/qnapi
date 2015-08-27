@@ -1,6 +1,9 @@
 /*****************************************************************************
-** QNapi
-** Copyright (C) 2008-2009 Krzemin <pkrzemin@o2.pl>
+**  Copyright (C) 2005 by Iulian M
+**  eti@erata.net
+**
+**  modifications by Piotr Krzemiński
+**  Copyright (C) 2008-2015
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2009 Krzemin <pkrzemin@o2.pl>
+** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -11,7 +11,6 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 **
 *****************************************************************************/
-
 
 #include "qnapi.h"
 

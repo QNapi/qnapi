@@ -427,6 +427,7 @@ bool QNapisy24Engine::unpack()
         return false;
 
     QString resp = QByteArray(p7zip.readAll());
+
 #ifdef Q_OS_WIN
     QRegExp r("\r\nPath = ([^\r\n]*)\r\n");
 #else
@@ -434,17 +435,32 @@ bool QNapisy24Engine::unpack()
 #endif
     r.setPatternSyntax(QRegExp::RegExp2);
 
-    if (r.lastIndexIn(resp) == -1)
+    QStringList pathMatches;
+    int offset = 0;
+
+    while((offset = r.indexIn(resp, offset)) != -1)
+    {
+        QString filePath = r.cap(1);
+
+        if(filePath != tmpPackedFile && !filePath.endsWith(".url"))
+        {
+            pathMatches << filePath;
+        }
+
+        offset += r.matchedLength();
+    }
+
+    if(pathMatches.isEmpty())
         return false;
 
-    QString subFileName = r.cap(1);
+    QString subFileName = pathMatches.first();
 
     subtitlesTmp = tmpPath + "/" + subFileName;
     if(QFile::exists(subtitlesTmp))
         QFile::remove(subtitlesTmp);
 
     QStringList args;
-    args << "e" << "-y" << ("-o" + tmpPath) << tmpPackedFile;
+    args << "e" << "-y" << ("-o" + tmpPath) << tmpPackedFile << subFileName;
 
     p7zip.start(p7zipPath, args);
 

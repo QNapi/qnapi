@@ -112,7 +112,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../res/resources.qrc">:/icon/qnapi-48.png</pixmap>
+        <pixmap resource="../res/resources.qrc">:/icon/qnapi.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

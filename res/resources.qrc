@@ -3,10 +3,9 @@
         <file>opensubtitles.gif</file>
         <file>qnapi-22-mono.png</file>
         <file>qnapi-48-icon.png</file>
-        <file>qnapi-48.png</file>
-        <file>qnapi.png</file>
         <file>napisy24.gif</file>
         <file>napiprojekt.jpg</file>
+        <file alias="qnapi.png">icons/48x48/apps/qnapi.png</file>
     </qresource>
     <qresource prefix="/languages">
         <file>el.gif</file>

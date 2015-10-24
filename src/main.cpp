@@ -172,8 +172,11 @@ QStringList parseArgs(int argc, char **argv)
 
     for(int i = 1; i < argc; i++)
     {
+#ifdef Q_OS_WIN
+        QString p = QString::fromLocal8Bit(argv[i]);
+#else
         QString p = argv[i];
-
+#endif
         if(p.startsWith("file://"))
             p = p.remove(0, 7);
 
@@ -186,7 +189,6 @@ QStringList parseArgs(int argc, char **argv)
         if(QFileInfo(p).isFile())
             pathList << p;
     }
-
     return pathList;
 }
 

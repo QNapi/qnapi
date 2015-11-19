@@ -15,6 +15,7 @@
 #include "encodingutils.h"
 
 #include <QTextStream>
+#include <QTextCodec>
 
 EncodingUtils::EncodingUtils()
 {
@@ -24,8 +25,13 @@ EncodingUtils::EncodingUtils()
         <<"I"<<"I"<<"I"<<"I"<<"D"<<"N"<<"O"<<"O"<<"O"<<"O"<<"O"<<"O"<<"U"<<"U"<<"U"<<"U"<<"Y"<<"s"<<"a"
         <<"a"<<"a"<<"a"<<"a"<<"a"<<"ae"<<"c"<<"e"<<"e"<<"e"<<"e"<<"i"<<"i"<<"i"<<"i"<<"o"<<"n"<<"o"<<"o"
         <<"o"<<"o"<<"o"<<"o"<<"u"<<"u"<<"u"<<"u"<<"y"<<"y";
-    codecs << "windows-1250" << "windows-1257" << "ISO-8859-2"
-            << "ISO-8859-13" << "ISO-8859-16" << "UTF-8";
+
+    codecs << "windows-1257"
+           << "ISO-8859-13"
+           << "ISO-8859-16"
+           << "ISO-8859-2"
+           << "windows-1250"
+           << "UTF-8";
 }
 
 QString EncodingUtils::replaceDiacriticsWithASCII(const QString & str) {
@@ -50,21 +56,22 @@ QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
 
     foreach(QString codec, codecs)
     {
-        QTextStream ts(buffer);
-        ts.setCodec(qPrintable(codec));
-        QString encodedData = ts.readAll();
+        QTextCodec *tc = QTextCodec::codecForName(qPrintable(codec));
+        const QString text = tc->toUnicode(buffer.constData(), buffer.size());
+
         QStringList chars = QString::fromUtf8("ą/ś/ż/ć/ń/ł/ó/ę").split("/");
 
-        int i;
-        for (i = 0; i < chars.count(); i++)
-        {
-            if(!encodedData.contains(chars[i], Qt::CaseInsensitive))
-                break;
+        int found = 0;
 
-            if(i + 1 > bestMatch) {
-                bestMatch = i + 1;
-                from = codec;
-            }
+        foreach (QString c, chars)
+        {
+            if(text.contains(c, Qt::CaseInsensitive))
+                ++found;
+        }
+
+        if(found >= bestMatch) {
+            bestMatch = found;
+            from = codec;
         }
     }
 

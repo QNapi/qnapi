@@ -214,7 +214,7 @@ bool SubtitleConverter::writeFile(const QString & filename, const QStringList & 
         QTextStream out(&outputFile);
         foreach(QString line, lines)
         {
-            out << line << "\r\n";
+            out << line << "\n";
         }
         outputFile.close();
         return true;

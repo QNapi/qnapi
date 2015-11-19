@@ -27,7 +27,7 @@ bool SubRipSubtitleFormat::detect(const QStringList &lines)
     foreach(QString line, lines2)
     {
         if(line.isEmpty()) break;
-        firstEntryBuff += line + "\r\n";
+        firstEntryBuff += line + "\n";
     }
 
     QRegExp r("^(\\d+)(\\n|\\r\\n|\\s+)(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})\\s+\\-\\->\\s+(\\d{2}):(\\d{2}):(\\d{2})\\,(\\d{3})(.*)");
@@ -78,7 +78,7 @@ SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
         }
         else if(rNumLine.exactMatch(line))
         {
-            numsBuff += line + "\r\n";
+            numsBuff += line + "\n";
         }
         else if (!line.trimmed().isEmpty()) {
             if(!numsBuff.isEmpty())
@@ -86,7 +86,7 @@ SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
                 tokensBuff += numsBuff;
                 numsBuff.clear();
             }
-            tokensBuff += line + "\r\n";
+            tokensBuff += line + "\n";
         }
     }
 
@@ -151,7 +151,7 @@ QStringList SubRipSubtitleFormat::encodeEntry(const SubEntry & entry, int i)
            .arg(m2, 2, 10, QChar('0'))
            .arg(s2, 2, 10, QChar('0'))
            .arg(ms2, 3, 10, QChar('0'))
-        << tokensBuff.split("\r\n");
+        << tokensBuff.split("\n");
     return out;
 }
 
@@ -161,7 +161,7 @@ QString SubRipSubtitleFormat::encodeToken(const SubToken & entry)
     {
     case STT_WS: return " ";
     case STT_WORD: return entry.payload;
-    case STT_NEWLINE: return "\r\n";
+    case STT_NEWLINE: return "\n";
     case STT_BOLD: return "<b>";
     case STT_BOLD_END: return "</b>";
     case STT_ITALIC: return "<i>";

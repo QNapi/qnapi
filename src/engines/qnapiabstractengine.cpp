@@ -162,27 +162,13 @@ void QNapiAbstractEngine::pp()
     }
 }
 
-QString QNapiAbstractEngine::ppDetectEncoding(const QString & fileName, int testBufferSize)
-{
-    QFile f(fileName);
-    if(!f.open(QIODevice::ReadOnly))
-        return "";
-
-    QByteArray testData = (testBufferSize > 0) ? f.read(testBufferSize) : f.readAll();
-
-    f.close();
-
-    return encodingUtils.detectBufferEncoding(testData);
-}
-
-
 // zamienia znaki diakrytyczne na ASCII
 bool QNapiAbstractEngine::ppReplaceDiacriticsWithASCII()
 {
     if(!QFileInfo(subtitlesTmp).exists())
         return false;
 
-    QString from = ppDetectEncoding(subtitlesTmp);
+    QString from = encodingUtils.detectFileEncoding(subtitlesTmp);
 
     if(from.isEmpty())
         return false;
@@ -248,7 +234,7 @@ bool QNapiAbstractEngine::ppChangeSubtitlesEncoding(const QString & to)
     if(!QFileInfo(subtitlesTmp).exists())
         return false;
 
-    QString from = ppDetectEncoding(subtitlesTmp);
+    QString from = encodingUtils.detectFileEncoding(subtitlesTmp);
 
     if(from.isEmpty())
         return false;
@@ -264,7 +250,7 @@ bool QNapiAbstractEngine::ppRemoveLinesContainingWords(QStringList wordList)
 
     wordList = wordList.filter(QRegExp("^(.+)$"));
 
-    QString fromCodec = ppDetectEncoding(subtitlesTmp);
+    QString fromCodec = encodingUtils.detectFileEncoding(subtitlesTmp);
 
     if(fromCodec.isEmpty())
         fromCodec = GlobalConfig().ppEncodingFrom();

@@ -26,6 +26,7 @@ public:
 
     QString replaceDiacriticsWithASCII(const QString & str);
     QString detectBufferEncoding(const QByteArray & buffer);
+    QString detectFileEncoding(const QString & filename);
 
 private:
     QString diacritics;

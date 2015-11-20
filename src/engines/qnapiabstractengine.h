@@ -51,8 +51,6 @@ public:
     // dokonuje przetwarzania napisow
     void pp();
 
-    // probuje wykrywac (polskie) kodowanie znakow w pliku tekstowym
-    QString ppDetectEncoding(const QString & fileName, int testBufferSize = 10240);
     // zamienia znaki diakrytyczne na ASCII
     bool ppReplaceDiacriticsWithASCII();
     // zmienia kodowanie znakow w pobranych napisach

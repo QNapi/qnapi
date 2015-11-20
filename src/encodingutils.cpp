@@ -16,6 +16,7 @@
 
 #include <QTextStream>
 #include <QTextCodec>
+#include <QFile>
 
 EncodingUtils::EncodingUtils()
 {
@@ -76,4 +77,17 @@ QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
     }
 
     return from;
+}
+
+
+QString EncodingUtils::detectFileEncoding(const QString & filename)
+{
+    QFile f(filename);
+    if(f.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QString enc = detectBufferEncoding(f.readAll());
+        f.close();
+        return enc;
+    }
+    return "";
 }

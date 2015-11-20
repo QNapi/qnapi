@@ -48,8 +48,8 @@ private:
     long ts2frame(long ts, double frameRate);
     long frame2ts(long frame, double frameRate);
 
-    QStringList readFile(const QString & filename, long atMostLines = 0);
-    bool writeFile(const QString & filename, const QStringList & lines);
+    QStringList readFile(const QString & filename, QString encoding, long atMostLines = 0);
+    bool writeFile(const QString & filename, QString encoding, const QStringList & lines);
 
 };
 

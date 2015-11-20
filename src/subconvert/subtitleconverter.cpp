@@ -20,10 +20,12 @@
 #include "version.h"
 #include <cmath>
 #include <QTextStream>
+#include "encodingutils.h"
+#include <QDebug>
 
 QString SubtitleConverter::detectFormat(const QString &subtitleFile)
 {
-    const QStringList & lines = readFile(subtitleFile, 15);
+    const QStringList & lines = readFile(subtitleFile, "UTF-8", 15);
     return detectFormat(lines);
 }
 
@@ -71,7 +73,10 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          double fpsRatio,
                                          double delayOffset)
 {
-    QStringList subtitleLines = readFile(subtitleFile);
+    EncodingUtils eu;
+    QString encoding = eu.detectFileEncoding(subtitleFile);
+
+    QStringList subtitleLines = readFile(subtitleFile, encoding);
 
     QString detectedFormat = detectFormat(subtitleLines);
     if(detectedFormat.isEmpty())
@@ -175,7 +180,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
 
     QStringList targetLines = targetFormat->encode(sf);
 
-    return writeFile(targetFileName, targetLines);
+    return writeFile(targetFileName, encoding, targetLines);
 }
 
 long SubtitleConverter::ts2frame(long ts, double frameRate)
@@ -188,30 +193,32 @@ long SubtitleConverter::frame2ts(long frame, double frameRate)
     return (long)floor(1000.0 * frame / frameRate);
 }
 
-QStringList SubtitleConverter::readFile(const QString & filename, long atMostLines)
+QStringList SubtitleConverter::readFile(const QString & filename, QString encoding, long atMostLines)
 {
     QStringList buff;
     long current = 0;
     QFile inputFile(filename);
     if (inputFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-       QTextStream in(&inputFile);
-       while (!in.atEnd() || current < atMostLines)
-       {
-          buff += in.readLine();
-          ++current;
-       }
-       inputFile.close();
+        QTextStream in(&inputFile);
+        in.setCodec(qPrintable(encoding));
+        while (!in.atEnd() && (atMostLines == 0 || current < atMostLines))
+        {
+            buff += in.readLine();
+            ++current;
+        }
+        inputFile.close();
     }
     return buff;
 }
 
-bool SubtitleConverter::writeFile(const QString & filename, const QStringList & lines)
+bool SubtitleConverter::writeFile(const QString & filename, QString encoding, const QStringList & lines)
 {
     QFile outputFile(filename);
     if(outputFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QTextStream out(&outputFile);
+        out.setCodec(qPrintable(encoding));
         foreach(QString line, lines)
         {
             out << line << "\n";

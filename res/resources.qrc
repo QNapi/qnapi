@@ -1,55 +1,55 @@
 <RCC>
     <qresource prefix="/icon">
-        <file>opensubtitles.gif</file>
         <file>qnapi-22-mono.png</file>
         <file>qnapi-48-icon.png</file>
-        <file>napisy24.gif</file>
-        <file>napiprojekt.jpg</file>
         <file alias="qnapi.png">icons/48x48/apps/qnapi.png</file>
+        <file alias="opensubtitles.gif">engines/opensubtitles.gif</file>
+        <file alias="napisy24.gif">engines/napisy24.gif</file>
+        <file alias="napiprojekt.jpg">engines/napiprojekt.jpg</file>
     </qresource>
     <qresource prefix="/languages">
-        <file>el.gif</file>
-        <file>ar.gif</file>
-        <file>bg.gif</file>
-        <file>cs.gif</file>
-        <file>da.gif</file>
-        <file>de.gif</file>
-        <file>es.gif</file>
-        <file>fi.gif</file>
-        <file>fr.gif</file>
-        <file>hr.gif</file>
-        <file>hu.gif</file>
-        <file>id.gif</file>
-        <file>it.gif</file>
-        <file>ja.gif</file>
-        <file>ko.gif</file>
-        <file>mk.gif</file>
-        <file>nl.gif</file>
-        <file>zh.gif</file>
-        <file>vi.gif</file>
-        <file>tr.gif</file>
-        <file>sv.gif</file>
-        <file>sr.gif</file>
-        <file>sq.gif</file>
-        <file>sl.gif</file>
-        <file>ro.gif</file>
-        <file>pt.gif</file>
-        <file>pl.gif</file>
-        <file>pb.gif</file>
-        <file>et.gif</file>
-        <file>no.gif</file>
-        <file>ru.gif</file>
-        <file>sk.gif</file>
-        <file>en.gif</file>
+        <file alias="el.gif">langs/el.gif</file>
+        <file alias="ar.gif">langs/ar.gif</file>
+        <file alias="bg.gif">langs/bg.gif</file>
+        <file alias="cs.gif">langs/cs.gif</file>
+        <file alias="da.gif">langs/da.gif</file>
+        <file alias="de.gif">langs/de.gif</file>
+        <file alias="es.gif">langs/es.gif</file>
+        <file alias="fi.gif">langs/fi.gif</file>
+        <file alias="fr.gif">langs/fr.gif</file>
+        <file alias="hr.gif">langs/hr.gif</file>
+        <file alias="hu.gif">langs/hu.gif</file>
+        <file alias="id.gif">langs/id.gif</file>
+        <file alias="it.gif">langs/it.gif</file>
+        <file alias="ja.gif">langs/ja.gif</file>
+        <file alias="ko.gif">langs/ko.gif</file>
+        <file alias="mk.gif">langs/mk.gif</file>
+        <file alias="nl.gif">langs/nl.gif</file>
+        <file alias="zh.gif">langs/zh.gif</file>
+        <file alias="vi.gif">langs/vi.gif</file>
+        <file alias="tr.gif">langs/tr.gif</file>
+        <file alias="sv.gif">langs/sv.gif</file>
+        <file alias="sr.gif">langs/sr.gif</file>
+        <file alias="sq.gif">langs/sq.gif</file>
+        <file alias="sl.gif">langs/sl.gif</file>
+        <file alias="ro.gif">langs/ro.gif</file>
+        <file alias="pt.gif">langs/pt.gif</file>
+        <file alias="pl.gif">langs/pl.gif</file>
+        <file alias="pb.gif">langs/pb.gif</file>
+        <file alias="et.gif">langs/et.gif</file>
+        <file alias="no.gif">langs/no.gif</file>
+        <file alias="ru.gif">langs/ru.gif</file>
+        <file alias="sk.gif">langs/sk.gif</file>
+        <file alias="en.gif">langs/en.gif</file>
     </qresource>
     <qresource prefix="/ui">
-        <file>folder.png</file>
-        <file>arrow_down.png</file>
-        <file>arrow_up.png</file>
-        <file>wrench.png</file>
-        <file>information.png</file>
-        <file>film.png</file>
-        <file>accept.png</file>
-        <file>exclamation.png</file>
+        <file alias="folder.png">ui/folder.png</file>
+        <file alias="arrow_down.png">ui/arrow_down.png</file>
+        <file alias="arrow_up.png">ui/arrow_up.png</file>
+        <file alias="wrench.png">ui/wrench.png</file>
+        <file alias="information.png">ui/information.png</file>
+        <file alias="film.png">ui/film.png</file>
+        <file alias="accept.png">ui/accept.png</file>
+        <file alias="exclamation.png">ui/exclamation.png</file>
     </qresource>
 </RCC>

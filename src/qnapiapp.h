@@ -23,6 +23,7 @@
 #include <QAction>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
+#include <QDateTime>
 
 #include "qcumber/qsingleapplication.h"
 
@@ -101,6 +102,8 @@ class QNapiApp : public QSingleApplication
         frmNapiProjektUpload *f_napiProjektUpload;
         frmNapiProjektCorrect *f_napiProjektCorrect;
         frmNapiProjektReport *f_napiProjektReport;
+
+        QDateTime creationDT;
 
     private slots:
 

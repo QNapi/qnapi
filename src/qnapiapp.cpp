@@ -15,7 +15,7 @@
 #include "qnapiapp.h"
 
 QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName)
-    : QSingleApplication(argc, argv, useGui, appName)
+    : QSingleApplication(argc, argv, useGui, appName), creationDT(QDateTime::currentDateTime())
 {
     setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
@@ -423,10 +423,13 @@ void QNapiApp::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 bool QNapiApp::event(QEvent *ev)
 {
-    if(ev->type() == QEvent::FileOpen)
+    if(ev->type() == QEvent::FileOpen) {
+        bool batchMode = creationDT.secsTo(QDateTime::currentDateTime()) <= 1;
+        progress()->setBatchMode(batchMode);
         emit downloadFile(static_cast<QFileOpenEvent*>(ev)->file());
-    else
+    } else {
         return QApplication::event(ev);
+    }
 
     return true;
 }

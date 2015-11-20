@@ -38,8 +38,8 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     foreach(QString lang, QNapiLanguage("").listLanguages())
     {
         tlcode = QNapiLanguage(lang).toTwoLetter();
-        ui.cbLang->addItem(QIcon(QString(":/languages/%1.gif").arg(tlcode)),lang,QVariant(tlcode));
-        ui.cbLangBackup->addItem(QIcon(QString(":/languages/%1.gif").arg(tlcode)),lang,QVariant(tlcode));
+        ui.cbLang->addItem(QIcon(QString(":/languages/%1.png").arg(tlcode)),lang,QVariant(tlcode));
+        ui.cbLangBackup->addItem(QIcon(QString(":/languages/%1.png").arg(tlcode)),lang,QVariant(tlcode));
     }
 
     setAttribute(Qt::WA_QuitOnClose, false);

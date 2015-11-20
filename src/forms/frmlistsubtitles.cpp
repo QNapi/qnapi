@@ -60,7 +60,7 @@ void frmListSubtitles::setSubtitlesList(const QList<QNapiSubtitleInfo> & list)
         else if(highlight && (s.resolution == SUBTITLE_BAD))
             ++bad;
 
-        QString lang_path = QString(":/languages/") + s.lang + ".gif";
+        QString lang_path = QString(":/languages/") + s.lang + ".png";
         if(QFile::exists(lang_path))
         {
             item = new QTableWidgetItem(QIcon(lang_path), "");

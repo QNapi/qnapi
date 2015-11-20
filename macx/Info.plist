@@ -43,5 +43,9 @@
 	<string>ttxt</string>
 	<key>LSUIElement</key>
 	<false/>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
 </dict>
 </plist>

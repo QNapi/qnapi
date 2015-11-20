@@ -7,6 +7,7 @@ QNapi ChangeLog:
  * wsparcie dla ekranow retina (OSX) - #27
  * wsparcie dla nazw sciezek zawierajacych znaki specjalne (Windows) - #28
  * poprawiony blad przy konwersji SRT polegajacy na dodawaniu pustych linii (Windows) - #29
+ * automatyczne zamykanie aplikacji po pobraniu napisow (OSX) - #31
  * informacje o wersji w pliku .exe (Windows) - #32
  * poprawki bledow w wykrywaniu kodowania pliku (m.in. UTF-8 z BOM) - #34
  * zachowanie kodowania znakow podczas konwersji pomiedzy formatami

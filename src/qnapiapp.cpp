@@ -17,6 +17,8 @@
 QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName)
     : QSingleApplication(argc, argv, useGui, appName)
 {
+    setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+
     openDialog = 0;
 
     f_progress = 0;

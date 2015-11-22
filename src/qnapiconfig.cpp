@@ -64,10 +64,11 @@ QString QNapiConfig::p7zipPath()
     if(!p7z_path.isEmpty() && QFileInfo(p7z_path).isExecutable())
         return p7z_path;
 
-    // Przeszukiwanie sciezek systemowych
+    // Przeszukiwanie sciezek systemowych i biezacego katalogu
     QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
     QStringList paths = path.mid(5).split(":");
     paths.removeAll("");
+    paths.append(".");
 
     if(paths.size() == 0)
         paths << "/usr/bin" << "/usr/local/bin";
@@ -110,10 +111,11 @@ QString QNapiConfig::ffProbePath()
     if(!ffprobe_path.isEmpty() && QFileInfo(ffprobe_path).isExecutable())
         return ffprobe_path;
 
-    // Przeszukiwanie sciezek systemowych
+    // Przeszukiwanie sciezek systemowych i biezacego katalogu
     QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
     QStringList paths = path.mid(5).split(":");
     paths.removeAll("");
+    paths.append(".");
 
     if(paths.size() == 0)
         paths << "/usr/bin" << "/usr/local/bin";

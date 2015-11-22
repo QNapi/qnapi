@@ -344,8 +344,8 @@ void GetThread::run()
         // jesli mozna i potrzeba, listujemy dostepne napisy
         if(napi->needToShowList())
         {
-            emit selectSubtitles(   QFileInfo(queue[i]).fileName(),
-                                    napi->listSubtitles());
+            emit selectSubtitles(QFileInfo(queue[i]).fileName(),
+                                 napi->listSubtitles());
 
             waitForDlg.lock();
             waitForDlg.lock();

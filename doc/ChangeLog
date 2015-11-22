@@ -12,6 +12,7 @@ QNapi ChangeLog:
  * informacje o wersji w pliku .exe (Windows) - #32
  * poprawki bledow w wykrywaniu kodowania pliku (m.in. UTF-8 z BOM) - #34
  * zachowanie kodowania znakow podczas konwersji pomiedzy formatami
+ * poprawiony blad nieuwzgledniajacy jezyka zapasowego przy pobieraniu napisow - #36
 
 2015-08-26 v0.1.9:
  * obsluga konwersji pomiedzy formatami napisow: SRT, mDVD, TMP, MPL2

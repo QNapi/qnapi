@@ -38,10 +38,10 @@ class GetThread : public QNapiThread
 Q_OBJECT
 
     public:
-        GetThread()
+        GetThread() : langBackupPassed(false)
         {
             connect(this, SIGNAL(criticalError(const QString &)),
-                    this, SLOT(setCriticalMessage(const QString &)));
+                    this, SLOT(setCriticalMessage(const QString &)));            
         }
 
     signals:
@@ -86,6 +86,11 @@ class frmProgress: public QWidget
         {
             getThread.setEngines(enginesList);
         }
+        void setBatchMode(bool value) { batchMode = value; }
+        void setBatchLanguages(QString lang, QString langBackup, bool langBackupPassed) {
+            getThread.setLanguages(lang, langBackup, langBackupPassed);
+        }
+        bool isBatchMode() { return batchMode; }
 
     signals:
         void subtitlesSelected(int idx);
@@ -98,12 +103,6 @@ class frmProgress: public QWidget
         void updateProgress(int current, int all, float stageProgress);
         void selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles);
         void downloadFinished();
-
-        void setBatchMode(bool value) { batchMode = value; }
-        void setBatchLanguages(QString lang, QString langBackup, bool langBackupPassed) {
-            getThread.setLanguages(lang, langBackup, langBackupPassed);
-        }
-        bool isBatchMode() { return batchMode; }
 
     private:
         void closeEvent(QCloseEvent *event);

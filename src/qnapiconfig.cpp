@@ -274,6 +274,8 @@ void QNapiConfig::setQuietBatch(bool quietBatch)
 {
 #ifndef Q_OS_MAC
     settings->setValue("qnapi/quiet_batch", quietBatch);
+#else
+    Q_UNUSED(quietBatch)
 #endif
 }
 

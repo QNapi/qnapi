@@ -24,7 +24,6 @@
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
 #include "qnapicli.h"
-
 #include <signal.h>
 
 QStringList parseArgs(int argc, char **argv);
@@ -33,15 +32,21 @@ void sigHandler(int);
 
 int main(int argc, char **argv)
 {
-    bool useGui = !QNapiCli::isCliCall(argc, argv);
+    bool isCliCall = QNapiCli::isCliCall(argc, argv);
+
+    QStringList pathList = parseArgs(argc, argv);
 
     regSignal();
+
+    QFileInfo appExe(argv[0]);
+    GlobalConfig().load(appExe.absoluteDir().path());
+
+    bool quietBatch = GlobalConfig().quietBatch();
+    bool useGui = !isCliCall && !(quietBatch && !pathList.isEmpty());
 
     if(useGui)
     {
         QNapiApp app(argc, argv, true, "QNapi");
-
-        QStringList pathList = parseArgs(argc, argv);
 
         QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
         QTranslator cuteTranslator;

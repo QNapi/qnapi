@@ -56,7 +56,7 @@ enum ChangeEncodingMethod
 class QNapiConfig
 {
     public:
-        void reload();
+        void load(QString appDirPath);
         void save();
 
         bool firstRun();
@@ -85,6 +85,9 @@ class QNapiConfig
 
         bool noBackup();
         void setNoBackup(bool noBackup);
+
+        bool quietBatch();
+        void setQuietBatch(bool quietBatch);
 
 #ifdef Q_OS_MAC
         bool showDockIcon();

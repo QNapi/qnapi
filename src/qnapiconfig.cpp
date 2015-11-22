@@ -16,7 +16,6 @@
 
 QNapiConfig::QNapiConfig()
 {
-    reload();
 }
 
 QNapiConfig::~QNapiConfig()
@@ -24,11 +23,11 @@ QNapiConfig::~QNapiConfig()
     if(settings) delete settings;
 }
 
-void QNapiConfig::reload()
+void QNapiConfig::load(QString appDirPath)
 {
     if(settings) delete settings;
 
-    QString localQNapiIniPath = QCoreApplication::applicationDirPath() + QDir::separator() + "qnapi.ini";
+    QString localQNapiIniPath = appDirPath + QDir::separator() + "qnapi.ini";
     isPortableMode = QFileInfo(localQNapiIniPath).exists();
 
     if(isPortableMode)
@@ -248,6 +247,22 @@ bool QNapiConfig::noBackup()
 void QNapiConfig::setNoBackup(bool noBackup)
 {
     settings->setValue("qnapi/no_backup", noBackup);
+}
+
+bool QNapiConfig::quietBatch()
+{
+#ifdef Q_OS_MAC
+    return false;
+#else
+    return settings->value("qnapi/quiet_batch", false).toBool();
+#endif
+}
+
+void QNapiConfig::setQuietBatch(bool quietBatch)
+{
+#ifndef Q_OS_MAC
+    settings->setValue("qnapi/quiet_batch", quietBatch);
+#endif
 }
 
 #ifdef Q_OS_MAC

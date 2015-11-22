@@ -21,9 +21,14 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
     ui.setupUi(this);
 
+#ifdef Q_OS_MAC
+    ui.cbQuietBatch->hide();
+#endif
+
 #ifndef Q_OS_MAC
     ui.cbShowDockIcon->hide();
 #endif
+
 
 #ifdef Q_OS_WIN
     // Pod Windowsami chowamy kontrolki odpowiadajace za zmiane uprawnien - i tak sie nie przydadza
@@ -333,6 +338,9 @@ void frmOptions::writeConfig()
     GlobalConfig().setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString());
     GlobalConfig().setLanguageBackup(ui.cbLangBackup->itemData(ui.cbLangBackup->currentIndex()).toString());
     GlobalConfig().setNoBackup(ui.cbNoBackup->isChecked());
+#ifndef Q_OS_MAC
+    GlobalConfig().setQuietBatch(ui.cbQuietBatch->isChecked());
+#endif
 
 #ifdef Q_OS_MAC
     GlobalConfig().setShowDockIcon(ui.cbShowDockIcon->isChecked());
@@ -375,16 +383,17 @@ void frmOptions::writeConfig()
 
 void frmOptions::readConfig()
 {
-    GlobalConfig().reload();
+    GlobalConfig().load(QCoreApplication::applicationDirPath());
 
     ui.le7zPath->setText(GlobalConfig().p7zipPath());
     ui.leFfprobePath->setText(GlobalConfig().ffProbePath());
     ui.leTmpPath->setText(GlobalConfig().tmpPath());
     ui.cbLang->setCurrentIndex(ui.cbLang->findData(QNapiLanguage(GlobalConfig().language()).toTwoLetter()));
     ui.cbLangBackup->setCurrentIndex(ui.cbLangBackup->findData(QNapiLanguage(GlobalConfig().languageBackup()).toTwoLetter()));
-
     ui.cbNoBackup->setChecked(GlobalConfig().noBackup());
-
+#ifndef Q_OS_MAC
+    ui.cbQuietBatch->setChecked(GlobalConfig().quietBatch());
+#endif
 #ifdef Q_OS_MAC
     ui.cbShowDockIcon->setChecked(GlobalConfig().showDockIcon());
 #endif
@@ -460,6 +469,7 @@ void frmOptions::restoreDefaults()
     GlobalConfig().setLanguage("pl");
     GlobalConfig().setLanguageBackup("en");
     GlobalConfig().setNoBackup(false);
+    GlobalConfig().setQuietBatch(false);
     GlobalConfig().setChangePermissions(false);
     GlobalConfig().setChangePermissionsTo("644");
 

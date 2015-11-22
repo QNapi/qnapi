@@ -1,7 +1,8 @@
 QNapi ChangeLog:
 ================
 
-2015-11-?? v0.2.0:
+2015-11-22 v0.2.0:
+ * możliwość wyboru cichego trybu wsadowego - #13
  * poprawki bledow w silniku Napisy24 - #23
  * umieszczenie ikon w katalogach opisujacych ich rozmiar - #24 (thx Fisiu)
  * wsparcie dla ekranow retina (OSX) - #27

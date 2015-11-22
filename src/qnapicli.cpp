@@ -138,6 +138,13 @@ bool QNapiCli::analyze()
         }
     }
 
+    bool quietBatch = GlobalConfig().quietBatch();
+    if(quietBatch && !movieList.isEmpty())
+    {
+        mode = CM_QUIET;
+        return true;
+    }
+
 #if (defined(Q_OS_UNIX) || defined(Q_OS_LINUX))
     if((getenv("DISPLAY") == 0) && (mode == CM_UNSET))
         mode = CM_CONSOLE;

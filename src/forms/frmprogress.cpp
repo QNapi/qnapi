@@ -256,7 +256,6 @@ void GetThread::run()
     criticalMessage.clear();
     if(queue.size() <= 0) return;
 
-    QString windowTitle, md5;
     napiSuccess = napiFail = 0;
     gotList.clear();
     failedList.clear();

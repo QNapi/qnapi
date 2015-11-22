@@ -64,14 +64,20 @@ QString QNapiConfig::p7zipPath()
     if(!p7z_path.isEmpty() && QFileInfo(p7z_path).isExecutable())
         return p7z_path;
 
+#ifdef Q_OS_WIN
+    QString separator = ";";
+#else
+    QString separator = ":";
+#endif
+
     // Przeszukiwanie sciezek systemowych i biezacego katalogu
     QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
-    QStringList paths = path.mid(5).split(":");
+    QStringList paths = path.mid(5).split(separator);
     paths.removeAll("");
     paths.append(".");
 
     if(paths.size() == 0)
-        paths << "/usr/bin" << "/usr/local/bin";
+        paths << "/bin" << "/usr/bin" << "/usr/local/bin";
 
 #ifdef Q_OS_MAC
     // Pod MacOS X 7zip jest w zasobach aplikacji
@@ -87,14 +93,13 @@ QString QNapiConfig::p7zipPath()
         {
             p7z_path = (*i) + "/" + (*j);
             if(QFileInfo(p7z_path).isExecutable())
-                return p7z_path;
+                return QFileInfo(p7z_path).absoluteFilePath();
         }
     }
 
 
 #ifdef Q_OS_WIN
-    // Pod systemem Windows program 7za.exe musi byc w tym samym katalogu,
-    // co qnapi.exe
+    // Pod systemem Windows program 7za.exe musi byc w tym samym katalogu, co qnapi.exe
     p7z_path = QFileInfo(QApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();
     if(QFileInfo(p7z_path).isExecutable())
         return p7z_path;
@@ -111,17 +116,23 @@ QString QNapiConfig::ffProbePath()
     if(!ffprobe_path.isEmpty() && QFileInfo(ffprobe_path).isExecutable())
         return ffprobe_path;
 
+#ifdef Q_OS_WIN
+    QString separator = ";";
+#else
+    QString separator = ":";
+#endif
+
     // Przeszukiwanie sciezek systemowych i biezacego katalogu
     QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
-    QStringList paths = path.mid(5).split(":");
+    QStringList paths = path.mid(5).split(separator);
     paths.removeAll("");
     paths.append(".");
 
     if(paths.size() == 0)
-        paths << "/usr/bin" << "/usr/local/bin";
+        paths << "/bin" << "/usr/bin" << "/usr/local/bin";
 
 #ifdef Q_OS_MAC
-    // Pod MacOS X 7zip jest w zasobach aplikacji
+    // Pod MacOS X ffprobe jest w zasobach aplikacji
     paths << QDir(QApplication::applicationDirPath() + "/../Resources").canonicalPath();
 #endif
 
@@ -130,13 +141,12 @@ QString QNapiConfig::ffProbePath()
     {
         ffprobe_path = (*i) + "/" + binary;
         if(QFileInfo(ffprobe_path).isExecutable())
-            return ffprobe_path;
+            return QFileInfo(ffprobe_path).absoluteFilePath();
     }
 
 
 #ifdef Q_OS_WIN
-    // Pod systemem Windows program ffprobe.exe musi byc w tym samym katalogu,
-    // co qnapi.exe
+    // Pod systemem Windows program ffprobe.exe musi byc w tym samym katalogu, co qnapi.exe
     ffprobe_path = QFileInfo(QApplication::applicationDirPath() + "/ffprobe.exe").absoluteFilePath();
     if(QFileInfo(ffprobe_path).isExecutable())
         return ffprobe_path;

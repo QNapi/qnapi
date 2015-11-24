@@ -51,7 +51,7 @@ void QManagedSocket::readyRead()
 {
     if ( pSocket )
     {
-        QString msg = QString::fromLocal8Bit(pSocket->readAll());
+        QString msg = pSocket->readAll();
         
         emit message(msg);
         emit message(msg, this);

@@ -53,13 +53,16 @@ bool QNapiAbstractEngine::match()
 
     QString targetExtension = stf.suffix();
 
-    if(!GlobalConfig().ppSubFormat().isEmpty() && GlobalConfig().ppSubExtension().isEmpty())
+    if(GlobalConfig().ppEnabled())
     {
-        targetExtension = GlobalFormatsRegistry().select(GlobalConfig().ppSubFormat())->defaultExtension();
-    }
-    else if(!GlobalConfig().ppSubExtension().isEmpty())
-    {
-        targetExtension = GlobalConfig().ppSubExtension();
+        if(!GlobalConfig().ppSubFormat().isEmpty() && GlobalConfig().ppSubExtension().isEmpty())
+        {
+            targetExtension = GlobalFormatsRegistry().select(GlobalConfig().ppSubFormat())->defaultExtension();
+        }
+        else if(!GlobalConfig().ppSubExtension().isEmpty())
+        {
+            targetExtension = GlobalConfig().ppSubExtension();
+        }
     }
 
     QFileInfo mf(movie);

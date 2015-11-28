@@ -31,7 +31,10 @@ public:
 
     QNapiCli(int argc, char **argv) :
         QCoreApplication(argc, argv),
-        mode(CM_UNSET), showPolicy(SLP_USE_CONFIG) {}
+        mode(CM_UNSET),
+        showPolicy(SLP_USE_CONFIG),
+        langBackupPassed(false)
+    {}
 
     static bool isCliCall(int argc, char **argv);
     int exec();

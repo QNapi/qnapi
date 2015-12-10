@@ -141,6 +141,8 @@ macx {
 }
 
 unix { 
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libmediainfo
     INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share
     target.path = $${INSTALL_PREFIX}/bin

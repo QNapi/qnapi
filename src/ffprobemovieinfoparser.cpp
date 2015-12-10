@@ -13,8 +13,11 @@
 *****************************************************************************/
 
 #include "ffprobemovieinfoparser.h"
+#include <MediaInfo/MediaInfo.h>
+#include <string>
+#include <QRegExp>
+using namespace MediaInfoLib;
 
-#include <QProcess>
 
 FFProbeMovieInfoParser::FFProbeMovieInfoParser(const QString & ffProbeExePath)
     : ffProbePath(ffProbeExePath)
@@ -22,54 +25,45 @@ FFProbeMovieInfoParser::FFProbeMovieInfoParser(const QString & ffProbeExePath)
 
 MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
 {
-    MovieInfo mi;
-    mi.isFilled = false;
+    MovieInfo info;
+    info.isFilled = false;
 
-    QStringList args;
+    MediaInfo::Option_Static(__T("Internet"), __T("No"));
 
-    args << movieFilePath
-         << "-v" << 0
-         << "-select_streams" << "v"
-         << "-print_format" << "flat"
-         << "-show_entries" << "stream=r_frame_rate,width,height,duration";
+    MediaInfo mi;
+    mi.Open(movieFilePath.toStdWString().c_str());
 
-    QProcess ffProbe;
-    ffProbe.start(ffProbePath, args);
+    QString widthS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Width"), Info_Text).c_str()));
+    QString heightS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Height"), Info_Text).c_str()));
+    QString frameRateS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("FrameRate"), Info_Text).c_str()));
+    QString durationS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Duration"), Info_Text).c_str()));
 
-    if(!ffProbe.waitForFinished(15000))
-        return mi;
 
-    if(ffProbe.exitCode() != 0)
-        return mi;
+    QRegExp rWidth("(\\d+)");
+    if(rWidth.indexIn(widthS) == -1)
+        return info;
+    info.width = rWidth.cap(1).toInt();
 
-    QString ffProbeOut = QByteArray(ffProbe.readAll());
+    QRegExp rHeight("(\\d+)");
+    if(rHeight.indexIn(heightS) == -1)
+        return info;
+    info.height = rHeight.cap(1).toInt();
 
-    QRegExp rWidth("streams\\.stream\\.0\\.width=(\\d+)");
-    if(rWidth.indexIn(ffProbeOut) == -1)
-        return mi;
-    mi.width = rWidth.cap(1).toInt();
+    QRegExp rFrameRate("(\\d+).(\\d+)");
+    if(rFrameRate.indexIn(frameRateS) == -1)
+        return info;
 
-    QRegExp rHeight("streams\\.stream\\.0\\.height=(\\d+)");
-    if(rHeight.indexIn(ffProbeOut) == -1)
-        return mi;
-    mi.height = rHeight.cap(1).toInt();
+    long frFloor = rFrameRate.cap(1).toLong();
+    long frFrac = rFrameRate.cap(2).toLong();
+    info.frameRate = (double)frFloor + (double)frFrac / 1000.0;
 
-    QRegExp rFrameRate("streams\\.stream\\.0\\.r_frame_rate=\"(\\d+)/(\\d+)\"");
-    if(rFrameRate.indexIn(ffProbeOut) == -1)
-        return mi;
+    QRegExp rDuration("(\\d+)");
+    if(rDuration.indexIn(durationS) == -1)
+        return info;
+    info.durationSecs = rDuration.cap(1).toDouble() / 1000.0;
 
-    long frL = rFrameRate.cap(1).toLong();
-    long frM = rFrameRate.cap(2).toLong();
-    mi.frameRate = (double)frL / frM;
+    info.isFilled = true;
 
-    QRegExp rDuration("streams\\.stream\\.0\\.duration=\"(.+)\"");
-    if(rDuration.indexIn(ffProbeOut) == -1)
-        return mi;
-
-    mi.durationSecs = rDuration.cap(1).toDouble();
-
-    mi.isFilled = true;
-
-    return mi;
+    return info;
 }
 

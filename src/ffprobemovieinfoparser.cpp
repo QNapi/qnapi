@@ -41,7 +41,7 @@ MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
 
     MediaInfo *mi = new MediaInfo();
     mi->Option(__T("Internet"), __T("No"));
-    mi->Open(movieFilePath.toStdWString().c_str());
+    mi->Open(movieFilePath.toStdWString());
 
 #define GET_VIDEO_INFO(__streamIdx, __key) \
     QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text).c_str()))

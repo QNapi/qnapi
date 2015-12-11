@@ -48,8 +48,13 @@ MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
     mi->Open(movieFilePath.toStdString());
 #endif
 
-#define GET_VIDEO_INFO(__streamIdx, __key) \
-    QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text).c_str()))
+#ifdef UNICODE
+    #define GET_VIDEO_INFO(__streamIdx, __key) \
+        QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
+#else
+    #define GET_VIDEO_INFO(__streamIdx, __key) \
+        QString::fromStdString(std::string(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
+#endif
 
     QString widthS = GET_VIDEO_INFO(0, "Width");
     QString heightS = GET_VIDEO_INFO(0, "Height");

@@ -178,7 +178,9 @@ unix {
         desktop
 }
 
-win32 { 
+win32 {
+    INCLUDEPATH += deps/libmediainfo/include
+
     RC_FILE = win32/qnapi.rc
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
@@ -204,15 +206,18 @@ win32 {
     icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
     icudlls.path = $${INSTALL_PREFIX}
 
+    libmediainfodlls.files += deps/libmediainfo/bin/MediaInfo.dll
+    libmediainfodlls.path = $${INSTALL_PREFIX}
+
     deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
 
     platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms
     platform.depends = deploywin
 
-    QMAKE_EXTRA_TARGETS += icudlls deploywin platform
+    QMAKE_EXTRA_TARGETS += icudlls libmediainfodlls deploywin platform
 
-    INSTALLS = target p7zip ffprobe doc icudlls platform
+    INSTALLS = target p7zip ffprobe doc icudlls libmediainfodlls platform
 }
 
 !win32 { 

@@ -13,10 +13,21 @@
 *****************************************************************************/
 
 #include "ffprobemovieinfoparser.h"
-#include <MediaInfo/MediaInfo.h>
 #include <string>
 #include <QRegExp>
-using namespace MediaInfoLib;
+
+#ifdef UNICODE
+    #define _UNICODE
+#endif
+
+#ifdef MEDIAINFO_LIBRARY
+    #include "MediaInfo/MediaInfo.h" //Staticly-loaded library (.lib or .a or .so)
+    #define MediaInfoNameSpace MediaInfoLib;
+#else //MEDIAINFO_LIBRARY
+    #include "MediaInfoDLL/MediaInfoDLL.h" //Dynamicly-loaded library (.dll or .so)
+    #define MediaInfoNameSpace MediaInfoDLL;
+#endif //MEDIAINFO_LIBRARY
+using namespace MediaInfoNameSpace;
 
 
 FFProbeMovieInfoParser::FFProbeMovieInfoParser(const QString & ffProbeExePath)
@@ -28,16 +39,20 @@ MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
     MovieInfo info;
     info.isFilled = false;
 
-    MediaInfo::Option_Static(__T("Internet"), __T("No"));
+    MediaInfo *mi = new MediaInfo();
+    mi->Option(__T("Internet"), __T("No"));
+    mi->Open(movieFilePath.toStdWString().c_str());
 
-    MediaInfo mi;
-    mi.Open(movieFilePath.toStdWString().c_str());
+#define GET_VIDEO_INFO(__streamIdx, __key) \
+    QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text).c_str()))
 
-    QString widthS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Width"), Info_Text).c_str()));
-    QString heightS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Height"), Info_Text).c_str()));
-    QString frameRateS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("FrameRate"), Info_Text).c_str()));
-    QString durationS = QString::fromStdWString(std::wstring(mi.Get(Stream_Video, 0, __T("Duration"), Info_Text).c_str()));
+    QString widthS = GET_VIDEO_INFO(0, "Width");
+    QString heightS = GET_VIDEO_INFO(0, "Height");
+    QString frameRateS = GET_VIDEO_INFO(0, "FrameRate");
+    QString durationS = GET_VIDEO_INFO(0, "Duration");
 
+    mi->Close();
+    delete mi;
 
     QRegExp rWidth("(\\d+)");
     if(rWidth.indexIn(widthS) == -1)

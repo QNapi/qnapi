@@ -20,13 +20,13 @@
     #define _UNICODE
 #endif
 
-#ifdef MEDIAINFO_LIBRARY
-    #include "MediaInfo/MediaInfo.h" //Staticly-loaded library (.lib or .a or .so)
-    #define MediaInfoNameSpace MediaInfoLib;
-#else //MEDIAINFO_LIBRARY
+#ifdef Q_OS_WIN
     #include "MediaInfoDLL/MediaInfoDLL.h" //Dynamicly-loaded library (.dll or .so)
     #define MediaInfoNameSpace MediaInfoDLL;
-#endif //MEDIAINFO_LIBRARY
+#else
+    #include "MediaInfo/MediaInfo.h" //Staticly-loaded library (.lib or .a or .so)
+    #define MediaInfoNameSpace MediaInfoLib;
+#endif
 using namespace MediaInfoNameSpace;
 
 

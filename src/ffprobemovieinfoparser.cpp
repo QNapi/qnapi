@@ -16,6 +16,10 @@
 #include <string>
 #include <QRegExp>
 
+#ifndef UNICODE
+    #define UNICODE
+#endif
+
 #ifdef UNICODE
     #define _UNICODE
 #endif
@@ -42,19 +46,10 @@ MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
     MediaInfo *mi = new MediaInfo();
     mi->Option(__T("Internet"), __T("No"));
 
-#ifdef UNICODE
     mi->Open(movieFilePath.toStdWString());
-#else
-    mi->Open(movieFilePath.toStdString());
-#endif
 
-#ifdef UNICODE
-    #define GET_VIDEO_INFO(__streamIdx, __key) \
-        QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
-#else
-    #define GET_VIDEO_INFO(__streamIdx, __key) \
-        QString::fromStdString(std::string(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
-#endif
+#define GET_VIDEO_INFO(__streamIdx, __key) \
+    QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
 
     QString widthS = GET_VIDEO_INFO(0, "Width");
     QString heightS = GET_VIDEO_INFO(0, "Height");

@@ -58,7 +58,7 @@ QManagedRequest& QManagedRequest::operator = (const QManagedRequest& r)
 
 QString QManagedRequest::toString() const
 {
-    return QString::fromLocal8Bit(joinArguments(sCommand, lArguments));
+    return QString::fromUtf8(joinArguments(sCommand, lArguments));
 }
 
 QManagedRequest QManagedRequest::fromString(const QString& s)
@@ -105,7 +105,7 @@ QByteArray QManagedRequest::joinArguments(const QString& cmd, const QStringList&
 {
     QByteArray msg;
     
-    msg += cmd.toLocal8Bit();
+    msg += cmd.toUtf8();
     
     foreach ( QString a, l )
     {
@@ -116,7 +116,7 @@ QByteArray QManagedRequest::joinArguments(const QString& cmd, const QStringList&
             a = "\"" + a + "\"";
         
         msg += " ";
-        msg += a.toLocal8Bit();
+        msg += a.toUtf8();
     }
     
     return msg;

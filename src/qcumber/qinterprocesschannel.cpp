@@ -117,7 +117,7 @@ void QInterProcessChannel::sendMessage()
 */
 void QInterProcessChannel::sendMessage(const QString& s)
 {
-    sendMessage(s);
+    sendMessage(s.toLocal8Bit());
 }
 /*!
     \brief Send a message to server instance

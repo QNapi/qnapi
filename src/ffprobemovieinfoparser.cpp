@@ -24,7 +24,7 @@
     #define _UNICODE
 #endif
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     #include "MediaInfoDLL/MediaInfoDLL.h" //Dynamicly-loaded library (.dll or .so)
     #define MediaInfoNameSpace MediaInfoDLL;
 #else
@@ -86,4 +86,3 @@ MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
 
     return info;
 }
-

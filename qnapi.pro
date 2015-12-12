@@ -121,25 +121,6 @@ INCLUDEPATH = src
 
 include(deps/libmaia/maia.pri)
 
-macx { 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
-    ICON = macx/qnapi.icns
-    QMAKE_INFO_PLIST = macx/Info.plist
-    TARGET = macx/QNapi
-    7ZIP_BINARY.files = macx/content/7za
-    7ZIP_BINARY.path = Contents/Resources
-    FFPROBE_BINARY.files = macx/content/ffprobe
-    FFPROBE_BINARY.path = Contents/Resources
-    QMAKE_BUNDLE_DATA += 7ZIP_BINARY FFPROBE_BINARY
-
-    macdeploy.commands = macdeployqt macx/QNapi.app
-    appdmg.depends = macdeploy
-    appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg
-
-    QMAKE_EXTRA_TARGETS += macdeploy appdmg
-}
-
 unix { 
     CONFIG += link_pkgconfig
     PKGCONFIG += libmediainfo
@@ -176,6 +157,31 @@ unix {
         doc \
         man \
         desktop
+}
+
+macx {
+    CONFIG -= link_pkgconfig
+    INCLUDEPATH += deps/libmediainfo/include
+    LIBS += -framework CoreFoundation
+
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
+    ICON = macx/qnapi.icns
+    QMAKE_INFO_PLIST = macx/Info.plist
+    TARGET = macx/QNapi
+    7ZIP_BINARY.files = macx/content/7za
+    7ZIP_BINARY.path = Contents/Resources
+    FFPROBE_BINARY.files = macx/content/ffprobe
+    FFPROBE_BINARY.path = Contents/Resources
+    LIBMEDIAINFO.files = deps/libmediainfo/lib/libmediainfo.0.dylib
+    LIBMEDIAINFO.path = Contents/MacOS
+    QMAKE_BUNDLE_DATA += 7ZIP_BINARY FFPROBE_BINARY LIBMEDIAINFO
+
+    macdeploy.commands = macdeployqt macx/QNapi.app
+    appdmg.depends = macdeploy
+    appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg
+
+    QMAKE_EXTRA_TARGETS += macdeploy appdmg
 }
 
 win32 {

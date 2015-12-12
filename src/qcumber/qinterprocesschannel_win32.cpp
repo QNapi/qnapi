@@ -95,7 +95,7 @@ void QInterProcessChannel::sendMessage()
 */
 void QInterProcessChannel::sendMessage(const QString& s)
 {
-    sendMessage(s);
+    sendMessage(s.toUtf8());
 }
 /*!
     \brief Send a message to server instance

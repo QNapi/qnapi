@@ -13,6 +13,3 @@ macx/QNapi*.app
 macx/QNapi*.dmg
 .DS_Store
 .qmake.stash
-win32/content/ffprobe.exe
-macx/content/ffprobe
-

@@ -20,7 +20,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "subconvert/subtitleformatsregistry.h"
-#include "ffprobemovieinfoparser.h"
+#include "libmediainfomovieinfoparser.h"
 #include "qnapiconfig.h"
 #include "qnapiopendialog.h"
 
@@ -178,7 +178,7 @@ void frmConvert::movieFPSSelectClicked()
 
 QString frmConvert::determineMovieFPS(const QString & movieFilePath)
 {
-    FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
+    LibmediainfoMovieInfoParser mip;
     MovieInfo mi = mip.parseFile(movieFilePath);
     return QString::number(mi.frameRate, 'f', 3);
 }

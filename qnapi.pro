@@ -40,7 +40,6 @@ SOURCES += src/main.cpp \
     src/synchttp.cpp \
     src/syncxmlrpc.cpp \
     src/encodingutils.cpp \
-    src/ffprobemovieinfoparser.cpp \
     src/forms/frmnapiprojektupload.cpp \
     src/forms/frmnapiprojektcorrect.cpp \
     src/forms/frmnapiprojektreport.cpp \
@@ -51,7 +50,8 @@ SOURCES += src/main.cpp \
     src/subconvert/formats/tmplayer.cpp \
     src/subconvert/formats/subrip.cpp \
     src/subconvert/formats/mpl2.cpp \
-    src/subconvert/subtitleformat.cpp
+    src/subconvert/subtitleformat.cpp \
+    src/libmediainfomovieinfoparser.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -85,7 +85,6 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
     src/encodingutils.h \
-    src/ffprobemovieinfoparser.h \
     src/forms/frmnapiprojektupload.h \
     src/forms/frmnapiprojektcorrect.h \
     src/forms/frmnapiprojektreport.h \
@@ -97,7 +96,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/subtitleconverter.h \
     src/subconvert/formats/tmplayer.h \
     src/subconvert/formats/subrip.h \
-    src/subconvert/formats/mpl2.h
+    src/subconvert/formats/mpl2.h \
+    src/libmediainfomovieinfoparser.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -121,26 +121,9 @@ INCLUDEPATH = src
 
 include(deps/libmaia/maia.pri)
 
-macx { 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
-    ICON = macx/qnapi.icns
-    QMAKE_INFO_PLIST = macx/Info.plist
-    TARGET = macx/QNapi
-    7ZIP_BINARY.files = macx/content/7za
-    7ZIP_BINARY.path = Contents/Resources
-    FFPROBE_BINARY.files = macx/content/ffprobe
-    FFPROBE_BINARY.path = Contents/Resources
-    QMAKE_BUNDLE_DATA += 7ZIP_BINARY FFPROBE_BINARY
-
-    macdeploy.commands = macdeployqt macx/QNapi.app
-    appdmg.depends = macdeploy
-    appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg
-
-    QMAKE_EXTRA_TARGETS += macdeploy appdmg
-}
-
 unix { 
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libmediainfo
     INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share
     target.path = $${INSTALL_PREFIX}/bin
@@ -176,7 +159,32 @@ unix {
         desktop
 }
 
-win32 { 
+macx {
+    CONFIG -= link_pkgconfig
+    INCLUDEPATH += deps/libmediainfo/include
+    LIBS += -framework CoreFoundation
+
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
+    ICON = macx/qnapi.icns
+    QMAKE_INFO_PLIST = macx/Info.plist
+    TARGET = macx/QNapi
+    7ZIP_BINARY.files = macx/content/7za
+    7ZIP_BINARY.path = Contents/Resources
+    LIBMEDIAINFO.files = deps/libmediainfo/lib/libmediainfo.0.dylib
+    LIBMEDIAINFO.path = Contents/MacOS
+    QMAKE_BUNDLE_DATA += 7ZIP_BINARY LIBMEDIAINFO
+
+    macdeploy.commands = macdeployqt macx/QNapi.app
+    appdmg.depends = macdeploy
+    appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg
+
+    QMAKE_EXTRA_TARGETS += macdeploy appdmg
+}
+
+win32 {
+    INCLUDEPATH += deps/libmediainfo/include
+
     RC_FILE = win32/qnapi.rc
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
@@ -189,8 +197,6 @@ win32 {
 
     p7zip.files += win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
-    ffprobe.files += win32/content/ffprobe.exe
-    ffprobe.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \
         doc/LICENSE \
@@ -202,15 +208,18 @@ win32 {
     icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
     icudlls.path = $${INSTALL_PREFIX}
 
+    libmediainfodlls.files += deps/libmediainfo/bin/MediaInfo.dll
+    libmediainfodlls.path = $${INSTALL_PREFIX}
+
     deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
 
     platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms
     platform.depends = deploywin
 
-    QMAKE_EXTRA_TARGETS += icudlls deploywin platform
+    QMAKE_EXTRA_TARGETS += icudlls libmediainfodlls deploywin platform
 
-    INSTALLS = target p7zip ffprobe doc icudlls platform
+    INSTALLS = target p7zip doc icudlls libmediainfodlls platform
 }
 
 !win32 { 

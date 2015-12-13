@@ -16,7 +16,7 @@
 #include "forms/frmnapiprojektconfig.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include "ffprobemovieinfoparser.h"
+#include "libmediainfomovieinfoparser.h"
 
 #ifdef Q_OS_WIN // for SetFileAttributes
 #include <qt_windows.h>
@@ -231,7 +231,7 @@ QNapiProjektEngine::UploadResult
     if(!QFile::exists(movie) || !QFile::exists(subtitles))
         return NAPI_FAIL;
 
-    FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
+    LibmediainfoMovieInfoParser mip;
     MovieInfo movieInfo = mip.parseFile(movie);
 
     unsigned long movie_size = QFileInfo(movie).size();

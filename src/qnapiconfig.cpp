@@ -109,64 +109,10 @@ QString QNapiConfig::p7zipPath()
     return "7z";
 }
 
-QString QNapiConfig::ffProbePath()
-{
-    // Odczytujemy z konfiguracji
-    QString ffprobe_path = settings->value("qnapi/ffprobe_path", "").toString();
-    if(!ffprobe_path.isEmpty() && QFileInfo(ffprobe_path).isExecutable())
-        return ffprobe_path;
-
-#ifdef Q_OS_WIN
-    QString separator = ";";
-#else
-    QString separator = ":";
-#endif
-
-    // Przeszukiwanie sciezek systemowych i biezacego katalogu
-    QString path = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
-    QStringList paths = path.mid(5).split(separator);
-    paths.removeAll("");
-    paths.append(".");
-
-    if(paths.size() == 0)
-        paths << "/bin" << "/usr/bin" << "/usr/local/bin";
-
-#ifdef Q_OS_MAC
-    // Pod MacOS X ffprobe jest w zasobach aplikacji
-    paths << QDir(QApplication::applicationDirPath() + "/../Resources").canonicalPath();
-#endif
-
-    QString binary = "ffprobe";
-    for(QStringList::iterator i = paths.begin(); i != paths.end(); i++)
-    {
-        ffprobe_path = (*i) + "/" + binary;
-        if(QFileInfo(ffprobe_path).isExecutable())
-            return QFileInfo(ffprobe_path).absoluteFilePath();
-    }
-
-
-#ifdef Q_OS_WIN
-    // Pod systemem Windows program ffprobe.exe musi byc w tym samym katalogu, co qnapi.exe
-    ffprobe_path = QFileInfo(QApplication::applicationDirPath() + "/ffprobe.exe").absoluteFilePath();
-    if(QFileInfo(ffprobe_path).isExecutable())
-        return ffprobe_path;
-#endif
-
-    // Jesli wszystko inne zawiodlo...;)
-    return "ffprobe";
-}
-
 void QNapiConfig::setP7zipPath(const QString & path)
 {
     settings->setValue("qnapi/7z_path", path);
 }
-
-
-void QNapiConfig::setFFProbePath(const QString & path)
-{
-    settings->setValue("qnapi/ffprobe_path", path);
-}
-
 
 QString QNapiConfig::tmpPath()
 {

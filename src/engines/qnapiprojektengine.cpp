@@ -231,7 +231,7 @@ QNapiProjektEngine::UploadResult
     if(!QFile::exists(movie) || !QFile::exists(subtitles))
         return NAPI_FAIL;
 
-    FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
+    FFProbeMovieInfoParser mip;
     MovieInfo movieInfo = mip.parseFile(movie);
 
     unsigned long movie_size = QFileInfo(movie).size();

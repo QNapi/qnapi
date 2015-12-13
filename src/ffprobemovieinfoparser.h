@@ -20,9 +20,7 @@
 
 class FFProbeMovieInfoParser
 {
-    QString ffProbePath;
 public:
-    FFProbeMovieInfoParser(const QString & ffProbeExePath);
 
     MovieInfo parseFile(const QString & movieFilePath) const;
 };

@@ -39,54 +39,44 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="leFfprobePath">
-         <property name="text">
-          <string>/usr/bin/ffprobe</string>
-         </property>
-         <property name="cursorPosition">
-          <number>16</number>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="3">
+       <item row="4" column="0" colspan="3">
         <widget class="QCheckBox" name="cbNoBackup">
          <property name="text">
           <string>Nie twórz kopii istniejących napisów. Nadpisuj je bez pytania.</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1" colspan="2">
+       <item row="3" column="1" colspan="2">
         <widget class="QComboBox" name="cbLangBackup"/>
        </item>
-       <item row="2" column="1" colspan="2">
+       <item row="1" column="1" colspan="2">
         <widget class="QLineEdit" name="leTmpPath">
          <property name="text">
           <string>/tmp</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="2" column="1" colspan="2">
+        <widget class="QComboBox" name="cbLang"/>
+       </item>
+       <item row="2" column="0">
         <widget class="QLabel" name="lbLang">
          <property name="text">
           <string>Preferowany jezyk napisów:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lbFfprobePath">
+       <item row="7" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbShowDockIcon">
          <property name="text">
-          <string>Ścieżka do programu ffprobe:</string>
+          <string>Pokazuj ikonę w doku systemowym (wymaga ponownego uruchomienia aplikacji)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QComboBox" name="cbLang"/>
-       </item>
-       <item row="2" column="3">
+       <item row="1" column="3">
         <widget class="QPushButton" name="pbTmpPathSelect">
          <property name="text">
           <string/>
@@ -97,7 +87,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
+       <item row="6" column="2">
         <layout class="QHBoxLayout" name="_2">
          <property name="spacing">
           <number>6</number>
@@ -159,6 +149,13 @@
          </item>
         </layout>
        </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QCheckBox" name="cbChangePermissions">
+         <property name="text">
+          <string>Zmień uprawnienia do pliku z napisami na: </string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="1" colspan="2">
         <widget class="QLineEdit" name="le7zPath">
          <property name="text">
@@ -172,34 +169,17 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0" colspan="3">
-        <widget class="QCheckBox" name="cbShowDockIcon">
-         <property name="text">
-          <string>Pokazuj ikonę w doku systemowym (wymaga ponownego uruchomienia aplikacji)</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QCheckBox" name="cbChangePermissions">
-         <property name="text">
-          <string>Zmień uprawnienia do pliku z napisami na: </string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lbTmpPath">
-         <property name="text">
-          <string>Ścieżka do katalogu tymczasowego:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="lbLangBackup">
          <property name="text">
           <string>Zapasowy jezyk napisów:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lbTmpPath">
+         <property name="text">
+          <string>Ścieżka do katalogu tymczasowego:</string>
          </property>
         </widget>
        </item>
@@ -210,31 +190,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0" colspan="3">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>568</width>
-           <height>172</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="pbFfprobePathSelect">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../res/resources.qrc">
-           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="3">
+       <item row="5" column="0" colspan="3">
         <widget class="QCheckBox" name="cbQuietBatch">
          <property name="toolTip">
           <string>Nie pokazuje żadnych okien przy pobieraniu napisów z menu kontestowego w menedżerze plików lub przy podaniu plików jako argumenty wiersza poleceń</string>
@@ -246,6 +202,19 @@
           <string>Cichy tryb wsadowy</string>
          </property>
         </widget>
+       </item>
+       <item row="8" column="0" colspan="3">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>568</width>
+           <height>172</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

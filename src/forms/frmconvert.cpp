@@ -178,7 +178,7 @@ void frmConvert::movieFPSSelectClicked()
 
 QString frmConvert::determineMovieFPS(const QString & movieFilePath)
 {
-    FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
+    FFProbeMovieInfoParser mip;
     MovieInfo mi = mip.parseFile(movieFilePath);
     return QString::number(mi.frameRate, 'f', 3);
 }

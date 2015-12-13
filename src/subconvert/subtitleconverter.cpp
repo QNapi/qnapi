@@ -57,7 +57,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString movieFile)
 {
     return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [&]() -> double {
-        FFProbeMovieInfoParser mip(GlobalConfig().ffProbePath());
+        FFProbeMovieInfoParser mip;
         MovieInfo mfm = mip.parseFile(movieFile);
         if(mfm.isFilled)
             return mfm.frameRate;

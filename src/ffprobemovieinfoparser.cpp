@@ -34,10 +34,6 @@
 using namespace MediaInfoNameSpace;
 
 
-FFProbeMovieInfoParser::FFProbeMovieInfoParser(const QString & ffProbeExePath)
-    : ffProbePath(ffProbeExePath)
-{}
-
 MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
 {
     MovieInfo info;

@@ -18,7 +18,7 @@ Latest binary packages are available at http://qnapi.github.io/#download
 
 #### Binary prerequisities
 
-QNapi depends on these binary dependencies:
+QNapi requires these binary dependencies:
 
 * p7zip (7z, 7za) - to unpack subtitles, which are commonly compressed with 7zip
 * libmediainfo - to retrieve movie info such as dimensions, duration and frame rate

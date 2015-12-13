@@ -40,7 +40,6 @@ SOURCES += src/main.cpp \
     src/synchttp.cpp \
     src/syncxmlrpc.cpp \
     src/encodingutils.cpp \
-    src/ffprobemovieinfoparser.cpp \
     src/forms/frmnapiprojektupload.cpp \
     src/forms/frmnapiprojektcorrect.cpp \
     src/forms/frmnapiprojektreport.cpp \
@@ -51,7 +50,8 @@ SOURCES += src/main.cpp \
     src/subconvert/formats/tmplayer.cpp \
     src/subconvert/formats/subrip.cpp \
     src/subconvert/formats/mpl2.cpp \
-    src/subconvert/subtitleformat.cpp
+    src/subconvert/subtitleformat.cpp \
+    src/libmediainfomovieinfoparser.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -85,7 +85,6 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
     src/encodingutils.h \
-    src/ffprobemovieinfoparser.h \
     src/forms/frmnapiprojektupload.h \
     src/forms/frmnapiprojektcorrect.h \
     src/forms/frmnapiprojektreport.h \
@@ -97,7 +96,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/subtitleconverter.h \
     src/subconvert/formats/tmplayer.h \
     src/subconvert/formats/subrip.h \
-    src/subconvert/formats/mpl2.h
+    src/subconvert/formats/mpl2.h \
+    src/libmediainfomovieinfoparser.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

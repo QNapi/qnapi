@@ -15,7 +15,7 @@
 #include "subtitleconverter.h"
 #include "subconvert/subtitleformatsregistry.h"
 #include "qnapiconfig.h"
-#include "ffprobemovieinfoparser.h"
+#include "libmediainfomovieinfoparser.h"
 #include "movieinfo.h"
 #include "version.h"
 #include <cmath>
@@ -57,7 +57,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString movieFile)
 {
     return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [&]() -> double {
-        FFProbeMovieInfoParser mip;
+        LibmediainfoMovieInfoParser mip;
         MovieInfo mfm = mip.parseFile(movieFile);
         if(mfm.isFilled)
             return mfm.frameRate;

@@ -12,7 +12,7 @@
 **
 *****************************************************************************/
 
-#include "ffprobemovieinfoparser.h"
+#include "libmediainfomovieinfoparser.h"
 #include <string>
 #include <QRegExp>
 
@@ -34,7 +34,7 @@
 using namespace MediaInfoNameSpace;
 
 
-MovieInfo FFProbeMovieInfoParser::parseFile(const QString & movieFilePath) const
+MovieInfo LibmediainfoMovieInfoParser::parseFile(const QString & movieFilePath) const
 {
     MovieInfo info;
     info.isFilled = false;

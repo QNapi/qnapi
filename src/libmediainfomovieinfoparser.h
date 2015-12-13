@@ -18,7 +18,7 @@
 #include <QString>
 #include "movieinfo.h"
 
-class FFProbeMovieInfoParser
+class LibmediainfoMovieInfoParser
 {
 public:
 

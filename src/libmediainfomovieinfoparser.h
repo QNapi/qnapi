@@ -12,8 +12,8 @@
 **
 *****************************************************************************/
 
-#ifndef FFPROBEMOVIEINFOPARSER_H
-#define FFPROBEMOVIEINFOPARSER_H
+#ifndef LIBMEDIAINFOMOVIEINFOPARSER_H
+#define LIBMEDIAINFOMOVIEINFOPARSER_H
 
 #include <QString>
 #include "movieinfo.h"
@@ -25,4 +25,4 @@ public:
     MovieInfo parseFile(const QString & movieFilePath) const;
 };
 
-#endif // FFPROBEMOVIEINFOPARSER_H
+#endif // LIBMEDIAINFOMOVIEINFOPARSER_H

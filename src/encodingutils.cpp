@@ -18,6 +18,7 @@
 #include <QTextCodec>
 #include <QFile>
 
+
 EncodingUtils::EncodingUtils()
 {
     diacritics = QString::fromUtf8("ąćęłśżźĄĆĘŁŚŻŹŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ");
@@ -51,13 +52,20 @@ QString EncodingUtils::replaceDiacriticsWithASCII(const QString & str) {
 }
 
 QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
-    QString from;
+
+    QTextCodec::ConverterState state;
+    QTextCodec::codecForName("UTF-8")->toUnicode(buffer.constData(), buffer.length(), &state);
+
+    if(state.invalidChars == 0)
+        return "UTF-8";
 
     int bestMatch = 0;
+    QString from;
 
     foreach(QString codec, codecs)
     {
         QTextCodec *tc = QTextCodec::codecForName(qPrintable(codec));
+
         const QString text = tc->toUnicode(buffer.constData(), buffer.size());
 
         QStringList chars = QString::fromUtf8("ą/ś/ż/ć/ń/ł/ó/ę").split("/");
@@ -66,8 +74,9 @@ QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
 
         foreach (QString c, chars)
         {
-            if(text.contains(c, Qt::CaseInsensitive))
+            if(text.contains(c, Qt::CaseInsensitive)) {
                 ++found;
+            }
         }
 
         if(found >= bestMatch) {

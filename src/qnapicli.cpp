@@ -229,7 +229,7 @@ int QNapiCli::exec()
             printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
             found = napi.lookForSubtitles(lang, e) || found;
 
-            if(sp == SP_BREAK_IF_FOUND)
+            if(sp == SP_BREAK_IF_FOUND && found)
                 break;
         }
 
@@ -239,7 +239,7 @@ int QNapiCli::exec()
                 printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
                 found = napi.lookForSubtitles(langBackup, e) || found;
 
-                if(sp == SP_BREAK_IF_FOUND)
+                if(sp == SP_BREAK_IF_FOUND && found)
                     break;
             }
         }

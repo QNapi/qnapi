@@ -313,7 +313,7 @@ void GetThread::run()
             emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
             found = napi->lookForSubtitles(language, e) || found;
 
-            if(sp == SP_BREAK_IF_FOUND)
+            if(sp == SP_BREAK_IF_FOUND && found)
                 break;
 
             ABORT_POINT
@@ -326,7 +326,7 @@ void GetThread::run()
                 emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
                 found = napi->lookForSubtitles(languageBackup, e) || found;
 
-                if(sp == SP_BREAK_IF_FOUND)
+                if(sp == SP_BREAK_IF_FOUND && found)
                     break;
 
                 ABORT_POINT

@@ -2,7 +2,7 @@
 
 before_install:
     - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-    - sudo add-apt-repository --yes ppa:beineri/opt-qt55
+    - sudo add-apt-repository --yes ppa:beineri/opt-qt551
     - sudo apt-get update -qq
     - sudo apt-get install -qq qt5-qmake qt55base libmediainfo-dev
     - . /opt/qt55/bin/qt55-env.sh

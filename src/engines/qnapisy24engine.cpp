@@ -441,19 +441,21 @@ bool QNapisy24Engine::unpack()
     while((offset = r.indexIn(resp, offset)) != -1)
     {
         QString filePath = r.cap(1);
-
-        if(filePath != tmpPackedFile && !filePath.endsWith(".url"))
-        {
-            pathMatches << filePath;
-        }
-
+        pathMatches << filePath;
         offset += r.matchedLength();
     }
 
-    if(pathMatches.isEmpty())
-        return false;
+    QString subFileName = "";
+    QStringList subExts = GlobalConfig().subtitleExtensions();
+    foreach (QString archiveFileName, pathMatches) {
+        if(subExts.contains(QFileInfo(archiveFileName).suffix(), Qt::CaseInsensitive)) {
+            subFileName = archiveFileName;
+            break;
+        }
+    }
 
-    QString subFileName = pathMatches.first();
+    if(subFileName.isEmpty())
+        return false;
 
     subtitlesTmp = tmpPath + "/" + subFileName;
     if(QFile::exists(subtitlesTmp))

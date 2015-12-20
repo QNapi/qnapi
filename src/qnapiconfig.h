@@ -35,8 +35,9 @@
 
 enum SearchPolicy
 {
-    SP_SEARCH_ALL = 0,
-    SP_BREAK_IF_FOUND = 1
+    SP_BREAK_IF_FOUND = 0,
+    SP_SEARCH_ALL = 1,
+    SP_SEARCH_ALL_WITH_BACKUP_LANG = 2
 };
 
 enum DownloadPolicy
@@ -58,6 +59,8 @@ class QNapiConfig
     public:
         void load(QString appDirPath);
         void save();
+
+        void performMigrations();
 
         bool firstRun();
         QString version();

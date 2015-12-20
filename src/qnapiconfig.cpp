@@ -38,6 +38,9 @@ void QNapiConfig::load(QString appDirPath)
     {
         settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, "qnapi");
     }
+
+    performMigrations();
+
 }
 
 void QNapiConfig::save()
@@ -46,6 +49,22 @@ void QNapiConfig::save()
     settings->setValue("qnapi/firstrun", false);
     settings->sync();
 }
+
+void QNapiConfig::performMigrations()
+{
+    if(!version().isEmpty() && version() <= "0.2.0") {
+        // between 0.2.0 and 0.2.1 there was semantic change within search_policy
+        // config item; SP_SEARCH_ALL and SP_BREAK_IF_FOUND were swapped
+
+        if(searchPolicy() == SP_SEARCH_ALL)
+            setSearchPolicy(SP_BREAK_IF_FOUND);
+        else if(searchPolicy() == SP_BREAK_IF_FOUND)
+            setSearchPolicy(SP_SEARCH_ALL);
+
+        save();
+    }
+}
+
 
 bool QNapiConfig::firstRun()
 {

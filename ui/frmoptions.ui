@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>455</height>
+    <width>700</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -230,7 +230,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="lbDownloadPolicy">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -243,7 +243,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="0" colspan="2">
+       <item row="12" column="0" colspan="2">
         <widget class="QComboBox" name="cbDownloadPolicy">
          <property name="currentIndex">
           <number>1</number>
@@ -304,22 +304,14 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="QComboBox" name="cbSearchPolicy">
-         <item>
-          <property name="text">
-           <string>Wyszukaj wszystkie dostępne napisy (wolniej)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="8" column="0" colspan="2">
         <widget class="QLabel" name="lbSearchPolicy">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Wyszukiwanie napisów:</string>
          </property>
@@ -365,6 +357,28 @@
           <iconset resource="../res/resources.qrc">
            <normaloff>:/ui/wrench.png</normaloff>:/ui/wrench.png</iconset>
          </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QComboBox" name="cbSearchPolicy">
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Wyszukaj wszystkie dostępne napisy (wolniej)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Wyszukaj wszystkie napisy, także w zapasowym języku (najwolniej)</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -757,7 +771,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>pbMoveDown</tabstop>
   <tabstop>pbEngineConf</tabstop>
   <tabstop>pbEngineInfo</tabstop>
-  <tabstop>cbSearchPolicy</tabstop>
   <tabstop>cbDownloadPolicy</tabstop>
   <tabstop>cbAutoDetectEncoding</tabstop>
   <tabstop>cbEncFrom</tabstop>

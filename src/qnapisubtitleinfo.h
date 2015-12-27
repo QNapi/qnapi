@@ -15,6 +15,8 @@
 #ifndef __QNAPISUBTITLEINFO__H__
 #define __QNAPISUBTITLEINFO__H__
 
+#include <QUuid>
+
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
 enum QNapiSubtitleResolution
 {
@@ -30,19 +32,33 @@ enum QNapiSubtitleResolution
 // struktura opisujaca napisy
 struct QNapiSubtitleInfo
 {
-    QNapiSubtitleInfo(QString l = "", QString e = "", QString u = "",
-                      QString n = "", QString c = "", QString f = "",
-                      QNapiSubtitleResolution r = SUBTITLE_UNKNOWN)
-        : lang(l.toLower()), engine(e), url(u), name(n), comment(c), format(f),
-          resolution(r) {}
+    QNapiSubtitleInfo(QString _lang = "",
+                      QString _engine = "",
+                      QString _sourceLocation = "",
+                      QString _name = "",
+                      QString _comment = "",
+                      QString _format = "",
+                      QNapiSubtitleResolution _resolution = SUBTITLE_UNKNOWN)
+        : lang(_lang.toLower()),
+          engine(_engine),
+          sourceLocation(_sourceLocation),
+          name(_name),
+          comment(_comment),
+          format(_format),
+          resolution(_resolution),
+          id(QUuid::createUuid()) {}
+
     QString lang;
     QString engine;
-    QString url;
+    QString sourceLocation;
     QString name;
     QString comment;
     QString format;
     QNapiSubtitleResolution resolution;
+    QUuid id;
 };
+
+Q_DECLARE_METATYPE(QNapiSubtitleInfo);
 
 typedef QList<QNapiSubtitleInfo> QNapiSubtitleInfoList;
 

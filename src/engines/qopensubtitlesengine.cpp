@@ -16,14 +16,12 @@
 #include "forms/frmopensubtitlesconfig.h"
 
 // konstruktor klasy
-QOpenSubtitlesEngine::QOpenSubtitlesEngine(const QString & movieFile, const QString & subtitlesFile)
-    : QNapiAbstractEngine(movieFile, subtitlesFile),
-      rpc(openSubtitlesXmlRpcUrl)
+QOpenSubtitlesEngine::QOpenSubtitlesEngine()
+    : rpc(openSubtitlesXmlRpcUrl)
 {
     p7zipPath = GlobalConfig().p7zipPath();
     lang = GlobalConfig().language();
     noBackup = GlobalConfig().noBackup();
-    tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());
 }
 
 // destruktor klasy
@@ -43,7 +41,7 @@ QString QOpenSubtitlesEngine::engineName()
 // zwraca informacje nt. modulu
 QString QOpenSubtitlesEngine::engineInfo()
 {
-    return "Modul pobierania napisów z bazy <b>www.opensubtitles.org</b>";
+    return "Moduł pobierania napisów z bazy <b>www.opensubtitles.org</b>";
 }
 
 // zwraca ikone w formacie XMP
@@ -123,8 +121,6 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 {
     if(checkSum.isEmpty()) return false;
     if(!isLogged() && !login()) return false;
-
-    subtitlesList.clear();
 
     QVariantMap paramsMap;
     paramsMap["sublanguageid"] = QNapiLanguage(lang).toTriLetter();
@@ -213,18 +209,20 @@ QList<QNapiSubtitleInfo> QOpenSubtitlesEngine::listSubtitles()
 }
 
 // Probuje pobrac napisy do filmu z serwera OpenSubtitles
-bool QOpenSubtitlesEngine::download(int idx)
+bool QOpenSubtitlesEngine::download(QUuid id)
 {
-    if(idx >= subtitlesList.size())
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+
+    if(!ms)
         return false;
+
+    QNapiSubtitleInfo s = ms.value();
 
     QVariantList paramsList;
     QVariantList requestList;
 
-    QNapiSubtitleInfo s = subtitlesList.at(idx);
-
     subFileName = generateTmpFileName() + "." + s.format;
-    paramsList << s.url;
+    paramsList << s.sourceLocation;
     requestList << (QVariant)paramsList;
 
     QVariantList args;
@@ -245,7 +243,9 @@ bool QOpenSubtitlesEngine::download(int idx)
 
     QByteArray subtitleContent = QByteArray::fromBase64(responseList.at(0).toMap()["data"].toByteArray());
 
-    QFile file(tmpPackedFile);
+
+    s.sourceLocation = generateTmpPath();
+    QFile file(s.sourceLocation);
     if(file.exists()) file.remove();
     if(!file.open(QIODevice::WriteOnly))
         return false;
@@ -253,24 +253,28 @@ bool QOpenSubtitlesEngine::download(int idx)
     int r = file.write(subtitleContent);
     file.close();
 
+    updateSubtitleInfo(s);
+
     return (bool)r;
 }
 
 // Probuje dopasowac napisy do filmu
-bool QOpenSubtitlesEngine::unpack()
+bool QOpenSubtitlesEngine::unpack(QUuid id)
 {
-    if(!QFile::exists(tmpPackedFile)) return false;
-    if(!QFile::exists(movie)) return false; 
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+    if(!ms) return false;
+
+    if(!QFile::exists(movie)) return false;
 
     QStringList args;
-    args << "e" << "-y" << ("-o" + tmpPath) << tmpPackedFile;
+    args << "e" << "-y" << ("-o" + tmpPath) << ms.value().sourceLocation;
 
     QProcess p7zip;
     p7zip.start(p7zipPath, args);
 
     if(!p7zip.waitForFinished()) return false;
 
-    QString unpackedTmp = tmpPath + QDir::separator() + QFileInfo(tmpPackedFile).completeBaseName();
+    QString unpackedTmp = tmpPath + QDir::separator() + QFileInfo(ms.value().sourceLocation).completeBaseName();
     subtitlesTmp = tmpPath + QDir::separator() + subFileName;
 
     QFile::copy(unpackedTmp, subtitlesTmp);
@@ -281,8 +285,7 @@ bool QOpenSubtitlesEngine::unpack()
 
 void QOpenSubtitlesEngine::cleanup()
 {
-    if(QFile::exists(tmpPackedFile))
-        QFile::remove(tmpPackedFile);
+    clearSubtitlesList();
     if(QFile::exists(subtitlesTmp))
         QFile::remove(subtitlesTmp);
 }

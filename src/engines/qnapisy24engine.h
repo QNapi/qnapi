@@ -23,7 +23,7 @@
 class QNapisy24Engine : public QNapiAbstractEngine
 {
 public:
-    QNapisy24Engine(const QString & movieFile = "", const QString & subtitlesFile = "");
+    QNapisy24Engine();
     ~QNapisy24Engine();
 
     QString engineName();
@@ -33,17 +33,15 @@ public:
     void configure(QWidget * parent);
 
     QString checksum(QString filename = "");
-
     bool lookForSubtitles(QString lang);
     QList<QNapiSubtitleInfo> listSubtitles();
-    bool download(int idx);
-    bool unpack();
+    bool download(QUuid id);
+    bool unpack(QUuid id);
     void cleanup();
 
 private:
     quint64 fileSize;
-    QString p7zipPath, lang, tmpPackedFile, subFileName, fileName;
-    QList<QNapiSubtitleInfo> subtitlesList;
+    QString p7zipPath;
 };
 
 #endif // QNAPISY24ENGINE_H

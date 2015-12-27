@@ -52,10 +52,14 @@ class QNapi
         QString moviePath();
         // sprawdza uprawnienia zapisu do katalogu docelowego
         bool checkWritePermissions();
+
+        void clearSubtitlesList();
         // oblicza sume kontrolna pliku z filmem
         void checksum();
         // szuka napisow w podanym jezyku
         bool lookForSubtitles(QString lang, QString engine = "");
+        // szuka napisow w podanych jezykach
+        bool lookForSubtitles(QStringList languages, QString engine = "");
         // zwraca liste znalezionych napisow
         QList<QNapiSubtitleInfo> listSubtitles();
 
@@ -67,7 +71,7 @@ class QNapi
         // pobiera napisy o i-tym indeksie z listy subtitlesList
         bool download(int i);
         // rozpakowuje pobrane napisy, a sciezke do nich zapisuje w subtitlesTmp
-        bool unpack();
+        bool unpack(int i);
         // dopasowuje pobrane napisy
         bool match();
         // wykonuje przetwarzanie na dopasowanych napisach
@@ -96,8 +100,6 @@ class QNapi
         QList<QNapiAbstractEngine*> enginesList;
         // lista znalezionych napisow
         QList<QNapiSubtitleInfo> subtitlesList;
-        // offsety w indeksach w powyzszej liscie napisow dla poszczegolnych silnikow
-        QHash<QString, int> offsetsList;
         // wskaznik do obiektu silnika, na ktorym aktualnie pracujemy
         // ustawiany po wykonaniu metody download()
         QNapiAbstractEngine * currentEngine;

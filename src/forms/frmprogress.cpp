@@ -297,6 +297,8 @@ void GetThread::run()
             return;
         }
 
+        napi->clearSubtitlesList();
+
         emit progressChange(i, queue.size(), 0.3f);
         emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
 
@@ -307,29 +309,49 @@ void GetThread::run()
         bool found = false;
         SearchPolicy sp = GlobalConfig().searchPolicy();        
 
-        foreach(QString e, napi->listLoadedEngines())
+
+        if(sp == SP_SEARCH_ALL_WITH_BACKUP_LANG)
         {
-            emit progressChange(i, queue.size(), 0.4f);
-            emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
-            found = napi->lookForSubtitles(language, e) || found;
-
-            if(sp == SP_BREAK_IF_FOUND && found)
-                break;
-
-            ABORT_POINT
-        }
-
-        if(!found && !languageBackup.isEmpty()) {
             foreach(QString e, napi->listLoadedEngines())
             {
-                emit progressChange(i, queue.size(), 0.45f);
+                emit progressChange(i, queue.size(), 0.4f);
+                emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
+                found = napi->lookForSubtitles(language, e) || found;
+
+                ABORT_POINT
+
                 emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
                 found = napi->lookForSubtitles(languageBackup, e) || found;
+
+                ABORT_POINT
+            }
+        }
+        else
+        {
+            foreach(QString e, napi->listLoadedEngines())
+            {
+                emit progressChange(i, queue.size(), 0.4f);
+                emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
+                found = napi->lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found)
                     break;
 
                 ABORT_POINT
+            }
+
+            if(!found && !languageBackup.isEmpty()) {
+                foreach(QString e, napi->listLoadedEngines())
+                {
+                    emit progressChange(i, queue.size(), 0.45f);
+                    emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
+                    found = napi->lookForSubtitles(languageBackup, e) || found;
+
+                    if(sp == SP_BREAK_IF_FOUND && found)
+                        break;
+
+                    ABORT_POINT
+                }
             }
         }
 
@@ -381,7 +403,7 @@ void GetThread::run()
         emit progressChange(i, queue.size(), 0.65);
         emit actionChange(tr("Rozpakowywanie napisów..."));
 
-        if(!napi->unpack())
+        if(!napi->unpack(selIdx))
         {
             ++napiFail;
             failedList << queue[i];

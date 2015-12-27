@@ -25,25 +25,24 @@
 
 #include <ctime>
 
+#include <Maybe.h>
+
 #include "qnapiconfig.h"
 #include "qnapisubtitleinfo.h"
 #include "encodingutils.h"
+
 
 class QNapiAbstractEngine
 {
 public:
 
     // destruktor
-    virtual ~QNapiAbstractEngine() {};
+    virtual ~QNapiAbstractEngine() {}
 
     // ustawia sciezke do pliku filmowego
     void setMoviePath(const QString & path);
     // zwraca sciezke do pliku filmowego
     QString moviePath();
-    // ustawia sciezke do pliku z napisami
-    void setSubtitlesPath(const QString & path);
-    // zwraca sciezke do pliku z napisami
-    QString subtitlesPath();
 
     // dopasowuje napisy do pliku z filmem
     bool match();
@@ -77,26 +76,31 @@ public:
     // wywoluje okienko konfiguracji
     virtual void configure(QWidget * parent) = 0;
 
+    // czysci wewnetrzne listy znalezionych napisow w silniku
+    virtual void clearSubtitlesList();
     // powinna obliczac i zwracac sume kontrolna pliku filmowego,
-    // a takze ustawiac wartosc zmiennej checkSym
+    // a takze ustawiac wartosc zmiennej checksum
     virtual QString checksum(QString filename = "") = 0;
     // szuka napisow w podanym jezyku
     virtual bool lookForSubtitles(QString lang) = 0;
     // zwraca liste dostepnych napisow
     virtual QList<QNapiSubtitleInfo> listSubtitles() = 0;
     // powinna pobierac napisy do filmu i zapisywac w jakims pliku tymczasowym
-    virtual bool download(int idx) = 0;
+    virtual bool download(QUuid id) = 0;
     // powinna rozpakowywac pobrane napisy, a ich sciezke zapisywac w polu
     // subtitlesTmpPath
-    virtual bool unpack() = 0;
+    virtual bool unpack(QUuid id) = 0;
     // powinna czyscic pliki tymczasowe itd.
     virtual void cleanup() = 0;
 
+
 protected:
+
+    QList<QNapiSubtitleInfo> subtitlesList;
 
     // sciezka do pliku filmowego
     QString movie;
-    // sciezka do napisow (zazwyczaj taka sama jak do napisow z innym rozszerzeniem)
+    // sciezka do napisow (zazwyczaj taka sama jak do napisow, tylko z innym rozszerzeniem)
     QString subtitles;
     // sciezka do tymczasowego pliku z napisami
     QString subtitlesTmp;
@@ -109,15 +113,20 @@ protected:
     bool noBackup;
 
     // konstruktor klasy
-    QNapiAbstractEngine(const QString & movieFile = "", const QString & subtitlesFile = "") 
-        : movie(movieFile), subtitles(subtitlesFile)
+    QNapiAbstractEngine()
     {
         tmpPath = GlobalConfig().tmpPath();
         noBackup = GlobalConfig().noBackup();
-    };
+    }
+
+    Maybe<QNapiSubtitleInfo> resolveById(QUuid id);
+    void updateSubtitleInfo(const QNapiSubtitleInfo & si);
+
 
     // generuje nazwe dla pliku tymczasowego
     QString generateTmpFileName();
+    // generuje sciezke dla pliku tymczasowego w katalogu tymczasowym
+    QString generateTmpPath();
 
 private:
     EncodingUtils encodingUtils;

@@ -99,6 +99,15 @@ bool QNapi::checkWritePermissions()
     return QFileInfo(QFileInfo(movie).path()).isWritable();
 }
 
+void QNapi::clearSubtitlesList()
+{
+    subtitlesList.clear();
+    foreach(QNapiAbstractEngine *e, enginesList)
+    {
+        e->clearSubtitlesList();
+    }
+}
+
 void QNapi::checksum()
 {
     foreach(QNapiAbstractEngine *e, enginesList)
@@ -109,8 +118,6 @@ void QNapi::checksum()
 
 bool QNapi::lookForSubtitles(QString lang, QString engine)
 {
-    subtitlesList.clear();
-
     bool result = false;
 
 
@@ -142,15 +149,11 @@ bool QNapi::lookForSubtitles(QString lang, QString engine)
 
 QList<QNapiSubtitleInfo> QNapi::listSubtitles()
 {
-    int curr_offset = 0;
     subtitlesList.clear();
 
     foreach(QNapiAbstractEngine *e, enginesList)
     {
         QList<QNapiSubtitleInfo> list =  e->listSubtitles();
-
-        offsetsList.insert(nameByEngine(e), curr_offset);
-        curr_offset += list.size();
         subtitlesList << list;
     }
     return subtitlesList;
@@ -173,12 +176,12 @@ bool QNapi::needToShowList()
         ++i;
     }
 
-    if(listSubtitles().size() <= 1)
-        return false;
-
     if(GlobalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST)  
         return true;
     if(GlobalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)   
+        return false;
+
+    if(listSubtitles().size() <= 1)
         return false;
 
     return !foundBestIdx;
@@ -194,18 +197,21 @@ bool QNapi::download(int i)
     QNapiSubtitleInfo s = subtitlesList[i];
     currentEngine = engineByName(s.engine);
     if(!currentEngine) return false;
-    int offset = offsetsList.value(s.engine, 0);
-    return currentEngine->download(i - offset);
+    return currentEngine->download(s.id);
 }
 
-bool QNapi::unpack()
+bool QNapi::unpack(int i)
 {
-    return currentEngine ? currentEngine->unpack() : false;
+    return currentEngine
+            ? currentEngine->unpack(subtitlesList[i].id)
+            : false;
 }
 
 bool QNapi::match()
 {
-    return currentEngine ? currentEngine->match() : false;
+    return currentEngine
+            ? currentEngine->match()
+            : false;
 }
 
 void QNapi::pp()

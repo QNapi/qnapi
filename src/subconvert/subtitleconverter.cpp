@@ -21,7 +21,7 @@
 #include <cmath>
 #include <QTextStream>
 #include "encodingutils.h"
-#include <QDebug>
+
 
 QString SubtitleConverter::detectFormat(const QString &subtitleFile)
 {

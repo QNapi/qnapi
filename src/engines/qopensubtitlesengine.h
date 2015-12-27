@@ -31,7 +31,7 @@ class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {
 public:
 
-    QOpenSubtitlesEngine(const QString & movieFile = "", const QString & subtitlesFile = "");
+    QOpenSubtitlesEngine();
     ~QOpenSubtitlesEngine();
 
     // zwraca nazwe modulu
@@ -52,21 +52,20 @@ public:
     // wyniki wyszukiwania
     QList<QNapiSubtitleInfo> listSubtitles();
     // probuje pobrac napisy
-    bool download(int idx);
+    bool download(QUuid id);
     // probuje rozpakowac napisy
-    bool unpack();
+    bool unpack(QUuid id);
     // czysci smieci, pliki tymczasowe
     void cleanup();
 
 private:
 
-    QString p7zipPath, lang, tmpPackedFile, subFileName;
+    QString p7zipPath, lang, subFileName;
     quint64 fileSize;
 
     SyncXmlRpc rpc;
     QString token;
 
-    QList<QNapiSubtitleInfo> subtitlesList;
 
     // sprawdza czy dana instancja klasy jest zalogowana na sewerze
     bool isLogged() { return !token.isEmpty(); }

@@ -17,7 +17,7 @@
 #include "subconvert/subtitleformatsregistry.h"
 
 #include <QFlags>
-#include <QDebug>
+
 
 // ustawia sciezke do pliku filmowego
 void QNapiAbstractEngine::setMoviePath(const QString & path)
@@ -31,17 +31,16 @@ QString QNapiAbstractEngine::moviePath()
     return movie;
 }
 
-// ustawia sciezke do pliku z napisami
-void QNapiAbstractEngine::setSubtitlesPath(const QString & path)
+void QNapiAbstractEngine::clearSubtitlesList()
 {
-    subtitles = path;
+    foreach(QNapiSubtitleInfo s, subtitlesList)
+    {
+        if(QFile::exists(s.sourceLocation))
+            QFile::remove(s.sourceLocation);
+    }
+    subtitlesList.clear();
 }
 
-// zwraca sciezke do pliku z napisami
-QString QNapiAbstractEngine::subtitlesPath()
-{
-    return subtitles;
-}
 
 // dopasowuje napisy do pliku z filmem
 bool QNapiAbstractEngine::match()
@@ -321,6 +320,31 @@ bool QNapiAbstractEngine::changeSubtitlesPermissions(QFile::Permissions permissi
 }
 #endif
 
+
+Maybe<QNapiSubtitleInfo> QNapiAbstractEngine::resolveById(QUuid id)
+{
+    foreach(QNapiSubtitleInfo s, subtitlesList)
+    {
+        if(s.id == id)
+            return just(s);
+    }
+    return nothing();
+}
+
+void QNapiAbstractEngine::updateSubtitleInfo(const QNapiSubtitleInfo & si)
+{
+    for(int i = 0; i < subtitlesList.size(); ++i)
+    {
+        if(subtitlesList[i].id == si.id)
+        {
+            subtitlesList[i] = si;
+            break;
+        }
+    }
+
+}
+
+
 // generuje nazwe dla pliku tymczasowego
 QString QNapiAbstractEngine::generateTmpFileName()
 {
@@ -332,3 +356,12 @@ QString QNapiAbstractEngine::generateTmpFileName()
     }
     return QString("QNapi.%1.tmp").arg(qrand());
 }
+
+QString QNapiAbstractEngine::generateTmpPath()
+{
+    QString newTmpFilePath = QString("%1/%2")
+            .arg(tmpPath)
+            .arg(generateTmpFileName());
+    return QDir::toNativeSeparators(newTmpFilePath);
+}
+

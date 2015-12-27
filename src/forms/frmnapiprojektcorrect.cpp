@@ -175,13 +175,13 @@ void PostThread::run()
 
     QNapiProjektEngine *napi;
 
-    if((napi = new QNapiProjektEngine(movie, subtitles)))
+    if((napi = new QNapiProjektEngine()))
     {
-        taskResult = napi->uploadSubtitles( language,
-                                            GlobalConfig().nick("NapiProjekt"),
-                                            GlobalConfig().pass("NapiProjekt"),
-                                            true,
-                                            comment);
+        taskResult = napi->uploadSubtitles(movie,
+                                           subtitles,
+                                           language,
+                                           true,
+                                           comment);
         delete napi;
     }
 

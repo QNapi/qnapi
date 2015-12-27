@@ -218,31 +218,47 @@ int QNapiCli::exec()
             return EC_NO_WRITE_PERMISSIONS;
         }
 
+        napi.clearSubtitlesList();
+
         printCli(QString(QString("   Obliczanie sum kontrolnych...")));
         napi.checksum();
 
         bool found = false;
         SearchPolicy sp = GlobalConfig().searchPolicy();
 
-        foreach(QString e, napi.listLoadedEngines())
+        if(sp == SP_SEARCH_ALL_WITH_BACKUP_LANG)
         {
-            printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
-            found = napi.lookForSubtitles(lang, e) || found;
-
-            if(sp == SP_BREAK_IF_FOUND && found)
-                break;
-        }
-
-        if(!found && !langBackup.isEmpty()) {
             foreach(QString e, napi.listLoadedEngines())
             {
+                printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
+                found = napi.lookForSubtitles(lang, e) || found;
                 printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
                 found = napi.lookForSubtitles(langBackup, e) || found;
+            }
+        }
+        else
+        {
+            foreach(QString e, napi.listLoadedEngines())
+            {
+                printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
+                found = napi.lookForSubtitles(lang, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found)
                     break;
             }
+
+            if(!found && !langBackup.isEmpty()) {
+                foreach(QString e, napi.listLoadedEngines())
+                {
+                    printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
+                    found = napi.lookForSubtitles(langBackup, e) || found;
+
+                    if(sp == SP_BREAK_IF_FOUND && found)
+                        break;
+                }
+            }
         }
+
 
         if(!found)
         {
@@ -328,7 +344,7 @@ int QNapiCli::exec()
         }
 
         printCli(QString(QString("   Rozpakowywanie napisow...")));
-        if(!napi.unpack())
+        if(!napi.unpack(selIdx))
         {
             printCli(QString(QString("   Nie udało sie poprawnie rozpakowac napisow!")));
             return EC_COULD_NOT_UNARCHIVE;

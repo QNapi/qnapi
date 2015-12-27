@@ -189,18 +189,17 @@ void ReportThread::run()
     }
 
     QNapiProjektEngine *napi;
-    if(!(napi = new QNapiProjektEngine(movie)))
+    if(!(napi = new QNapiProjektEngine))
     {
         emit reportFinished(true);
         return;
     }
 
     QString *response = new QString();
-    taskResult = napi->reportBad(   language,
-                                    GlobalConfig().nick("NapiProjekt"),
-                                    GlobalConfig().pass("NapiProjekt"),
-                                    comment,
-                                    response);
+    taskResult = napi->reportBad(movie,
+                                 language,
+                                 comment,
+                                 response);
     if(taskResult == QNapiProjektEngine::NAPI_REPORTED)
         emit serverMessage(*response);
     delete response;

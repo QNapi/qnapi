@@ -17,13 +17,10 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-QNapisy24Engine::QNapisy24Engine(const QString & movieFile, const QString & subtitlesFile)
-    : QNapiAbstractEngine(movieFile, subtitlesFile)
+QNapisy24Engine::QNapisy24Engine()
 {
     p7zipPath = GlobalConfig().p7zipPath();
-    lang = GlobalConfig().language();
     noBackup = GlobalConfig().noBackup();
-    tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());
 }
 
 QNapisy24Engine::~QNapisy24Engine()
@@ -38,7 +35,7 @@ QString QNapisy24Engine::engineName()
 
 QString QNapisy24Engine::engineInfo()
 {
-    return "Modul pobierania napisów z bazy <b>www.napisy24.pl</b><br />";
+    return "Moduł pobierania napisów z bazy <b>www.napisy24.pl</b><br />";
 }
 
 QIcon QNapisy24Engine::engineIcon()
@@ -344,8 +341,6 @@ QString QNapisy24Engine::checksum(QString filename)
         return QString("");
 
     fileSize = file.size();
-    QFileInfo fileInfo(file.fileName());
-    fileName = fileInfo.fileName();
     quint64 hash = fileSize;
     quint64 tmp, i;
 
@@ -358,7 +353,8 @@ QString QNapisy24Engine::checksum(QString filename)
 
 bool QNapisy24Engine::lookForSubtitles(QString lang)
 {
-    subtitlesList.clear();
+    if(lang != "pl") return false;
+
     const QUrl url = QUrl("http://napisy24.pl/run/CheckSubAgent.php");
 
     QUrlQuery params(url);
@@ -367,8 +363,10 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     params.addQueryItem("ap", "susolatnat");
     params.addQueryItem("fh", checkSum);
     params.addQueryItem("fs", QString::number(fileSize));
-    params.addQueryItem("fn", fileName);
-    params.addQueryItem("nl", lang); // TODO: Add napiprojekt checksum
+    params.addQueryItem("fn", QFileInfo(movie).fileName());
+    // API N24 ignoruje ten parametr; jeśli nie ma napisów w żądanym języku, to i tak
+    // zwraca napisy w jęz. polskim
+    // params.addQueryItem("nl", lang);
     QByteArray data = params.query().toUtf8();
 
     SyncHTTP http;
@@ -382,6 +380,8 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
     QByteArray respData = reply->readAll();
     if (!respData.startsWith("OK-2"))
         return false;
+
+    QString tmpPackedFile = generateTmpPath();
 
     QFile file(tmpPackedFile);
     if(file.exists()) file.remove();
@@ -401,7 +401,7 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
                                         "txt",
                                         SUBTITLE_UNKNOWN);
 
-    return (subtitlesList.size() > 0);
+    return true;
 }
 
 QList<QNapiSubtitleInfo> QNapisy24Engine::listSubtitles()
@@ -409,20 +409,23 @@ QList<QNapiSubtitleInfo> QNapisy24Engine::listSubtitles()
     return subtitlesList;
 }
 
-bool QNapisy24Engine::download(int idx)
+bool QNapisy24Engine::download(QUuid id)
 {
-    Q_UNUSED(idx);
-    return (subtitlesList.size() > 0);
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+
+    return ms && QFile::exists(ms.value().sourceLocation);
 }
 
-bool QNapisy24Engine::unpack()
+bool QNapisy24Engine::unpack(QUuid id)
 {
-    if(!QFile::exists(tmpPackedFile)) return false;
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+    if(!ms) return false;
+
     if(!QFile::exists(movie)) return false;
 
     QProcess p7zip;
 
-    p7zip.start(p7zipPath, QStringList() << "l" << "-slt" << tmpPackedFile);
+    p7zip.start(p7zipPath, QStringList() << "l" << "-slt" << ms.value().sourceLocation);
     if (!p7zip.waitForFinished(5000))
         return false;
 
@@ -462,7 +465,7 @@ bool QNapisy24Engine::unpack()
         QFile::remove(subtitlesTmp);
 
     QStringList args;
-    args << "e" << "-y" << ("-o" + tmpPath) << tmpPackedFile << subFileName;
+    args << "e" << "-y" << ("-o" + tmpPath) << ms.value().sourceLocation << subFileName;
 
     p7zip.start(p7zipPath, args);
 
@@ -473,8 +476,7 @@ bool QNapisy24Engine::unpack()
 
 void QNapisy24Engine::cleanup()
 {
-    if(QFile::exists(tmpPackedFile))
-        QFile::remove(tmpPackedFile);
+    clearSubtitlesList();
     if(QFile::exists(subtitlesTmp))
         QFile::remove(subtitlesTmp);
 }

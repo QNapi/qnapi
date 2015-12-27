@@ -120,6 +120,7 @@ OBJECTS_DIR = tmp
 INCLUDEPATH = src
 
 include(deps/libmaia/maia.pri)
+include(deps/qt-maybe/qt-maybe.pri)
 
 unix { 
     CONFIG += link_pkgconfig

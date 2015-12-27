@@ -31,14 +31,12 @@
 #endif
 
 // konstruktor klasy
-QNapiProjektEngine::QNapiProjektEngine(const QString & movieFile, const QString & subtitlesFile)
-    : QNapiAbstractEngine(movieFile, subtitlesFile)
+QNapiProjektEngine::QNapiProjektEngine()
 {
     p7zipPath = GlobalConfig().p7zipPath();
     nick = GlobalConfig().nick(engineName());
     pass = GlobalConfig().pass(engineName());
     noBackup = GlobalConfig().noBackup();
-    tmpPackedFile =  QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());
 }
 
 // destruktor klasy
@@ -57,7 +55,7 @@ QString QNapiProjektEngine::engineName()
 // zwraca informacje nt. modulu
 QString QNapiProjektEngine::engineInfo()
 {
-    return "Modul pobierania napisów z bazy <b>www.napiprojekt.pl</b>";
+    return "Moduł pobierania napisów z bazy <b>www.napiprojekt.pl</b>";
 }
 
 // zwraca ikone w formacie XMP
@@ -115,8 +113,6 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
 {
     if(checkSum.isEmpty()) return false;
 
-    subtitlesList.clear();
-
     SyncHTTP http;
     QString urlTxt = napiDownloadUrlTpl.arg(npLangWrapper(lang))
                                         .arg(checkSum)
@@ -143,6 +139,8 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
     if(buffer.indexOf("NPc") == 0)
         return false;
 
+    QString tmpPackedFile = generateTmpPath();
+
     QFile file(tmpPackedFile);
     if(file.exists()) file.remove();
     if(!file.open(QIODevice::WriteOnly))
@@ -155,13 +153,13 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
     
     subtitlesList << QNapiSubtitleInfo( lang,
                                         engineName(),
-                                        urlTxt,
+                                        tmpPackedFile,
                                         QFileInfo(movie).completeBaseName(),
                                         "",
                                         "txt",
                                         SUBTITLE_UNKNOWN);
 
-    return (subtitlesList.size() > 0);
+    return true;
 }
 
 QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
@@ -170,17 +168,19 @@ QList<QNapiSubtitleInfo> QNapiProjektEngine::listSubtitles()
 }
 
 // Probuje pobrac napisy do filmu z serwera NAPI
-bool QNapiProjektEngine::download(int idx)
+bool QNapiProjektEngine::download(QUuid id)
 {
-    Q_UNUSED(idx)
-    
-    return (subtitlesList.size() > 0);
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+
+    return ms && QFile::exists(ms.value().sourceLocation);
 }
 
 // Probuje rozpakowac napisy do filmu
-bool QNapiProjektEngine::unpack()
+bool QNapiProjektEngine::unpack(QUuid id)
 {
-    if(!QFile::exists(tmpPackedFile)) return false;
+    Maybe<QNapiSubtitleInfo> ms = resolveById(id);
+    if(!ms) return false;
+
     if(!QFile::exists(movie)) return false;
     subtitlesTmp = tmpPath + "/" + checkSum + ".txt";
 
@@ -188,7 +188,7 @@ bool QNapiProjektEngine::unpack()
         QFile::remove(subtitlesTmp);
 
     QStringList args;
-    args << "e" << "-y" << ("-p" + napiZipPassword) << ("-o" + tmpPath) << tmpPackedFile;
+    args << "e" << "-y" << ("-p" + napiZipPassword) << ("-o" + tmpPath) << ms.value().sourceLocation;
 
     QProcess p7zip;
     p7zip.start(p7zipPath, args);
@@ -201,8 +201,7 @@ bool QNapiProjektEngine::unpack()
 
 void QNapiProjektEngine::cleanup()
 {
-    if(QFile::exists(tmpPackedFile))
-        QFile::remove(tmpPackedFile);
+    clearSubtitlesList();
     if(QFile::exists(subtitlesTmp))
         QFile::remove(subtitlesTmp);
 }
@@ -225,8 +224,11 @@ bool QNapiProjektEngine::checkUser(const QString & nick, const QString & pass)
 
 // Wrzuca napisy do bazy NAPI
 QNapiProjektEngine::UploadResult
-    QNapiProjektEngine::uploadSubtitles(const QString & language, const QString & nick,
-                                        const QString & pass, bool correct, const QString & comment)
+    QNapiProjektEngine::uploadSubtitles(const QString & movie,
+                                        const QString & subtitles,
+                                        const QString & language,
+                                        bool correct,
+                                        const QString & comment)
 {
     if(!QFile::exists(movie) || !QFile::exists(subtitles))
         return NAPI_FAIL;
@@ -363,8 +365,10 @@ QNapiProjektEngine::UploadResult
 
 // Wysyla blad o niepasujacyh napisach
 QNapiProjektEngine::ReportResult
-    QNapiProjektEngine::reportBad(const QString & language, const QString & nick, const QString & pass,
-                                    const QString & comment, QString *response)
+    QNapiProjektEngine::reportBad(const QString & movie,
+                                  const QString & language,
+                                  const QString & comment,
+                                  QString *response)
 {
     QFileInfo fi(movie);
     subtitles = fi.path() + "/" + fi.completeBaseName() + ".txt";

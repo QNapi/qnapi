@@ -316,16 +316,18 @@ void UploadThread::run()
     for(int i = 0; i < size; i++)
     {
         QFileInfo fi(movieList[i]);
-        napi = new QNapiProjektEngine(movieList[i], fi.path() + "/" + fi.completeBaseName() + ".txt");
+        napi = new QNapiProjektEngine();
+        napi->setMoviePath(movieList[i]);
+
         if(!napi) continue;
 
         emit fileNameChange(fi.fileName());
         emit progressChange(i * 100 / size);
         
-        switch( napi->uploadSubtitles(  GlobalConfig().language(),
-                                        GlobalConfig().nick("NapiProjekt"),
-                                        GlobalConfig().pass("NapiProjekt"),
-                                        false ) )
+        switch(napi->uploadSubtitles(movieList[i],
+                                     fi.path() + "/" + fi.completeBaseName() + ".txt",
+                                     GlobalConfig().language(),
+                                     false))
         {
             case QNapiProjektEngine::NAPI_ADDED_NEW: ++added_new; break;
             case QNapiProjektEngine::NAPI_FAIL: ++failed; break;

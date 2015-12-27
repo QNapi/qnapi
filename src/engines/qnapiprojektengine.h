@@ -54,7 +54,7 @@ public:
         NAPI_REPORTED, NAPI_NO_SUBTITLES, NAPI_NOT_REPORTED
     };
 
-    QNapiProjektEngine(const QString & movieFile = "", const QString & subtitlesFile = "");
+    QNapiProjektEngine();
     ~QNapiProjektEngine();
 
     // zwraca nazwe modulu
@@ -68,11 +68,12 @@ public:
     // wywoluje okienko konfiguracji
     void configure(QWidget * parent);
 
+
     QString checksum(QString filename = "");
     bool lookForSubtitles(QString lang);
     QList<QNapiSubtitleInfo> listSubtitles();
-    bool download(int idx);
-    bool unpack();
+    bool download(QUuid id);
+    bool unpack(QUuid id);
     void cleanup();
 
     QString name()
@@ -81,17 +82,20 @@ public:
     }
 
     static bool checkUser(const QString & nick, const QString & pass);
-    UploadResult uploadSubtitles(const QString & language, const QString & nick,
-                                    const QString & pass, bool correct = false,
-                                    const QString & comment = "");
-    ReportResult reportBad(const QString & language, const QString & nick, const QString & pass,
-                            const QString & comment, QString *response);
+    UploadResult uploadSubtitles(const QString & movie,
+                                 const QString & subtitles,
+                                 const QString & language,
+                                 bool correct = false,
+                                 const QString & comment = "");
+
+    ReportResult reportBad(const QString & movie,
+                           const QString & language,
+                           const QString & comment,
+                           QString *response);
 
 private:
 
-    QString p7zipPath, nick, pass, tmpPackedFile;
-
-    QList<QNapiSubtitleInfo> subtitlesList;
+    QString p7zipPath, nick, pass;
 
     QString checksum(QString filename, bool limit10M);
     QString npFDigest(const QString & input);

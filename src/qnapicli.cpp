@@ -371,9 +371,10 @@ int QNapiCli::exec()
 
 void QNapiCli::printHeader()
 {
-    printCli(QString("QNapi %1, %2\n")
+    printCli(QString("QNapi %1, %2\nwersja Qt: %3\n")
                 .arg(QNAPI_DISPLAYABLE_VERSION)
-                .arg(QNAPI_URL));
+                .arg(QNAPI_URL)
+                .arg(qVersion()));
 }
 
 void QNapiCli::printHelp()

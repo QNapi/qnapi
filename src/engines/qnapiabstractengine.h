@@ -18,8 +18,6 @@
 #include <QString>
 #include <QFileInfo>
 #include <QFile>
-#include <QTextCodec>
-#include <QTextStream>
 #include <QIcon>
 #include <QPixmap>
 
@@ -29,8 +27,6 @@
 
 #include "qnapiconfig.h"
 #include "qnapisubtitleinfo.h"
-#include "encodingutils.h"
-
 
 class QNapiAbstractEngine
 {
@@ -47,19 +43,6 @@ public:
     // dopasowuje napisy do pliku z filmem
     bool match();
 
-    // dokonuje przetwarzania napisow
-    void pp();
-
-    // zamienia znaki diakrytyczne na ASCII
-    bool ppReplaceDiacriticsWithASCII();
-    // zmienia kodowanie znakow w pobranych napisach
-    bool ppChangeSubtitlesEncoding(const QString & from, const QString & to);
-    // zmienia kodowanie znakow w napisach na podane, dokonujac autodetekcji kodowania zrodlowgo
-    bool ppChangeSubtitlesEncoding(const QString & to);
-    // usuwa linie z pliku zawierajace conajmniej jedno z podanej listy slow
-    bool ppRemoveLinesContainingWords(QStringList wordList);
-    // usuwa polskie znaki diakrytyczne ze stringa
-    QString removePolishDiacritics(const QString & str);
 #ifndef Q_OS_WIN
     // zmienia uprawnienia do pliku z napisami
     bool changeSubtitlesPermissions(QFile::Permissions permissions);
@@ -128,9 +111,7 @@ protected:
     // generuje sciezke dla pliku tymczasowego w katalogu tymczasowym
     QString generateTmpPath();
 
-private:
-    EncodingUtils encodingUtils;
-
+    friend class QNapi;
 };
 
 #endif

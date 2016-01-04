@@ -51,7 +51,8 @@ SOURCES += src/main.cpp \
     src/subconvert/formats/subrip.cpp \
     src/subconvert/formats/mpl2.cpp \
     src/subconvert/subtitleformat.cpp \
-    src/libmediainfomovieinfoparser.cpp
+    src/libmediainfomovieinfoparser.cpp \
+    src/qsubpostprocess.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -97,7 +98,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/formats/tmplayer.h \
     src/subconvert/formats/subrip.h \
     src/subconvert/formats/mpl2.h \
-    src/libmediainfomovieinfoparser.h
+    src/libmediainfomovieinfoparser.h \
+    src/qsubpostprocess.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

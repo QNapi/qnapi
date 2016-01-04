@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "qnapi.h"
+#include "qsubpostprocess.h"
 
 QNapi::~QNapi()
 {
@@ -216,7 +217,11 @@ bool QNapi::match()
 
 void QNapi::pp()
 {
-    if(currentEngine) currentEngine->pp();
+    if(currentEngine) {
+        QSubPostProcess pp(currentEngine->movie,
+                           currentEngine->subtitlesTmp);
+        pp.perform();
+    }
 }
 
 void QNapi::cleanup()

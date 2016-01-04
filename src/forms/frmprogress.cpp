@@ -14,6 +14,15 @@
 
 #include "frmprogress.h"
 #include "qnapiapp.h"
+#include <QSystemTrayIcon>
+#include <QMessageBox>
+#include <QFileInfo>
+#include <QFile>
+#include <QDir>
+#include <QCloseEvent>
+#include <QDesktopWidget>
+
+
 
 frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
     : QWidget(parent, f)

@@ -18,12 +18,9 @@
 
 
 #include <QDialog>
-#include <QtWidgets/QHeaderView>
-#include <QDesktopWidget>
 
 #include "ui_frmlistsubtitles.h"
-
-#include "qnapi.h"
+#include "qnapisubtitleinfo.h"
 
 class frmListSubtitles : public QDialog
 {

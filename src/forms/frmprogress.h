@@ -15,15 +15,9 @@
 #ifndef __FRMPROGRESS__H__
 #define __FRMPROGRESS__H__
 
-#include "ui_frmprogress.h"
-#include <QSystemTrayIcon>
-#include <QMessageBox>
-#include <QFileInfo>
-#include <QFile>
-#include <QDir>
-#include <QCloseEvent>
-#include <QDesktopWidget>
 #include <QMutex>
+
+#include "ui_frmprogress.h"
 
 #include "frmsummary.h"
 
@@ -32,6 +26,7 @@
 #include "qnapiconfig.h"
 #include "qnapiopendialog.h"
 #include "frmlistsubtitles.h"
+#include "qnapisubtitleinfo.h"
 
 class GetThread : public QNapiThread
 {

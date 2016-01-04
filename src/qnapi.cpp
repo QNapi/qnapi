@@ -13,7 +13,11 @@
 *****************************************************************************/
 
 #include "qnapi.h"
+#include "qnapiconfig.h"
 #include "qsubpostprocess.h"
+#include "engines/qnapiprojektengine.h"
+#include "engines/qnapisy24engine.h"
+#include "engines/qopensubtitlesengine.h"
 
 QNapi::~QNapi()
 {

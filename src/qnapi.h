@@ -15,13 +15,9 @@
 #ifndef __QNAPI__H__
 #define __QNAPI__H__
 
-
 #include <QtCore>
-#include "qnapiconfig.h"
+
 #include "engines/qnapiabstractengine.h"
-#include "engines/qnapiprojektengine.h"
-#include "engines/qnapisy24engine.h"
-#include "engines/qopensubtitlesengine.h"
 #include "qnapisubtitleinfo.h"
 
 // globalny menedzer pobierania napisow

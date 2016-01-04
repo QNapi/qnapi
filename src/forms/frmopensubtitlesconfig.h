@@ -16,10 +16,8 @@
 #define __FRMOpenSubtitlesCONFIG__H__
 
 #include <QDialog>
-#include "ui_frmopensubtitlesconfig.h"
 
-#include "qnapiconfig.h"
-#include "qnapiapp.h"
+#include "ui_frmopensubtitlesconfig.h"
 
 class frmOpenSubtitlesConfig : public QDialog
 {

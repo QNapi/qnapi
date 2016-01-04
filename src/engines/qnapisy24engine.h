@@ -17,8 +17,6 @@
 
 #include "qnapiabstractengine.h"
 #include "synchttp.h"
-#include <QUrl>
-#include <QUrlQuery>
 
 class QNapisy24Engine : public QNapiAbstractEngine
 {

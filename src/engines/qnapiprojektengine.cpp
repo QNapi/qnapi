@@ -14,9 +14,19 @@
 
 #include "qnapiprojektengine.h"
 #include "forms/frmnapiprojektconfig.h"
+#include "libmediainfomovieinfoparser.h"
+#include "qmultiparthttprequest.h"
+#include "synchttp.h"
+#include "movieinfo.h"
+#include "qnapilanguage.h"
+
+#include <cmath>
+
+#include <QCryptographicHash>
+#include <QUrl>
+#include <QMessageBox>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include "libmediainfomovieinfoparser.h"
 
 #ifdef Q_OS_WIN // for SetFileAttributes
 #include <qt_windows.h>

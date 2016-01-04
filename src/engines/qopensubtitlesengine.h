@@ -15,17 +15,10 @@
 #ifndef __QOPENSUBTITLESENGINE__H__
 #define __QOPENSUBTITLESENGINE__H__
 
-#include <QUrl>
-#include <QDir>
-#include <QMessageBox>
-
 #include "qnapiabstractengine.h"
-#include "version.h"
-#include "qnapilanguage.h"
 #include "syncxmlrpc.h"
 
-
-const QUrl openSubtitlesXmlRpcUrl = QUrl("http://api.opensubtitles.org/xml-rpc");
+const QString openSubtitlesXmlRpcUrl = "http://api.opensubtitles.org/xml-rpc";
 
 class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {

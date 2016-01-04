@@ -14,10 +14,16 @@
 
 #include "qopensubtitlesengine.h"
 #include "forms/frmopensubtitlesconfig.h"
+#include "version.h"
+#include "qnapilanguage.h"
+
+#include <QUrl>
+#include <QDir>
+#include <QMessageBox>
 
 // konstruktor klasy
 QOpenSubtitlesEngine::QOpenSubtitlesEngine()
-    : rpc(openSubtitlesXmlRpcUrl)
+    : rpc(QUrl(openSubtitlesXmlRpcUrl))
 {
     p7zipPath = GlobalConfig().p7zipPath();
     lang = GlobalConfig().language();

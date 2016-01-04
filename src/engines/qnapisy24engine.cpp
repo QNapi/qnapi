@@ -16,6 +16,8 @@
 #include "qnapisy24engine.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
 
 QNapisy24Engine::QNapisy24Engine()
 {

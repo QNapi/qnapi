@@ -12,8 +12,9 @@
 **
 *****************************************************************************/
 
-
 #include "frmlistsubtitles.h"
+
+#include <QMessageBox>
 
 frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)

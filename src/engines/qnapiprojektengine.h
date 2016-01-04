@@ -15,18 +15,7 @@
 #ifndef __QNAPIPROJEKTENGINE__H__
 #define __QNAPIPROJEKTENGINE__H__
 
-#include <QCryptographicHash>
-#include <QUrl>
-#include <QMessageBox>
-
-#include <cmath>
-
 #include "qnapiabstractengine.h"
-#include "qmultiparthttprequest.h"
-#include "synchttp.h"
-#include "movieinfo.h"
-
-#include "qnapilanguage.h"
 
 const unsigned long NAPI_10MB = 10485760;
 

@@ -1,6 +1,6 @@
 ; Define your application name
 !define APPNAME "QNapi"
-!define APPVER "0.2.1-snapshot"
+!define APPVER "0.2.1"
 !define APPNAMEANDVERSION "${APPNAME} ${APPVER}"
 
 !include "MUI2.nsh"

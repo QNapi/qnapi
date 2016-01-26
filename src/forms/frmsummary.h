@@ -18,6 +18,7 @@
 #include <QDesktopWidget>
 #include <QListWidget>
 #include <QFileInfo>
+#include <QtCore>
 
 #include "qnapiconfig.h"
 
@@ -30,7 +31,7 @@ Q_OBJECT
         frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
         ~frmSummary() {};
 
-        void setSummaryList(const QStringList & listSuccess, const QStringList & listFailures);
+        void setSummaryList(const QList<QPair<QString,QString>> & listSuccess, const QStringList & listFailures);
 
     private:
         Ui::frmSummary ui;

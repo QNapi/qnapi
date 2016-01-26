@@ -316,6 +316,7 @@ void GetThread::run()
         ABORT_POINT
 
         bool found = false;
+        bool foundBackup = false;
         SearchPolicy sp = GlobalConfig().searchPolicy();        
 
 
@@ -343,8 +344,10 @@ void GetThread::run()
                 emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
-                if(sp == SP_BREAK_IF_FOUND && found)
+                if(sp == SP_BREAK_IF_FOUND && found){
+                    foundBackup = true;
                     break;
+                }
 
                 ABORT_POINT
             }
@@ -442,7 +445,7 @@ void GetThread::run()
         }
 
         ++napiSuccess;
-        gotList << queue[i];
+        gotList.append(qMakePair(queue[i], foundBackup ? languageBackup : language));
 
         napi->cleanup();
 

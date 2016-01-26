@@ -61,7 +61,8 @@ Q_OBJECT
         }
         void run();
 
-        QStringList queue, gotList, failedList, engines;
+        QStringList queue, failedList, engines;
+        QList<QPair<QString,QString>> gotList;
         QString lang, langBackup;
         bool langBackupPassed;
         int napiSuccess, napiFail;

@@ -25,7 +25,7 @@ frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmSummary::setSummaryList(const QStringList & listSuccess, const QStringList & listFailures)
+void frmSummary::setSummaryList(const QList<QPair<QString,QString>> & listSuccess, const QStringList & listFailures)
 {
     ui.lwSummary->clear();
 
@@ -34,9 +34,13 @@ void frmSummary::setSummaryList(const QStringList & listSuccess, const QStringLi
 
     QIcon succIcon(":/ui/accept.png"), failIcon(":/ui/exclamation.png");
 
-    foreach(QString successItem, listSuccess)
+QPair<QString, QString> successItem;
+
+    foreach(successItem, listSuccess)
     {
-        ui.lwSummary->addItem(new QListWidgetItem(succIcon, QFileInfo(successItem).fileName()));
+        QListWidgetItem* wi = new QListWidgetItem(succIcon,"[" + successItem.second.toUpper() + "] " + QFileInfo(successItem.first).fileName());
+
+        ui.lwSummary->addItem(wi);
     }
 
     foreach(QString failureItem, listFailures)

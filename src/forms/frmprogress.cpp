@@ -316,7 +316,6 @@ void GetThread::run()
         ABORT_POINT
 
         bool found = false;
-        bool foundBackup = false;
         SearchPolicy sp = GlobalConfig().searchPolicy();        
 
 
@@ -345,7 +344,6 @@ void GetThread::run()
                 found = napi->lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found){
-                    foundBackup = true;
                     break;
                 }
 
@@ -444,8 +442,10 @@ void GetThread::run()
             return;
         }
 
+        QNapiSubtitleInfo si = napi->listSubtitles().at(selIdx);
+
         ++napiSuccess;
-        gotList.append(qMakePair(queue[i], foundBackup ? languageBackup : language));
+        gotList.append(qMakePair(queue[i], si.lang));
 
         napi->cleanup();
 

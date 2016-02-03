@@ -204,6 +204,7 @@ QList<QNapiSubtitleInfo> QOpenSubtitlesEngine::listSubtitles()
             case SUBTITLE_GOOD: good << n; break;
             case SUBTITLE_UNKNOWN: unknown << n; break;
             case SUBTITLE_BAD: bad << n; break;
+            case SUBTITLE_NONE:break;
         }
     }
 

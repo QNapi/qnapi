@@ -13,6 +13,9 @@
 *****************************************************************************/
 
 #include "frmsummary.h"
+#include "qnapi.h"
+
+#include "subdatawidget.h"
 
 frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
@@ -25,34 +28,61 @@ frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmSummary::setSummaryList(const QList<QPair<QString,QString>> & listSuccess, const QStringList & listFailures)
+void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> &list)
 {
-    ui.lwSummary->clear();
+    std::sort(list.begin(), list.end());
 
-    ui.lbSuccess->setVisible(!listSuccess.isEmpty());
-    ui.lbFail->setVisible(!listFailures.isEmpty());
+    QNapi n;
+    n.addEngines(n.enumerateEngines());
 
     QIcon succIcon(":/ui/accept.png"), failIcon(":/ui/exclamation.png");
 
-QPair<QString, QString> successItem;
+    ui.lwSummary->clear();
+    ui.lwSummary->setFocusPolicy(Qt::NoFocus);
 
-    foreach(successItem, listSuccess)
-    {
-        QListWidgetItem* wi = new QListWidgetItem(succIcon,"[" + successItem.second.toUpper() + "] " + QFileInfo(successItem.first).fileName());
+       int i = 0, good = 0, bad = 0;
+        foreach(QNapiSubtitleInfo s, list)
+        {
+            bool isGood = false;
 
-        ui.lwSummary->addItem(wi);
-    }
+            if(s.resolution != SUBTITLE_NONE){
+                ++good;
+                isGood = true;
+            }
+            else{
+                ++bad;
+            }
 
-    foreach(QString failureItem, listFailures)
-    {
-        ui.lwSummary->addItem(new QListWidgetItem(failIcon, QFileInfo(failureItem).fileName()));
-    }
+            QNapiAbstractEngine *e = n.engineByName(s.engine);
+            QListWidgetItem *listitem = new QListWidgetItem();
 
-    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2")
-                          .arg(listSuccess.size())
-                          .arg(tr(listSuccess.size() > 1 ? "plików" : "pliku")));
 
-    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2")
-                       .arg(listFailures.size())
-                       .arg(tr(listFailures.size() > 1 ? "plików" : "pliku")));
+            ui.lwSummary->addItem(listitem);
+
+            subDataWidget *subData = new subDataWidget();
+
+            if(isGood){
+                QString lang_path = QString(":/languages/") + s.lang + ".png";
+                subData->setSubData(succIcon, s.name,QIcon(lang_path),e->engineIcon());
+
+            }else{
+                subData->setSubData(failIcon, QFileInfo(s.name).fileName());
+
+            }
+           ui.lwSummary->setItemWidget(listitem, subData);
+           listitem->setSizeHint(subData->sizeHint());
+
+            ++i;
+        }
+
+
+        ui.lwSummary->setMinimumWidth(ui.lwSummary->sizeHintForColumn(0) + 20);
+        this->adjustSize();
+
+        ui.lbSuccess->setVisible(good != 0);
+        ui.lbFail->setVisible(bad != 0);
+
+    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2").arg(good).arg(tr(good > 1 ? "plików" : "pliku")));
+
+    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2").arg(bad).arg(tr(bad > 1 ? "plików" : "pliku")));
 }

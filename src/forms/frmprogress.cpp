@@ -182,10 +182,9 @@ void frmProgress::downloadFinished()
         {
             QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
         }
-        else if(queue.size() > 0
-                && !(getThread.gotList.isEmpty() && getThread.failedList.isEmpty()))
+        else if(queue.size() > 0 && !getThread.subStatusList.isEmpty())
         {
-            summary.setSummaryList(getThread.gotList, getThread.failedList);
+            summary.setSummaryList(getThread.subStatusList);
             summary.exec();
         }
     }
@@ -266,8 +265,7 @@ void GetThread::run()
     if(queue.size() <= 0) return;
 
     napiSuccess = napiFail = 0;
-    gotList.clear();
-    failedList.clear();
+    subStatusList.clear();
 
     QNapi *napi = new QNapi();
 
@@ -368,7 +366,7 @@ void GetThread::run()
         if(!found)
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -392,7 +390,7 @@ void GetThread::run()
         if(selIdx == -1)
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -404,7 +402,7 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -416,7 +414,7 @@ void GetThread::run()
         if(!napi->unpack(selIdx))
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -436,16 +434,14 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
 
             emit criticalError(tr("Nie udało się dopasować napisów!!"));
             return;
         }
 
-        QNapiSubtitleInfo si = napi->listSubtitles().at(selIdx);
-
         ++napiSuccess;
-        gotList.append(qMakePair(queue[i], si.lang));
+        subStatusList << napi->listSubtitles().at(selIdx);
 
         napi->cleanup();
 

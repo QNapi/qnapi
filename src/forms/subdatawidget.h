@@ -2,10 +2,7 @@
 #define SUBDATAWIDGET_H
 
 #include <QWidget>
-
-namespace Ui {
-class subDataWidget;
-}
+#include "ui_subDataWidget.h"
 
 class subDataWidget : public QWidget
 {

@@ -1,5 +1,4 @@
 #include "subdatawidget.h"
-#include "ui_subdatawidget.h"
 
 subDataWidget::subDataWidget(QWidget *parent) :
     QWidget(parent),

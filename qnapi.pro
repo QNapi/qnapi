@@ -4,7 +4,6 @@ CONFIG += warn_on \
     thread \
     qt \
     resources \
-    release \
     silent \
     c++11
 
@@ -52,7 +51,8 @@ SOURCES += src/main.cpp \
     src/subconvert/formats/mpl2.cpp \
     src/subconvert/subtitleformat.cpp \
     src/libmediainfomovieinfoparser.cpp \
-    src/qsubpostprocess.cpp
+    src/qsubpostprocess.cpp \
+    src/forms/subdatawidget.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -99,7 +99,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/formats/subrip.h \
     src/subconvert/formats/mpl2.h \
     src/libmediainfomovieinfoparser.h \
-    src/qsubpostprocess.h
+    src/qsubpostprocess.h \
+    src/forms/subdatawidget.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -112,7 +113,8 @@ FORMS += ui/frmprogress.ui \
     ui/napiprojekt/frmnapiprojektreport.ui \
     ui/napiprojekt/frmnapiprojektupload.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
-    ui/frmconvert.ui
+    ui/frmconvert.ui \
+    ui/subDataWidget.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

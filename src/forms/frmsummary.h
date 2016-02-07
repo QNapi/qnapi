@@ -18,10 +18,12 @@
 #include <QDesktopWidget>
 #include <QListWidget>
 #include <QFileInfo>
+#include <QtCore>
 
 #include "qnapiconfig.h"
 
 #include "ui_frmsummary.h"
+#include "qnapisubtitleinfo.h"
 
 class frmSummary: public QDialog
 {
@@ -30,7 +32,7 @@ Q_OBJECT
         frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
         ~frmSummary() {};
 
-        void setSummaryList(const QStringList & listSuccess, const QStringList & listFailures);
+        void setSummaryList(QList<QNapiSubtitleInfo> &list);
 
     private:
         Ui::frmSummary ui;

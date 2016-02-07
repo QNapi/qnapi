@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
-    <height>333</height>
+    <width>460</width>
+    <height>330</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>460</width>
+    <height>330</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>QNapi - rezultat dopasowania napisów</string>
@@ -51,7 +63,14 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="lwSummary"/>
+    <widget class="QListWidget" name="lwSummary">
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout">

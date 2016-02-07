@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>subDataWidget</class>
+ <widget class="QWidget" name="subDataWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>68</width>
+    <height>31</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>30</height>
+   </size>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="place1">
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="place2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="place3">
+     <property name="text">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="place4">
+     <property name="text">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

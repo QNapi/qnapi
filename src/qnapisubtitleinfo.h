@@ -20,6 +20,8 @@
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
 enum QNapiSubtitleResolution
 {
+    // brak napisów
+    SUBTITLE_NONE,
     // nie wiadomo (lub nie jestesmy pewni)
     SUBTITLE_UNKNOWN,
     // podejrzenie, ze napisy nie pasuja
@@ -56,6 +58,10 @@ struct QNapiSubtitleInfo
     QString format;
     QNapiSubtitleResolution resolution;
     QUuid id;
+
+    bool operator<(const QNapiSubtitleInfo& other) const {
+        return resolution > other.resolution;
+    }
 };
 
 Q_DECLARE_METATYPE(QNapiSubtitleInfo);

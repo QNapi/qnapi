@@ -182,10 +182,9 @@ void frmProgress::downloadFinished()
         {
             QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
         }
-        else if(queue.size() > 0
-                && !(getThread.gotList.isEmpty() && getThread.failedList.isEmpty()))
+        else if(queue.size() > 0 && !getThread.subStatusList.isEmpty())
         {
-            summary.setSummaryList(getThread.gotList, getThread.failedList);
+            summary.setSummaryList(getThread.subStatusList);
             summary.exec();
         }
     }
@@ -266,8 +265,7 @@ void GetThread::run()
     if(queue.size() <= 0) return;
 
     napiSuccess = napiFail = 0;
-    gotList.clear();
-    failedList.clear();
+    subStatusList.clear();
 
     QNapi *napi = new QNapi();
 
@@ -343,8 +341,9 @@ void GetThread::run()
                 emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
-                if(sp == SP_BREAK_IF_FOUND && found)
+                if(sp == SP_BREAK_IF_FOUND && found){
                     break;
+                }
 
                 ABORT_POINT
             }
@@ -367,7 +366,7 @@ void GetThread::run()
         if(!found)
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -391,7 +390,7 @@ void GetThread::run()
         if(selIdx == -1)
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -403,7 +402,7 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -415,7 +414,7 @@ void GetThread::run()
         if(!napi->unpack(selIdx))
         {
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
             continue;
         }
 
@@ -435,14 +434,14 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            failedList << queue[i];
+            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
 
             emit criticalError(tr("Nie udało się dopasować napisów!!"));
             return;
         }
 
         ++napiSuccess;
-        gotList << queue[i];
+        subStatusList << napi->listSubtitles().at(selIdx);
 
         napi->cleanup();
 

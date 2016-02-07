@@ -121,46 +121,15 @@ QString QNapiProjektEngine::checksum(QString filename)
 
 bool QNapiProjektEngine::lookForSubtitles(QString lang)
 {
-    if(checkSum.isEmpty()) return false;
+    Maybe<QString> tmpPackedFileOpt = downloadByLangAndChecksum(lang, checkSum);
 
-    SyncHTTP http;
-    QString urlTxt = napiDownloadUrlTpl.arg(npLangWrapper(lang))
-                                        .arg(checkSum)
-                                        .arg(npFDigest(checkSum))
-                                        .arg(nick)
-                                        .arg(pass)
-#ifdef Q_OS_WIN
-                                        .arg("Windows");
-#elif defined(Q_OS_MAC)
-                                        .arg("Mac OS X");
-#else
-                                        .arg("Linux/UNIX");
-#endif
-
-    QUrl url(urlTxt);
-
-    QNetworkReply *reply = http.syncGet(QNetworkRequest(url));
-
-    if(reply->error() != QNetworkReply::NoError)
+    if(!tmpPackedFileOpt)
+    {
         return false;
+    }
 
-    QByteArray buffer = reply->readAll();
+    QString tmpPackedFile = tmpPackedFileOpt.value();
 
-    if(buffer.indexOf("NPc") == 0)
-        return false;
-
-    QString tmpPackedFile = generateTmpPath();
-
-    QFile file(tmpPackedFile);
-    if(file.exists()) file.remove();
-    if(!file.open(QIODevice::WriteOnly))
-        return false;
-
-    int r = file.write(buffer);
-    file.close();
-    
-    if(!r) return false;
-    
     subtitlesList << QNapiSubtitleInfo( lang,
                                         engineName(),
                                         tmpPackedFile,
@@ -168,7 +137,6 @@ bool QNapiProjektEngine::lookForSubtitles(QString lang)
                                         "",
                                         "txt",
                                         SUBTITLE_UNKNOWN);
-
     return true;
 }
 
@@ -183,6 +151,47 @@ bool QNapiProjektEngine::download(QUuid id)
     Maybe<QNapiSubtitleInfo> ms = resolveById(id);
 
     return ms && QFile::exists(ms.value().sourceLocation);
+}
+
+Maybe<QString> QNapiProjektEngine::downloadByLangAndChecksum(QString lang, QString checksum) const
+{
+    if(checksum.isEmpty())
+        return nothing();
+
+    QString urlTxt = napiDownloadUrlTpl.arg(npLangWrapper(lang))
+                                       .arg(checksum)
+                                       .arg(npFDigest(checksum))
+                                       .arg(nick)
+                                       .arg(pass)
+                                       .arg(napiOS());
+
+    QUrl url(urlTxt);
+
+    SyncHTTP http;
+    QNetworkReply *reply = http.syncGet(QNetworkRequest(url));
+
+    if(reply->error() != QNetworkReply::NoError)
+        return nothing();
+
+    QByteArray buffer = reply->readAll();
+
+    if(buffer.indexOf("NPc") == 0)
+        return nothing();
+
+    QString tmpPackedFile = generateTmpPath();
+
+    QFile file(tmpPackedFile);
+    if(file.exists()) file.remove();
+    if(!file.open(QIODevice::WriteOnly))
+        return nothing();
+
+    int r = file.write(buffer);
+    file.close();
+
+    if(r < 0)
+        return nothing();
+
+    return just(tmpPackedFile);
 }
 
 // Probuje rozpakowac napisy do filmu
@@ -458,7 +467,7 @@ QString QNapiProjektEngine::checksum(QString filename, bool limit10M)
 }
 
 // Tajemnicza funkcja f()
-QString QNapiProjektEngine::npFDigest(const QString & input)
+QString QNapiProjektEngine::npFDigest(const QString & input) const
 {
     if(input.size() != 32) return "";
 
@@ -487,7 +496,7 @@ QString QNapiProjektEngine::npFDigest(const QString & input)
     return b;
 }
 
-QString QNapiProjektEngine::npLangWrapper(QString lang)
+QString QNapiProjektEngine::npLangWrapper(QString lang) const
 {
     lang = QNapiLanguage(lang).toTwoLetter().toUpper();
 
@@ -495,4 +504,15 @@ QString QNapiProjektEngine::npLangWrapper(QString lang)
         lang = "ENG";
 
     return lang;
+}
+
+QString QNapiProjektEngine::napiOS() const
+{
+#if defined(Q_OS_WIN)
+    return "Windows";
+#elif defined(Q_OS_MAC)
+    return "Mac OS X";
+#else
+    return "Linux/UNIX";
+#endif
 }

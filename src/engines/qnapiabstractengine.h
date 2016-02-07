@@ -107,9 +107,9 @@ protected:
 
 
     // generuje nazwe dla pliku tymczasowego
-    QString generateTmpFileName();
+    QString generateTmpFileName() const;
     // generuje sciezke dla pliku tymczasowego w katalogu tymczasowym
-    QString generateTmpPath();
+    QString generateTmpPath() const;
 
     friend class QNapi;
 };

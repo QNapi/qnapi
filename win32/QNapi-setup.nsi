@@ -35,6 +35,9 @@ SetCompressor LZMA
 
 Section "QNapi" Section1
 
+    ${nsProcess::KillProcess} "qnapi.exe" $R0
+    ${nsProcess::Unload}
+
     ; Set Section properties
     SetOverwrite on
 

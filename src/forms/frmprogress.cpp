@@ -366,7 +366,7 @@ void GetThread::run()
         if(!found)
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
+            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
@@ -390,7 +390,7 @@ void GetThread::run()
         if(selIdx == -1)
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
+            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
@@ -402,7 +402,7 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
+            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
@@ -414,7 +414,7 @@ void GetThread::run()
         if(!napi->unpack(selIdx))
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
+            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
@@ -434,7 +434,7 @@ void GetThread::run()
             ABORT_POINT
 
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo("","","",queue[i],"","",SUBTITLE_NONE);
+            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
 
             emit criticalError(tr("Nie udało się dopasować napisów!!"));
             return;

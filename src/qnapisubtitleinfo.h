@@ -22,11 +22,11 @@ enum QNapiSubtitleResolution
 {
     // brak napisów
     SUBTITLE_NONE,
-    // nie wiadomo (lub nie jestesmy pewni)
-    SUBTITLE_UNKNOWN,
     // podejrzenie, ze napisy nie pasuja
     // (np. zostaly oznaczone jako nieprawidlowe)
     SUBTITLE_BAD,
+    // nie wiadomo (lub nie jestesmy pewni)
+    SUBTITLE_UNKNOWN,
     // napisy prawdopodobnie pasuja (np. nazwa pliku czy releasu sie zgadza)
     SUBTITLE_GOOD
 };
@@ -61,6 +61,10 @@ struct QNapiSubtitleInfo
 
     bool operator<(const QNapiSubtitleInfo& other) const {
         return resolution > other.resolution;
+    }
+
+    static QNapiSubtitleInfo fromFailed(QString name) {
+        return QNapiSubtitleInfo("", "", "",name, "" ,"", SUBTITLE_NONE);
     }
 };
 

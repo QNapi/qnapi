@@ -58,7 +58,7 @@ void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> list)
             subData->setSubData(succIcon, s.name, QIcon(lang_path), e->engineIcon());
         } else {
             ++badCount;
-            subData->setSubData(failIcon, QFileInfo(s.name).fileName());
+            subData->setSubData(failIcon, s.name);
         }
 
         ui.lwSummary->setItemWidget(listItem, subData);

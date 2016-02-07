@@ -40,49 +40,41 @@ void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> &list)
     ui.lwSummary->clear();
     ui.lwSummary->setFocusPolicy(Qt::NoFocus);
 
-       int i = 0, good = 0, bad = 0;
-        foreach(QNapiSubtitleInfo s, list)
-        {
-            bool isGood = false;
+    int i = 0, goodCount = 0, badCount = 0;
+    foreach(QNapiSubtitleInfo s, list)
+    {
+        bool isGood = s.resolution != SUBTITLE_NONE;
 
-            if(s.resolution != SUBTITLE_NONE){
-                ++good;
-                isGood = true;
-            }
-            else{
-                ++bad;
-            }
+        QNapiAbstractEngine *e = n.engineByName(s.engine);
+        QListWidgetItem *listItem = new QListWidgetItem();
 
-            QNapiAbstractEngine *e = n.engineByName(s.engine);
-            QListWidgetItem *listitem = new QListWidgetItem();
+        ui.lwSummary->addItem(listItem);
 
+        subDataWidget *subData = new subDataWidget();
 
-            ui.lwSummary->addItem(listitem);
-
-            subDataWidget *subData = new subDataWidget();
-
-            if(isGood){
-                QString lang_path = QString(":/languages/") + s.lang + ".png";
-                subData->setSubData(succIcon, s.name,QIcon(lang_path),e->engineIcon());
-
-            }else{
-                subData->setSubData(failIcon, QFileInfo(s.name).fileName());
-
-            }
-           ui.lwSummary->setItemWidget(listitem, subData);
-           listitem->setSizeHint(subData->sizeHint());
-
-            ++i;
+        if(isGood) {
+            ++goodCount;
+            QString lang_path = QString(":/languages/") + s.lang + ".png";
+            subData->setSubData(succIcon, s.name, QIcon(lang_path), e->engineIcon());
+        } else {
+            ++badCount;
+            subData->setSubData(failIcon, QFileInfo(s.name).fileName());
         }
 
+        ui.lwSummary->setItemWidget(listItem, subData);
+        listItem->setSizeHint(subData->sizeHint());
 
-        ui.lwSummary->setMinimumWidth(ui.lwSummary->sizeHintForColumn(0) + 20);
-        this->adjustSize();
+        ++i;
+    }
 
-        ui.lbSuccess->setVisible(good != 0);
-        ui.lbFail->setVisible(bad != 0);
+    ui.lwSummary->setMinimumWidth(ui.lwSummary->sizeHintForColumn(0) + 20);
+    this->adjustSize();
 
-    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2").arg(good).arg(tr(good > 1 ? "plików" : "pliku")));
+    ui.lbSuccess->setVisible(goodCount != 0);
+    ui.lbFail->setVisible(badCount != 0);
 
-    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2").arg(bad).arg(tr(bad > 1 ? "plików" : "pliku")));
+    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2")
+        .arg(goodCount).arg(tr(goodCount > 1 ? "plików" : "pliku")));
+    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2")
+        .arg(badCount).arg(tr(badCount > 1 ? "plików" : "pliku")));
 }

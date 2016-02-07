@@ -162,7 +162,7 @@ void QNapiAbstractEngine::updateSubtitleInfo(const QNapiSubtitleInfo & si)
 
 
 // generuje nazwe dla pliku tymczasowego
-QString QNapiAbstractEngine::generateTmpFileName()
+QString QNapiAbstractEngine::generateTmpFileName() const
 {
     static bool gen_inited;
     if(!gen_inited)
@@ -173,7 +173,7 @@ QString QNapiAbstractEngine::generateTmpFileName()
     return QString("QNapi.%1.tmp").arg(qrand());
 }
 
-QString QNapiAbstractEngine::generateTmpPath()
+QString QNapiAbstractEngine::generateTmpPath() const
 {
     QString newTmpFilePath = QString("%1/%2")
             .arg(tmpPath)

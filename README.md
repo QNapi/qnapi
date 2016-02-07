@@ -93,6 +93,9 @@ To build .dmg image for OSX with nice, drag&drop installer, you have to execute:
 
 You need to have **NSIS** 2.x installed. You can found it at http://nsis.sourceforge.net
 
+Also, you will need to manually install NSIS plugin **nsProcess**. It can be found at
+http://nsis.sourceforge.net/NsProcess_plugin
+
 #### Building Windows installer
 
 Installer script is placed at `win32/QNapi-setup.nsi`. You can build binary exe package using NSIS user interface (by `right mouse button -> compile NSIS script`) or from command line:

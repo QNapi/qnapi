@@ -87,8 +87,10 @@ private:
     QString p7zipPath, nick, pass;
 
     QString checksum(QString filename, bool limit10M);
-    QString npFDigest(const QString & input);
-    QString npLangWrapper(QString lang);
+    Maybe<QString> downloadByLangAndChecksum(QString lang, QString checksum) const;
+    QString npFDigest(const QString & input) const;
+    QString npLangWrapper(QString lang) const;
+    QString napiOS() const;
 
 };
 

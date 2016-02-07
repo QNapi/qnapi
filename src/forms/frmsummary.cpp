@@ -28,7 +28,7 @@ frmSummary::frmSummary(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
     move(position.topLeft());
 }
 
-void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> &list)
+void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> list)
 {
     std::sort(list.begin(), list.end());
 

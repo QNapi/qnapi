@@ -53,7 +53,8 @@ SOURCES += src/main.cpp \
     src/subconvert/subtitleformat.cpp \
     src/libmediainfomovieinfoparser.cpp \
     src/qsubpostprocess.cpp \
-    src/forms/subdatawidget.cpp
+    src/forms/subdatawidget.cpp \
+    src/qnapisubtitleinfo.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \

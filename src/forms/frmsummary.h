@@ -30,9 +30,9 @@ class frmSummary: public QDialog
 Q_OBJECT
     public:
         frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmSummary() {};
+        ~frmSummary() {}
 
-        void setSummaryList(QList<QNapiSubtitleInfo> &list);
+        void setSummaryList(QList<QNapiSubtitleInfo> list);
 
     private:
         Ui::frmSummary ui;

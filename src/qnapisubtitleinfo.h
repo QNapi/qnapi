@@ -16,6 +16,7 @@
 #define __QNAPISUBTITLEINFO__H__
 
 #include <QUuid>
+#include <QMetaType>
 
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
 enum QNapiSubtitleResolution
@@ -32,8 +33,9 @@ enum QNapiSubtitleResolution
 };
 
 // struktura opisujaca napisy
-struct QNapiSubtitleInfo
+class QNapiSubtitleInfo
 {
+public:
     QNapiSubtitleInfo(QString _lang = "",
                       QString _engine = "",
                       QString _sourceLocation = "",
@@ -59,13 +61,9 @@ struct QNapiSubtitleInfo
     QNapiSubtitleResolution resolution;
     QUuid id;
 
-    bool operator<(const QNapiSubtitleInfo& other) const {
-        return resolution > other.resolution;
-    }
+    bool operator<(const QNapiSubtitleInfo& other) const;
 
-    static QNapiSubtitleInfo fromFailed(QString name) {
-        return QNapiSubtitleInfo("", "", "",name, "" ,"", SUBTITLE_NONE);
-    }
+    static QNapiSubtitleInfo fromFailed(QString name);
 };
 
 Q_DECLARE_METATYPE(QNapiSubtitleInfo);

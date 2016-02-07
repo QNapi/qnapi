@@ -21,6 +21,8 @@
 #include <QDir>
 #include <QMessageBox>
 
+#include <QDebug>
+
 // konstruktor klasy
 QOpenSubtitlesEngine::QOpenSubtitlesEngine()
     : rpc(QUrl(openSubtitlesXmlRpcUrl))
@@ -195,23 +197,7 @@ bool QOpenSubtitlesEngine::lookForSubtitles(QString lang)
 // wyniki wyszukiwania
 QList<QNapiSubtitleInfo> QOpenSubtitlesEngine::listSubtitles()
 {
-    QList<QNapiSubtitleInfo> good, unknown, bad;
-
-    foreach(QNapiSubtitleInfo n, subtitlesList)
-    {
-        switch(n.resolution)
-        {
-            case SUBTITLE_GOOD: good << n; break;
-            case SUBTITLE_UNKNOWN: unknown << n; break;
-            case SUBTITLE_BAD: bad << n; break;
-            case SUBTITLE_NONE:break;
-        }
-    }
-
-    subtitlesList.clear();
-    
-    subtitlesList << good << unknown << bad;
-
+    std::sort(subtitlesList.begin(), subtitlesList.end());
     return subtitlesList;
 }
 

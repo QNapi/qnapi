@@ -6,18 +6,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>68</width>
-    <height>31</height>
+    <width>400</width>
+    <height>28</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>30</height>
+    <width>40</width>
+    <height>16</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>40</height>
    </size>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="spacing">
+   <property name="leftMargin">
+    <number>8</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>8</number>
+   </property>
+   <property name="bottomMargin">
     <number>5</number>
    </property>
    <item>

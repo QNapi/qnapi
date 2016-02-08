@@ -47,34 +47,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QTableWidget" name="twSubtitles">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="dragDropOverwriteMode">
-      <bool>false</bool>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="verticalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="horizontalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="cornerButtonEnabled">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="2">
     <widget class="QPushButton" name="pbDownload">
      <property name="text">
@@ -103,6 +75,31 @@
     <widget class="QLabel" name="lbRedHint">
      <property name="text">
       <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; nie pasujące do Twojego filmu.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QListWidget" name="twSubtitles">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
     </widget>
    </item>
@@ -151,12 +148,12 @@
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>166</x>
-     <y>109</y>
+     <x>286</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>480</x>
-     <y>320</y>
+     <x>525</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>

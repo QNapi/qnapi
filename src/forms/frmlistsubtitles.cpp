@@ -34,7 +34,7 @@ frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
 void frmListSubtitles::setFileName(const QString & name)
 {
     ui.lbSelectSubtitles->setText(QString(  "Z poniższej listy wybierz napisy, które"
-                                            " chcesz dopasować do pliku <b>%1</b>:")
+                                            " chcesz dopasować do pliku<br><br><b>%1</b>")
                                         .arg(name));
 }
 

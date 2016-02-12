@@ -10,8 +10,10 @@ class subDataWidget : public QWidget
 
 public:
     explicit subDataWidget(QWidget *parent = 0);
-    void setSubData(const QIcon &_stateIcon, QString _name, const QIcon &_langIcon, const QIcon &_engineIcon);
-    void setSubData(const QIcon &_stateIcon, QString _name);
+    void setSubData(const QIcon &stateIcon, QString name, const QIcon &langIcon, const QIcon &engineIcon);
+    void setSubData(const QIcon &stateIcon, QString name);
+    void setSubData(QString name, QString ext, const QIcon &langIcon, const QIcon &engineIcon);
+    void clearAll();
     ~subDataWidget();
 
 private:

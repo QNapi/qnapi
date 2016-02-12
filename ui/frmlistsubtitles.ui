@@ -40,38 +40,10 @@
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="lbSelectSubtitles">
      <property name="text">
-      <string>Z poniższej listy wybierz napisy, które chcesz dopasować do pliku &lt;b&gt;film.avi&lt;/b&gt;:</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z poniższej listy wybierz napisy, które chcesz dopasować do pliku&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;film.avi&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QTableWidget" name="twSubtitles">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="dragDropOverwriteMode">
-      <bool>false</bool>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="verticalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="horizontalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="cornerButtonEnabled">
-      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -103,6 +75,31 @@
     <widget class="QLabel" name="lbRedHint">
      <property name="text">
       <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; nie pasujące do Twojego filmu.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QListWidget" name="twSubtitles">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
     </widget>
    </item>
@@ -151,12 +148,12 @@
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>166</x>
-     <y>109</y>
+     <x>286</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>480</x>
-     <y>320</y>
+     <x>525</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>

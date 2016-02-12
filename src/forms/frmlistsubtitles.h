@@ -34,7 +34,7 @@ Q_OBJECT
     public slots:
 
         void setFileName(const QString & name);
-        void setSubtitlesList(const QList<QNapiSubtitleInfo> & list);
+        void setSubtitlesList(QList<QNapiSubtitleInfo> list);
         int getSelectedIndex();
         void accept();
 

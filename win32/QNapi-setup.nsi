@@ -14,7 +14,7 @@ OutFile "${APPNAME}-${APPVER}-setup.exe"
 
 SetCompressor LZMA
 
-!define MUI_ICON qnapi.ico
+!define MUI_ICON qnapi-drive.ico
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\orange.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\win.bmp"

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>740</width>
-    <height>465</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -59,8 +59,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>706</width>
-        <height>364</height>
+        <width>714</width>
+        <height>348</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -106,12 +106,12 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="lblNPBanner">
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../res/resources.qrc">:/icon/napiprojekt.jpg</pixmap>
+          <pixmap resource="../res/resources.qrc">:/icon/napiprojekt@2x.jpg</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -133,26 +133,11 @@
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="lbOSBanner">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>70</height>
-          </size>
-         </property>
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../res/resources.qrc">:/icon/opensubtitles.gif</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
+          <pixmap resource="../res/resources.qrc">:/icon/opensubtitles@2x.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -176,12 +161,12 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="lblN24Banner">
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../res/resources.qrc">:/icon/napisy24.gif</pixmap>
+          <pixmap resource="../res/resources.qrc">:/icon/napisy24@2x.gif</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -218,50 +203,32 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbIcon">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QLabel" name="lblIcon">
        <property name="minimumSize">
         <size>
-         <width>80</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>70</height>
+         <width>64</width>
+         <height>0</height>
         </size>
        </property>
        <property name="text">
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../res/resources.qrc">:/icon/qnapi.png</pixmap>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="margin">
-        <number>0</number>
+        <pixmap resource="../res/resources.qrc">:/icon/qnapi@2x.png</pixmap>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbTitle">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="font">
         <font>
-         <pointsize>16</pointsize>
+         <pointsize>26</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>

@@ -1,10 +1,13 @@
 <RCC>
     <qresource prefix="/icon">
-        <file alias="napisy24@2x.gif">engines/napisy24.gif</file>
-        <file alias="napiprojekt@2x.jpg">engines/napiprojekt.jpg</file>
         <file alias="qnapi.png">qnapi.png</file>
         <file alias="qnapi@2x.png">qnapi@2x.png</file>
-        <file alias="opensubtitles@2x.png">engines/opensubtitles.png</file>
+        <file alias="napiprojekt.jpg">engines/napiprojekt.jpg</file>
+        <file alias="napiprojekt@2x.jpg">engines/napiprojekt@2x.jpg</file>
+        <file alias="napisy24.gif">engines/napisy24.gif</file>
+        <file alias="napisy24@2x.gif">engines/napisy24@2x.gif</file>
+        <file alias="opensubtitles.png">engines/opensubtitles.png</file>
+        <file alias="opensubtitles@2x.png">engines/opensubtitles@2x.png</file>
     </qresource>
     <qresource prefix="/languages">
         <file alias="el.png">langs/el.png</file>

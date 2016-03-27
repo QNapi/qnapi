@@ -147,7 +147,7 @@ unix {
     man.files = doc/$${TARGET}.1.gz
     icons16.files = res/icons/16x16/apps/qnapi.png
     icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/
-    icons22.files = res/icons/22x/apps/qnapi.png
+    icons22.files = res/icons/22x22/apps/qnapi.png
     icons22.path = $${DATADIR}/icons/hicolor/22x22/apps/
     icons32.files = res/icons/32x32/apps/qnapi.png
     icons32.path = $${DATADIR}/icons/hicolor/32x32/apps/

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>465</height>
+    <width>640</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>740</width>
-    <height>465</height>
+    <width>500</width>
+    <height>380</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -59,8 +59,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>706</width>
-        <height>364</height>
+        <width>614</width>
+        <height>334</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -106,7 +106,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="lbNPBanner">
          <property name="text">
           <string/>
          </property>
@@ -133,26 +133,11 @@
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="lbOSBanner">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>70</height>
-          </size>
-         </property>
          <property name="text">
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../res/resources.qrc">:/icon/opensubtitles.gif</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
+          <pixmap resource="../res/resources.qrc">:/icon/opensubtitles.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -176,7 +161,7 @@
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="lbN24Banner">
          <property name="text">
           <string/>
          </property>
@@ -218,23 +203,11 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbIcon">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QLabel" name="lbQNapiIcon">
        <property name="minimumSize">
         <size>
-         <width>80</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>70</height>
+         <width>64</width>
+         <height>0</height>
         </size>
        </property>
        <property name="text">
@@ -243,25 +216,19 @@
        <property name="pixmap">
         <pixmap resource="../res/resources.qrc">:/icon/qnapi.png</pixmap>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="margin">
-        <number>0</number>
-       </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="lbTitle">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="font">
         <font>
-         <pointsize>16</pointsize>
+         <pointsize>26</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>

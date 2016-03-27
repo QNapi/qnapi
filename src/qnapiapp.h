@@ -40,6 +40,7 @@
 #include "qnapiconfig.h"
 #include "qnapiopendialog.h"
 
+#include "forms/frmmain.h"
 
 class QNapiApp : public QSingleApplication
 {
@@ -49,7 +50,7 @@ class QNapiApp : public QSingleApplication
         ~QNapiApp();
 
         void createTrayIcon();
-        void showTrayMessage(QString title, QString msg);
+        void createMainWindow();
 
         frmProgress * progress();
 
@@ -84,6 +85,7 @@ class QNapiApp : public QSingleApplication
         bool event(QEvent *ev);
 
         QSystemTrayIcon *trayIcon;
+
         QMenu *trayIconMenu, *napiSubMenu, *osSubMenu, *napisy24SubMenu;
         QAction *getAction, *scanAction, *convertAction, *napiGetAction,
                 *napiAddAction, *napiCorrectAction, *napiReportAction,
@@ -102,6 +104,7 @@ class QNapiApp : public QSingleApplication
         frmNapiProjektUpload *f_napiProjektUpload;
         frmNapiProjektCorrect *f_napiProjektCorrect;
         frmNapiProjektReport *f_napiProjektReport;
+        frmMain * f_main;
 
         QDateTime creationDT;
 

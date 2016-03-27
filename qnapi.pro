@@ -54,7 +54,8 @@ SOURCES += src/main.cpp \
     src/libmediainfomovieinfoparser.cpp \
     src/qsubpostprocess.cpp \
     src/forms/subdatawidget.cpp \
-    src/qnapisubtitleinfo.cpp
+    src/qnapisubtitleinfo.cpp \
+    src/forms/frmmain.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -102,7 +103,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/formats/mpl2.h \
     src/libmediainfomovieinfoparser.h \
     src/qsubpostprocess.h \
-    src/forms/subdatawidget.h
+    src/forms/subdatawidget.h \
+    src/forms/frmmain.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -116,7 +118,8 @@ FORMS += ui/frmprogress.ui \
     ui/napiprojekt/frmnapiprojektupload.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
     ui/frmconvert.ui \
-    ui/subDataWidget.ui
+    ui/subDataWidget.ui \
+    ui/frmmain.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

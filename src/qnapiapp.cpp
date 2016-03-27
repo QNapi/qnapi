@@ -48,6 +48,8 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
     osSubMenu = 0;
     trayIconMenu = 0;
     trayIcon = 0;
+
+    f_main = 0;
 }
 
 QNapiApp::~QNapiApp()
@@ -80,6 +82,8 @@ QNapiApp::~QNapiApp()
     if(napiSubMenu) delete napiSubMenu;
     if(trayIconMenu) delete trayIconMenu;
     if(trayIcon) delete trayIcon;
+
+    if(f_main) delete f_main;
 }
 
 frmProgress * QNapiApp::progress()
@@ -194,9 +198,12 @@ void QNapiApp::createTrayIcon()
     trayIcon->show();
 }
 
-void QNapiApp::showTrayMessage(QString title, QString msg)
+void QNapiApp::createMainWindow()
 {
-    trayIcon->showMessage(title, msg);
+    if(!f_main)
+        f_main = new frmMain();
+
+    f_main->show();
 }
 
 bool QNapiApp::showOpenDialog(QString engine)

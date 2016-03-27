@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>frmMain</class>
+ <widget class="QMainWindow" name="frmMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>200</height>
+   </size>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>QNapi - program do pobierania napisów do filmów</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
+    <normaloff>:/icon/qnapi-48-icon.png</normaloff>:/icon/qnapi-48-icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 4px dashed gray;
+margin: 15px;</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:0; color: gray; margin:0;</string>
+         </property>
+         <property name="text">
+          <string>Upuść pliki/katalogi tutaj</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuNapisy">
+    <property name="title">
+     <string>Napisy</string>
+    </property>
+    <widget class="QMenu" name="menuNapiProjekt">
+     <property name="title">
+      <string>NapiProjekt</string>
+     </property>
+     <addaction name="actionPobierz_2"/>
+     <addaction name="actionSkonfiguruj"/>
+     <addaction name="actionZa_konto"/>
+    </widget>
+    <widget class="QMenu" name="menuOpenSubtitles">
+     <property name="title">
+      <string>OpenSubtitles</string>
+     </property>
+     <addaction name="actionPobierz_3"/>
+     <addaction name="actionSkonfiguruj_2"/>
+     <addaction name="actionZa_konto_2"/>
+    </widget>
+    <widget class="QMenu" name="menuNapisy24">
+     <property name="title">
+      <string>Napisy24</string>
+     </property>
+     <addaction name="actionPobierz_4"/>
+     <addaction name="actionSkonfiguruj_3"/>
+     <addaction name="actionZa_konto_3"/>
+    </widget>
+    <addaction name="actionPobierz"/>
+    <addaction name="actionSkanuj_katalogi"/>
+    <addaction name="actionKonwertuj"/>
+    <addaction name="separator"/>
+    <addaction name="menuNapiProjekt"/>
+    <addaction name="menuOpenSubtitles"/>
+    <addaction name="menuNapisy24"/>
+   </widget>
+   <widget class="QMenu" name="menuProgram">
+    <property name="title">
+     <string>Program</string>
+    </property>
+    <addaction name="actionUstawienia"/>
+    <addaction name="actionO_programie"/>
+    <addaction name="actionPomoc"/>
+    <addaction name="separator"/>
+    <addaction name="actionZako_cz"/>
+   </widget>
+   <addaction name="menuProgram"/>
+   <addaction name="menuNapisy"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionPobierz">
+   <property name="text">
+    <string>Pobierz</string>
+   </property>
+  </action>
+  <action name="actionSkanuj_katalogi">
+   <property name="text">
+    <string>Skanuj katalogi</string>
+   </property>
+  </action>
+  <action name="actionKonwertuj">
+   <property name="text">
+    <string>Konwertuj</string>
+   </property>
+  </action>
+  <action name="actionUstawienia">
+   <property name="text">
+    <string>Ustawienia</string>
+   </property>
+  </action>
+  <action name="actionO_programie">
+   <property name="text">
+    <string>O programie</string>
+   </property>
+  </action>
+  <action name="actionZako_cz">
+   <property name="text">
+    <string>Zakończ</string>
+   </property>
+  </action>
+  <action name="actionPomoc">
+   <property name="text">
+    <string>Pomoc</string>
+   </property>
+  </action>
+  <action name="actionPobierz_2">
+   <property name="text">
+    <string>Pobierz</string>
+   </property>
+  </action>
+  <action name="actionSkonfiguruj">
+   <property name="text">
+    <string>Skonfiguruj</string>
+   </property>
+  </action>
+  <action name="actionZa_konto">
+   <property name="text">
+    <string>Załóż konto</string>
+   </property>
+  </action>
+  <action name="actionPobierz_3">
+   <property name="text">
+    <string>Pobierz</string>
+   </property>
+  </action>
+  <action name="actionSkonfiguruj_2">
+   <property name="text">
+    <string>Skonfiguruj</string>
+   </property>
+  </action>
+  <action name="actionZa_konto_2">
+   <property name="text">
+    <string>Załóż konto</string>
+   </property>
+  </action>
+  <action name="actionPobierz_4">
+   <property name="text">
+    <string>Pobierz</string>
+   </property>
+  </action>
+  <action name="actionSkonfiguruj_3">
+   <property name="text">
+    <string>Skonfiguruj</string>
+   </property>
+  </action>
+  <action name="actionZa_konto_3">
+   <property name="text">
+    <string>Załóż konto</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../res/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

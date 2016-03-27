@@ -63,6 +63,16 @@ void frmProgress::receiveRequest(const QString & request)
     activateWindow();
 }
 
+void frmProgress::receiveRequests(const QStringList & requests)
+{
+    enqueueFiles(requests);
+    if(!getThread.isRunning())
+        download();
+    raise();
+    activateWindow();
+}
+
+
 void frmProgress::enqueueFile(const QString & filePath)
 {
     static QMutex locker;

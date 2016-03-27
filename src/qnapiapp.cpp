@@ -80,8 +80,6 @@ frmProgress * QNapiApp::progress()
     {
         f_progress = new frmProgress();
         if(!f_progress) abort();
-        connect(this, SIGNAL(request(QString)),
-                f_progress, SLOT(receiveRequest(QString)));
         connect(this, SIGNAL(downloadFile(const QString &)),
                 f_progress, SLOT(receiveRequest(const QString &)));
     }
@@ -172,8 +170,23 @@ void QNapiApp::createTrayIcon()
 
 void QNapiApp::createMainWindow()
 {
-    if(!f_main)
+    if(!f_main) {
         f_main = new frmMain();
+
+        progress(); // initialize to be able to connect signals
+
+        connect(f_main, SIGNAL(droppedFiles(QStringList)), f_progress, SLOT(receiveRequests(QStringList)));
+        connect(f_main, SIGNAL(droppedDirectory(QString)), this, SLOT(showScanDialog(QString)));
+
+        connect(f_main, SIGNAL(settings()), this, SLOT(showSettings()));
+        connect(f_main, SIGNAL(about()), this, SLOT(showAbout()));
+        // TODO: help?
+        connect(f_main, SIGNAL(quit()), this, SLOT(tryQuit()));
+
+        connect(f_main, SIGNAL(download()), this, SLOT(showOpenDialog()));
+        connect(f_main, SIGNAL(scan()), this, SLOT(showScanDialog()));
+        connect(f_main, SIGNAL(convert()), this, SLOT(showConvertDialog()));
+    }
 
     f_main->show();
 }

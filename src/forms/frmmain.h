@@ -16,6 +16,8 @@
 #define __FRMMAIN__H__
 
 #include <QMainWindow>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 
 #include "ui_frmmain.h"
 
@@ -27,9 +29,32 @@ public:
 
 signals:
 
+    void droppedFiles(const QStringList &);
+    void droppedDirectory(const QString &);
+
+    void settings();
+    void about();
+    void help();
+    void quit();
+
+    void download();
+    void scan();
+    void convert();
+
+
 public slots:
 
 private:
+
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
+    void closeEvent (QCloseEvent *event);
+
+    bool acceptDraggedUrls(const QList<QUrl> & urls) const;
+    bool hasOnlyMovieFiles(const QList<QUrl> & urls) const;
+    bool hasOnlyDirectories(const QList<QUrl> & urls) const;
+
     Ui::frmMain ui;
 };
 

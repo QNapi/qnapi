@@ -93,6 +93,7 @@ class frmProgress: public QWidget
 
     public slots:
         void receiveRequest(const QString & request);
+        void receiveRequests(const QStringList & requests);
         void enqueueFile(const QString &file);
         void enqueueFiles(const QStringList &fileList);
         bool download();

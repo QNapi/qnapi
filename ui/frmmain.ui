@@ -93,29 +93,29 @@ margin: 15px;</string>
      <property name="title">
       <string>NapiProjekt</string>
      </property>
-     <addaction name="actionPobierz_2"/>
-     <addaction name="actionSkonfiguruj"/>
-     <addaction name="actionZa_konto"/>
+     <addaction name="actionNPDownload"/>
+     <addaction name="actionNPConfigure"/>
+     <addaction name="actionNPRegister"/>
     </widget>
     <widget class="QMenu" name="menuOpenSubtitles">
      <property name="title">
       <string>OpenSubtitles</string>
      </property>
-     <addaction name="actionPobierz_3"/>
-     <addaction name="actionSkonfiguruj_2"/>
-     <addaction name="actionZa_konto_2"/>
+     <addaction name="actionOSDownload"/>
+     <addaction name="actionOSConfigure"/>
+     <addaction name="actionOSRegister"/>
     </widget>
     <widget class="QMenu" name="menuNapisy24">
      <property name="title">
       <string>Napisy24</string>
      </property>
-     <addaction name="actionPobierz_4"/>
-     <addaction name="actionSkonfiguruj_3"/>
-     <addaction name="actionZa_konto_3"/>
+     <addaction name="actionN24Download"/>
+     <addaction name="actionN24Configure"/>
+     <addaction name="actionN24Register"/>
     </widget>
-    <addaction name="actionPobierz"/>
-    <addaction name="actionSkanuj_katalogi"/>
-    <addaction name="actionKonwertuj"/>
+    <addaction name="actionSubtitleDownload"/>
+    <addaction name="actionDirectoryScan"/>
+    <addaction name="actionConvert"/>
     <addaction name="separator"/>
     <addaction name="menuNapiProjekt"/>
     <addaction name="menuOpenSubtitles"/>
@@ -125,92 +125,92 @@ margin: 15px;</string>
     <property name="title">
      <string>Program</string>
     </property>
-    <addaction name="actionUstawienia"/>
-    <addaction name="actionO_programie"/>
-    <addaction name="actionPomoc"/>
+    <addaction name="actionSettings"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionHelp"/>
     <addaction name="separator"/>
-    <addaction name="actionZako_cz"/>
+    <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuProgram"/>
    <addaction name="menuNapisy"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionPobierz">
+  <action name="actionSubtitleDownload">
    <property name="text">
     <string>Pobierz</string>
    </property>
   </action>
-  <action name="actionSkanuj_katalogi">
+  <action name="actionDirectoryScan">
    <property name="text">
     <string>Skanuj katalogi</string>
    </property>
   </action>
-  <action name="actionKonwertuj">
+  <action name="actionConvert">
    <property name="text">
     <string>Konwertuj</string>
    </property>
   </action>
-  <action name="actionUstawienia">
+  <action name="actionSettings">
    <property name="text">
     <string>Ustawienia</string>
    </property>
   </action>
-  <action name="actionO_programie">
+  <action name="actionAbout">
    <property name="text">
     <string>O programie</string>
    </property>
   </action>
-  <action name="actionZako_cz">
+  <action name="actionQuit">
    <property name="text">
     <string>Zakończ</string>
    </property>
   </action>
-  <action name="actionPomoc">
+  <action name="actionHelp">
    <property name="text">
     <string>Pomoc</string>
    </property>
   </action>
-  <action name="actionPobierz_2">
+  <action name="actionNPDownload">
    <property name="text">
     <string>Pobierz</string>
    </property>
   </action>
-  <action name="actionSkonfiguruj">
+  <action name="actionNPConfigure">
    <property name="text">
     <string>Skonfiguruj</string>
    </property>
   </action>
-  <action name="actionZa_konto">
+  <action name="actionNPRegister">
    <property name="text">
     <string>Załóż konto</string>
    </property>
   </action>
-  <action name="actionPobierz_3">
+  <action name="actionOSDownload">
    <property name="text">
     <string>Pobierz</string>
    </property>
   </action>
-  <action name="actionSkonfiguruj_2">
+  <action name="actionOSConfigure">
    <property name="text">
     <string>Skonfiguruj</string>
    </property>
   </action>
-  <action name="actionZa_konto_2">
+  <action name="actionOSRegister">
    <property name="text">
     <string>Załóż konto</string>
    </property>
   </action>
-  <action name="actionPobierz_4">
+  <action name="actionN24Download">
    <property name="text">
     <string>Pobierz</string>
    </property>
   </action>
-  <action name="actionSkonfiguruj_3">
+  <action name="actionN24Configure">
    <property name="text">
     <string>Skonfiguruj</string>
    </property>
   </action>
-  <action name="actionZa_konto_3">
+  <action name="actionN24Register">
    <property name="text">
     <string>Załóż konto</string>
    </property>

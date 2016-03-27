@@ -26,17 +26,11 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
     f_about = 0;
     f_scan = 0;
     f_convert = 0;
-    f_napiProjektUpload = 0;
-    f_napiProjektCorrect = 0;
-    f_napiProjektReport = 0;
 
     getAction = 0;
     scanAction = 0;
     convertAction = 0;
     napiGetAction = 0;
-    napiAddAction = 0;
-    napiCorrectAction = 0;
-    napiReportAction = 0;
     napiCreateUserAction = 0;
     osGetAction = 0;
     osAddAction = 0;
@@ -61,17 +55,11 @@ QNapiApp::~QNapiApp()
     if(f_about) delete f_about;
     if(f_scan) delete f_scan;
     if(f_convert) delete f_convert;
-    if(f_napiProjektUpload) delete f_napiProjektUpload;
-    if(f_napiProjektCorrect) delete f_napiProjektCorrect;
-    if(f_napiProjektReport) delete f_napiProjektReport;
 
     if(getAction) delete getAction;
     if(scanAction) delete scanAction;
     if(convertAction) delete convertAction;
     if(napiGetAction) delete napiGetAction;
-    if(napiAddAction) delete napiAddAction;
-    if(napiCorrectAction) delete napiCorrectAction;
-    if(napiReportAction) delete napiReportAction;
     if(napiCreateUserAction) delete napiCreateUserAction;
     if(osGetAction) delete osGetAction;
     if(osAddAction) delete osAddAction;
@@ -114,15 +102,6 @@ void QNapiApp::createTrayIcon()
     napiGetAction = new QAction(tr("Pobierz napisy"), 0);
     connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showNPGetDialog()));
 
-    napiAddAction = new QAction(tr("Dodaj napisy"), 0);
-    connect(napiAddAction, SIGNAL(triggered()), this, SLOT(showNPUploadDialog()));
-
-    napiCorrectAction = new QAction(tr("Popraw napisy"), 0);
-    connect(napiCorrectAction, SIGNAL(triggered()), this, SLOT(showNPCorrectDialog()));
-
-    napiReportAction = new QAction(tr("Zgłoś niepasujące"), 0);
-    connect(napiReportAction, SIGNAL(triggered()), this, SLOT(showNPReportDialog()));
-
     napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
     connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showNPCreateUser()));
 
@@ -153,24 +132,17 @@ void QNapiApp::createTrayIcon()
     napiSubMenu = new QMenu(0);
     napiSubMenu->setTitle(tr("NapiProjekt"));
     napiSubMenu->addAction(napiGetAction);
-    napiSubMenu->addSeparator();
-    napiSubMenu->addAction(napiAddAction);
-    napiSubMenu->addAction(napiCorrectAction);
-    napiSubMenu->addAction(napiReportAction);
-    napiSubMenu->addSeparator();
     napiSubMenu->addAction(napiCreateUserAction);
 
     osSubMenu = new QMenu(0);
     osSubMenu->setTitle(tr("OpenSubtitles"));
     osSubMenu->addAction(osGetAction);
     osSubMenu->addAction(osAddAction);
-    osSubMenu->addSeparator();
     osSubMenu->addAction(osCreateUserAction);
 
     napisy24SubMenu = new QMenu(0);
     napisy24SubMenu->setTitle(tr("Napisy24"));
     napisy24SubMenu->addAction(napisy24GetAction);
-    napisy24SubMenu->addSeparator();
     napisy24SubMenu->addAction(napisy24CreateUserAction);
 
     trayIconMenu = new QMenu(0);
@@ -308,45 +280,6 @@ void QNapiApp::showConvertDialog()
 void QNapiApp::showNPGetDialog()
 {
     showOpenDialog("NapiProjekt");
-}
-
-void QNapiApp::showNPUploadDialog()
-{
-    if(!f_napiProjektUpload) f_napiProjektUpload = new frmNapiProjektUpload();
-    if(f_napiProjektUpload->isVisible())
-    {
-        f_napiProjektUpload->raise();
-        return;
-    }
-    f_napiProjektUpload->exec();
-    delete f_napiProjektUpload;
-    f_napiProjektUpload = 0;
-}
-
-void QNapiApp::showNPCorrectDialog()
-{
-    if(!f_napiProjektCorrect) f_napiProjektCorrect = new frmNapiProjektCorrect();
-    if(f_napiProjektCorrect->isVisible())
-    {
-        f_napiProjektCorrect->raise();
-        return;
-    }
-    f_napiProjektCorrect->exec();
-    delete f_napiProjektCorrect;
-    f_napiProjektCorrect = 0;
-}
-
-void QNapiApp::showNPReportDialog()
-{
-    if(!f_napiProjektReport) f_napiProjektReport = new frmNapiProjektReport();
-    if(f_napiProjektReport->isVisible())
-    {
-        f_napiProjektReport->raise();
-        return;
-    }
-    f_napiProjektReport->exec();
-    delete f_napiProjektReport;
-    f_napiProjektReport = 0;
 }
 
 void QNapiApp::showNPCreateUser()

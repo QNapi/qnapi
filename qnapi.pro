@@ -40,9 +40,6 @@ SOURCES += src/main.cpp \
     src/synchttp.cpp \
     src/syncxmlrpc.cpp \
     src/encodingutils.cpp \
-    src/forms/frmnapiprojektupload.cpp \
-    src/forms/frmnapiprojektcorrect.cpp \
-    src/forms/frmnapiprojektreport.cpp \
     src/forms/frmconvert.cpp \
     src/subconvert/subtitleformatsregistry.cpp \
     src/subconvert/subtitleconverter.cpp \
@@ -89,9 +86,6 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/qnapisubtitleinfo.h \
     src/version.h \
     src/encodingutils.h \
-    src/forms/frmnapiprojektupload.h \
-    src/forms/frmnapiprojektcorrect.h \
-    src/forms/frmnapiprojektreport.h \
     src/forms/frmconvert.h \
     src/subconvert/subfile.h \
     src/subconvert/subtitleformat.h \
@@ -113,9 +107,6 @@ FORMS += ui/frmprogress.ui \
     ui/frmoptions.ui \
     ui/frmabout.ui \
     ui/napiprojekt/frmnapiprojektconfig.ui \
-    ui/napiprojekt/frmnapiprojektcorrect.ui \
-    ui/napiprojekt/frmnapiprojektreport.ui \
-    ui/napiprojekt/frmnapiprojektupload.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
     ui/frmconvert.ui \
     ui/subDataWidget.ui \

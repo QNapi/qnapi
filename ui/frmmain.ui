@@ -102,6 +102,7 @@ margin: 15px;</string>
       <string>OpenSubtitles</string>
      </property>
      <addaction name="actionOSDownload"/>
+     <addaction name="actionOSUpload"/>
      <addaction name="actionOSConfigure"/>
      <addaction name="actionOSRegister"/>
     </widget>
@@ -166,6 +167,9 @@ margin: 15px;</string>
    </property>
   </action>
   <action name="actionHelp">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Pomoc</string>
    </property>
@@ -206,6 +210,9 @@ margin: 15px;</string>
    </property>
   </action>
   <action name="actionN24Configure">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Skonfiguruj</string>
    </property>
@@ -213,6 +220,11 @@ margin: 15px;</string>
   <action name="actionN24Register">
    <property name="text">
     <string>Załóż konto</string>
+   </property>
+  </action>
+  <action name="actionOSUpload">
+   <property name="text">
+    <string>Dodaj napisy</string>
    </property>
   </action>
  </widget>

@@ -186,6 +186,20 @@ void QNapiApp::createMainWindow()
         connect(f_main, SIGNAL(download()), this, SLOT(showOpenDialog()));
         connect(f_main, SIGNAL(scan()), this, SLOT(showScanDialog()));
         connect(f_main, SIGNAL(convert()), this, SLOT(showConvertDialog()));
+
+
+        connect(f_main, SIGNAL(downloadNP()), this, SLOT(showNPGetDialog()));
+//        connect(f_main, SIGNAL(configureNP()), this, SLOT(showNPConfigurationDialog()));
+        connect(f_main, SIGNAL(registerNP()), this, SLOT(showNPCreateUser()));
+
+        connect(f_main, SIGNAL(downloadOS()), this, SLOT(showOSGetDialog()));
+        connect(f_main, SIGNAL(uploadOS()), this, SLOT(showOSUploadDialog()));
+//        connect(f_main, SIGNAL(configureOS()), this, SLOT(showOSConfigurationDialog()));
+        connect(f_main, SIGNAL(registerOS()), this, SLOT(showOSCreateUser()));
+
+        connect(f_main, SIGNAL(downloadN24()), this, SLOT(showNapisy24GetDialog()));
+//        connect(f_main, SIGNAL(configureN24()), this, SLOT(showN24ConfigurationDialog()));
+        connect(f_main, SIGNAL(registerN24()), this, SLOT(showNapisy24CreateUser()));
     }
 
     f_main->show();

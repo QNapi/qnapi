@@ -33,16 +33,6 @@ class QNapiProjektEngine : public QNapiAbstractEngine
 {
 public:
 
-    enum UploadResult
-    {
-        NAPI_ADDED_NEW, NAPI_OK, NAPI_FAIL, NAPI_UNKNOWN
-    };
-
-    enum ReportResult
-    {
-        NAPI_REPORTED, NAPI_NO_SUBTITLES, NAPI_NOT_REPORTED
-    };
-
     QNapiProjektEngine();
     ~QNapiProjektEngine();
 
@@ -71,16 +61,6 @@ public:
     }
 
     static bool checkUser(const QString & nick, const QString & pass);
-    UploadResult uploadSubtitles(const QString & movie,
-                                 const QString & subtitles,
-                                 const QString & language,
-                                 bool correct = false,
-                                 const QString & comment = "");
-
-    ReportResult reportBad(const QString & movie,
-                           const QString & language,
-                           const QString & comment,
-                           QString *response);
 
 private:
 

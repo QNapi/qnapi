@@ -25,7 +25,10 @@ frmMain::frmMain()
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
-    setWindowFlags(Qt::WindowTitleHint | Qt::WindowMinimizeButtonHint | Qt::WindowSystemMenuHint);
+    setWindowFlags(Qt::WindowTitleHint
+                 | Qt::WindowMinimizeButtonHint
+                 | Qt::WindowSystemMenuHint
+                 | Qt::WindowCloseButtonHint);
 
     connect(ui.actionSettings, SIGNAL(triggered()), this, SIGNAL(settings()));
     connect(ui.actionAbout, SIGNAL(triggered()), this, SIGNAL(about()));
@@ -46,7 +49,7 @@ frmMain::frmMain()
     connect(ui.actionOSRegister, SIGNAL(triggered()), this, SIGNAL(registerOS()));
 
     connect(ui.actionN24Download, SIGNAL(triggered()), this, SIGNAL(downloadN24()));
-    connect(ui.actionN24Configure, SIGNAL(triggered()), this, SIGNAL(configureN24()));
+    //connect(ui.actionN24Configure, SIGNAL(triggered()), this, SIGNAL(configureN24()));
     connect(ui.actionN24Register, SIGNAL(triggered()), this, SIGNAL(registerN24()));
 }
 

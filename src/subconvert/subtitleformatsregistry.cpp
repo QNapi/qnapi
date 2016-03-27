@@ -42,7 +42,7 @@ QStringList SubtitleFormatsRegistry::enumerateFormats() const
 
 SubtitleFormat* SubtitleFormatsRegistry::select(const QString & format) const
 {
-    return formats[format];
+    return formats.value(format, 0);
 }
 
 

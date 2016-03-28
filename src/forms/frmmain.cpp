@@ -31,6 +31,8 @@ frmMain::frmMain()
                  | Qt::WindowSystemMenuHint
                  | Qt::WindowCloseButtonHint);
 
+    statusBar()->hide();
+
     QRect position = frameGeometry();
     position.moveCenter(QDesktopWidget().availableGeometry().center());
     move(position.topLeft());

@@ -18,6 +18,7 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QFileInfo>
+#include <QDesktopWidget>
 
 #include "qnapiconfig.h"
 
@@ -29,6 +30,10 @@ frmMain::frmMain()
                  | Qt::WindowMinimizeButtonHint
                  | Qt::WindowSystemMenuHint
                  | Qt::WindowCloseButtonHint);
+
+    QRect position = frameGeometry();
+    position.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(position.topLeft());
 
     connect(ui.actionSettings, SIGNAL(triggered()), this, SIGNAL(settings()));
     connect(ui.actionAbout, SIGNAL(triggered()), this, SIGNAL(about()));

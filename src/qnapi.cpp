@@ -19,6 +19,8 @@
 #include "engines/qnapisy24engine.h"
 #include "engines/qopensubtitlesengine.h"
 
+#include <QtAlgorithms>
+
 QNapi::~QNapi()
 {
     cleanup();
@@ -161,6 +163,21 @@ QList<QNapiSubtitleInfo> QNapi::listSubtitles()
         QList<QNapiSubtitleInfo> list =  e->listSubtitles();
         subtitlesList << list;
     }
+
+    QString mainLang = GlobalConfig().language();
+    QString backupLang = GlobalConfig().languageBackup();
+
+    auto langRank = [&](QString lang) {
+        if(lang == mainLang) return 0;
+        if(lang == backupLang) return 1;
+        return 2;
+    };
+
+    qStableSort(subtitlesList.begin(), subtitlesList.end(),
+                [&](const QNapiSubtitleInfo & si1, const QNapiSubtitleInfo & si2) {
+       return langRank(si1.lang) < langRank(si2.lang);
+    });
+
     return subtitlesList;
 }
 

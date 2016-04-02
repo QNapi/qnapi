@@ -20,6 +20,7 @@
 #include <QFile>
 #include <QIcon>
 #include <QPixmap>
+#include <QUrl>
 
 #include <ctime>
 

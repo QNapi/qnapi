@@ -94,7 +94,6 @@ margin: 15px;</string>
       <string>NapiProjekt</string>
      </property>
      <addaction name="actionNPDownload"/>
-     <addaction name="actionNPConfigure"/>
      <addaction name="actionNPRegister"/>
     </widget>
     <widget class="QMenu" name="menuOpenSubtitles">
@@ -103,7 +102,6 @@ margin: 15px;</string>
      </property>
      <addaction name="actionOSDownload"/>
      <addaction name="actionOSUpload"/>
-     <addaction name="actionOSConfigure"/>
      <addaction name="actionOSRegister"/>
     </widget>
     <widget class="QMenu" name="menuNapisy24">
@@ -111,7 +109,6 @@ margin: 15px;</string>
       <string>Napisy24</string>
      </property>
      <addaction name="actionN24Download"/>
-     <addaction name="actionN24Configure"/>
      <addaction name="actionN24Register"/>
     </widget>
     <addaction name="actionSubtitleDownload"/>
@@ -155,15 +152,24 @@ margin: 15px;</string>
    <property name="text">
     <string>Ustawienia</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>O programie</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
+   </property>
   </action>
   <action name="actionQuit">
    <property name="text">
     <string>Zakończ</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="actionHelp">
@@ -210,9 +216,6 @@ margin: 15px;</string>
    </property>
   </action>
   <action name="actionN24Configure">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Skonfiguruj</string>
    </property>
@@ -225,6 +228,14 @@ margin: 15px;</string>
   <action name="actionOSUpload">
    <property name="text">
     <string>Dodaj napisy</string>
+   </property>
+  </action>
+  <action name="actionO_Qt">
+   <property name="text">
+    <string>O Qt</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
  </widget>

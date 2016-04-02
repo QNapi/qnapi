@@ -41,17 +41,13 @@ signals:
     void scan();
     void convert();
 
-    void downloadNP();
-    void configureNP();
+    void engineDownload(QString);
+
     void registerNP();
 
-    void downloadOS();
     void uploadOS();
-    void configureOS();
     void registerOS();
 
-    void downloadN24();
-//    void configureN24();
     void registerN24();
 
 public slots:

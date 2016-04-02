@@ -46,17 +46,14 @@ frmMain::frmMain()
     connect(ui.actionDirectoryScan, SIGNAL(triggered()), this, SIGNAL(scan()));
     connect(ui.actionConvert, SIGNAL(triggered()), this, SIGNAL(convert()));
 
-    connect(ui.actionNPDownload, SIGNAL(triggered()), this, SIGNAL(downloadNP()));
-    connect(ui.actionNPConfigure, SIGNAL(triggered()), this, SIGNAL(configureNP()));
+    connect(ui.actionNPDownload, &QAction::triggered, [this] { emit engineDownload("NapiProjekt"); });
     connect(ui.actionNPRegister, SIGNAL(triggered()), this, SIGNAL(registerNP()));
 
-    connect(ui.actionOSDownload, SIGNAL(triggered()), this, SIGNAL(downloadOS()));
+    connect(ui.actionOSDownload, &QAction::triggered, [this] { emit engineDownload("OpenSubtitles"); });
     connect(ui.actionOSUpload, SIGNAL(triggered()), this, SIGNAL(uploadOS()));
-    connect(ui.actionOSConfigure, SIGNAL(triggered()), this, SIGNAL(configureOS()));
     connect(ui.actionOSRegister, SIGNAL(triggered()), this, SIGNAL(registerOS()));
 
-    connect(ui.actionN24Download, SIGNAL(triggered()), this, SIGNAL(downloadN24()));
-    //connect(ui.actionN24Configure, SIGNAL(triggered()), this, SIGNAL(configureN24()));
+    connect(ui.actionN24Download, &QAction::triggered, [this] { emit engineDownload("Napisy24"); });
     connect(ui.actionN24Register, SIGNAL(triggered()), this, SIGNAL(registerN24()));
 }
 

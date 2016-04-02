@@ -38,6 +38,9 @@ public:
     void cleanup();
 
 private:
+
+    QPair<QString, QString> getCredentials() const;
+
     quint64 fileSize;
     QString p7zipPath;
 };

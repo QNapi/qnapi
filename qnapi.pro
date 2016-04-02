@@ -52,7 +52,8 @@ SOURCES += src/main.cpp \
     src/qsubpostprocess.cpp \
     src/forms/subdatawidget.cpp \
     src/qnapisubtitleinfo.cpp \
-    src/forms/frmmain.cpp
+    src/forms/frmmain.cpp \
+    src/forms/frmnapisy24config.cpp
 
 
 HEADERS += src/engines/qnapiabstractengine.h \
@@ -98,7 +99,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/libmediainfomovieinfoparser.h \
     src/qsubpostprocess.h \
     src/forms/subdatawidget.h \
-    src/forms/frmmain.h
+    src/forms/frmmain.h \
+    src/forms/frmnapisy24config.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -110,7 +112,8 @@ FORMS += ui/frmprogress.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
     ui/frmconvert.ui \
     ui/subDataWidget.ui \
-    ui/frmmain.ui
+    ui/frmmain.ui \
+    ui/napisy24/frmnapisy24config.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

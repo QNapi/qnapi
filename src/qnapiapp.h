@@ -57,15 +57,12 @@ class QNapiApp : public QSingleApplication
         bool showScanDialog(QString init_dir = "");
         void showConvertDialog();
 
-        void showNPGetDialog();
         void showNPCreateUser();
 
-        void showOSGetDialog();
         void showOSUploadDialog();
         void showOSCreateUser();
         
-        void showNapisy24GetDialog();
-        void showNapisy24CreateUser();
+        void showN24CreateUser();
 
         void showSettings();
         void showAbout();

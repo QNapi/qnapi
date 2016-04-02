@@ -98,13 +98,13 @@ void QNapiApp::createTrayIcon()
     connect(convertAction, SIGNAL(triggered()), this, SLOT(showConvertDialog()));
 
     napiGetAction = new QAction(tr("Pobierz napisy"), 0);
-    connect(napiGetAction, SIGNAL(triggered()), this, SLOT(showNPGetDialog()));
+    connect(napiGetAction, &QAction::triggered, [this] { showOpenDialog("NapiProjekt"); });
 
     napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
     connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showNPCreateUser()));
 
     osGetAction = new QAction(tr("Pobierz napisy"), 0);
-    connect(osGetAction, SIGNAL(triggered()), this, SLOT(showOSGetDialog()));
+    connect(osGetAction, &QAction::triggered, [this] { showOpenDialog("OpenSubtitles"); });
 
     osAddAction = new QAction(tr("Dodaj napisy"), 0);
     connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
@@ -113,10 +113,10 @@ void QNapiApp::createTrayIcon()
     connect(osCreateUserAction, SIGNAL(triggered()), this, SLOT(showOSCreateUser()));
 
     napisy24GetAction = new QAction(tr("Pobierz napisy"), 0);
-    connect(napisy24GetAction, SIGNAL(triggered()), this, SLOT(showNapisy24GetDialog()));
+    connect(napisy24GetAction, &QAction::triggered, [this] { showOpenDialog("Napisy24"); });
 
     napisy24CreateUserAction = new QAction(tr("Załóż konto"), 0);
-    connect(napisy24CreateUserAction, SIGNAL(triggered()), this, SLOT(showNapisy24CreateUser()));
+    connect(napisy24CreateUserAction, SIGNAL(triggered()), this, SLOT(showN24CreateUser()));
 
     settingsAction = new QAction(tr("Opcje"), 0);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
@@ -187,19 +187,14 @@ void QNapiApp::createMainWindow()
         connect(f_main, SIGNAL(scan()), this, SLOT(showScanDialog()));
         connect(f_main, SIGNAL(convert()), this, SLOT(showConvertDialog()));
 
+        connect(f_main, SIGNAL(engineDownload(QString)), this, SLOT(showOpenDialog(QString)));
 
-        connect(f_main, SIGNAL(downloadNP()), this, SLOT(showNPGetDialog()));
-//        connect(f_main, SIGNAL(configureNP()), this, SLOT(showNPConfigurationDialog()));
         connect(f_main, SIGNAL(registerNP()), this, SLOT(showNPCreateUser()));
 
-        connect(f_main, SIGNAL(downloadOS()), this, SLOT(showOSGetDialog()));
         connect(f_main, SIGNAL(uploadOS()), this, SLOT(showOSUploadDialog()));
-//        connect(f_main, SIGNAL(configureOS()), this, SLOT(showOSConfigurationDialog()));
         connect(f_main, SIGNAL(registerOS()), this, SLOT(showOSCreateUser()));
 
-        connect(f_main, SIGNAL(downloadN24()), this, SLOT(showNapisy24GetDialog()));
-//        connect(f_main, SIGNAL(configureN24()), this, SLOT(showN24ConfigurationDialog()));
-        connect(f_main, SIGNAL(registerN24()), this, SLOT(showNapisy24CreateUser()));
+        connect(f_main, SIGNAL(registerN24()), this, SLOT(showN24CreateUser()));
     }
 
     f_main->show();
@@ -304,19 +299,9 @@ void QNapiApp::showConvertDialog()
     f_scan = 0;
 }
 
-void QNapiApp::showNPGetDialog()
-{
-    showOpenDialog("NapiProjekt");
-}
-
 void QNapiApp::showNPCreateUser()
 {
     QDesktopServices::openUrl(QUrl("http://www.napiprojekt.pl/rejestracja"));
-}
-
-void QNapiApp::showOSGetDialog()
-{
-    showOpenDialog("OpenSubtitles");
 }
 
 void QNapiApp::showOSUploadDialog()
@@ -329,12 +314,7 @@ void QNapiApp::showOSCreateUser()
     QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/newuser"));
 }
 
-void QNapiApp::showNapisy24GetDialog()
-{
-    showOpenDialog("Napisy24");
-}
-
-void QNapiApp::showNapisy24CreateUser()
+void QNapiApp::showN24CreateUser()
 {
     QDesktopServices::openUrl(QUrl("http://napisy24.pl/cb-registration/registers"));
 }

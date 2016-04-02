@@ -47,14 +47,13 @@ frmMain::frmMain()
     connect(ui.actionConvert, SIGNAL(triggered()), this, SIGNAL(convert()));
 
     connect(ui.actionNPDownload, &QAction::triggered, [this] { emit engineDownload("NapiProjekt"); });
-    connect(ui.actionNPRegister, SIGNAL(triggered()), this, SIGNAL(registerNP()));
+    connect(ui.actionNPRegister, &QAction::triggered, [this] { emit engineCreateAccount("NapiProjekt"); });
 
     connect(ui.actionOSDownload, &QAction::triggered, [this] { emit engineDownload("OpenSubtitles"); });
-    connect(ui.actionOSUpload, SIGNAL(triggered()), this, SIGNAL(uploadOS()));
-    connect(ui.actionOSRegister, SIGNAL(triggered()), this, SIGNAL(registerOS()));
+    connect(ui.actionOSRegister, &QAction::triggered, [this] { emit engineCreateAccount("OpenSubtitles"); });
 
     connect(ui.actionN24Download, &QAction::triggered, [this] { emit engineDownload("Napisy24"); });
-    connect(ui.actionN24Register, SIGNAL(triggered()), this, SIGNAL(registerN24()));
+    connect(ui.actionN24Register, &QAction::triggered, [this] { emit engineCreateAccount("Napisy24"); });
 }
 
 void frmMain::dragEnterEvent(QDragEnterEvent *event)

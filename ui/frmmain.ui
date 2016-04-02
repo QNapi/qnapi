@@ -101,7 +101,6 @@ margin: 15px;</string>
       <string>OpenSubtitles</string>
      </property>
      <addaction name="actionOSDownload"/>
-     <addaction name="actionOSUpload"/>
      <addaction name="actionOSRegister"/>
     </widget>
     <widget class="QMenu" name="menuNapisy24">

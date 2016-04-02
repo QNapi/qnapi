@@ -44,7 +44,7 @@ void frmOpenSubtitlesConfig::accept()
 
 void frmOpenSubtitlesConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showOSCreateUser();
+    ((QNapiApp*)qApp)->showCreateAccount("OpenSubtitles");
 }
 
 void frmOpenSubtitlesConfig::load()

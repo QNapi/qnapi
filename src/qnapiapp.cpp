@@ -33,7 +33,6 @@ QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName
     napiGetAction = 0;
     napiCreateUserAction = 0;
     osGetAction = 0;
-    osAddAction = 0;
     settingsAction = 0;
     aboutAction = 0;
     quitAction = 0;
@@ -62,7 +61,6 @@ QNapiApp::~QNapiApp()
     if(napiGetAction) delete napiGetAction;
     if(napiCreateUserAction) delete napiCreateUserAction;
     if(osGetAction) delete osGetAction;
-    if(osAddAction) delete osAddAction;
     if(settingsAction) delete settingsAction;
     if(aboutAction) delete aboutAction;
     if(quitAction) delete quitAction;
@@ -101,22 +99,19 @@ void QNapiApp::createTrayIcon()
     connect(napiGetAction, &QAction::triggered, [this] { showOpenDialog("NapiProjekt"); });
 
     napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
-    connect(napiCreateUserAction, SIGNAL(triggered()), this, SLOT(showNPCreateUser()));
+    connect(napiCreateUserAction, &QAction::triggered, [this] { showCreateAccount("NapiProjekt"); });
 
     osGetAction = new QAction(tr("Pobierz napisy"), 0);
     connect(osGetAction, &QAction::triggered, [this] { showOpenDialog("OpenSubtitles"); });
 
-    osAddAction = new QAction(tr("Dodaj napisy"), 0);
-    connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
-
     osCreateUserAction = new QAction(tr("Załóż konto"), 0);
-    connect(osCreateUserAction, SIGNAL(triggered()), this, SLOT(showOSCreateUser()));
+    connect(osCreateUserAction, &QAction::triggered, [this] { showCreateAccount("OpenSubtitles"); });
 
     napisy24GetAction = new QAction(tr("Pobierz napisy"), 0);
     connect(napisy24GetAction, &QAction::triggered, [this] { showOpenDialog("Napisy24"); });
 
     napisy24CreateUserAction = new QAction(tr("Załóż konto"), 0);
-    connect(napisy24CreateUserAction, SIGNAL(triggered()), this, SLOT(showN24CreateUser()));
+    connect(napisy24CreateUserAction, &QAction::triggered, [this] { showCreateAccount("Napisy24"); });
 
     settingsAction = new QAction(tr("Opcje"), 0);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
@@ -135,7 +130,6 @@ void QNapiApp::createTrayIcon()
     osSubMenu = new QMenu(0);
     osSubMenu->setTitle(tr("OpenSubtitles"));
     osSubMenu->addAction(osGetAction);
-    osSubMenu->addAction(osAddAction);
     osSubMenu->addAction(osCreateUserAction);
 
     napisy24SubMenu = new QMenu(0);
@@ -188,13 +182,7 @@ void QNapiApp::createMainWindow()
         connect(f_main, SIGNAL(convert()), this, SLOT(showConvertDialog()));
 
         connect(f_main, SIGNAL(engineDownload(QString)), this, SLOT(showOpenDialog(QString)));
-
-        connect(f_main, SIGNAL(registerNP()), this, SLOT(showNPCreateUser()));
-
-        connect(f_main, SIGNAL(uploadOS()), this, SLOT(showOSUploadDialog()));
-        connect(f_main, SIGNAL(registerOS()), this, SLOT(showOSCreateUser()));
-
-        connect(f_main, SIGNAL(registerN24()), this, SLOT(showN24CreateUser()));
+        connect(f_main, SIGNAL(engineCreateAccount(QString)), this, SLOT(showCreateAccount(QString)));
     }
 
     f_main->show();
@@ -299,24 +287,11 @@ void QNapiApp::showConvertDialog()
     f_scan = 0;
 }
 
-void QNapiApp::showNPCreateUser()
+void QNapiApp::showCreateAccount(QString engine)
 {
-    QDesktopServices::openUrl(QUrl("http://www.napiprojekt.pl/rejestracja"));
-}
-
-void QNapiApp::showOSUploadDialog()
-{
-    QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
-}
-
-void QNapiApp::showOSCreateUser()
-{
-    QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/newuser"));
-}
-
-void QNapiApp::showN24CreateUser()
-{
-    QDesktopServices::openUrl(QUrl("http://napisy24.pl/cb-registration/registers"));
+    QNapi n;
+    n.addEngine(engine);
+    QDesktopServices::openUrl(n.engineByName(engine)->registrationUrl());
 }
 
 void QNapiApp::showSettings()

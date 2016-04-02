@@ -57,12 +57,7 @@ class QNapiApp : public QSingleApplication
         bool showScanDialog(QString init_dir = "");
         void showConvertDialog();
 
-        void showNPCreateUser();
-
-        void showOSUploadDialog();
-        void showOSCreateUser();
-        
-        void showN24CreateUser();
+        void showCreateAccount(QString engine);
 
         void showSettings();
         void showAbout();
@@ -79,7 +74,7 @@ class QNapiApp : public QSingleApplication
 
         QMenu *trayIconMenu, *napiSubMenu, *osSubMenu, *napisy24SubMenu;
         QAction *getAction, *scanAction, *convertAction, *napiGetAction,
-                *napiCreateUserAction, *osGetAction, *osAddAction,
+                *napiCreateUserAction, *osGetAction,
                 *osCreateUserAction, *napisy24GetAction,
                 *napisy24CreateUserAction, *settingsAction,
                 *aboutAction, *quitAction;

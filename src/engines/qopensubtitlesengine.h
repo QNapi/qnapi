@@ -38,6 +38,11 @@ public:
     // wywoluje okienko konfiguracji
     void configure(QWidget * parent);
 
+    QUrl registrationUrl() const {
+        return QUrl("http://www.opensubtitles.org/newuser");
+    }
+
+
     // oblicza sume kontrolna pliku filmowego
     QString checksum(QString filename = "");
     // szuka napisow

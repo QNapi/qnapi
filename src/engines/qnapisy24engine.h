@@ -30,6 +30,11 @@ public:
     bool isConfigurable();
     void configure(QWidget * parent);
 
+    QUrl registrationUrl() const {
+        return QUrl("http://napisy24.pl/cb-registration/registers");
+    }
+
+
     QString checksum(QString filename = "");
     bool lookForSubtitles(QString lang);
     QList<QNapiSubtitleInfo> listSubtitles();

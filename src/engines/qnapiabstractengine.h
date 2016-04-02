@@ -58,6 +58,8 @@ public:
     virtual bool isConfigurable() = 0;
     // wywoluje okienko konfiguracji
     virtual void configure(QWidget * parent) = 0;
+    // rejestracja uzytkownika
+    virtual QUrl registrationUrl() const = 0;
 
     // czysci wewnetrzne listy znalezionych napisow w silniku
     virtual void clearSubtitlesList();

@@ -42,13 +42,7 @@ signals:
     void convert();
 
     void engineDownload(QString);
-
-    void registerNP();
-
-    void uploadOS();
-    void registerOS();
-
-    void registerN24();
+    void engineCreateAccount(QString);
 
 public slots:
 

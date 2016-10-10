@@ -62,7 +62,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="lbLang">
          <property name="text">
-          <string>Preferowany jezyk napisów:</string>
+          <string>Preferowany język napisów:</string>
          </property>
         </widget>
        </item>
@@ -172,7 +172,7 @@
        <item row="3" column="0">
         <widget class="QLabel" name="lbLangBackup">
          <property name="text">
-          <string>Zapasowy jezyk napisów:</string>
+          <string>Zapasowy język napisów:</string>
          </property>
         </widget>
        </item>
@@ -193,7 +193,7 @@
        <item row="5" column="0" colspan="3">
         <widget class="QCheckBox" name="cbQuietBatch">
          <property name="toolTip">
-          <string>Nie pokazuje żadnych okien przy pobieraniu napisów z menu kontestowego w menedżerze plików lub przy podaniu plików jako argumenty wiersza poleceń</string>
+          <string>Nie pokazuje żadnych okien przy pobieraniu napisów z menu kontekstowego w menedżerze plików lub przy podaniu plików jako argumenty wiersza poleceń</string>
          </property>
          <property name="toolTipDuration">
           <number>5000</number>
@@ -722,7 +722,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QPushButton" name="pbRestoreDefaults">
        <property name="text">
-        <string>Przywróć domyslne</string>
+        <string>Przywróć domyślne</string>
        </property>
       </widget>
      </item>

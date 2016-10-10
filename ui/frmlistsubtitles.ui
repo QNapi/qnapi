@@ -74,7 +74,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QLabel" name="lbRedHint">
      <property name="text">
-      <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; nie pasujące do Twojego filmu.</string>
+      <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; niepasujące do Twojego filmu.</string>
      </property>
     </widget>
    </item>

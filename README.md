@@ -16,7 +16,7 @@ Latest binary packages are available at http://qnapi.github.io/#download
 * C++ compiler with c++11 support installed (`clang++`, `g++` or *MinGW* for Windows), present in `PATH`
 * Qt 5.1+ (most recent 5.x recommended) installed with `qmake` present in `PATH` (you can find one at http://www.qt.io/download-open-source/)
 
-#### Binary prerequisities
+#### Binary prerequisites
 
 QNapi requires these binary dependencies:
 
@@ -69,7 +69,7 @@ After you locate your binaries, you can run the application.
 > ##### 7zip note #####
 > For proper subtitle extraction after download, *7zip* executable is required to be passed in application's settings.
 > Linux users have to install 7zip binary package from distribution repositories or compile on its own.
-> For Windows and OSX there are pre-build binaries included in this repository, in `win32` and `macx` directories appropriately and should be automatically detected by the application.
+> For Windows and OSX there are pre-built binaries included in this repository, in `win32` and `macx` directories appropriately and should be automatically detected by the application.
 
 ## Making redistributable package
 

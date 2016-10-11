@@ -20,7 +20,6 @@ QNapiConfig::QNapiConfig()
 
 QNapiConfig::~QNapiConfig()
 {
-    if(settings) delete settings;
 }
 
 void QNapiConfig::load(QString appDirPath)

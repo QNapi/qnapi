@@ -1,0 +1,16 @@
+install:
+  - set QTDIR=C:\Qt\5.7\mingw53_32
+  - set MINGW=C:\Qt\Tools\mingw530_32
+  - set NSIS="C:\Program Files (x86)\NSIS"
+  - set PATH=%PATH%;%MINGW%\bin;%QTDIR%\bin;%NSIS%
+  - cinst nsis -y -version 2.51
+  - appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip" -FileName NsProcess.zip
+  - 7z e -o"C:\Program Files (x86)\NSIS\Include" NsProcess.zip Include\*.nsh
+  - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" NsProcess.zip Plugin\*.dll
+  - git submodule update --init --recursive
+build_script:
+  - qmake qnapi.pro
+  - mingw32-make -j4
+  - mingw32-make install
+  - makensis win32/QNapi-setup.nsi
+

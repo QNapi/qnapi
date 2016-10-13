@@ -16,6 +16,7 @@ install:
        && brew tap homebrew/versions
        && brew install qt55
        && chmod -R 755 /usr/local/opt/qt55/*
+       && npm install -g appdmg
         ;
       fi     
 
@@ -30,5 +31,12 @@ script:
       fi
     - qmake -v
     - qmake
-    - make -j4
+    - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+          make -j2
+        ;
+      else
+          make -j2
+       && make appdmg
+        ;
+      fi
 

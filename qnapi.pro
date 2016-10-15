@@ -27,6 +27,7 @@ SOURCES += src/main.cpp \
     src/forms/frmabout.cpp \
     src/forms/frmnapiprojektconfig.cpp \
     src/forms/frmopensubtitlesconfig.cpp \
+    src/forms/frmnapisy24config.cpp \
     src/qcumber/qmanagedrequest.cpp \
     src/qcumber/qmanagedsocket.cpp \
     src/qcumber/qsingleapplication.cpp \
@@ -53,7 +54,6 @@ SOURCES += src/main.cpp \
     src/forms/subdatawidget.cpp \
     src/qnapisubtitleinfo.cpp
 
-
 HEADERS += src/engines/qnapiabstractengine.h \
     src/engines/qnapiprojektengine.h \
     src/engines/qnapisy24engine.h \
@@ -66,6 +66,7 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/forms/frmabout.h \
     src/forms/frmnapiprojektconfig.h \
     src/forms/frmopensubtitlesconfig.h \
+    src/forms/frmnapisy24config.h \
     src/qcumber/qmanagedrequest.h \
     src/qcumber/qmanagedsocket.h \
     src/qcumber/qsingleapplication.h \
@@ -106,6 +107,7 @@ FORMS += ui/frmprogress.ui \
     ui/frmabout.ui \
     ui/napiprojekt/frmnapiprojektconfig.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
+    ui/napisy24/frmnapisy24config.ui \
     ui/frmconvert.ui \
     ui/subDataWidget.ui
 

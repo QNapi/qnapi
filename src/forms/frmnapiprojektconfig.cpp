@@ -41,8 +41,7 @@ void frmNapiProjektConfig::accept()
 
 void frmNapiProjektConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showNPCreateUser();
-    load();
+    ((QNapiApp*)qApp)->showCreateAccount("NapiProjekt");
 }
 
 void frmNapiProjektConfig::load()

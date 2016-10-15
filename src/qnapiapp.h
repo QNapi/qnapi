@@ -63,8 +63,8 @@ class QNapiApp : public QSingleApplication
         void showOSUploadDialog();
         void showOSCreateUser();
         
-        void showNapisy24GetDialog();
-        void showNapisy24CreateUser();
+        void showN24GetDialog();
+        void showN24CreateUser();
 
         void showSettings();
         void showAbout();

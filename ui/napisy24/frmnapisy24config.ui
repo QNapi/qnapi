@@ -1,0 +1,177 @@
+<ui version="4.0" >
+ <class>frmNapisy24Config</class>
+ <widget class="QDialog" name="frmNapisy24Config" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>150</height>
+   </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>330</width>
+    <height>130</height>
+   </size>
+  </property>
+  <property name="maximumSize" >
+   <size>
+    <width>450</width>
+    <height>180</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Napisy24 - konfiguracja</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="lbNick" >
+     <property name="text" >
+      <string>Login:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3" >
+    <widget class="QLineEdit" name="leNick" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QLabel" name="lbPass" >
+     <property name="text" >
+      <string>Hasło:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="3" >
+    <widget class="QLineEdit" name="lePass" >
+     <property name="text" >
+      <string/>
+     </property>
+     <property name="echoMode" >
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>318</width>
+       <height>41</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QPushButton" name="pbRegister" >
+     <property name="text" >
+      <string>Załóż konto</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>108</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2" >
+    <widget class="QPushButton" name="pbCancel" >
+     <property name="text" >
+      <string>Anuluj</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" >
+    <widget class="QPushButton" name="pbSave" >
+     <property name="text" >
+      <string>Zapisz</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../res/resources.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>pbCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>frmNapisy24Config</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>236</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbSave</sender>
+   <signal>clicked()</signal>
+   <receiver>frmNapisy24Config</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>300</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leNick</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmNapisy24Config</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>220</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lePass</sender>
+   <signal>returnPressed()</signal>
+   <receiver>frmNapisy24Config</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>220</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>164</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

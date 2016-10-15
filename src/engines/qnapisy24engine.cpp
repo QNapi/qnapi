@@ -14,6 +14,7 @@
 *****************************************************************************/
 
 #include "qnapisy24engine.h"
+#include "forms/frmnapisy24config.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QUrl>
@@ -323,12 +324,13 @@ QIcon QNapisy24Engine::engineIcon()
 
 bool QNapisy24Engine::isConfigurable()
 {
-    return false;
+    return true;
 }
 
 void QNapisy24Engine::configure(QWidget * parent)
 {
-    Q_UNUSED(parent);
+    frmNapisy24Config config(parent);
+    config.exec();
 }
 
 QString QNapisy24Engine::checksum(QString filename)
@@ -357,10 +359,12 @@ bool QNapisy24Engine::lookForSubtitles(QString lang)
 
     const QUrl url = QUrl("http://napisy24.pl/run/CheckSubAgent.php");
 
+    auto credentials = getCredentials();
+
     QUrlQuery params(url);
     params.addQueryItem("postAction", "CheckSub");
-    params.addQueryItem("ua", "tantalosus");
-    params.addQueryItem("ap", "susolatnat");
+    params.addQueryItem("ua", credentials.first);
+    params.addQueryItem("ap", credentials.second);
     params.addQueryItem("fh", checkSum);
     params.addQueryItem("fs", QString::number(fileSize));
     params.addQueryItem("fn", QFileInfo(movie).fileName());
@@ -479,4 +483,16 @@ void QNapisy24Engine::cleanup()
     clearSubtitlesList();
     if(QFile::exists(subtitlesTmp))
         QFile::remove(subtitlesTmp);
+}
+
+QPair<QString, QString> QNapisy24Engine::getCredentials() const
+{
+    QString configLogin = GlobalConfig().nick("Napisy24");
+    QString configPass = GlobalConfig().pass("Napisy24");
+
+    if(!configLogin.isEmpty() && !configPass.isEmpty()) {
+        return qMakePair(configLogin, configPass);
+    } else {
+        return qMakePair(QString("tantalosus"), QString("susolatnat"));
+    }
 }

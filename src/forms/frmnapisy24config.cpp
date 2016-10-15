@@ -42,8 +42,7 @@ void frmNapisy24Config::accept()
 
 void frmNapisy24Config::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showN24CreateUser();
-    load();
+    ((QNapiApp*)qApp)->showCreateAccount("Napisy24");
 }
 
 void frmNapisy24Config::load()

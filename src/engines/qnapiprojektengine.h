@@ -47,6 +47,9 @@ public:
     // wywoluje okienko konfiguracji
     void configure(QWidget * parent);
 
+    QUrl registrationUrl() const {
+        return QUrl("http://www.napiprojekt.pl/rejestracja");
+    }
 
     QString checksum(QString filename = "");
     bool lookForSubtitles(QString lang);

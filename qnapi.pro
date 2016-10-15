@@ -147,8 +147,6 @@ unix {
     man.files = doc/$${TARGET}.1.gz
     icons16.files = res/icons/16x16/apps/qnapi.png
     icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/
-    icons22.files = res/icons/22x22/apps/qnapi.png
-    icons22.path = $${DATADIR}/icons/hicolor/22x22/apps/
     icons32.files = res/icons/32x32/apps/qnapi.png
     icons32.path = $${DATADIR}/icons/hicolor/32x32/apps/
     icons48.files = res/icons/48x48/apps/qnapi.png
@@ -157,7 +155,7 @@ unix {
     icons128.path = $${DATADIR}/icons/hicolor/128x128/apps/
     icons512.files = res/icons/512x512/apps/qnapi.png
     icons512.path = $${DATADIR}/icons/hicolor/512x512/apps/
-    INSTALLS += icons16 icons22 icons32 icons48 icons128 icons512
+    INSTALLS += icons16 icons32 icons48 icons128 icons512
     desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/$${TARGET}.desktop
     INSTALLS += target \

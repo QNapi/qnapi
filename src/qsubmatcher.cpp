@@ -22,37 +22,16 @@ bool QSubMatcher::matchSubtitles(QString subtitlesTmpFilePath, QString targetMov
 
 #ifdef Q_OS_WIN
     // Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
-    QFile f(subtitles), f2(subtitlesTmp);
-    if(!f.open(QIODevice::WriteOnly) || !f2.open(QIODevice::ReadOnly))
-    {
-        f.close();
-    }
-    else
-    {
-        result = f.write(f2.readAll()) > 0;
-        f2.close();
-        f.close();
-    }
+    result = dryCopy(subtitlesTmpFilePath, targetSubtitlesFilePath);
 #else
-    // pod normalnymi OS-ami nie trzeba sie gimnastykowac z atrybutami
+    // pod innymi OS-ami wystarczy skopiowac plik
     result = QFile::copy(subtitlesTmpFilePath, targetSubtitlesFilePath);
+#endif
 
-    // Zmiana uprawnien do pliku
     if(changePermissions)
     {
-        bool validPermissions;
-        int permInt = changePermissionsTo.toInt(&validPermissions, 8);
-
-        if(validPermissions)
-        {
-            int perm = 0;
-            perm |= (permInt & 0700) << 2;
-            perm |= (permInt & 0070) << 1;
-            perm |= (permInt & 0007);
-            changeFilePermissions(targetSubtitlesFilePath, QFile::Permissions(perm));
-        }
+        fixFilePermissions(targetSubtitlesFilePath, changePermissionsTo);
     }
-#endif
 
     return result;
 }
@@ -107,11 +86,36 @@ void QSubMatcher::removeOrCopy(QString targetMoviefilePath, QString targetSubtit
     }
 }
 
-bool QSubMatcher::changeFilePermissions(QString filePath, QFile::Permissions permissions) const
+bool QSubMatcher::dryCopy(QString srcFilePath, QString dstFilePath) const
 {
-    if(!QFileInfo(filePath).exists())
-        return false;
+    QFile dstFile(dstFilePath), srcFile(srcFilePath);
+    bool result = false;
 
-    return QFile::setPermissions(filePath, permissions);
+    if(!dstFile.open(QIODevice::WriteOnly) || !srcFile.open(QIODevice::ReadOnly))
+    {
+        dstFile.close();
+    }
+    else
+    {
+        result = dstFile.write(srcFile.readAll()) > 0;
+        srcFile.close();
+        dstFile.close();
+    }
+
+    return result;
 }
 
+void QSubMatcher::fixFilePermissions(QString targetSubtitlesFilePath, QString changePermissionsTo) const
+{
+    bool validPermissions;
+    int permInt = changePermissionsTo.toInt(&validPermissions, 8);
+
+    if(validPermissions)
+    {
+        int perm = 0;
+        perm |= (permInt & 0700) << 2;
+        perm |= (permInt & 0070) << 1;
+        perm |= (permInt & 0007);
+        QFile::setPermissions(targetSubtitlesFilePath, QFile::Permissions(perm));
+    }
+}

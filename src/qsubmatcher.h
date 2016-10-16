@@ -28,7 +28,8 @@ private:
     QString constructSubtitlePath(QString targetMovieFilePath, QString targetExtension, QString baseSuffix = "") const;
     bool isWritablePath(QString path) const;
     void removeOrCopy(QString targetMoviefilePath, QString targetSubtitlesFilePath) const;
-    bool changeFilePermissions(QString filePath, QFile::Permissions permissions) const;
+    bool dryCopy(QString srcFilePath, QString dstFilePath) const;
+    void fixFilePermissions(QString targetSubtitlesFilePath, QString changePermissionsTo) const;
 
     bool noBackup;
     bool isPostProcessingEnabled;

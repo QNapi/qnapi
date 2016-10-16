@@ -45,7 +45,6 @@ QNapiProjektEngine::QNapiProjektEngine()
     p7zipPath = GlobalConfig().p7zipPath();
     nick = GlobalConfig().nick(engineName());
     pass = GlobalConfig().pass(engineName());
-    noBackup = GlobalConfig().noBackup();
 }
 
 // destruktor klasy

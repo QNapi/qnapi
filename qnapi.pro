@@ -51,7 +51,8 @@ SOURCES += src/main.cpp \
     src/libmediainfomovieinfoparser.cpp \
     src/qsubpostprocess.cpp \
     src/forms/subdatawidget.cpp \
-    src/qnapisubtitleinfo.cpp
+    src/qnapisubtitleinfo.cpp \
+    src/qsubmatcher.cpp
 
 HEADERS += src/engines/qnapiabstractengine.h \
     src/engines/qnapiprojektengine.h \
@@ -95,7 +96,8 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/subconvert/formats/mpl2.h \
     src/libmediainfomovieinfoparser.h \
     src/qsubpostprocess.h \
-    src/forms/subdatawidget.h
+    src/forms/subdatawidget.h \
+    src/qsubmatcher.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

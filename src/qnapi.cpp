@@ -14,6 +14,7 @@
 
 #include "qnapi.h"
 #include "qnapiconfig.h"
+#include "qsubmatcher.h"
 #include "qsubpostprocess.h"
 #include "engines/qnapiprojektengine.h"
 #include "engines/qnapisy24engine.h"
@@ -231,9 +232,19 @@ bool QNapi::unpack(int i)
 
 bool QNapi::match()
 {
+    QNapiConfig & config = GlobalConfig();
+
+    QSubMatcher subMatcher(config.noBackup(),
+                           config.ppEnabled(),
+                           config.ppSubFormat(),
+                           config.ppSubExtension(),
+                           config.changePermissions(),
+                           config.changePermissionsTo());
+
     return currentEngine
-            ? currentEngine->match()
-            : false;
+             ? subMatcher.matchSubtitles(currentEngine->subtitlesTmp,
+                                         currentEngine->movie)
+             : false;
 }
 
 void QNapi::pp()

@@ -29,7 +29,6 @@ QOpenSubtitlesEngine::QOpenSubtitlesEngine()
 {
     p7zipPath = GlobalConfig().p7zipPath();
     lang = GlobalConfig().language();
-    noBackup = GlobalConfig().noBackup();
 }
 
 // destruktor klasy

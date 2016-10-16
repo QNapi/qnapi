@@ -41,14 +41,6 @@ public:
     // zwraca sciezke do pliku filmowego
     QString moviePath();
 
-    // dopasowuje napisy do pliku z filmem
-    bool match();
-
-#ifndef Q_OS_WIN
-    // zmienia uprawnienia do pliku z napisami
-    bool changeSubtitlesPermissions(QFile::Permissions permissions);
-#endif
-
     // powinna zwracac nazwe modulu
     virtual QString engineName() = 0;
     // powinna zwracac informacje nt. modulu (prawa autorskie itp.)
@@ -94,15 +86,11 @@ protected:
     QString tmpPath;
     // suma kontrolna pliku filmowego
     QString checkSum;
-    // okresla czy uzytkownik wylaczyl wykonywanie kopii zapasowej, gdy napisy do
-    // zadanego filmu juz istnieja
-    bool noBackup;
 
     // konstruktor klasy
     QNapiAbstractEngine()
     {
         tmpPath = GlobalConfig().tmpPath();
-        noBackup = GlobalConfig().noBackup();
     }
 
     Maybe<QNapiSubtitleInfo> resolveById(QUuid id);

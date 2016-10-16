@@ -23,7 +23,6 @@
 QNapisy24Engine::QNapisy24Engine()
 {
     p7zipPath = GlobalConfig().p7zipPath();
-    noBackup = GlobalConfig().noBackup();
 }
 
 QNapisy24Engine::~QNapisy24Engine()

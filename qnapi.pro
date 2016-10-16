@@ -35,7 +35,6 @@ SOURCES += src/main.cpp \
     src/qnapiapp.cpp \
     src/qnapicli.cpp \
     src/qnapi.cpp \
-    src/qmultiparthttprequest.cpp \
     src/qnapiopendialog.cpp \
     src/qnapilanguage.cpp \
     src/synchttp.cpp \
@@ -79,7 +78,6 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/qnapiopendialog.h \
     src/qnapilanguage.h \
     src/qcheckedlistwidget.h \
-    src/qmultiparthttprequest.h \
     src/qnapithread.h \
     src/synchttp.h \
     src/syncxmlrpc.h \

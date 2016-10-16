@@ -15,7 +15,6 @@
 #include "qnapiprojektengine.h"
 #include "forms/frmnapiprojektconfig.h"
 #include "libmediainfomovieinfoparser.h"
-#include "qmultiparthttprequest.h"
 #include "synchttp.h"
 #include "movieinfo.h"
 #include "qnapilanguage.h"

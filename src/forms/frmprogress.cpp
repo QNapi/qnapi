@@ -425,7 +425,6 @@ void GetThread::run()
             napi->pp();
         }
 
-
         emit progressChange(i, queue.size(), 0.9);
         emit actionChange(tr("Dopasowywanie napisów..."));
 

@@ -5,34 +5,18 @@
 bool QSubMatcher::matchSubtitles(QString subtitlesTmpFilePath, QString targetMovieFilePath) const
 {
     QFileInfo subtitlesTmpFileInfo(subtitlesTmpFilePath);
-    QFileInfo targetMovieFileInfo(targetMovieFilePath);
 
     if(!subtitlesTmpFileInfo.exists())
         return false;
 
     QString targetExtension = selectTargetExtension(subtitlesTmpFileInfo);
 
-    QString targetSubtitlesFilePath = targetMovieFileInfo.path() + "/" + targetMovieFileInfo.completeBaseName() + "." + targetExtension;
+    QString targetSubtitlesFilePath = constructSubtitlePath(targetMovieFilePath, targetExtension);
 
-    QFileInfo targetSubtitlesFileInfo(targetSubtitlesFilePath);
-
-    if(!QFileInfo(targetSubtitlesFileInfo.absolutePath()).isWritable())
+    if(!isWritablePath(targetSubtitlesFilePath))
         return false;
 
-    if(QFile::exists(targetSubtitlesFilePath))
-    {
-        if(!noBackup)
-        {
-            QString newName = targetMovieFileInfo.path() + QDir::separator() + targetMovieFileInfo.completeBaseName() + "_kopia." + targetSubtitlesFileInfo.suffix();
-
-            if(QFile::exists(newName))
-                QFile::remove(newName);
-
-            QFile::rename(targetSubtitlesFilePath, newName);
-        }
-        else
-            QFile::remove(targetSubtitlesFilePath);
-    }
+    removeOrCopy(targetMovieFilePath, targetSubtitlesFilePath);
 
     bool result = false;
 
@@ -45,7 +29,7 @@ bool QSubMatcher::matchSubtitles(QString subtitlesTmpFilePath, QString targetMov
     }
     else
     {
-        r = f.write(f2.readAll()) > 0;
+        result = f.write(f2.readAll()) > 0;
         f2.close();
         f.close();
     }
@@ -90,6 +74,37 @@ QString QSubMatcher::selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const
     }
 
     return targetExtension;
+}
+
+QString QSubMatcher::constructSubtitlePath(QString targetMovieFilePath, QString targetExtension, QString baseSuffix) const
+{
+    QFileInfo targetMovieFileInfo(targetMovieFilePath);
+    return targetMovieFileInfo.path() + QDir::separator() + targetMovieFileInfo.completeBaseName() + baseSuffix + "." + targetExtension;
+}
+
+bool QSubMatcher::isWritablePath(QString path) const
+{
+    QFileInfo pathFileInfo(path);
+    return QFileInfo(pathFileInfo.absolutePath()).isWritable();
+}
+
+void QSubMatcher::removeOrCopy(QString targetMoviefilePath, QString targetSubtitlesFilePath) const
+{
+    if(QFile::exists(targetSubtitlesFilePath))
+    {
+        if(!noBackup)
+        {
+            QFileInfo targetSubtitlesFileInfo(targetSubtitlesFilePath);
+            QString newName = constructSubtitlePath(targetMoviefilePath, targetSubtitlesFileInfo.suffix(), "_kopia");
+
+            if(QFile::exists(newName))
+                QFile::remove(newName);
+
+            QFile::rename(targetSubtitlesFilePath, newName);
+        }
+        else
+            QFile::remove(targetSubtitlesFilePath);
+    }
 }
 
 bool QSubMatcher::changeFilePermissions(QString filePath, QFile::Permissions permissions) const

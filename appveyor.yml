@@ -19,6 +19,9 @@ build_script:
   - rem ver.txt
   - cd win32
   - rename out QNapi
-  - copy /y nul QNapi/qnapi.ini
+  - cd QNapi
+  - copy /y nul qnapi.ini
+  - cd ..
   - 7z a -tzip QNapi-%VERSION%-portable.zip QNapi 
   - cd ..
+

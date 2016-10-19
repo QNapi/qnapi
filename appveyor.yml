@@ -14,9 +14,11 @@ build_script:
   - mingw32-make -j4
   - mingw32-make install
   - makensis win32/QNapi-setup.nsi
-  - rename win32/out win32/QNapi
-  - copy /y nul win32/QNapi/qnapi.ini
   - scripts/version.bat > ver.txt
   - set /p VERSION=<ver.txt
   - rem ver.txt
-  - 7z a -tzip win32/QNapi-%VERSION%-portable.zip win32/QNapi 
+  - cd win32
+  - rename out QNapi
+  - copy /y nul QNapi/qnapi.ini
+  - 7z a -tzip QNapi-%VERSION%-portable.zip QNapi 
+  - cd ..

@@ -4,6 +4,7 @@ install:
   - set NSIS="C:\Program Files (x86)\NSIS"
   - set PATH=%PATH%;%MINGW%\bin;%QTDIR%\bin;%NSIS%
   - appveyor-retry cinst nsis -y -version 2.51
+  - appveyor-retry cinst 7z.commandline -y -x86
   - appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip" -FileName NsProcess.zip
   - 7z e -o"C:\Program Files (x86)\NSIS\Include" NsProcess.zip Include\*.nsh
   - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" NsProcess.zip Plugin\*.dll
@@ -13,4 +14,8 @@ build_script:
   - mingw32-make -j4
   - mingw32-make install
   - makensis win32/QNapi-setup.nsi
-
+  - rename win32/out win32/QNapi
+  - copy /y nul win32/QNapi/qnapi.ini
+#  - set VERSION=`cat src/version.h | findstr QNAPI_DISPLAYABLE_VERSION`
+  - set VERSION=0.2.2
+  - 7z a -tzip win32/QNapi-%VERSION%-portable.zip win32/QNapi 

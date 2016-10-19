@@ -4,7 +4,7 @@ install:
   - set NSIS="C:\Program Files (x86)\NSIS"
   - set PATH=%PATH%;%MINGW%\bin;%QTDIR%\bin;%NSIS%
   - appveyor-retry cinst nsis -y -version 2.51
-  - appveyor-retry cinst 7z.commandline -y -x86
+  - appveyor-retry cinst 7zip.commandline -y -x86
   - appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip" -FileName NsProcess.zip
   - 7z e -o"C:\Program Files (x86)\NSIS\Include" NsProcess.zip Include\*.nsh
   - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" NsProcess.zip Plugin\*.dll

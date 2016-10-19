@@ -16,6 +16,7 @@ build_script:
   - makensis win32/QNapi-setup.nsi
   - rename win32/out win32/QNapi
   - copy /y nul win32/QNapi/qnapi.ini
-#  - set VERSION=`cat src/version.h | findstr QNAPI_DISPLAYABLE_VERSION`
-  - set VERSION=0.2.2
+  - scripts/version.bat > ver.txt
+  - set /p VERSION=<ver.txt
+  - rem ver.txt
   - 7z a -tzip win32/QNapi-%VERSION%-portable.zip win32/QNapi 

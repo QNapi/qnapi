@@ -24,4 +24,16 @@ build_script:
   - cd ..
   - 7z a -tzip QNapi-%VERSION%-portable.zip QNapi 
   - cd ..
+artifacts:
+  - path: win32\QNapi*zip
+  - path: win32\QNapi*exe
+deploy:
+  provider: GitHub
+  description: This is latest snapshot release. Be careful - it may not be stable!
+  auth_token:
+    secure: W8Vjs744iJ2Tb6DWml0XY8LAOyj3FXlvA9ZhAlaIxCAYhjAL3e7yolizmaoLSlhy 
+  artifact: /QNapi.*/
+  force_update: true
+  on:
+    appveyor_repo_tag: true
 

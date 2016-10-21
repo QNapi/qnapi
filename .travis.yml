@@ -66,6 +66,7 @@ deploy:
     file_glob: true
     file: "${FILE_TO_UPLOAD}"
     skip_cleanup: true
+    overwrite: true
     on:
       tags: true
 

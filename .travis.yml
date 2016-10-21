@@ -21,6 +21,7 @@ install:
       fi     
 
 script:
+    - export VERSION=`scripts/version.sh`
     - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
           . /opt/qt55/bin/qt55-env.sh
         ;
@@ -37,9 +38,9 @@ script:
       else
           make -j2
        && make appdmg
+       && mv macx/QNapi.dmg macx/QNapi-$VERSION.dmg
         ;
       fi
-    - export VERSION=`scripts/version.sh`
     - export DST_DIR=../qnapi-$VERSION
     - mkdir $DST_DIR
     - cp -rv * $DST_DIR
@@ -51,4 +52,17 @@ script:
     - rm -fr $DST_DIR/macx/QNapi*dmg
     - tar -zcvf qnapi-$VERSION.tar.gz $DST_DIR
     - rm -fr $DST_DIR
+
+before_deploy:
+  - export FILE_TO_UPLOAD=$(ls ./qnapi-*.tar.gz macx/QNapi*.dmg)
+
+deploy:
+    provider: releases
+    api_key:
+        secure: fQr38DcITobL1+Eit15lH5ynVYZm6ytfJD+kb9fgXLWcXfZc85zhCti1VUWnqzNykHEktzGi8nM5D0mh4PYgZwL6O9lFZB5XYiAz+lDAxkoE62OoYYs5Oohl/OswHIOjuk2kI+a1hoWNLxfAeD0GC73dNKiyO7Y1199mb+9Xmm+IA+chl4i8qyPlnm0sAFpjMTaRZMWMZIX5rgnVBOjr0IyBDln1Sh/iMmHvUr8CmVxfJMlbAGdo9nCbLPqJ7TmaW87xoddmYorZhmblgJpHMxQhNH9Nzk7AwmGvou33zOzHhwNdFp4p46XmvUY582HBRAq5GPr9i4aduFX+eslhfmAfUnntr9e/h2isaa1ucavqmPfySpqkGwObj8N8A8R8WX5e8GTAt5YtXoPUbcVfeQYw1sAFTRisES+C1RxLQlB5QMPVwmm+1VQ+xlQySByq8YMqFLmY4yVTlngXCummAkv9pWlbpd1L1tKi3ZZ2i4XH81mve5aGc1gtDndSj5SIumJVUAAvS/naTaV/cAn86Rgy0Jnv/ttp7FSYEjsatl4NLF79HalM2LuYxEdw/kv53bavjtQVD/12rUTKjyudsgk8+6f7tkejyNWH0yBi4mULe/gaws7cWDhMK6sjOO/1cmK8QlvIypERpxP3IML6x0FM9uCzYkJxJHIfcUGBzDU=
+    file_glob: true
+    file: "${FILE_TO_UPLOAD}"
+    skip_cleanup: true
+    on:
+      tags: true
 

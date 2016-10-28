@@ -157,6 +157,9 @@ win32 {
 
     TARGET = qnapi
     DESTDIR = ../win32/
+
+    target.path = ../win32/out
+    INSTALLS += target
 }
 
 !win32 { 

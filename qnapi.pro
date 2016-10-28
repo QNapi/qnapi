@@ -47,33 +47,30 @@ macx {
 win32 {
     INSTALL_PREFIX = win32/out
 
-    target.files = win32/qnapi.exe
-    target.path = $${INSTALL_PREFIX}
-
-    p7zip.files += win32/content/7za.exe
+    p7zip.files = win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \
-        doc/LICENSE \
-        doc/LICENSE-pl
+                doc/LICENSE \
+                doc/LICENSE-pl
     doc.path = $${INSTALL_PREFIX}
 
-    icudlls.files += $$[QT_INSTALL_BINS]/icuin54.dll
-    icudlls.files += $$[QT_INSTALL_BINS]/icuuc54.dll
-    icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
+    icudlls.files = $$[QT_INSTALL_BINS]/icuin54.dll \
+                    $$[QT_INSTALL_BINS]/icuuc54.dll \
+                    $$[QT_INSTALL_BINS]/icudt54.dll
     icudlls.path = $${INSTALL_PREFIX}
 
     libmediainfodlls.files += deps/libmediainfo/bin/MediaInfo.dll
     libmediainfodlls.path = $${INSTALL_PREFIX}
 
-    deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
+    deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32/out/qnapi.exe
 
-    platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
+    platform.files = $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms
     platform.depends = deploywin
 
-    QMAKE_EXTRA_TARGETS += icudlls libmediainfodlls deploywin platform
+    QMAKE_EXTRA_TARGETS += deploywin platform
 
-    INSTALLS = target p7zip doc icudlls libmediainfodlls platform
+    INSTALLS = p7zip doc icudlls libmediainfodlls platform
 }
 

@@ -3,7 +3,13 @@ QT -= gui
 
 TARGET = qnapi
 TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += staticlib \
+          warn_on \
+          release \
+          silent \
+          c++11
+
+DESTDIR = $$PWD
 
 #include(../deps/libmaia/maia.pri)
 

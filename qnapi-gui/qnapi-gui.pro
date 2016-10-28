@@ -123,37 +123,8 @@ include(../libqnapi/libqnapi.pri)
 unix { 
     CONFIG += link_pkgconfig
     PKGCONFIG += libmediainfo
-    INSTALL_PREFIX = /usr
-    DATADIR=$${INSTALL_PREFIX}/share
-    target.path = $${INSTALL_PREFIX}/bin
-    doc.path = $${INSTALL_PREFIX}/share/doc/$${TARGET}
-    doc.files = doc/ChangeLog \
-        doc/LICENSE \
-        doc/LICENSE-pl \
-        doc/COPYRIGHT \
-        doc/qnapi-download.desktop \
-        doc/qnapi-scan.desktop \
-        doc/qnapi-download.schemas \
-        doc/qnapi-scan.schemas
-    man.path = $${INSTALL_PREFIX}/share/man/man1
-    man.files = doc/$${TARGET}.1.gz
-    icons16.files = res/icons/16x16/apps/qnapi.png
-    icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/
-    icons32.files = res/icons/32x32/apps/qnapi.png
-    icons32.path = $${DATADIR}/icons/hicolor/32x32/apps/
-    icons48.files = res/icons/48x48/apps/qnapi.png
-    icons48.path = $${DATADIR}/icons/hicolor/48x48/apps/
-    icons128.files = res/icons/128x128/apps/qnapi.png
-    icons128.path = $${DATADIR}/icons/hicolor/128x128/apps/
-    icons512.files = res/icons/512x512/apps/qnapi.png
-    icons512.path = $${DATADIR}/icons/hicolor/512x512/apps/
-    INSTALLS += icons16 icons32 icons48 icons128 icons512
-    desktop.path = $${INSTALL_PREFIX}/share/applications
-    desktop.files = doc/$${TARGET}.desktop
-    INSTALLS += target \
-        doc \
-        man \
-        desktop
+    TARGET = qnapi
+    DESTDIR = ../
 }
 
 macx {
@@ -161,11 +132,13 @@ macx {
     INCLUDEPATH += ../deps/libmediainfo/include
     LIBS += -framework CoreFoundation
 
+    TARGET = QNapi
+    DESTDIR = ../macx/
+
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
     ICON = ../macx/qnapi.icns
     QMAKE_INFO_PLIST = ../macx/Info.plist
-    TARGET = ../macx/QNapi
     7ZIP_BINARY.files = ../macx/content/7za
     7ZIP_BINARY.path = Contents/Resources
     LIBMEDIAINFO.files = ../deps/libmediainfo/lib/libmediainfo.0.dylib
@@ -174,43 +147,16 @@ macx {
 }
 
 win32 {
-    INCLUDEPATH += deps/libmediainfo/include
+    CONFIG += nostrip
 
-    RC_FILE = win32/qnapi.rc
+    INCLUDEPATH += ../deps/libmediainfo/include
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
 
-    CONFIG += nostrip
+    RC_FILE = ../win32/qnapi.rc
 
-    INSTALL_PREFIX = win32/out
-
-    target.path = $${INSTALL_PREFIX}
-
-    p7zip.files += win32/content/7za.exe
-    p7zip.path = $${INSTALL_PREFIX}
-
-    doc.files = doc/ChangeLog \
-        doc/LICENSE \
-        doc/LICENSE-pl
-    doc.path = $${INSTALL_PREFIX}
-
-    icudlls.files += $$[QT_INSTALL_BINS]/icuin54.dll
-    icudlls.files += $$[QT_INSTALL_BINS]/icuuc54.dll
-    icudlls.files += $$[QT_INSTALL_BINS]/icudt54.dll
-    icudlls.path = $${INSTALL_PREFIX}
-
-    libmediainfodlls.files += deps/libmediainfo/bin/MediaInfo.dll
-    libmediainfodlls.path = $${INSTALL_PREFIX}
-
-    deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32\out\qnapi.exe
-
-    platform.files += $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
-    platform.path = $${INSTALL_PREFIX}/platforms
-    platform.depends = deploywin
-
-    QMAKE_EXTRA_TARGETS += icudlls libmediainfodlls deploywin platform
-
-    INSTALLS = target p7zip doc icudlls libmediainfodlls platform
+    TARGET = qnapi
+    DESTDIR = ../win32/
 }
 
 !win32 { 

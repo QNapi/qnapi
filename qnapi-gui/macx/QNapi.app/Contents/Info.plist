@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rm</string>
+				<string>mpg</string>
+				<string>mpeg</string>
+				<string>mov</string>
+				<string>avi</string>
+				<string>rmvb</string>
+				<string>mkv</string>
+				<string>m4v</string>
+				<string>mp4</string>
+				<string>asf</string>
+				<string>divx</string>
+				<string>ogm</string>
+				<string>wmv</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>qnapi.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>QNapi supported file</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSUIElement</key>
+			<false/>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>QNapi</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Created by Qt/QMake</string>
+	<key>CFBundleIconFile</key>
+	<string>qnapi.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>ttxt</string>
+	<key>LSUIElement</key>
+	<false/>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
+</dict>
+</plist>

@@ -3,8 +3,8 @@ IDI_ICON1               ICON    DISCARDABLE     "qnapi.ico"
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     0,2,2,0
-PRODUCTVERSION  0,2,2,0
+FILEVERSION     0,2,3,0
+PRODUCTVERSION  0,2,3,0
 
 BEGIN
     BLOCK "StringFileInfo"
@@ -12,11 +12,11 @@ BEGIN
         BLOCK "040904E4"
         BEGIN
             VALUE "FileDescription",    "Aplikacja do pobierania napisow do filmow"
-            VALUE "FileVersion",        "0.2.2"
+            VALUE "FileVersion",        "0.2.3"
             VALUE "InternalName",       "QNapi"
             VALUE "OriginalFilename",   "qnapi.exe"
             VALUE "ProductName",        "QNapi"
-            VALUE "ProductVersion",     "0.2.2"
+            VALUE "ProductVersion",     "0.2.3"
         END
     END
 

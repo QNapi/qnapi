@@ -81,7 +81,6 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/qnapithread.h \
     src/syncxmlrpc.h \
     src/qnapisubtitleinfo.h \
-    src/version.h \
     src/encodingutils.h \
     src/forms/frmconvert.h \
     src/subconvert/subfile.h \

@@ -18,8 +18,10 @@ MOC_DIR = tmp
 RCC_DIR = tmp
 OBJECTS_DIR = tmp
 
-SOURCES += libqnapi.cpp \
+SOURCES += src/libqnapi.cpp \
            src/utils/synchttp.cpp
 
-HEADERS += libqnapi.h \
+HEADERS += src/libqnapi.h \
+           src/version.h \
            src/utils/synchttp.h
+

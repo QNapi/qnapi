@@ -155,7 +155,6 @@ win32 {
     RC_FILE = ../win32/qnapi.rc
 
     TARGET = qnapi
-    DESTDIR = ../win32/
 
     target.path = ../win32/out
     INSTALLS += target

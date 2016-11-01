@@ -6,7 +6,6 @@ TEMPLATE = lib
 
 CONFIG += staticlib \
           warn_on \
-          release \
           silent \
           c++11
 

@@ -4,7 +4,6 @@ CONFIG += warn_on \
     thread \
     qt \
     resources \
-    release \
     silent \
     c++11
 

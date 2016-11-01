@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS = libqnapi qnapi-gui
+SUBDIRS = libqnapi gui
 
 unix {
     INSTALL_PREFIX = /usr

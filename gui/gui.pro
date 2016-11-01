@@ -75,8 +75,6 @@ RCC_DIR = tmp
 OBJECTS_DIR = tmp
 INCLUDEPATH = src
 
-include(../deps/libmaia/maia.pri)
-include(../deps/qt-maybe/qt-maybe.pri)
 include(../libqnapi/libqnapi.pri)
 
 unix { 

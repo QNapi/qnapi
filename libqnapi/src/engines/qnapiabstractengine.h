@@ -18,8 +18,6 @@
 #include <QString>
 #include <QFileInfo>
 #include <QFile>
-#include <QIcon>
-#include <QPixmap>
 #include <QUrl>
 
 #include <ctime>
@@ -46,11 +44,7 @@ public:
     // powinna zwracac informacje nt. modulu (prawa autorskie itp.)
     virtual QString engineInfo() = 0;
     // zwraca ikone silnika pobierania
-    virtual QIcon engineIcon() = 0;
-    // zwraca czy silnik jest konfigurowalny
-    virtual bool isConfigurable() = 0;
-    // wywoluje okienko konfiguracji
-    virtual void configure(QWidget * parent) = 0;
+    virtual const char * const * enginePixmapData() const = 0;
     // rejestracja uzytkownika
     virtual QUrl registrationUrl() const = 0;
 

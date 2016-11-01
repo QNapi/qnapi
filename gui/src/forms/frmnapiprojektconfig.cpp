@@ -12,19 +12,16 @@
 **
 *****************************************************************************/
 
-#include "frmopensubtitlesconfig.h"
-#include "qnapi.h"
-#include "qnapiconfig.h"
-#include "qnapiapp.h"
+#include "frmnapiprojektconfig.h"
+#include "../qnapi.h"
 
-
-frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags f)
+frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(q.engineByName("OpenSubtitles")->engineIcon());
+    setWindowIcon(QIcon(QPixmap(q.engineByName("NapiProjekt")->enginePixmapData())));
 
     load();
 
@@ -35,20 +32,20 @@ frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags 
     move(position.topLeft());
 }
 
-void frmOpenSubtitlesConfig::accept()
+void frmNapiProjektConfig::accept()
 {
-    GlobalConfig().setNick("OpenSubtitles", ui.leNick->text());
-    GlobalConfig().setPass("OpenSubtitles", ui.lePass->text());
+    GlobalConfig().setNick("NapiProjekt", ui.leNick->text());
+    GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
     QDialog::accept();
 }
 
-void frmOpenSubtitlesConfig::pbRegisterClicked()
+void frmNapiProjektConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("OpenSubtitles");
+    ((QNapiApp*)qApp)->showCreateAccount("NapiProjekt");
 }
 
-void frmOpenSubtitlesConfig::load()
+void frmNapiProjektConfig::load()
 {
-    ui.leNick->setText(GlobalConfig().nick("OpenSubtitles"));
-    ui.lePass->setText(GlobalConfig().pass("OpenSubtitles"));
+    ui.leNick->setText(GlobalConfig().nick("NapiProjekt"));
+    ui.lePass->setText(GlobalConfig().pass("NapiProjekt"));
 }

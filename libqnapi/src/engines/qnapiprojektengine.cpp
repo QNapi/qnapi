@@ -13,9 +13,8 @@
 *****************************************************************************/
 
 #include "qnapiprojektengine.h"
-#include "forms/frmnapiprojektconfig.h"
 #include "libmediainfomovieinfoparser.h"
-#include "synchttp.h"
+#include "utils/synchttp.h"
 #include "movieinfo.h"
 #include "qnapilanguage.h"
 
@@ -23,7 +22,6 @@
 
 #include <QCryptographicHash>
 #include <QUrl>
-#include <QMessageBox>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
@@ -67,7 +65,7 @@ QString QNapiProjektEngine::engineInfo()
 }
 
 // zwraca ikone w formacie XMP
-QIcon QNapiProjektEngine::engineIcon()
+const char * const * QNapiProjektEngine::enginePixmapData() const
 {
     static const char * const icon[] = {
         "16 16 5 1",
@@ -92,20 +90,7 @@ QIcon QNapiProjektEngine::engineIcon()
         " .@@#@@#@####@@.",
         " .@@#@@#@#@@@@@.",
         " ..............."};
-    return QIcon(QPixmap(icon));
-}
-
-// zwraca czy silnik jest konfigurowalny
-bool QNapiProjektEngine::isConfigurable()
-{
-    return true;
-}
-
-// wywoluje okienko konfiguracji
-void QNapiProjektEngine::configure(QWidget * parent)
-{
-    frmNapiProjektConfig config(parent);
-    config.exec();
+    return icon;
 }
 
 // oblicza sume kontrolna dla pliku filmowego (md5 z pierwszych 10MB pliku)

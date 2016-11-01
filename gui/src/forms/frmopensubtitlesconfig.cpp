@@ -1,4 +1,3 @@
-
 /*****************************************************************************
 ** QNapi
 ** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
@@ -13,16 +12,19 @@
 **
 *****************************************************************************/
 
-#include "frmnapisy24config.h"
-#include "../qnapi.h"
+#include "frmopensubtitlesconfig.h"
+#include "qnapi.h"
+#include "qnapiconfig.h"
+#include "qnapiapp.h"
 
-frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
+
+frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(q.engineByName("Napisy24")->engineIcon());
+    setWindowIcon(QIcon(QPixmap(q.engineByName("OpenSubtitles")->enginePixmapData())));
 
     load();
 
@@ -33,20 +35,20 @@ frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
     move(position.topLeft());
 }
 
-void frmNapisy24Config::accept()
+void frmOpenSubtitlesConfig::accept()
 {
-    GlobalConfig().setNick("Napisy24", ui.leNick->text());
-    GlobalConfig().setPass("Napisy24", ui.lePass->text());
+    GlobalConfig().setNick("OpenSubtitles", ui.leNick->text());
+    GlobalConfig().setPass("OpenSubtitles", ui.lePass->text());
     QDialog::accept();
 }
 
-void frmNapisy24Config::pbRegisterClicked()
+void frmOpenSubtitlesConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("Napisy24");
+    ((QNapiApp*)qApp)->showCreateAccount("OpenSubtitles");
 }
 
-void frmNapisy24Config::load()
+void frmOpenSubtitlesConfig::load()
 {
-    ui.leNick->setText(GlobalConfig().nick("Napisy24"));
-    ui.lePass->setText(GlobalConfig().pass("Napisy24"));
+    ui.leNick->setText(GlobalConfig().nick("OpenSubtitles"));
+    ui.lePass->setText(GlobalConfig().pass("OpenSubtitles"));
 }

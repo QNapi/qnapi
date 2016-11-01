@@ -13,13 +13,11 @@
 *****************************************************************************/
 
 #include "qopensubtitlesengine.h"
-#include "forms/frmopensubtitlesconfig.h"
 #include "version.h"
 #include "qnapilanguage.h"
 
 #include <QUrl>
 #include <QDir>
-#include <QMessageBox>
 
 #include <QDebug>
 
@@ -52,7 +50,7 @@ QString QOpenSubtitlesEngine::engineInfo()
 }
 
 // zwraca ikone w formacie XMP
-QIcon QOpenSubtitlesEngine::engineIcon()
+const char * const * QOpenSubtitlesEngine::enginePixmapData() const
 {
     static const char *icon[]={
         "16 16 14 1",
@@ -86,20 +84,7 @@ QIcon QOpenSubtitlesEngine::engineIcon()
         ".##.##.##.##.##.",
         ".##.##.##.##.##.",
         "................"};
-    return QIcon(QPixmap(icon));
-}
-
-// zwraca czy silnik jest konfigurowalny
-bool QOpenSubtitlesEngine::isConfigurable()
-{
-    return true;
-}
-
-// wywoluje okienko konfiguracji
-void QOpenSubtitlesEngine::configure(QWidget * parent)
-{
-    frmOpenSubtitlesConfig config(parent);
-    config.exec();
+    return icon;
 }
 
 // oblicza sume kontrolna dla pliku filmowego

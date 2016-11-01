@@ -1,3 +1,4 @@
+
 /*****************************************************************************
 ** QNapi
 ** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
@@ -12,16 +13,16 @@
 **
 *****************************************************************************/
 
-#include "frmnapiprojektconfig.h"
+#include "frmnapisy24config.h"
 #include "../qnapi.h"
 
-frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
+frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(q.engineByName("NapiProjekt")->engineIcon());
+    setWindowIcon(QIcon(QPixmap(q.engineByName("Napisy24")->enginePixmapData())));
 
     load();
 
@@ -32,20 +33,20 @@ frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
     move(position.topLeft());
 }
 
-void frmNapiProjektConfig::accept()
+void frmNapisy24Config::accept()
 {
-    GlobalConfig().setNick("NapiProjekt", ui.leNick->text());
-    GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
+    GlobalConfig().setNick("Napisy24", ui.leNick->text());
+    GlobalConfig().setPass("Napisy24", ui.lePass->text());
     QDialog::accept();
 }
 
-void frmNapiProjektConfig::pbRegisterClicked()
+void frmNapisy24Config::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("NapiProjekt");
+    ((QNapiApp*)qApp)->showCreateAccount("Napisy24");
 }
 
-void frmNapiProjektConfig::load()
+void frmNapisy24Config::load()
 {
-    ui.leNick->setText(GlobalConfig().nick("NapiProjekt"));
-    ui.lePass->setText(GlobalConfig().pass("NapiProjekt"));
+    ui.leNick->setText(GlobalConfig().nick("Napisy24"));
+    ui.lePass->setText(GlobalConfig().pass("Napisy24"));
 }

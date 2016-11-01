@@ -19,7 +19,6 @@
 #include <QString>
 #include <QStringList>
 #include <QFileInfo>
-#include <QApplication>
 #include <QDir>
 #include <QProcess>
 #include <QRegExp>

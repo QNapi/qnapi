@@ -5,11 +5,13 @@ debug
 release
 Makefile*
 qnapi
+*.a
 win32/out/*
 win32/*.exe
 *.Debug
 *.Release
-macx/QNapi*.app
-macx/QNapi*.dmg
+*.app
+*.dmg
 .DS_Store
 .qmake.stash
+

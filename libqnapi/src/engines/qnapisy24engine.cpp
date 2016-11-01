@@ -14,7 +14,6 @@
 *****************************************************************************/
 
 #include "qnapisy24engine.h"
-#include "forms/frmnapisy24config.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QUrl>
@@ -40,7 +39,7 @@ QString QNapisy24Engine::engineInfo()
     return "Moduł pobierania napisów z bazy <b>www.napisy24.pl</b><br />";
 }
 
-QIcon QNapisy24Engine::engineIcon()
+const char * const * QNapisy24Engine::enginePixmapData() const
 {
     static const char * icon[] = {
     "16 16 256 2",
@@ -317,19 +316,7 @@ QIcon QNapisy24Engine::engineIcon()
     "& ^ & ^ ^ & ^ & ^ ^ & ^ ^ & ^ & ",
     "{ ) { { ) { { { { ) { ) ) { ) { "};
 
-    return QIcon(QPixmap(icon));
-}
-
-
-bool QNapisy24Engine::isConfigurable()
-{
-    return true;
-}
-
-void QNapisy24Engine::configure(QWidget * parent)
-{
-    frmNapisy24Config config(parent);
-    config.exec();
+    return icon;
 }
 
 QString QNapisy24Engine::checksum(QString filename)

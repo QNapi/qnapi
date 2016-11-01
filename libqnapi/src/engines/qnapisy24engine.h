@@ -16,7 +16,7 @@
 #define QNAPISY24ENGINE_H
 
 #include "qnapiabstractengine.h"
-#include "synchttp.h"
+#include "utils/synchttp.h"
 
 class QNapisy24Engine : public QNapiAbstractEngine
 {
@@ -26,9 +26,7 @@ public:
 
     QString engineName();
     QString engineInfo();
-    QIcon engineIcon();
-    bool isConfigurable();
-    void configure(QWidget * parent);
+    const char * const * enginePixmapData() const;
 
     QUrl registrationUrl() const {
         return QUrl("http://napisy24.pl/cb-registration/registers");

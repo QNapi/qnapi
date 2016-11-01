@@ -16,7 +16,7 @@
 #define __QOPENSUBTITLESENGINE__H__
 
 #include "qnapiabstractengine.h"
-#include "syncxmlrpc.h"
+#include "utils/syncxmlrpc.h"
 
 const QString openSubtitlesXmlRpcUrl = "http://api.opensubtitles.org/xml-rpc";
 
@@ -24,7 +24,7 @@ class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {
 public:
 
-    QOpenSubtitlesEngine();
+    QOpenSubtitlesEngine(const QString & qnapiDisplayableVersion);
     ~QOpenSubtitlesEngine();
 
     // zwraca nazwe modulu
@@ -58,6 +58,7 @@ private:
 
     SyncXmlRpc rpc;
     QString token;
+    const QString & qnapiDisplayableVersion;
 
 
     // sprawdza czy dana instancja klasy jest zalogowana na sewerze

@@ -15,7 +15,7 @@
 #include "qnapiabstractengine.h"
 #include "subconvert/subtitleformatsregistry.h"
 #include <QFlags>
-
+#include <QDir>
 
 // ustawia sciezke do pliku filmowego
 void QNapiAbstractEngine::setMoviePath(const QString & path)

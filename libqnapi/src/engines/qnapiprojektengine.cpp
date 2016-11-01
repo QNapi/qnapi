@@ -24,6 +24,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QProcess>
 
 #ifdef Q_OS_WIN // for SetFileAttributes
 #include <qt_windows.h>

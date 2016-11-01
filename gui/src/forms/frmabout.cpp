@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "frmabout.h"
+#include "libqnapi.h"
 
 frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f)
     : QDialog(parent, f)
@@ -20,7 +21,7 @@ frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f)
     ui.setupUi(this);
 
     setAttribute(Qt::WA_QuitOnClose, false);
-    ui.lbTitle->setText(QString("QNapi ") + QNAPI_DISPLAYABLE_VERSION);
+    ui.lbTitle->setText(QString("QNapi ") + LibQNapi::displayableVersion());
     ui.lbQtVersion->setText(QString("Wersja Qt: ") + qVersion());
 
     QRect position = frameGeometry();

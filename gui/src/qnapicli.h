@@ -20,8 +20,6 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <iostream>
-
-#include "version.h"
 #include "qnapi.h"
 #include "qnapilanguage.h"
 

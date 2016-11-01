@@ -20,7 +20,6 @@
 #include <QUrl>
 
 #include "ui_frmabout.h"
-#include "version.h"
 #include "qnapiconfig.h"
 
 class frmAbout: public QDialog

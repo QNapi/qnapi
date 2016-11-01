@@ -12,15 +12,16 @@
 **
 *****************************************************************************/
 
-#include "subtitleconverter.h"
 #include "subconvert/subtitleformatsregistry.h"
+#include "utils/encodingutils.h"
+#include "subtitleconverter.h"
 #include "qnapiconfig.h"
 #include "libmediainfomovieinfoparser.h"
 #include "movieinfo.h"
-#include "version.h"
+#include "libqnapi.h"
 #include <cmath>
 #include <QTextStream>
-#include "encodingutils.h"
+#include <QFile>
 
 
 QString SubtitleConverter::detectFormat(const QString &subtitleFile)
@@ -172,7 +173,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
             adEntry.tokens = targetFormat->decodeTokenStream(ad);
             SubToken urlToken;
             urlToken.type = STT_WORD;
-            urlToken.payload = QNAPI_URL;
+            urlToken.payload = LibQNapi::webpageUrl();
             adEntry.tokens.push_back(urlToken);
             sf.entries.push_back(adEntry);
         }

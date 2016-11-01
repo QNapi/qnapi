@@ -12,10 +12,17 @@
 **
 *****************************************************************************/
 
+#include "libqnapi.h"
 #include "qnapiconfig.h"
 #include <QCoreApplication>
+#include <QSet>
+#include <QFileInfo>
+#include <QDir>
+#include <QProcess>
+#include <QRegExp>
 
-QNapiConfig::QNapiConfig()
+QNapiConfig::QNapiConfig(const QString & qnapiVersion)
+    : qnapiVersion(qnapiVersion)
 {
 }
 
@@ -45,7 +52,7 @@ void QNapiConfig::load(QString appDirPath)
 
 void QNapiConfig::save()
 {
-    settings->setValue("qnapi/version", QNAPI_VERSION);
+    settings->setValue("qnapi/version", qnapiVersion);
     settings->setValue("qnapi/firstrun", false);
     settings->sync();
 }
@@ -732,6 +739,6 @@ QString QNapiConfig::subtitleExtensionsFilter()
 
 QNapiConfig & GlobalConfig()
 {
-    static QNapiConfig cfg;
+    static QNapiConfig cfg(LibQNapi::version());
     return cfg;
 }

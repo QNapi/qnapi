@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "qnapicli.h"
+#include "libqnapi.h"
 
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
@@ -372,8 +373,8 @@ int QNapiCli::exec()
 void QNapiCli::printHeader()
 {
     printCli(QString("QNapi %1, %2\nwersja Qt: %3\n")
-                .arg(QNAPI_DISPLAYABLE_VERSION)
-                .arg(QNAPI_URL)
+                .arg(LibQNapi::displayableVersion())
+                .arg(LibQNapi::webpageUrl())
                 .arg(qVersion()));
 }
 

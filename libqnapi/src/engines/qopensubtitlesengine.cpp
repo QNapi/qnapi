@@ -13,17 +13,15 @@
 *****************************************************************************/
 
 #include "qopensubtitlesengine.h"
-#include "version.h"
 #include "qnapilanguage.h"
 
 #include <QUrl>
 #include <QDir>
 
-#include <QDebug>
-
 // konstruktor klasy
-QOpenSubtitlesEngine::QOpenSubtitlesEngine()
-    : rpc(QUrl(openSubtitlesXmlRpcUrl))
+QOpenSubtitlesEngine::QOpenSubtitlesEngine(const QString & qnapiVersion)
+    : rpc(QUrl(openSubtitlesXmlRpcUrl)),
+      qnapiDisplayableVersion(qnapiVersion)
 {
     p7zipPath = GlobalConfig().p7zipPath();
     lang = GlobalConfig().language();
@@ -269,7 +267,7 @@ void QOpenSubtitlesEngine::cleanup()
 
 bool QOpenSubtitlesEngine::login()
 {
-    QString userAgent = QString("QNapi v%1").arg(QNAPI_VERSION);
+    QString userAgent = QString("QNapi v%1").arg(qnapiDisplayableVersion);
     QVariantList args;
     args << QString("") << QString("") << lang.toLower() << userAgent;
     if(!rpc.request("LogIn", args))

@@ -2,7 +2,7 @@
 #define QSUBPOSTPROCESS_H
 
 #include <QString>
-#include "encodingutils.h"
+#include "utils/encodingutils.h"
 
 class QSubPostProcess
 {

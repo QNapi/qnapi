@@ -12,6 +12,7 @@
 **
 *****************************************************************************/
 
+#include "libqnapi.h"
 #include "qnapi.h"
 #include "qnapiconfig.h"
 #include "qsubmatcher.h"
@@ -22,7 +23,6 @@
 #include "forms/frmnapiprojektconfig.h"
 #include "forms/frmopensubtitlesconfig.h"
 #include "forms/frmnapisy24config.h"
-
 #include <QtAlgorithms>
 
 QNapi::~QNapi()
@@ -69,7 +69,7 @@ bool QNapi::addEngine(QString engine)
     }
     else if(engine == "OpenSubtitles")
     {
-        enginesList << (new QOpenSubtitlesEngine());
+        enginesList << (new QOpenSubtitlesEngine(LibQNapi::displayableVersion()));
         return true;
     }
     else if(engine == "Napisy24")

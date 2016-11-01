@@ -18,19 +18,12 @@
 #include <QSettings>
 #include <QString>
 #include <QStringList>
-#include <QFileInfo>
-#include <QDir>
-#include <QProcess>
-#include <QRegExp>
 #include <QList>
 #include <QPair>
-#include <QSet>
 
 #ifdef Q_OS_MAC
 #include <QtXml>
 #endif
-
-#include "version.h"
 
 enum SearchPolicy
 {
@@ -163,12 +156,13 @@ class QNapiConfig
         QString subtitleExtensionsFilter();
 
     private:
-        QNapiConfig();
+        QNapiConfig(const QString & qnapiVersion);
         QNapiConfig(const QNapiConfig &);
         ~QNapiConfig();
 
         QSettings *settings;
         bool isPortableMode;
+        const QString & qnapiVersion;
 
     friend QNapiConfig& GlobalConfig();
 };

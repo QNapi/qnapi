@@ -18,6 +18,7 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include <QUrlQuery>
+#include <QProcess>
 
 QNapisy24Engine::QNapisy24Engine()
 {

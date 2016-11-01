@@ -5,6 +5,8 @@
 
 #include <QTextCodec>
 #include <QTextStream>
+#include <QFile>
+#include <QFileInfo>
 
 void QSubPostProcess::perform()
 {

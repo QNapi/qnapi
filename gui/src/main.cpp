@@ -20,7 +20,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QLocale>
-#include "version.h"
+#include "libqnapi.h"
 #include "qnapiconfig.h"
 #include "qnapiapp.h"
 #include "qnapicli.h"

@@ -80,6 +80,8 @@ include(../libqnapi/libqnapi.pri)
 unix { 
     TARGET = qnapi
     DESTDIR = ../
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libmediainfo
 }
 
 macx {

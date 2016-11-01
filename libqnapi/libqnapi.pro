@@ -72,12 +72,10 @@ HEADERS += src/libqnapi.h \
 
 
 unix {
-    CONFIG += link_pkgconfig
     PKGCONFIG += libmediainfo
 }
 
 macx {
-    CONFIG -= link_pkgconfig
     INCLUDEPATH += ../deps/libmediainfo/include
 }
 

@@ -62,11 +62,11 @@ FORMS += ui/frmprogress.ui \
     ui/frmscan.ui \
     ui/frmoptions.ui \
     ui/frmabout.ui \
+    ui/frmconvert.ui \
+    ui/subDataWidget.ui \
     ui/napiprojekt/frmnapiprojektconfig.ui \
     ui/opensubtitles/frmopensubtitlesconfig.ui \
-    ui/napisy24/frmnapisy24config.ui \
-    ui/frmconvert.ui \
-    ui/subDataWidget.ui
+    ui/napisy24/frmnapisy24config.ui
 
 RESOURCES += res/resources.qrc
 UI_DIR = tmp

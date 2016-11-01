@@ -77,7 +77,7 @@ INCLUDEPATH = src
 
 include(../libqnapi/libqnapi.pri)
 
-unix { 
+unix:!macx {
     TARGET = qnapi
     DESTDIR = ../
     CONFIG += link_pkgconfig

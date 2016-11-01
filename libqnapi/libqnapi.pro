@@ -71,7 +71,7 @@ HEADERS += src/libqnapi.h \
     src/qsubmatcher.h
 
 
-unix {
+unix:!macx {
     PKGCONFIG += libmediainfo
 }
 

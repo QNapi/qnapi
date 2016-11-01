@@ -138,9 +138,6 @@ void frmOptions::twEnginesSelectionChanged()
     if(ui.twEngines->selectedItems().size() < 1)
         return; 
 
-    QNapiAbstractEngine * e;
-    e = n.engineByName(ui.twEngines->selectedItems().at(0)->text());
-
     int currentRow = ui.twEngines->row(ui.twEngines->selectedItems().at(0));
 
     ui.pbMoveUp->setEnabled(currentRow > 0);

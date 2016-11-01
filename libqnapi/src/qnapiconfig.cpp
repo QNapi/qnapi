@@ -104,7 +104,7 @@ QString QNapiConfig::p7zipPath()
 #endif
 
     QStringList binaries;
-    binaries << "7z" << "7za" << "7zr" << "p7zip";
+    binaries << "7z" << "7za";
 
     for(QStringList::iterator i = paths.begin(); i != paths.end(); i++)
     {

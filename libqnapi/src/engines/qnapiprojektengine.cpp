@@ -13,18 +13,16 @@
 *****************************************************************************/
 
 #include "qnapiprojektengine.h"
-#include "libmediainfomovieinfoparser.h"
 #include "utils/synchttp.h"
-#include "movieinfo.h"
 #include "qnapilanguage.h"
 
 #include <cmath>
 
 #include <QCryptographicHash>
-#include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QProcess>
+#include <QUrl>
 
 #ifdef Q_OS_WIN // for SetFileAttributes
 #include <qt_windows.h>

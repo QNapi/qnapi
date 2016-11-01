@@ -162,7 +162,7 @@ class QNapiConfig
 
         QSettings *settings;
         bool isPortableMode;
-        const QString & qnapiVersion;
+        QString qnapiVersion;
 
     friend QNapiConfig& GlobalConfig();
 };

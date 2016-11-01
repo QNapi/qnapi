@@ -1,8 +1,7 @@
 LIBS += -L$$PWD -lqnapi
 INCLUDEPATH += $$PWD/src \
-    $$PWD/src/utils \
     $$PWD/../deps/libmaia \
     $$PWD/../deps/qt-maybe
-DEPENDPATH += $$PWD/src $$PWD/src/utils
+DEPENDPATH += $$PWD/src
 PRE_TARGETDEPS += $$PWD/libqnapi.a
 

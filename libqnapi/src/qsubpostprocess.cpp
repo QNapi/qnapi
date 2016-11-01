@@ -2,6 +2,7 @@
 #include "qnapiconfig.h"
 #include "subconvert/subtitleconverter.h"
 #include "subconvert/subtitleformatsregistry.h"
+#include "libqnapi.h"
 
 #include <QTextCodec>
 #include <QTextStream>
@@ -33,7 +34,7 @@ void QSubPostProcess::perform()
 
     if(!GlobalConfig().ppSubFormat().isEmpty())
     {
-        SubtitleConverter sc;
+        SubtitleConverter sc(LibQNapi::movieInfoProvider());
         QString targetFormat = GlobalConfig().ppSubFormat();
         sc.convertSubtitles(subtitleFilePath, targetFormat, subtitleFilePath, movieFilePath);
     }

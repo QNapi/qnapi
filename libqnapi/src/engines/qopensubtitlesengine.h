@@ -58,8 +58,7 @@ private:
 
     SyncXmlRpc rpc;
     QString token;
-    const QString & qnapiDisplayableVersion;
-
+    QString qnapiDisplayableVersion;
 
     // sprawdza czy dana instancja klasy jest zalogowana na sewerze
     bool isLogged() { return !token.isEmpty(); }
@@ -67,7 +66,6 @@ private:
     bool login();
     // wylogowuje z serwera
     void logout();
-
 };
 
 #endif

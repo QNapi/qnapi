@@ -16,8 +16,9 @@
 #define __FRMCONVERT_H__
 
 #include "ui_frmconvert.h"
-#include <QDialog>
 #include "subconvert/subtitleconverter.h"
+#include <Maybe.h>
+#include <QDialog>
 
 class frmConvert : public QDialog
 {
@@ -32,7 +33,7 @@ private:
     bool targetFileNameSelected;
 
     void checkFPSNeeded();
-    QString determineMovieFPS(const QString & defaultMovieFilePath);
+    Maybe<QString> determineMovieFPS(const QString & defaultMovieFilePath);
     void generateTargetFileName();
 
 private slots:

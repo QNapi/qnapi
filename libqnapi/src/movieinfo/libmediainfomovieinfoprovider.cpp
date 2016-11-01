@@ -12,7 +12,7 @@
 **
 *****************************************************************************/
 
-#include "libmediainfomovieinfoparser.h"
+#include "libmediainfomovieinfoprovider.h"
 #include <string>
 #include <QRegExp>
 
@@ -34,51 +34,47 @@
 using namespace MediaInfoNameSpace;
 
 
-MovieInfo LibmediainfoMovieInfoParser::parseFile(const QString & movieFilePath) const
+const Maybe<MovieInfo> LibmediainfoMovieInfoProvider::getMovieInfo(const QString & moviePath) const
 {
-    MovieInfo info;
-    info.isFilled = false;
+    MediaInfo mi;
+    mi.Option(__T("Internet"), __T("No"));
 
-    MediaInfo *mi = new MediaInfo();
-    mi->Option(__T("Internet"), __T("No"));
-
-    mi->Open(movieFilePath.toStdWString());
+    mi.Open(moviePath.toStdWString());
 
 #define GET_VIDEO_INFO(__streamIdx, __key) \
-    QString::fromStdWString(std::wstring(mi->Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
+    QString::fromStdWString(std::wstring(mi.Get(Stream_Video, __streamIdx, __T(__key), Info_Text)))
 
     QString widthS = GET_VIDEO_INFO(0, "Width");
     QString heightS = GET_VIDEO_INFO(0, "Height");
     QString frameRateS = GET_VIDEO_INFO(0, "FrameRate");
     QString durationS = GET_VIDEO_INFO(0, "Duration");
 
-    mi->Close();
-    delete mi;
+    mi.Close();
 
     QRegExp rWidth("(\\d+)");
     if(rWidth.indexIn(widthS) == -1)
-        return info;
-    info.width = rWidth.cap(1).toInt();
+        return nothing();
 
     QRegExp rHeight("(\\d+)");
     if(rHeight.indexIn(heightS) == -1)
-        return info;
-    info.height = rHeight.cap(1).toInt();
+        return nothing();
 
     QRegExp rFrameRate("(\\d+).(\\d+)");
     if(rFrameRate.indexIn(frameRateS) == -1)
-        return info;
-
+        return nothing();
     long frFloor = rFrameRate.cap(1).toLong();
     long frFrac = rFrameRate.cap(2).toLong();
-    info.frameRate = (double)frFloor + (double)frFrac / 1000.0;
 
     QRegExp rDuration("(\\d+)");
     if(rDuration.indexIn(durationS) == -1)
-        return info;
-    info.durationSecs = rDuration.cap(1).toDouble() / 1000.0;
+        return nothing();
 
-    info.isFilled = true;
+    MovieInfo info(
+        rWidth.cap(1).toInt(),
+        rHeight.cap(1).toInt(),
+        (double)frFloor + (double)frFrac / 1000.0,
+        rDuration.cap(1).toDouble() / 1000.0
+    );
 
-    return info;
+    return just<MovieInfo>(info);
 }

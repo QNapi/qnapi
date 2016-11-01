@@ -1,5 +1,6 @@
 #include "libqnapi.h"
 #include "version.h"
+#include "movieinfo/libmediainfomovieinfoprovider.h"
 
 LibQNapi::LibQNapi()
 {
@@ -18,4 +19,9 @@ QString LibQNapi::displayableVersion()
 QString LibQNapi::webpageUrl()
 {
     return QString(QNAPI_URL);
+}
+
+QSharedPointer<const MovieInfoProvider> LibQNapi::movieInfoProvider()
+{
+    return QSharedPointer<const MovieInfoProvider>(new LibmediainfoMovieInfoProvider());
 }

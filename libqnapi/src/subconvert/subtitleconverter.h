@@ -15,13 +15,18 @@
 #ifndef SUBTITLECONVERTER_H
 #define SUBTITLECONVERTER_H
 
+#include "movieinfo/movieinfoprovider.h"
+
 #include <QString>
 #include <QStringList>
 #include <functional>
+#include <QSharedPointer>
 
 class SubtitleConverter
 {
 public:
+    SubtitleConverter(QSharedPointer<const MovieInfoProvider> movieInfoProvider);
+
     QString detectFormat(const QString &subtitleFile);
     QString detectFormat(const QStringList &subtitleLines);
 
@@ -45,6 +50,8 @@ public:
                           double delayOffset = 0.0);
 
 private:
+    QSharedPointer<const MovieInfoProvider> movieInfoProvider;
+
     long ts2frame(long ts, double frameRate);
     long frame2ts(long frame, double frameRate);
 

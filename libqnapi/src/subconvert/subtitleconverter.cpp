@@ -12,17 +12,21 @@
 **
 *****************************************************************************/
 
+#include "movieinfo/movieinfoprovider.h"
 #include "subconvert/subtitleformatsregistry.h"
 #include "utils/encodingutils.h"
-#include "subtitleconverter.h"
-#include "qnapiconfig.h"
-#include "libmediainfomovieinfoparser.h"
-#include "movieinfo.h"
 #include "libqnapi.h"
+#include "qnapiconfig.h"
+#include "subtitleconverter.h"
 #include <cmath>
 #include <QTextStream>
 #include <QFile>
 
+
+SubtitleConverter::SubtitleConverter(QSharedPointer<const MovieInfoProvider> movieInfoProvider)
+    : movieInfoProvider(movieInfoProvider)
+{
+}
 
 QString SubtitleConverter::detectFormat(const QString &subtitleFile)
 {
@@ -58,12 +62,8 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                                          QString movieFile)
 {
     return convertSubtitles(subtitleFile, targetFormatName, targetFileName, [&]() -> double {
-        LibmediainfoMovieInfoParser mip;
-        MovieInfo mfm = mip.parseFile(movieFile);
-        if(mfm.isFilled)
-            return mfm.frameRate;
-        else
-            return 0.0;
+        const Maybe<MovieInfo> mmi = movieInfoProvider->getMovieInfo(movieFile);
+        return mmi ? mmi.value().frameRate() : 0.0;
     });
 }
 

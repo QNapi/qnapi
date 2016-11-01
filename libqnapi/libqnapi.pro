@@ -26,6 +26,7 @@ SOURCES += src/libqnapi.cpp \
     src/engines/qnapiprojektengine.cpp \
     src/engines/qnapisy24engine.cpp \
     src/engines/qopensubtitlesengine.cpp \
+    src/movieinfo/libmediainfomovieinfoprovider.cpp \
     src/subconvert/subtitleformatsregistry.cpp \
     src/subconvert/subtitleconverter.cpp \
     src/subconvert/formats/microdvd.cpp \
@@ -38,7 +39,6 @@ SOURCES += src/libqnapi.cpp \
     src/utils/syncxmlrpc.cpp \
     src/qnapiconfig.cpp \
     src/qnapilanguage.cpp \
-    src/libmediainfomovieinfoparser.cpp \
     src/qsubpostprocess.cpp \
     src/qnapisubtitleinfo.cpp \
     src/qsubmatcher.cpp
@@ -50,6 +50,9 @@ HEADERS += src/libqnapi.h \
     src/engines/qnapiprojektengine.h \
     src/engines/qnapisy24engine.h \
     src/engines/qopensubtitlesengine.h \
+    src/movieinfo/movieinfo.h \
+    src/movieinfo/movieinfoprovider.h \
+    src/movieinfo/libmediainfomovieinfoprovider.h \
     src/subconvert/subfile.h \
     src/subconvert/subtitleformat.h \
     src/subconvert/formats/microdvd.h \
@@ -62,13 +65,10 @@ HEADERS += src/libqnapi.h \
     src/utils/synchttp.h \
     src/utils/syncxmlrpc.h \
     src/qnapiconfig.h \
-    src/movieinfo.h \
     src/qnapilanguage.h \
     src/qnapisubtitleinfo.h \
-    src/libmediainfomovieinfoparser.h \
     src/qsubpostprocess.h \
     src/qsubmatcher.h
-
 
 unix:!macx {
     PKGCONFIG += libmediainfo

@@ -13,19 +13,23 @@
 *****************************************************************************/
 
 #include "frmconvert.h"
+#include "subconvert/subtitleformatsregistry.h"
+#include "movieinfo/movieinfoprovider.h"
+#include "libqnapi.h"
+#include "qnapiconfig.h"
+#include "qnapiopendialog.h"
 
 #include <QDesktopWidget>
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QMessageBox>
-#include "subconvert/subtitleformatsregistry.h"
-#include "libmediainfomovieinfoparser.h"
-#include "qnapiconfig.h"
-#include "qnapiopendialog.h"
+#include <QSharedPointer>
 
 frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f), targetFileNameSelected(false)
+    : QDialog(parent, f),
+      subConverter(LibQNapi::movieInfoProvider()),
+      targetFileNameSelected(false)
 {
     ui.setupUi(this);
 
@@ -154,9 +158,12 @@ void frmConvert::checkFPSNeeded()
             QString movieFilePath = movieFilePathBase + "." + movieExt;
             if(QFileInfo(movieFilePath).exists())
             {
-                QString fps = determineMovieFPS(movieFilePath);
-                ui.cbMovieFPS->setCurrentText(fps);
-                ui.cbFPSTo->setCurrentText(fps);
+                Maybe<QString> maybeFPS = determineMovieFPS(movieFilePath);
+                if(maybeFPS)
+                {
+                    ui.cbMovieFPS->setCurrentText(maybeFPS.value());
+                    ui.cbFPSTo->setCurrentText(maybeFPS.value());
+                }
                 break;
             }
         }
@@ -171,16 +178,22 @@ void frmConvert::movieFPSSelectClicked()
     if(openMovie.selectFile())
     {
         QString moviePath = openMovie.selectedFiles().first();
-        QString fps = determineMovieFPS(moviePath);
-        ui.cbMovieFPS->setCurrentText(fps);
+        Maybe<QString> maybeFPS = determineMovieFPS(moviePath);
+        if(maybeFPS)
+        {
+            ui.cbMovieFPS->setCurrentText(maybeFPS.value());
+        }
     }
 }
 
-QString frmConvert::determineMovieFPS(const QString & movieFilePath)
+Maybe<QString> frmConvert::determineMovieFPS(const QString & movieFilePath)
 {
-    LibmediainfoMovieInfoParser mip;
-    MovieInfo mi = mip.parseFile(movieFilePath);
-    return QString::number(mi.frameRate, 'f', 3);
+    QSharedPointer<const MovieInfoProvider> mip = LibQNapi::movieInfoProvider();
+    Maybe<MovieInfo> mmi = mip->getMovieInfo(movieFilePath);
+    if(mmi)
+        return just(QString::number(mmi.value().frameRate(), 'f', 3));
+    else
+        return nothing();
 }
 
 void frmConvert::targetMovieFPSSelectClicked()
@@ -191,8 +204,11 @@ void frmConvert::targetMovieFPSSelectClicked()
     if(openMovie.selectFile())
     {
         QString moviePath = openMovie.selectedFiles().first();
-        QString fps = determineMovieFPS(moviePath);
-        ui.cbFPSTo->setCurrentText(fps);
+        Maybe<QString> maybeFPS = determineMovieFPS(moviePath);
+        if(maybeFPS)
+        {
+            ui.cbFPSTo->setCurrentText(maybeFPS.value());
+        }
     }
 }
 

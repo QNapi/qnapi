@@ -41,6 +41,8 @@ class QNapi
         bool addEngine(QString engine);
         // za jedym zamachem wlacza silniki pobierania napisow o podanych nazwach
         bool addEngines(QStringList engines);
+        // wywoluje okno konfiguracji silnika
+        void configureEngine(QString engine, QWidget * parent) const;
 
         // ustawia sciezke do pliku z filmem
         void setMoviePath(QString path);

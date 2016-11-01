@@ -15,10 +15,6 @@ QT += network \
     xml
 
 SOURCES += src/main.cpp \
-    src/engines/qnapiabstractengine.cpp \
-    src/engines/qnapiprojektengine.cpp \
-    src/engines/qnapisy24engine.cpp \
-    src/engines/qopensubtitlesengine.cpp \
     src/forms/frmprogress.cpp \
     src/forms/frmlistsubtitles.cpp \
     src/forms/frmsummary.cpp \
@@ -28,36 +24,17 @@ SOURCES += src/main.cpp \
     src/forms/frmnapiprojektconfig.cpp \
     src/forms/frmopensubtitlesconfig.cpp \
     src/forms/frmnapisy24config.cpp \
+    src/forms/frmconvert.cpp \
+    src/forms/subdatawidget.cpp \
     src/qcumber/qmanagedrequest.cpp \
     src/qcumber/qmanagedsocket.cpp \
     src/qcumber/qsingleapplication.cpp \
-    src/qnapiconfig.cpp \
+    src/qnapiopendialog.cpp \
     src/qnapiapp.cpp \
     src/qnapicli.cpp \
-    src/qnapi.cpp \
-    src/qnapiopendialog.cpp \
-    src/qnapilanguage.cpp \
-    src/syncxmlrpc.cpp \
-    src/encodingutils.cpp \
-    src/forms/frmconvert.cpp \
-    src/subconvert/subtitleformatsregistry.cpp \
-    src/subconvert/subtitleconverter.cpp \
-    src/subconvert/formats/microdvd.cpp \
-    src/subconvert/formats/tmplayer.cpp \
-    src/subconvert/formats/subrip.cpp \
-    src/subconvert/formats/mpl2.cpp \
-    src/subconvert/subtitleformat.cpp \
-    src/libmediainfomovieinfoparser.cpp \
-    src/qsubpostprocess.cpp \
-    src/forms/subdatawidget.cpp \
-    src/qnapisubtitleinfo.cpp \
-    src/qsubmatcher.cpp
+    src/qnapi.cpp
 
-HEADERS += src/engines/qnapiabstractengine.h \
-    src/engines/qnapiprojektengine.h \
-    src/engines/qnapisy24engine.h \
-    src/engines/qopensubtitlesengine.h \
-    src/forms/frmprogress.h \
+HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
     src/forms/frmsummary.h \
     src/forms/frmscan.h \
@@ -66,35 +43,18 @@ HEADERS += src/engines/qnapiabstractengine.h \
     src/forms/frmnapiprojektconfig.h \
     src/forms/frmopensubtitlesconfig.h \
     src/forms/frmnapisy24config.h \
+    src/forms/frmconvert.h \
+    src/forms/subdatawidget.h \
     src/qcumber/qmanagedrequest.h \
     src/qcumber/qmanagedsocket.h \
     src/qcumber/qsingleapplication.h \
     src/qcumber/qcumber.h \
-    src/qnapiconfig.h \
-    src/qnapiapp.h \
-    src/qnapicli.h \
-    src/qnapi.h \
-    src/movieinfo.h \
-    src/qnapiopendialog.h \
-    src/qnapilanguage.h \
     src/qcheckedlistwidget.h \
     src/qnapithread.h \
-    src/syncxmlrpc.h \
-    src/qnapisubtitleinfo.h \
-    src/encodingutils.h \
-    src/forms/frmconvert.h \
-    src/subconvert/subfile.h \
-    src/subconvert/subtitleformat.h \
-    src/subconvert/formats/microdvd.h \
-    src/subconvert/subtitleformatsregistry.h \
-    src/subconvert/subtitleconverter.h \
-    src/subconvert/formats/tmplayer.h \
-    src/subconvert/formats/subrip.h \
-    src/subconvert/formats/mpl2.h \
-    src/libmediainfomovieinfoparser.h \
-    src/qsubpostprocess.h \
-    src/forms/subdatawidget.h \
-    src/qsubmatcher.h
+    src/qnapiopendialog.h \
+    src/qnapiapp.h \
+    src/qnapicli.h \
+    src/qnapi.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -120,15 +80,11 @@ include(../deps/qt-maybe/qt-maybe.pri)
 include(../libqnapi/libqnapi.pri)
 
 unix { 
-    CONFIG += link_pkgconfig
-    PKGCONFIG += libmediainfo
     TARGET = qnapi
     DESTDIR = ../
 }
 
 macx {
-    CONFIG -= link_pkgconfig
-    INCLUDEPATH += ../deps/libmediainfo/include
     LIBS += -framework CoreFoundation
 
     TARGET = QNapi
@@ -148,7 +104,6 @@ macx {
 win32 {
     CONFIG += nostrip
 
-    INCLUDEPATH += ../deps/libmediainfo/include
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
 

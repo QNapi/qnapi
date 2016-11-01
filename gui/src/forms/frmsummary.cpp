@@ -55,7 +55,7 @@ void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> list)
         if(isGood) {
             ++goodCount;
             QString lang_path = QString(":/languages/") + s.lang + ".png";
-            subData->setSubData(succIcon, s.name, QIcon(lang_path), e->engineIcon());
+            subData->setSubData(succIcon, s.name, QIcon(lang_path), QIcon(QPixmap(e->engineIcon())));
         } else {
             ++badCount;
             subData->setSubData(failIcon, s.name);

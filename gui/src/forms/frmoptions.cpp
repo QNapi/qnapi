@@ -145,7 +145,7 @@ void frmOptions::twEnginesSelectionChanged()
 
     ui.pbMoveUp->setEnabled(currentRow > 0);
     ui.pbMoveDown->setEnabled(currentRow < ui.twEngines->rowCount() - 1);
-    ui.pbEngineConf->setEnabled(e->isConfigurable());
+    ui.pbEngineConf->setEnabled(true);
     ui.pbEngineInfo->setEnabled(true);
 }
 
@@ -210,8 +210,8 @@ void frmOptions::pbMoveDownClicked()
 void frmOptions::pbEngineConfClicked()
 {
     QNapi n;
-    n.addEngines(n.enumerateEngines());
-    n.engineByName(ui.twEngines->selectedItems().at(0)->text())->configure(this);
+    QString engineName = ui.twEngines->selectedItems().at(0)->text();
+    n.configureEngine(engineName, this);
 }
 
 void frmOptions::pbEngineInfoClicked()
@@ -380,7 +380,7 @@ void frmOptions::readConfig()
     for(int i = 0; i < engines.size(); ++i)
     {
         QPair<QString,bool> e = engines.at(i);
-        QTableWidgetItem *item = new QTableWidgetItem(n.engineByName(e.first)->engineIcon(), e.first);
+        QTableWidgetItem *item = new QTableWidgetItem(QIcon(QPixmap(n.engineByName(e.first)->engineIcon())), e.first);
         item->setCheckState(e.second ? Qt::Checked : Qt::Unchecked);
         ui.twEngines->setItem(i, 0, item);
     }

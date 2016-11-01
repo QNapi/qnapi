@@ -99,7 +99,7 @@ QString QNapiConfig::p7zipPath()
 
 #ifdef Q_OS_MAC
     // Pod MacOS X 7zip jest w zasobach aplikacji
-    paths << QDir(QApplication::applicationDirPath() + "/../Resources").canonicalPath();
+    paths << QDir(QCoreApplication::applicationDirPath() + "/../Resources").canonicalPath();
 #endif
 
     QStringList binaries;
@@ -118,7 +118,7 @@ QString QNapiConfig::p7zipPath()
 
 #ifdef Q_OS_WIN
     // Pod systemem Windows program 7za.exe musi byc w tym samym katalogu, co qnapi.exe
-    p7z_path = QFileInfo(QApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();
+    p7z_path = QFileInfo(QCoreApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();
     if(QFileInfo(p7z_path).isExecutable())
         return p7z_path;
 #endif
@@ -248,7 +248,7 @@ bool QNapiConfig::showDockIcon()
 {
     const bool show_default = true;
     
-    QString infoPlistPath = QFileInfo(QApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
+    QString infoPlistPath = QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
 
     QFile plistFile(infoPlistPath);
     
@@ -320,7 +320,7 @@ bool QNapiConfig::showDockIcon()
 
 void QNapiConfig::setShowDockIcon(bool show)
 {
-    QString infoPlistPath = QFileInfo(QApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
+    QString infoPlistPath = QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
     
     QFile plistFile(infoPlistPath);
     

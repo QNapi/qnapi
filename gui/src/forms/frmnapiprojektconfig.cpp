@@ -21,7 +21,7 @@ frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(q.engineByName("NapiProjekt")->engineIcon());
+    setWindowIcon(QIcon(QPixmap(q.engineByName("NapiProjekt")->engineIcon())));
 
     load();
 

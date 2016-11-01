@@ -41,11 +41,7 @@ public:
     // zwraca informacje nt. modulu
     QString engineInfo();
     // zwraca ikone silnika pobierania
-    QIcon engineIcon();
-    // zwraca czy silnik jest konfigurowalny
-    bool isConfigurable();
-    // wywoluje okienko konfiguracji
-    void configure(QWidget * parent);
+    const char * const * engineIcon() const;
 
     QUrl registrationUrl() const {
         return QUrl("http://www.napiprojekt.pl/rejestracja");

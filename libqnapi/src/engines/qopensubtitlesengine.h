@@ -12,40 +12,61 @@
 **
 *****************************************************************************/
 
-#ifndef QNAPISY24ENGINE_H
-#define QNAPISY24ENGINE_H
+#ifndef __QOPENSUBTITLESENGINE__H__
+#define __QOPENSUBTITLESENGINE__H__
 
 #include "qnapiabstractengine.h"
-#include "synchttp.h"
+#include "syncxmlrpc.h"
 
-class QNapisy24Engine : public QNapiAbstractEngine
+const QString openSubtitlesXmlRpcUrl = "http://api.opensubtitles.org/xml-rpc";
+
+class QOpenSubtitlesEngine : public QNapiAbstractEngine
 {
 public:
-    QNapisy24Engine();
-    ~QNapisy24Engine();
 
+    QOpenSubtitlesEngine();
+    ~QOpenSubtitlesEngine();
+
+    // zwraca nazwe modulu
     QString engineName();
+    // zwraca informacje nt. modulu
     QString engineInfo();
-    QIcon engineIcon();
-    bool isConfigurable();
-    void configure(QWidget * parent);
+    // zwraca ikone silnika pobierania
+    const char * const * engineIcon() const;
 
     QUrl registrationUrl() const {
-        return QUrl("http://napisy24.pl/cb-registration/registers");
+        return QUrl("http://www.opensubtitles.org/newuser");
     }
 
+    // oblicza sume kontrolna pliku filmowego
     QString checksum(QString filename = "");
+    // szuka napisow
     bool lookForSubtitles(QString lang);
+    // wyniki wyszukiwania
     QList<QNapiSubtitleInfo> listSubtitles();
+    // probuje pobrac napisy
     bool download(QUuid id);
+    // probuje rozpakowac napisy
     bool unpack(QUuid id);
+    // czysci smieci, pliki tymczasowe
     void cleanup();
 
 private:
-    QPair<QString, QString> getCredentials() const;
 
+    QString p7zipPath, lang, subFileName;
     quint64 fileSize;
-    QString p7zipPath;
+
+    SyncXmlRpc rpc;
+    QString token;
+
+
+    // sprawdza czy dana instancja klasy jest zalogowana na sewerze
+    bool isLogged() { return !token.isEmpty(); }
+    // loguje na serwer OpenSubtitles
+    bool login();
+    // wylogowuje z serwera
+    void logout();
+
 };
 
-#endif // QNAPISY24ENGINE_H
+#endif

@@ -69,7 +69,7 @@ void frmListSubtitles::setSubtitlesList(QList<QNapiSubtitleInfo> list)
             ++badCount;
         }
 
-        subData->setSubData(s.name, s.format, QIcon(lang_path), QIcon(QPixmap(e->engineIcon())));
+        subData->setSubData(s.name, s.format, QIcon(lang_path), QIcon(QPixmap(e->enginePixmapData())));
 
         ui.twSubtitles->setItemWidget(listItem, subData);
         listItem->setSizeHint(subData->sizeHint());

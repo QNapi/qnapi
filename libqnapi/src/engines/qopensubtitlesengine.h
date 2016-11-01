@@ -32,7 +32,7 @@ public:
     // zwraca informacje nt. modulu
     QString engineInfo();
     // zwraca ikone silnika pobierania
-    const char * const * engineIcon() const;
+    const char * const * enginePixmapData() const;
 
     QUrl registrationUrl() const {
         return QUrl("http://www.opensubtitles.org/newuser");

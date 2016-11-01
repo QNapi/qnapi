@@ -24,7 +24,7 @@ frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags 
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(QIcon(QPixmap(q.engineByName("OpenSubtitles")->engineIcon())));
+    setWindowIcon(QIcon(QPixmap(q.engineByName("OpenSubtitles")->enginePixmapData())));
 
     load();
 

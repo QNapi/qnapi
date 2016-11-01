@@ -39,7 +39,7 @@ QString QNapisy24Engine::engineInfo()
     return "Moduł pobierania napisów z bazy <b>www.napisy24.pl</b><br />";
 }
 
-const char * const * QNapisy24Engine::engineIcon() const
+const char * const * QNapisy24Engine::enginePixmapData() const
 {
     static const char * icon[] = {
     "16 16 256 2",

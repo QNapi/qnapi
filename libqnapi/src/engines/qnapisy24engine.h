@@ -26,7 +26,7 @@ public:
 
     QString engineName();
     QString engineInfo();
-    const char * const * engineIcon() const;
+    const char * const * enginePixmapData() const;
 
     QUrl registrationUrl() const {
         return QUrl("http://napisy24.pl/cb-registration/registers");

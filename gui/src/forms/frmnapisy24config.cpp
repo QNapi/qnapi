@@ -22,7 +22,7 @@ frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
     ui.setupUi(this);
     QNapi q;
     q.addEngines(q.enumerateEngines());
-    setWindowIcon(QIcon(QPixmap(q.engineByName("Napisy24")->engineIcon())));
+    setWindowIcon(QIcon(QPixmap(q.engineByName("Napisy24")->enginePixmapData())));
 
     load();
 

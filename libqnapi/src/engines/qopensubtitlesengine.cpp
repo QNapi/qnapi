@@ -50,7 +50,7 @@ QString QOpenSubtitlesEngine::engineInfo()
 }
 
 // zwraca ikone w formacie XMP
-const char * const * QOpenSubtitlesEngine::engineIcon() const
+const char * const * QOpenSubtitlesEngine::enginePixmapData() const
 {
     static const char *icon[]={
         "16 16 14 1",

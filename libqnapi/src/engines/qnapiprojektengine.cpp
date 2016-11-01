@@ -65,7 +65,7 @@ QString QNapiProjektEngine::engineInfo()
 }
 
 // zwraca ikone w formacie XMP
-const char * const * QNapiProjektEngine::engineIcon() const
+const char * const * QNapiProjektEngine::enginePixmapData() const
 {
     static const char * const icon[] = {
         "16 16 5 1",

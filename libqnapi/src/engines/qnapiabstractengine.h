@@ -44,7 +44,7 @@ public:
     // powinna zwracac informacje nt. modulu (prawa autorskie itp.)
     virtual QString engineInfo() = 0;
     // zwraca ikone silnika pobierania
-    virtual const char * const * engineIcon() const = 0;
+    virtual const char * const * enginePixmapData() const = 0;
     // rejestracja uzytkownika
     virtual QUrl registrationUrl() const = 0;
 

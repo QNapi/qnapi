@@ -380,7 +380,7 @@ void frmOptions::readConfig()
     for(int i = 0; i < engines.size(); ++i)
     {
         QPair<QString,bool> e = engines.at(i);
-        QTableWidgetItem *item = new QTableWidgetItem(QIcon(QPixmap(n.engineByName(e.first)->engineIcon())), e.first);
+        QTableWidgetItem *item = new QTableWidgetItem(QIcon(QPixmap(n.engineByName(e.first)->enginePixmapData())), e.first);
         item->setCheckState(e.second ? Qt::Checked : Qt::Unchecked);
         ui.twEngines->setItem(i, 0, item);
     }

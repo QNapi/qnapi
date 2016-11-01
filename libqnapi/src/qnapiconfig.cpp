@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "qnapiconfig.h"
+#include <QCoreApplication>
 
 QNapiConfig::QNapiConfig()
 {

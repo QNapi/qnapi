@@ -1,8 +1,0 @@
-COMPONENTS="main restricted universe multiverse"
-DEBEMAIL='Piotr Krzemiński <pio.krzeminski@gmail.com>'
-AUTO_DEBSIGN=no
-APTCACHEHARDLINK=no
-DEBBUILDOPTS="-sa"
-BASETGZ=$HOME/pbuilder/base.tgz
-BUILDPLACE=$HOME/pbuilder/build/
-BUILDRESULT=$HOME/pbuilder/result/

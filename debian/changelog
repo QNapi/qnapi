@@ -1,5 +1,5 @@
-qnapi (0.2.3-snapshot-1) UNRELEASED; urgency=medium
+qnapi (0.2.2-1) xenial; urgency=medium
 
   * Initial release
 
- -- Piotr Krzemiński <pio.krzeminski@gmail.com>  Wed, 02 Nov 2016 17:26:39 +0100
+ -- Piotr Krzemiński <pio.krzeminski@gmail.com>  Wed, 05 Nov 2016 16:56:00 +0100

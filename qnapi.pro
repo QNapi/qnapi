@@ -7,6 +7,7 @@ SUBDIRS = libqnapi gui
 unix {
     INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share
+    target.files += qnapi
     target.path = $${INSTALL_PREFIX}/bin
     doc.path = $${INSTALL_PREFIX}/share/doc/qnapi
     doc.files = doc/ChangeLog \

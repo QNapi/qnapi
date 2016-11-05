@@ -34,6 +34,7 @@ deploy:
     secure: W8Vjs744iJ2Tb6DWml0XY8LAOyj3FXlvA9ZhAlaIxCAYhjAL3e7yolizmaoLSlhy 
   artifact: /QNapi.*/
   force_update: true
+  prerelease: true
   on:
     appveyor_repo_tag: true
 

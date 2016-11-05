@@ -46,6 +46,7 @@ script:
        && rm -fr $DST_DIR/macx/QNapi*dmg
        && rm -fr $DST_DIR/tmp
        && rm -fr $DST_DIR/appveyor.yml
+       && rm -fr $DST_DIR/qnapi
        && tar -zcvf qnapi-$VERSION.tar.gz $DST_DIR
        && rm -fr $DST_DIR
         ;

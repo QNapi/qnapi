@@ -1,0 +1,19 @@
+Source: qnapi
+Section: net
+Priority: optional
+Maintainer: Piotr Krzemiński <pio.krzeminski@gmail.com>
+Build-Depends: debhelper (>=9), qtbase5-dev, pkg-config, libmediainfo-dev, zlib1g-dev
+Standards-Version: 3.9.6
+Homepage: http://qnapi.github.io/
+Vcs-Git: git://github.com/QNapi/qnapi.git
+Vcs-Browser: https://github.com/QNapi/qnapi
+
+Package: qnapi
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, p7zip-full 
+Description: Qt-based subtitle downloader
+ QNapi is graphical and console subtitle downloader that supports several
+ subtitle engines like NapiProjekt, OpenSubtitles, Napisy24. Subtitles
+ may be fetched in many different languages. It supports converting
+ subtitles to different formats like SRT, microDVD, TMP.
+

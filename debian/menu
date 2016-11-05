@@ -1,0 +1,4 @@
+?package(qnapi):needs="X11" \
+  section="Applications/Network/File Transfer" \
+  title="QNapi" \
+  command="/usr/bin/qnapi"

@@ -16,10 +16,9 @@
 #define __FRMNAPISY24CONFIG__H__
 
 #include <QDialog>
-#include "ui_frmnapisy24config.h"
+#include "config/engineconfig.h"
 
-#include "qnapiconfig.h"
-#include "qnapiapp.h"
+#include "ui_frmnapisy24config.h"
 
 class frmNapisy24Config : public QDialog
 {
@@ -27,8 +26,12 @@ Q_OBJECT
 
     public:
 
-        frmNapisy24Config(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        frmNapisy24Config(const EngineConfig & config,
+                          QWidget *parent = 0,
+                          Qt::WindowFlags f = 0);
         ~frmNapisy24Config() {}
+
+        EngineConfig getConfig() const;
 
     public slots:
 
@@ -37,8 +40,7 @@ Q_OBJECT
 
     private:
         Ui::frmNapisy24Config ui;
-
-        void load();
+        EngineConfig config;
 
 };
 

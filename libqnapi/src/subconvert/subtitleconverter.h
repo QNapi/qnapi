@@ -16,6 +16,7 @@
 #define SUBTITLECONVERTER_H
 
 #include "movieinfo/movieinfoprovider.h"
+#include "subconvert/subtitleformatsregistry.h"
 
 #include <QString>
 #include <QStringList>
@@ -25,39 +26,42 @@
 class SubtitleConverter
 {
 public:
-    SubtitleConverter(QSharedPointer<const MovieInfoProvider> movieInfoProvider);
+    SubtitleConverter(QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry,
+                      QSharedPointer<const MovieInfoProvider> movieInfoProvider,
+                      bool skipConvertAds);
 
-    QString detectFormat(const QString &subtitleFile);
-    QString detectFormat(const QStringList &subtitleLines);
+    QString detectFormat(const QString &subtitleFile) const;
+    QString detectFormat(const QStringList &subtitleLines) const;
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,
                           QString targetFileName,
                           double movieFPS,
                           double fpsRatio,
-                          double delayOffset);
+                          double delayOffset) const;
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,
                           QString targetFileName,
-                          QString movieFile);
+                          QString movieFile) const;
 
     bool convertSubtitles(QString subtitleFile,
                           QString targetFormatName,
                           QString targetFileName,
                           std::function<double ()> determineFPS,
                           double fpsRatio = 1.0,
-                          double delayOffset = 0.0);
+                          double delayOffset = 0.0) const;
 
 private:
+    QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
     QSharedPointer<const MovieInfoProvider> movieInfoProvider;
+    bool skipConvertAds;
 
-    long ts2frame(long ts, double frameRate);
-    long frame2ts(long frame, double frameRate);
+    long ts2frame(long ts, double frameRate) const;
+    long frame2ts(long frame, double frameRate) const;
 
-    QStringList readFile(const QString & filename, QString encoding, long atMostLines = 0);
-    bool writeFile(const QString & filename, QString encoding, const QStringList & lines);
-
+    QStringList readFile(const QString & filename, QString encoding, long atMostLines = 0) const;
+    bool writeFile(const QString & filename, QString encoding, const QStringList & lines) const;
 };
 
 #endif // SUBTITLECONVERTER_H

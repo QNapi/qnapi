@@ -21,19 +21,22 @@
 
 #include "frmsummary.h"
 
+#include "config/qnapiconfig.h"
+
 #include "qnapi.h"
 #include "qnapithread.h"
-#include "qnapiconfig.h"
 #include "qnapiopendialog.h"
 #include "frmlistsubtitles.h"
-#include "qnapisubtitleinfo.h"
+#include "subtitleinfo.h"
+#include <Maybe.h>
 
 class GetThread : public QNapiThread
 {
 Q_OBJECT
 
     public:
-        GetThread() : langBackupPassed(false)
+        GetThread(const QNapiConfig & config)
+            : config(config), langBackupPassed(false)
         {
             connect(this, SIGNAL(criticalError(const QString &)),
                     this, SLOT(setCriticalMessage(const QString &)));            
@@ -44,7 +47,7 @@ Q_OBJECT
         void actionChange(const QString & newAction);
         void progressChange(int current, int all, float stageProgress);
         void criticalError(const QString & message);
-        void selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles);
+        void selectSubtitles(QString fileName, SubtitleInfoList subtitles);
 
     private slots:
         void setCriticalMessage(const QString & msg)
@@ -55,14 +58,17 @@ Q_OBJECT
 
     public:
 
-        void setEngines(QStringList enginesList) { engines = enginesList; }
+        void setSpecificEngine(Maybe<QString> engine) { specificEngine = engine; }
+
         void setLanguages(QString language, QString languageBackup, bool languageBackupPassed){
             lang = language; langBackup = languageBackup; langBackupPassed = languageBackupPassed;
         }
         void run();
 
-        QStringList queue, engines;
-        QList<QNapiSubtitleInfo> subStatusList;
+        const QNapiConfig config;
+        QStringList queue;
+        Maybe<QString> specificEngine;
+        QList<SubtitleInfo> subStatusList;
         QString lang, langBackup;
         bool langBackupPassed;
         int napiSuccess, napiFail;
@@ -76,12 +82,11 @@ class frmProgress: public QWidget
     Q_OBJECT
 
     public:
-        frmProgress(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        frmProgress(const QNapiConfig & config, QWidget *parent = 0, Qt::WindowFlags f = 0);
 
-        void setEngines(QStringList enginesList)
-        {
-            getThread.setEngines(enginesList);
-        }
+        void clearSpecificEngine() { getThread.setSpecificEngine(nothing()); }
+        void setSpecificEngine(QString engine) { getThread.setSpecificEngine(just(engine)); }
+
         void setBatchMode(bool value) { batchMode = value; }
         void setBatchLanguages(QString lang, QString langBackup, bool langBackupPassed) {
             getThread.setLanguages(lang, langBackup, langBackupPassed);
@@ -97,7 +102,7 @@ class frmProgress: public QWidget
         void enqueueFiles(const QStringList &fileList);
         bool download();
         void updateProgress(int current, int all, float stageProgress);
-        void selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles);
+        void selectSubtitles(QString fileName, SubtitleInfoList subtitles);
         void downloadFinished();
 
     private:
@@ -106,7 +111,7 @@ class frmProgress: public QWidget
         void dropEvent(QDropEvent *event);
 
         Ui::frmProgress ui;
-
+        const QNapiConfig config;
         GetThread getThread;    
         frmListSubtitles frmSelect;
         frmSummary summary;

@@ -23,11 +23,12 @@
 #include <QDesktopWidget>
 
 
-
-frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
-    : QWidget(parent, f)
+frmProgress::frmProgress(const QNapiConfig & config, QWidget * parent, Qt::WindowFlags f)
+    : QWidget(parent, f),
+      config(config),
+      getThread(config)
 {
-    qRegisterMetaType<QNapiSubtitleInfoList>("QNapiSubtitleInfoList");
+    qRegisterMetaType<SubtitleInfoList>("QNapiSubtitleInfoList");
 
     ui.setupUi(this);
 
@@ -42,8 +43,8 @@ frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
             ui.lbAction, SLOT(setText(const QString &)));
     connect(&getThread, SIGNAL(progressChange(int, int, float)),
             this, SLOT(updateProgress(int, int, float)));
-    connect(&getThread, SIGNAL(selectSubtitles(QString, QNapiSubtitleInfoList)),
-            this, SLOT(selectSubtitles(QString, QNapiSubtitleInfoList)));
+    connect(&getThread, SIGNAL(selectSubtitles(QString, SubtitleInfoList)),
+            this, SLOT(selectSubtitles(QString, SubtitleInfoList)));
     connect(this, SIGNAL(subtitlesSelected(int)),
             &getThread, SLOT(subtitlesSelected(int)));
     connect(&getThread, SIGNAL(finished()),
@@ -89,14 +90,17 @@ bool frmProgress::download()
         summary.close();
     }
 
-    if(!QNapi::checkP7ZipPath())
+    // TODO: perform these checks earlier
+    QNapi napi(config);
+
+    if(!napi.checkP7ZipPath())
     {
         QMessageBox::warning(0, tr("Can not find p7zip!"),
                                 tr("The path to the program p7zip is incorrect!"));
         return false;
     }
 
-    if(!QNapi::checkTmpPath())
+    if(!napi.checkTmpPath())
     {
         QMessageBox::warning(0, tr("Invalid temporary directory!"),
                                 tr("Unable to write to the temporary directory! Check your settings."));
@@ -149,7 +153,7 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
     m.unlock();
 }
 
-void frmProgress::selectSubtitles(QString fileName, QNapiSubtitleInfoList subtitles)
+void frmProgress::selectSubtitles(QString fileName, SubtitleInfoList subtitles)
 {
     frmSelect.setFileName(fileName);
     frmSelect.setSubtitlesList(subtitles);
@@ -256,7 +260,7 @@ void GetThread::subtitlesSelected(int idx)
     waitForDlg.unlock();
 }
 
-#define ABORT_POINT {if(abort){ delete napi; return;}}
+#define ABORT_POINT {if(abort){ return; }}
 
 void GetThread::run()
 {
@@ -267,23 +271,12 @@ void GetThread::run()
     napiSuccess = napiFail = 0;
     subStatusList.clear();
 
-    QNapi *napi = new QNapi();
-
-    if(!engines.isEmpty())
-    {
-        napi->addEngines(engines);
-    }
-    else if(!napi->addEngines(GlobalConfig().enginesList()))
-    {
-        emit criticalError(tr("Error: ") + napi->error());
-        delete napi;
-        return;
-    }
+    QNapi napi(config, specificEngine);
 
     emit progressChange(0, queue.size(), 0.0f);
 
-    QString language = !lang.isEmpty() ? lang : GlobalConfig().language();
-    QString languageBackup = langBackupPassed ? langBackup : GlobalConfig().languageBackup();
+    QString language = !lang.isEmpty() ? lang : config.generalConfig().language();
+    QString languageBackup = langBackupPassed ? langBackup : config.generalConfig().backupLanguage();
 
     for(int i = 0; i < queue.size(); i++)
     {
@@ -292,54 +285,53 @@ void GetThread::run()
         QFileInfo fi(queue[i]);
         emit fileNameChange(fi.fileName());
 
-        napi->setMoviePath(queue[i]);
+        napi.setMoviePath(queue[i]);
 
         emit progressChange(i, queue.size(), 0.1f);
         emit actionChange(tr("Checking permissions of the video directory..."));
 
-        if(!napi->checkWritePermissions())
+        if(!napi.checkWritePermissions())
         {
             emit criticalError(tr("No permission to write to the directory '%1'!").arg(QFileInfo(queue[i]).path()));
-            delete napi;
             return;
         }
 
-        napi->clearSubtitlesList();
+        napi.clearSubtitlesList();
 
         emit progressChange(i, queue.size(), 0.3f);
         emit actionChange(tr("Calculating checksum of the file..."));
 
-        napi->checksum();
+        napi.checksum();
 
         ABORT_POINT
 
         bool found = false;
-        SearchPolicy sp = GlobalConfig().searchPolicy();        
+        SearchPolicy sp = config.generalConfig().searchPolicy();
 
 
         if(sp == SP_SEARCH_ALL_WITH_BACKUP_LANG)
         {
-            foreach(QString e, napi->listLoadedEngines())
+            foreach(QString e, napi.listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
                 emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
-                found = napi->lookForSubtitles(language, e) || found;
+                found = napi.lookForSubtitles(language, e) || found;
 
                 ABORT_POINT
 
                 emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
-                found = napi->lookForSubtitles(languageBackup, e) || found;
+                found = napi.lookForSubtitles(languageBackup, e) || found;
 
                 ABORT_POINT
             }
         }
         else
         {
-            foreach(QString e, napi->listLoadedEngines())
+            foreach(QString e, napi.listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
                 emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
-                found = napi->lookForSubtitles(language, e) || found;
+                found = napi.lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found){
                     break;
@@ -349,11 +341,11 @@ void GetThread::run()
             }
 
             if(!found && !languageBackup.isEmpty()) {
-                foreach(QString e, napi->listLoadedEngines())
+                foreach(QString e, napi.listLoadedEngines())
                 {
                     emit progressChange(i, queue.size(), 0.45f);
                     emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
-                    found = napi->lookForSubtitles(languageBackup, e) || found;
+                    found = napi.lookForSubtitles(languageBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)
                         break;
@@ -366,15 +358,15 @@ void GetThread::run()
         if(!found)
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
+            subStatusList << SubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
         // jesli mozna i potrzeba, listujemy dostepne napisy
-        if(napi->needToShowList())
+        if(napi.needToShowList())
         {
             emit selectSubtitles(QFileInfo(queue[i]).fileName(),
-                                 napi->listSubtitles());
+                                 napi.listSubtitles());
 
             waitForDlg.lock();
             waitForDlg.lock();
@@ -382,7 +374,7 @@ void GetThread::run()
         }
         else
         {
-            selIdx = napi->bestIdx();
+            selIdx = napi.bestIdx();
         }
 
         ABORT_POINT
@@ -390,64 +382,62 @@ void GetThread::run()
         if(selIdx == -1)
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
+            subStatusList << SubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
         emit progressChange(i, queue.size(), 0.5);
         emit actionChange(tr("Downloading subtitles file..."));
 
-        if(!napi->download(selIdx))
+        if(!napi.download(selIdx))
         {
             ABORT_POINT
 
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
+            subStatusList << SubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
         ABORT_POINT
 
-        emit progressChange(i, queue.size(), 0.65);
+        emit progressChange(i, queue.size(), 0.65f);
         emit actionChange(tr("Unpacking subtitles file..."));
 
-        if(!napi->unpack(selIdx))
+        if(!napi.unpack(selIdx))
         {
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
+            subStatusList << SubtitleInfo::fromFailed(queue[i]);
             continue;
         }
 
-        if(napi->ppEnabled())
+        if(napi.ppEnabled())
         {
             emit progressChange(i, queue.size(), 0.8f);
             emit actionChange(tr("Post-processing subtitles..."));
-            napi->pp();
+            napi.postProcessSubtitles();
         }
 
-        emit progressChange(i, queue.size(), 0.9);
+        emit progressChange(i, queue.size(), 0.9f);
         emit actionChange(tr("Adjusting subtitles..."));
 
-        if(!napi->match())
+        if(!napi.matchSubtitles())
         {
             ABORT_POINT
 
             ++napiFail;
-            subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
+            subStatusList << SubtitleInfo::fromFailed(queue[i]);
 
             emit criticalError(tr("Could not adjust subtitles!"));
             return;
         }
 
         ++napiSuccess;
-        subStatusList << napi->listSubtitles().at(selIdx);
+        subStatusList << napi.listSubtitles().at(selIdx);
 
-        napi->cleanup();
+        napi.cleanup();
 
         emit progressChange(i, queue.size(), 1.0f);
     }
 
     emit progressChange(queue.size() - 1, queue.size(), 1);
-
-    delete napi;
 }

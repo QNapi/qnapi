@@ -36,7 +36,8 @@ EncodingUtils::EncodingUtils()
            << "UTF-8";
 }
 
-QString EncodingUtils::replaceDiacriticsWithASCII(const QString & str) {
+QString EncodingUtils::replaceDiacriticsWithASCII(const QString & str) const
+{
     QString output;
     for (int i = 0; i < str.length(); i++) {
         QChar c = str[i];
@@ -51,7 +52,8 @@ QString EncodingUtils::replaceDiacriticsWithASCII(const QString & str) {
     return output;
 }
 
-QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
+QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) const
+{
 
     QTextCodec::ConverterState state;
     QTextCodec::codecForName("UTF-8")->toUnicode(buffer.constData(), buffer.length(), &state);
@@ -89,7 +91,7 @@ QString EncodingUtils::detectBufferEncoding(const QByteArray & buffer) {
 }
 
 
-QString EncodingUtils::detectFileEncoding(const QString & filename)
+QString EncodingUtils::detectFileEncoding(const QString & filename) const
 {
     QFile f(filename);
     if(f.open(QIODevice::ReadOnly | QIODevice::Text))

@@ -13,10 +13,8 @@
 *****************************************************************************/
 
 #include "frmconvert.h"
-#include "subconvert/subtitleformatsregistry.h"
 #include "movieinfo/movieinfoprovider.h"
 #include "libqnapi.h"
-#include "qnapiconfig.h"
 #include "qnapiopendialog.h"
 
 #include <QDesktopWidget>
@@ -28,7 +26,14 @@
 
 frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f),
-      subConverter(LibQNapi::movieInfoProvider()),
+      staticConfig(LibQNapi::staticConfig()),
+      ppConfig(LibQNapi::loadConfig().postProcessingConfig()),
+      subtitleFormatsRegistry(LibQNapi::subtitleFormatsRegistry()),
+      subConverter(
+          subtitleFormatsRegistry,
+          LibQNapi::movieInfoProvider(),
+          ppConfig.skipConvertAds()
+      ),
       targetFileNameSelected(false)
 {
     ui.setupUi(this);
@@ -42,7 +47,7 @@ frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     ui.lbDetectedFormatValue->setText("");
 
     ui.cbTargetFormat->clear();
-    foreach(QString format, GlobalFormatsRegistry().enumerateFormats())
+    foreach(QString format, subtitleFormatsRegistry->listFormatNames())
     {
         ui.cbTargetFormat->addItem(format);
     }
@@ -56,19 +61,19 @@ frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
     connect(ui.cbDelaySubtitles, SIGNAL(toggled(bool)), this, SLOT(subDelayToggled()));
     connect(ui.pbConvert, SIGNAL(clicked()), this, SLOT(convertClicked()));
 
-    if(GlobalConfig().ppSubFormat().isEmpty())
+    if(ppConfig.subFormat().isEmpty())
     {
-        targetFormat = GlobalFormatsRegistry().enumerateFormats().first();
+        targetFormat = subtitleFormatsRegistry->listFormatNames().first();
     }
     else
     {
-        targetFormat = GlobalConfig().ppSubFormat();
+        targetFormat = ppConfig.subFormat();
         ui.cbTargetFormat->setCurrentText(targetFormat);
     }
 
-    if(!GlobalConfig().ppSubExtension().isEmpty())
+    if(!ppConfig.subExtension().isEmpty())
     {
-        ui.cbTargetExtension->setCurrentText(GlobalConfig().ppSubExtension());
+        ui.cbTargetExtension->setCurrentText(ppConfig.subExtension());
     }
 }
 
@@ -124,7 +129,7 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
 
 void frmConvert::targetFormatChanged(int targetFormatIdx)
 {
-    targetFormat = GlobalFormatsRegistry().enumerateFormats().at(targetFormatIdx);
+    targetFormat = subtitleFormatsRegistry->listFormatNames().at(targetFormatIdx);
     checkFPSNeeded();
 }
 
@@ -135,8 +140,8 @@ void frmConvert::checkFPSNeeded()
     {
         fpsNeeded = false;
     } else {
-        SubtitleFormat * srcSF = GlobalFormatsRegistry().select(srcFormat);
-        SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormat);
+        QSharedPointer<const SubtitleFormat> srcSF = subtitleFormatsRegistry->select(srcFormat);
+        QSharedPointer<const SubtitleFormat> targetSF = subtitleFormatsRegistry->select(targetFormat);
         fpsNeeded = (srcSF->isTimeBased() != targetSF->isTimeBased()) || (ui.cbDelaySubtitles->isChecked() && !targetSF->isTimeBased());
 
         QString targetDefaultExt = targetSF->defaultExtension();
@@ -153,7 +158,7 @@ void frmConvert::checkFPSNeeded()
 
         QString movieFilePathBase = srcSubFI.absolutePath() + "/" + srcSubFI.completeBaseName();
 
-        foreach(QString movieExt, GlobalConfig().movieExtensions())
+        foreach(QString movieExt, staticConfig->movieExtensions())
         {
             QString movieFilePath = movieFilePathBase + "." + movieExt;
             if(QFileInfo(movieFilePath).exists())
@@ -226,7 +231,7 @@ void frmConvert::generateTargetFileName()
 
         if(ui.cbTargetExtension->currentIndex() == 0)
         {
-            SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormat);
+            QSharedPointer<const SubtitleFormat> targetSF = subtitleFormatsRegistry->select(targetFormat);
             extension = targetSF->defaultExtension();
         } else {
             extension = ui.cbTargetExtension->currentText();

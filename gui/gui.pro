@@ -84,6 +84,9 @@ unix:!macx {
 }
 
 macx {
+    SOURCES += src/utils/infoplistdockicon.cpp
+    HEADERS += src/utils/infoplistdockicon.h
+
     LIBS += -framework CoreFoundation
 
     TARGET = QNapi

@@ -12,29 +12,35 @@
 **
 *****************************************************************************/
 
-#ifndef QNAPISY24ENGINE_H
-#define QNAPISY24ENGINE_H
+#ifndef NAPISY24DOWNLOADENGINE_H
+#define NAPISY24DOWNLOADENGINE_H
 
-#include "qnapiabstractengine.h"
+#include "config/engineconfig.h"
+#include "config/staticconfig.h"
+#include "engines/subtitledownloadengine.h"
 #include "utils/synchttp.h"
+#include "utils/p7zipdecoder.h"
 
-class QNapisy24Engine : public QNapiAbstractEngine
+#include <QSharedPointer>
+
+class Napisy24DownloadEngine : public SubtitleDownloadEngine
 {
 public:
-    QNapisy24Engine();
-    ~QNapisy24Engine();
+    Napisy24DownloadEngine(const QString & tmpPath,
+                           const EngineConfig & config,
+                           const QSharedPointer<const P7ZipDecoder> & p7zipDecoder,
+                           const QStringList & subtitleExtensions);
+    ~Napisy24DownloadEngine();
 
-    QString engineName();
-    QString engineInfo();
+    static SubtitleDownloadEngineMetadata metadata;
+    static const char * const pixmapData[];
+
+    SubtitleDownloadEngineMetadata meta() const;
     const char * const * enginePixmapData() const;
-
-    QUrl registrationUrl() const {
-        return QUrl("http://napisy24.pl/cb-registration/registers");
-    }
 
     QString checksum(QString filename = "");
     bool lookForSubtitles(QString lang);
-    QList<QNapiSubtitleInfo> listSubtitles();
+    QList<SubtitleInfo> listSubtitles();
     bool download(QUuid id);
     bool unpack(QUuid id);
     void cleanup();
@@ -42,8 +48,11 @@ public:
 private:
     QPair<QString, QString> getCredentials() const;
 
+    EngineConfig engineConfig;
+    QSharedPointer<const P7ZipDecoder> p7zipDecoder;
+    QStringList subtitleExtensions;
+
     quint64 fileSize;
-    QString p7zipPath;
 };
 
-#endif // QNAPISY24ENGINE_H
+#endif // NAPISY24DOWNLOADENGINE_H

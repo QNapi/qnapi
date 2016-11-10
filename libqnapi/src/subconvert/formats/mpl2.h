@@ -22,17 +22,17 @@ class MPL2SubtitleFormat : public SubtitleFormat
 public:
     virtual ~MPL2SubtitleFormat() {}
 
-    bool isTimeBased() { return true; }
-    QString formatName() { return "MPL2"; }
-    QString defaultExtension() { return "txt"; }
+    bool isTimeBased() const { return true; }
+    QString formatName() const { return "MPL2"; }
+    QString defaultExtension() const { return "txt"; }
 
-    bool detect(const QStringList &lines);
-    SubFile decode(const QStringList &lines);
-    QStringList encode(const SubFile & subFile);
+    bool detect(const QStringList &lines) const;
+    SubFile decode(const QStringList &lines) const;
+    QStringList encode(const SubFile & subFile) const;
 
 private:
-    QString encodeEntry(const SubEntry & entry);
-    QString encodeToken(const SubToken & entry);
+    QString encodeEntry(const SubEntry & entry) const;
+    QString encodeToken(const SubToken & entry) const;
 };
 
 #endif // MPL2SUBTITLEFORMAT_H

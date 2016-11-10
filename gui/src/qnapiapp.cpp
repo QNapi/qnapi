@@ -14,8 +14,12 @@
 
 #include "qnapiapp.h"
 
+#include "libqnapi.h"
+
 QNapiApp::QNapiApp(int & argc, char **argv, bool useGui, const QString & appName)
-    : QSingleApplication(argc, argv, useGui, appName), creationDT(QDateTime::currentDateTime())
+    : QSingleApplication(argc, argv, useGui, appName),
+      creationDT(QDateTime::currentDateTime()),
+      enginesRegistry(LibQNapi::subtitleDownloadEngineRegistry())
 {
     setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
@@ -74,7 +78,7 @@ frmProgress * QNapiApp::progress()
 {
     if(!f_progress)
     {
-        f_progress = new frmProgress();
+        f_progress = new frmProgress(LibQNapi::loadConfig());
         if(!f_progress) abort();
         connect(this, SIGNAL(request(QString)),
                 f_progress, SLOT(receiveRequest(QString)));
@@ -177,9 +181,16 @@ bool QNapiApp::showOpenDialog(QString engine)
 
     if(!openDialog)
     {
+        QString initDir = LibQNapi::loadConfig().lastOpenedDir();
+
+        if(!QFileInfo(initDir).isDir())
+        {
+            initDir = QDir::homePath();
+        }
+
         openDialog = new QNapiOpenDialog(0,
                             tr("Select one or more video files to download subtitles for"),
-                            GlobalConfig().previousDialogPath(),
+                            initDir,
                             QNapiOpenDialog::Movies);
     }
     else if(openDialog)
@@ -199,9 +210,9 @@ bool QNapiApp::showOpenDialog(QString engine)
 
         if(!fileList.isEmpty())
         {
-            QString dialogPath = QFileInfo(fileList[0]).absolutePath();
-            GlobalConfig().setPreviousDialogPath(dialogPath);
-            GlobalConfig().save();
+            QString dialogPath = openDialog->directory().absolutePath();
+            auto newConfig = LibQNapi::loadConfig().setLastOpenedDir(dialogPath);
+            LibQNapi::writeConfig(newConfig);
         }
     }
 
@@ -212,9 +223,11 @@ bool QNapiApp::showOpenDialog(QString engine)
     {
         if(!engine.isEmpty())
         {
-            QStringList e;
-            e << engine;
-            progress()->setEngines(e);
+            progress()->setSpecificEngine(engine);
+        }
+        else
+        {
+            progress()->clearSpecificEngine();
         }
 
         progress()->enqueueFiles(fileList);
@@ -270,14 +283,17 @@ void QNapiApp::showConvertDialog()
     f_scan = 0;
 }
 
-void QNapiApp::showCreateAccount(QString engine)
+void QNapiApp::showCreateAccount(const QString & engineName) const
 {
-    QNapi n;
-    n.addEngine(engine);
-    QDesktopServices::openUrl(n.engineByName(engine)->registrationUrl());
+    Maybe<QUrl> maybeRegistrationUrl = enginesRegistry->engineMetadata(engineName).registrationUrl();
+
+    if(maybeRegistrationUrl)
+    {
+        QDesktopServices::openUrl(maybeRegistrationUrl.value());
+    }
 }
 
-void QNapiApp::showOSUploadDialog()
+void QNapiApp::showOSUploadDialog() const
 {
     QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
 }
@@ -287,7 +303,7 @@ void QNapiApp::showSettings()
     if(!f_options)
     {
         f_options = new frmOptions();
-        f_options->readConfig();
+        f_options->readConfig(LibQNapi::loadConfig());
     }
 
     if(f_options->isVisible())

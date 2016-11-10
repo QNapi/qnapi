@@ -12,21 +12,25 @@
 **
 *****************************************************************************/
 
+#include <QDesktopWidget>
+#include <QDesktopServices>
+
 #include "frmopensubtitlesconfig.h"
-#include "qnapi.h"
-#include "qnapiconfig.h"
-#include "qnapiapp.h"
+#include "engines/opensubtitlesdownloadengine.h"
 
-
-frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f)
+frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(const EngineConfig & config,
+                                               QWidget *parent,
+                                               Qt::WindowFlags f)
+    : QDialog(parent, f),
+      config(config)
 {
     ui.setupUi(this);
-    QNapi q;
-    q.addEngines(q.enumerateEngines());
-    setWindowIcon(QIcon(QPixmap(q.engineByName("OpenSubtitles")->enginePixmapData())));
 
-    load();
+    ui.leNick->setText(config.nick());
+    ui.lePass->setText(config.password());
+
+    QIcon openSubtitlesIcon = QIcon(QPixmap(OpenSubtitlesDownloadEngine::pixmapData));
+    setWindowIcon(openSubtitlesIcon);
 
     connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 
@@ -35,20 +39,25 @@ frmOpenSubtitlesConfig::frmOpenSubtitlesConfig(QWidget *parent, Qt::WindowFlags 
     move(position.topLeft());
 }
 
+EngineConfig frmOpenSubtitlesConfig::getConfig() const
+{
+    return config;
+}
+
 void frmOpenSubtitlesConfig::accept()
 {
-    GlobalConfig().setNick("OpenSubtitles", ui.leNick->text());
-    GlobalConfig().setPass("OpenSubtitles", ui.lePass->text());
+    config = config
+      .setNick(ui.leNick->text())
+      .setPassword(ui.lePass->text());
     QDialog::accept();
 }
 
 void frmOpenSubtitlesConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("OpenSubtitles");
-}
+    Maybe<QUrl> maybeRegistrationUrl = OpenSubtitlesDownloadEngine::metadata.registrationUrl();
 
-void frmOpenSubtitlesConfig::load()
-{
-    ui.leNick->setText(GlobalConfig().nick("OpenSubtitles"));
-    ui.lePass->setText(GlobalConfig().pass("OpenSubtitles"));
+    if(maybeRegistrationUrl)
+    {
+        QDesktopServices::openUrl(maybeRegistrationUrl.value());
+    }
 }

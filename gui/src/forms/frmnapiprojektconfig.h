@@ -16,10 +16,9 @@
 #define __FRMNAPIPROJEKTCONFIG__H__
 
 #include <QDialog>
-#include "ui_frmnapiprojektconfig.h"
+#include "config/engineconfig.h"
 
-#include "qnapiconfig.h"
-#include "qnapiapp.h"
+#include "ui_frmnapiprojektconfig.h"
 
 class frmNapiProjektConfig : public QDialog
 {
@@ -27,8 +26,12 @@ Q_OBJECT
 
     public:
 
-        frmNapiProjektConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        frmNapiProjektConfig(const EngineConfig & config,
+                             QWidget *parent = 0,
+                             Qt::WindowFlags f = 0);
         ~frmNapiProjektConfig() {}
+
+        EngineConfig getConfig() const;
 
     public slots:
     
@@ -37,11 +40,7 @@ Q_OBJECT
 
     private:
         Ui::frmNapiProjektConfig ui;
-        
-        void load();
-        
+        EngineConfig config;
 };
-
-
 
 #endif

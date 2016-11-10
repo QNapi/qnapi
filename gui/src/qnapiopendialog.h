@@ -15,6 +15,8 @@
 #ifndef __QNAPIOPENDIALOG__H__
 #define __QNAPIOPENDIALOG__H__
 
+#include "config/staticconfig.h"
+
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QString>
@@ -22,7 +24,7 @@
 #include <QDir>
 #include <QUrl>
 #include <QDesktopWidget>
-#include "qnapiconfig.h"
+#include <QSharedPointer>
 
 class QNapiOpenDialog : public QFileDialog
 {
@@ -49,6 +51,8 @@ public:
 private:
 
     bool placeWindow();
+
+    QSharedPointer<const StaticConfig> staticConfig;
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     QStringList files;

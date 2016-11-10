@@ -15,7 +15,7 @@
 #include "subtitleformat.h"
 #include <QMap>
 
-QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream)
+QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream) const
 {
     QVector<SubToken> tokens;
     SubToken tok;

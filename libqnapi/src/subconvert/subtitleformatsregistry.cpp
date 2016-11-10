@@ -20,41 +20,24 @@
 #include "subconvert/formats/tmplayer.h"
 
 SubtitleFormatsRegistry::SubtitleFormatsRegistry()
-{}
-
-SubtitleFormatsRegistry::~SubtitleFormatsRegistry()
 {
-    foreach(QString formatName, formats.keys())
-    {
-        delete formats[formatName];
-    }
+    registerFormat(new MicroDVDSubtitleFormat);
+    registerFormat(new MPL2SubtitleFormat);
+    registerFormat(new SubRipSubtitleFormat);
+    registerFormat(new TMPlayerSubtitleFormat);
 }
 
-void SubtitleFormatsRegistry::registerFormat(SubtitleFormat *format)
-{
-    formats.insert(format->formatName(), format);
-}
-
-QStringList SubtitleFormatsRegistry::enumerateFormats() const
+QStringList SubtitleFormatsRegistry::listFormatNames() const
 {
     return formats.keys();
 }
 
-SubtitleFormat* SubtitleFormatsRegistry::select(const QString & format) const
+QSharedPointer<const SubtitleFormat> SubtitleFormatsRegistry::select(const QString & format) const
 {
-    return formats.value(format, 0);
+    return formats.value(format, QSharedPointer<SubtitleFormat>(0));
 }
 
-
-SubtitleFormatsRegistry & GlobalFormatsRegistry()
+void SubtitleFormatsRegistry::registerFormat(SubtitleFormat *format)
 {
-    static SubtitleFormatsRegistry registry;
-    if(registry.enumerateFormats().isEmpty())
-    {
-        registry.registerFormat(new MicroDVDSubtitleFormat);
-        registry.registerFormat(new MPL2SubtitleFormat);
-        registry.registerFormat(new SubRipSubtitleFormat);
-        registry.registerFormat(new TMPlayerSubtitleFormat);
-    }
-    return registry;
+    formats.insert(format->formatName(), QSharedPointer<SubtitleFormat>(format));
 }

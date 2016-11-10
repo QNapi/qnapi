@@ -12,14 +12,14 @@
 **
 *****************************************************************************/
 
-#ifndef __QNAPISUBTITLEINFO__H__
-#define __QNAPISUBTITLEINFO__H__
+#ifndef SUBTITLEINFO_H
+#define SUBTITLEINFO_H
 
 #include <QUuid>
 #include <QMetaType>
 
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
-enum QNapiSubtitleResolution
+enum SubtitleResolution
 {
     // brak napisów
     SUBTITLE_NONE,
@@ -33,16 +33,16 @@ enum QNapiSubtitleResolution
 };
 
 // struktura opisujaca napisy
-class QNapiSubtitleInfo
+class SubtitleInfo
 {
 public:
-    QNapiSubtitleInfo(QString _lang = "",
-                      QString _engine = "",
-                      QString _sourceLocation = "",
-                      QString _name = "",
-                      QString _comment = "",
-                      QString _format = "",
-                      QNapiSubtitleResolution _resolution = SUBTITLE_UNKNOWN)
+    SubtitleInfo(QString _lang = "",
+                 QString _engine = "",
+                 QString _sourceLocation = "",
+                 QString _name = "",
+                 QString _comment = "",
+                 QString _format = "",
+                 SubtitleResolution _resolution = SUBTITLE_UNKNOWN)
         : lang(_lang.toLower()),
           engine(_engine),
           sourceLocation(_sourceLocation),
@@ -58,16 +58,19 @@ public:
     QString name;
     QString comment;
     QString format;
-    QNapiSubtitleResolution resolution;
+    SubtitleResolution resolution;
     QUuid id;
 
-    bool operator<(const QNapiSubtitleInfo& other) const;
+    bool operator<(const SubtitleInfo & other) const;
 
-    static QNapiSubtitleInfo fromFailed(QString name);
+    static SubtitleInfo fromFailed(const QString &name);
 };
 
-Q_DECLARE_METATYPE(QNapiSubtitleInfo);
+Q_DECLARE_METATYPE(SubtitleInfo);
 
-typedef QList<QNapiSubtitleInfo> QNapiSubtitleInfoList;
+typedef QList<SubtitleInfo> SubtitleInfoList;
+
+Q_DECLARE_METATYPE(SubtitleInfoList);
+
 
 #endif

@@ -14,7 +14,7 @@
 
 #include "mpl2.h"
 
-bool MPL2SubtitleFormat::detect(const QStringList &lines)
+bool MPL2SubtitleFormat::detect(const QStringList &lines) const
 {
     foreach(QString line, lines)
     {
@@ -29,7 +29,7 @@ bool MPL2SubtitleFormat::detect(const QStringList &lines)
     return false;
 }
 
-SubFile MPL2SubtitleFormat::decode(const QStringList &lines)
+SubFile MPL2SubtitleFormat::decode(const QStringList &lines) const
 {
     SubFile sf;
 
@@ -56,7 +56,7 @@ SubFile MPL2SubtitleFormat::decode(const QStringList &lines)
     return sf;
 }
 
-QStringList MPL2SubtitleFormat::encode(const SubFile & subFile)
+QStringList MPL2SubtitleFormat::encode(const SubFile & subFile) const
 {
     QStringList lines;
     foreach(const SubEntry & entry, subFile.entries)
@@ -66,7 +66,7 @@ QStringList MPL2SubtitleFormat::encode(const SubFile & subFile)
     return lines;
 }
 
-QString MPL2SubtitleFormat::encodeEntry(const SubEntry & entry)
+QString MPL2SubtitleFormat::encodeEntry(const SubEntry & entry) const
 {
     QString tokensBuff;
     foreach(const SubToken & token, entry.tokens)
@@ -79,7 +79,7 @@ QString MPL2SubtitleFormat::encodeEntry(const SubEntry & entry)
             .arg(tokensBuff);
 }
 
-QString MPL2SubtitleFormat::encodeToken(const SubToken & entry)
+QString MPL2SubtitleFormat::encodeToken(const SubToken & entry) const
 {
     switch(entry.type)
     {

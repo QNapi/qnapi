@@ -14,7 +14,7 @@
 
 #include "microdvd.h"
 
-bool MicroDVDSubtitleFormat::detect(const QStringList &lines)
+bool MicroDVDSubtitleFormat::detect(const QStringList &lines) const
 {
     foreach(QString line, lines)
     {
@@ -29,7 +29,7 @@ bool MicroDVDSubtitleFormat::detect(const QStringList &lines)
     return false;
 }
 
-SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
+SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines) const
 {
     SubFile sf;
 
@@ -56,7 +56,7 @@ SubFile MicroDVDSubtitleFormat::decode(const QStringList &lines)
     return sf;
 }
 
-QStringList MicroDVDSubtitleFormat::encode(const SubFile & subFile)
+QStringList MicroDVDSubtitleFormat::encode(const SubFile & subFile) const
 {
     QStringList lines;
     foreach(const SubEntry & entry, subFile.entries)
@@ -66,7 +66,7 @@ QStringList MicroDVDSubtitleFormat::encode(const SubFile & subFile)
     return lines;
 }
 
-QString MicroDVDSubtitleFormat::encodeEntry(const SubEntry & entry)
+QString MicroDVDSubtitleFormat::encodeEntry(const SubEntry & entry) const
 {
     QString tokensBuff;
     foreach(const SubToken & token, entry.tokens)
@@ -79,7 +79,7 @@ QString MicroDVDSubtitleFormat::encodeEntry(const SubEntry & entry)
             .arg(tokensBuff);
 }
 
-QString MicroDVDSubtitleFormat::encodeToken(const SubToken & entry)
+QString MicroDVDSubtitleFormat::encodeToken(const SubToken & entry) const
 {
     switch(entry.type)
     {

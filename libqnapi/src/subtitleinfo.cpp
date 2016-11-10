@@ -1,9 +1,9 @@
-#include "qnapisubtitleinfo.h"
+#include "subtitleinfo.h"
 #include <algorithm>
 #include <vector>
 #include <QFileInfo>
 
-bool QNapiSubtitleInfo::operator<(const QNapiSubtitleInfo& other) const
+bool SubtitleInfo::operator<(const SubtitleInfo & other) const
 {
     std::vector<QString> v1 = { QString::number(other.resolution), name };
     std::vector<QString> v2 = { QString::number(resolution), other.name };
@@ -11,7 +11,7 @@ bool QNapiSubtitleInfo::operator<(const QNapiSubtitleInfo& other) const
     return std::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
 }
 
-QNapiSubtitleInfo QNapiSubtitleInfo::fromFailed(QString fileName)
+SubtitleInfo SubtitleInfo::fromFailed(const QString & fileName)
 {
-    return QNapiSubtitleInfo("", "", "", QFileInfo(fileName).completeBaseName(), "" ,"", SUBTITLE_NONE);
+    return SubtitleInfo("", "", "", QFileInfo(fileName).completeBaseName(), "" ,"", SUBTITLE_NONE);
 }

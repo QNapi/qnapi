@@ -24,9 +24,9 @@ class EncodingUtils
 public:
     EncodingUtils();
 
-    QString replaceDiacriticsWithASCII(const QString & str);
-    QString detectBufferEncoding(const QByteArray & buffer);
-    QString detectFileEncoding(const QString & filename);
+    QString replaceDiacriticsWithASCII(const QString & str) const;
+    QString detectBufferEncoding(const QByteArray & buffer) const;
+    QString detectFileEncoding(const QString & filename) const;
 
 private:
     QString diacritics;

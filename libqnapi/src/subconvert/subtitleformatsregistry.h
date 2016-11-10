@@ -15,25 +15,25 @@
 #ifndef SUBTITLEFORMATSREGISTRY_H
 #define SUBTITLEFORMATSREGISTRY_H
 
-#include <QString>
-#include <QMap>
-#include <QStringList>
 #include "subconvert/subtitleformat.h"
+
+#include <QMap>
+#include <QSharedPointer>
+#include <QString>
+#include <QStringList>
 
 class SubtitleFormatsRegistry
 {
-private:
-    QMap<QString, SubtitleFormat*> formats;
 public:
     SubtitleFormatsRegistry();
-    ~SubtitleFormatsRegistry();
 
+    QStringList listFormatNames() const;
+    QSharedPointer<const SubtitleFormat> select(const QString & format) const;
+
+private:
     void registerFormat(SubtitleFormat *format);
-    QStringList enumerateFormats() const;
-    SubtitleFormat* select(const QString & format) const;
 
+    QMap<QString, QSharedPointer<SubtitleFormat>> formats;
 };
-
-SubtitleFormatsRegistry & GlobalFormatsRegistry();
 
 #endif // SUBTITLEFORMATSREGISTRY_H

@@ -13,18 +13,25 @@
 **
 *****************************************************************************/
 
-#include "frmnapisy24config.h"
-#include "../qnapi.h"
+#include <QDesktopWidget>
+#include <QDesktopServices>
 
-frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f)
+#include "frmnapisy24config.h"
+#include "engines/napisy24downloadengine.h"
+
+frmNapisy24Config::frmNapisy24Config(const EngineConfig & config,
+                                     QWidget *parent,
+                                     Qt::WindowFlags f)
+    : QDialog(parent, f),
+      config(config)
 {
     ui.setupUi(this);
-    QNapi q;
-    q.addEngines(q.enumerateEngines());
-    setWindowIcon(QIcon(QPixmap(q.engineByName("Napisy24")->enginePixmapData())));
 
-    load();
+    ui.leNick->setText(config.nick());
+    ui.lePass->setText(config.password());
+
+    QIcon napisy24Icon = QIcon(QPixmap(Napisy24DownloadEngine::pixmapData));
+    setWindowIcon(napisy24Icon);
 
     connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 
@@ -33,20 +40,25 @@ frmNapisy24Config::frmNapisy24Config(QWidget *parent, Qt::WindowFlags f)
     move(position.topLeft());
 }
 
+EngineConfig frmNapisy24Config::getConfig() const
+{
+    return config;
+}
+
 void frmNapisy24Config::accept()
 {
-    GlobalConfig().setNick("Napisy24", ui.leNick->text());
-    GlobalConfig().setPass("Napisy24", ui.lePass->text());
+    config = config
+      .setNick(ui.leNick->text())
+      .setPassword(ui.lePass->text());
     QDialog::accept();
 }
 
 void frmNapisy24Config::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("Napisy24");
-}
+    Maybe<QUrl> maybeRegistrationUrl = Napisy24DownloadEngine::metadata.registrationUrl();
 
-void frmNapisy24Config::load()
-{
-    ui.leNick->setText(GlobalConfig().nick("Napisy24"));
-    ui.lePass->setText(GlobalConfig().pass("Napisy24"));
+    if(maybeRegistrationUrl)
+    {
+        QDesktopServices::openUrl(maybeRegistrationUrl.value());
+    }
 }

@@ -14,90 +14,51 @@
 
 #include "libqnapi.h"
 #include "qnapi.h"
-#include "qnapiconfig.h"
-#include "qsubmatcher.h"
-#include "qsubpostprocess.h"
-#include "engines/qnapiprojektengine.h"
-#include "engines/qnapisy24engine.h"
-#include "engines/qopensubtitlesengine.h"
-#include "forms/frmnapiprojektconfig.h"
-#include "forms/frmopensubtitlesconfig.h"
-#include "forms/frmnapisy24config.h"
+#include "subtitlematcher.h"
+#include "subtitlepostprocessor.h"
+
+#include "config/configreader.h"
+
 #include <QtAlgorithms>
+
+QNapi::QNapi(const QNapiConfig & config,
+             const Maybe<QString> & specificEngine)
+    : enginesRegistry(LibQNapi::subtitleDownloadEngineRegistry()),
+      config(config)
+{
+    if(specificEngine) {
+        enginesList << enginesRegistry->createEngine(specificEngine.value(), config);
+    } else {
+        enginesList << enginesRegistry->createEnabledEngines(config);
+    }
+}
+
 
 QNapi::~QNapi()
 {
     cleanup();
-
-    foreach(QNapiAbstractEngine *e, enginesList)
-    {
-        if(e) delete e;
-    }
 }
 
 bool QNapi::checkP7ZipPath()
 {
-    return QFileInfo(GlobalConfig().p7zipPath()).isExecutable();
+    return QFileInfo(config.generalConfig().p7zipPath()).isExecutable();
 }
 
 bool QNapi::checkTmpPath()
 {
-    QFileInfo f(GlobalConfig().tmpPath());
+    QFileInfo f(config.generalConfig().tmpPath());
     return f.isDir() && f.isWritable();
 }
 
 bool QNapi::ppEnabled()
 {
-    return GlobalConfig().ppEnabled();
-}
-
-QStringList QNapi::enumerateEngines()
-{
-    QStringList engines;
-    engines << "NapiProjekt";
-    engines << "OpenSubtitles";
-    engines << "Napisy24";
-    return engines;
-}
-
-bool QNapi::addEngine(QString engine)
-{
-    if(engine == "NapiProjekt")
-    {
-        enginesList << (new QNapiProjektEngine());
-        return true;
-    }
-    else if(engine == "OpenSubtitles")
-    {
-        enginesList << (new QOpenSubtitlesEngine(LibQNapi::displayableVersion()));
-        return true;
-    }
-    else if(engine == "Napisy24")
-    {
-        enginesList << (new QNapisy24Engine());
-        return true;
-    }
-    else
-    {
-        errorMsg = QString("Unsupported download engine: %1.").arg(engine);
-        return false;
-    }
-}
-
-bool QNapi::addEngines(QStringList engines)
-{
-    foreach(QString e, engines)
-    {
-        if(!addEngine(e))
-            return false;
-    }
-    return true;
+    return config.postProcessingConfig().enabled();
 }
 
 void QNapi::setMoviePath(QString path)
 {
     movie = path;
-    currentEngine = 0;
+    currentEngine = QSharedPointer<SubtitleDownloadEngine>();
 }
 
 QString QNapi::moviePath()
@@ -113,7 +74,7 @@ bool QNapi::checkWritePermissions()
 void QNapi::clearSubtitlesList()
 {
     subtitlesList.clear();
-    foreach(QNapiAbstractEngine *e, enginesList)
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
     {
         e->clearSubtitlesList();
     }
@@ -121,7 +82,7 @@ void QNapi::clearSubtitlesList()
 
 void QNapi::checksum()
 {
-    foreach(QNapiAbstractEngine *e, enginesList)
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
     {
         e->checksum(movie);
     }
@@ -131,10 +92,9 @@ bool QNapi::lookForSubtitles(QString lang, QString engine)
 {
     bool result = false;
 
-
     if(engine.isEmpty())
     {
-        foreach(QNapiAbstractEngine *e, enginesList)
+        foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
         {
             e->setMoviePath(movie);
             result = e->lookForSubtitles(lang) || result;
@@ -142,7 +102,7 @@ bool QNapi::lookForSubtitles(QString lang, QString engine)
     }
     else
     {
-        QNapiAbstractEngine *e = engineByName(engine);
+        QSharedPointer<SubtitleDownloadEngine> e = engineByName(engine);
         if(e)
         {
             e->setMoviePath(movie);
@@ -152,24 +112,24 @@ bool QNapi::lookForSubtitles(QString lang, QString engine)
 
     if(!result)
     {
-        errorMsg = "No subtitles found!";
+        errorMsg = QObject::tr("No subtitles found!");
     }
 
     return result;
 }
 
-QList<QNapiSubtitleInfo> QNapi::listSubtitles()
+QList<SubtitleInfo> QNapi::listSubtitles()
 {
     subtitlesList.clear();
 
-    foreach(QNapiAbstractEngine *e, enginesList)
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
     {
-        QList<QNapiSubtitleInfo> list =  e->listSubtitles();
+        QList<SubtitleInfo> list = e->listSubtitles();
         subtitlesList << list;
     }
 
-    QString mainLang = GlobalConfig().language();
-    QString backupLang = GlobalConfig().languageBackup();
+    QString mainLang = config.generalConfig().language();
+    QString backupLang = config.generalConfig().backupLanguage();
 
     auto langRank = [&](QString lang) {
         if(lang == mainLang) return 0;
@@ -178,7 +138,7 @@ QList<QNapiSubtitleInfo> QNapi::listSubtitles()
     };
 
     qStableSort(subtitlesList.begin(), subtitlesList.end(),
-                [&](const QNapiSubtitleInfo & si1, const QNapiSubtitleInfo & si2) {
+                [&](const SubtitleInfo & si1, const SubtitleInfo & si2) {
        return langRank(si1.lang) < langRank(si2.lang);
     });
 
@@ -191,7 +151,7 @@ bool QNapi::needToShowList()
 
     int i = 0;
     bool foundBestIdx = false;
-    foreach(QNapiSubtitleInfo s, listSubtitles())
+    foreach(SubtitleInfo s, listSubtitles())
     {
         if(s.resolution == SUBTITLE_GOOD)
         {
@@ -202,9 +162,9 @@ bool QNapi::needToShowList()
         ++i;
     }
 
-    if(GlobalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST)  
+    if(config.generalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST)
         return true;
-    if(GlobalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)   
+    if(config.generalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST)
         return false;
 
     if(listSubtitles().size() <= 1)
@@ -220,7 +180,7 @@ int QNapi::bestIdx()
 
 bool QNapi::download(int i)
 {
-    QNapiSubtitleInfo s = subtitlesList[i];
+    SubtitleInfo s = subtitlesList[i];
     currentEngine = engineByName(s.engine);
     if(!currentEngine) return false;
     return currentEngine->download(s.id);
@@ -233,35 +193,30 @@ bool QNapi::unpack(int i)
             : false;
 }
 
-bool QNapi::match()
+bool QNapi::matchSubtitles()
 {
-    QNapiConfig & config = GlobalConfig();
+    if(currentEngine)
+    {
+        QSharedPointer<const SubtitleMatcher> matcher = LibQNapi::subtitleMatcher(config);
+        return matcher->matchSubtitles(currentEngine->subtitlesTmp, currentEngine->movie);
+    }
 
-    QSubMatcher subMatcher(config.noBackup(),
-                           config.ppEnabled(),
-                           config.ppSubFormat(),
-                           config.ppSubExtension(),
-                           config.changePermissions(),
-                           config.changePermissionsTo());
-
-    return currentEngine
-             ? subMatcher.matchSubtitles(currentEngine->subtitlesTmp,
-                                         currentEngine->movie)
-             : false;
+    return false;
 }
 
-void QNapi::pp()
+void QNapi::postProcessSubtitles() const
 {
     if(currentEngine) {
-        QSubPostProcess pp(currentEngine->movie,
-                           currentEngine->subtitlesTmp);
-        pp.perform();
+        QSharedPointer<const SubtitlePostProcessor> postProcessor =
+            LibQNapi::subtitlePostProcessor(config.postProcessingConfig());
+
+        postProcessor->perform(currentEngine->movie, currentEngine->subtitlesTmp);
     }
 }
 
 void QNapi::cleanup()
 {
-    foreach(QNapiAbstractEngine *e, enginesList)
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
     {
         e->cleanup();
     }
@@ -272,45 +227,25 @@ QString QNapi::error()
     return errorMsg;
 }
 
-QNapiAbstractEngine * QNapi::engineByName(QString name)
+QStringList QNapi::listLoadedEngines() const
 {
-    foreach(QNapiAbstractEngine *e, enginesList)
+    QStringList list;
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
     {
-        if(name == (e->engineName()))
+        list << e->meta().name();
+    }
+    return list;
+}
+
+QSharedPointer<SubtitleDownloadEngine> QNapi::engineByName(QString name) const
+{
+    foreach(QSharedPointer<SubtitleDownloadEngine> e, enginesList)
+    {
+        if(name == e->meta().name())
         {
             return e;
         }
     }
 
-    return 0;
+    return QSharedPointer<SubtitleDownloadEngine>();
 }
-
-QString QNapi::nameByEngine(QNapiAbstractEngine * engine)
-{
-    return engine->engineName();
-}
-
-QStringList QNapi::listLoadedEngines()
-{
-    QStringList list;
-    foreach(QNapiAbstractEngine *e, enginesList)
-    {
-        list << e->engineName();
-    }
-    return list;
-}
-
-void QNapi::configureEngine(QString engine, QWidget * parent) const
-{
-    if(engine == "NapiProjekt") {
-        frmNapiProjektConfig config(parent);
-        config.exec();
-    } else if(engine == "OpenSubtitles") {
-        frmOpenSubtitlesConfig config(parent);
-        config.exec();
-    } else if(engine == "Napisy24") {
-        frmNapisy24Config config(parent);
-        config.exec();
-    }
-}
-

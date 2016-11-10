@@ -12,9 +12,9 @@
 **
 *****************************************************************************/
 
-#include "frmlistsubtitles.h"
-#include "qnapi.h"
+#include "libqnapi.h"
 
+#include "frmlistsubtitles.h"
 #include "subdatawidget.h"
 
 #include <QMessageBox>
@@ -22,7 +22,8 @@
 #include <QDesktopWidget>
 
 frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f)
+    : QDialog(parent, f),
+      enginesRegistry(LibQNapi::subtitleDownloadEngineRegistry())
 {
     ui.setupUi(this);
 
@@ -33,26 +34,23 @@ frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
 
 void frmListSubtitles::setFileName(const QString & name)
 {
-    ui.lbSelectSubtitles->setText(QString(  "Select the subtitle which you want to"
-                                            " adjust to the video file<br><br><b>%1</b>")
-                                        .arg(name));
+    ui.lbSelectSubtitles->setText(
+        tr("Select the subtitles which you want to download for video file<br><br><b>%1</b>")
+            .arg(name)
+    );
 }
 
-void frmListSubtitles::setSubtitlesList(QList<QNapiSubtitleInfo> list)
+void frmListSubtitles::setSubtitlesList(QList<SubtitleInfo> list)
 {
-    QNapi n;
-    n.addEngines(n.enumerateEngines()); 
-
     ui.twSubtitles->clear();
 
     int i = 0, goodCount = 0, badCount = 0;
-    foreach(QNapiSubtitleInfo s, list)
+    foreach(SubtitleInfo s, list)
     {
         bool highlight = (s.resolution != SUBTITLE_UNKNOWN);
 
         QBrush brush((s.resolution == SUBTITLE_GOOD) ? QColor(qRgb(200, 255, 200)) : QColor(qRgb(255, 200, 200)));
 
-        QNapiAbstractEngine *e = n.engineByName(s.engine);
         QListWidgetItem *listItem = new QListWidgetItem();
 
         ui.twSubtitles->addItem(listItem);
@@ -69,7 +67,7 @@ void frmListSubtitles::setSubtitlesList(QList<QNapiSubtitleInfo> list)
             ++badCount;
         }
 
-        subData->setSubData(s.name, s.format, QIcon(lang_path), QIcon(QPixmap(e->enginePixmapData())));
+        subData->setSubData(s.name, s.format, QIcon(lang_path), QIcon(QPixmap(enginesRegistry->enginePixmapData(s.engine))));
 
         ui.twSubtitles->setItemWidget(listItem, subData);
         listItem->setSizeHint(subData->sizeHint());
@@ -91,14 +89,12 @@ void frmListSubtitles::accept()
 {
     if(ui.twSubtitles->selectedItems().size() == 0)
     {
-        QMessageBox::warning(   this,
-                                "No subtitle selected",
-                                "You need to select a subtitle from the list!");
+        QMessageBox::warning(this,
+                             tr("No subtitle selected"),
+                             tr("You need to select a subtitle from the list!"));
     }
     else
     {
         QDialog::accept();
     }
 }
-
-

@@ -12,24 +12,26 @@
 **
 *****************************************************************************/
 
+#include "libqnapi.h"
 #include "qnapiopendialog.h"
 
 QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
                                  const QString & caption,
                                  const QString & init_path,
                                  FilterMode filterMode)
-                            : QFileDialog(parent)
+                            : QFileDialog(parent),
+                              staticConfig(LibQNapi::staticConfig())
 {
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowTitle(caption);
 
     if(filterMode == Movies)
     {
-        setNameFilter(tr("Videos (%1);;All files (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
+        setNameFilter(tr("Video files (%1);;All files (*.*)").arg(staticConfig->movieExtensionsFilter()));
     }
     else if(filterMode == Subtitles)
     {
-        setNameFilter(tr("Subtitles (%1);;All files (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
+        setNameFilter(tr("Subtitles files (%1);;All files (*.*)").arg(staticConfig->subtitleExtensionsFilter()));
     }
 
     if(QFileInfo(init_path).isDir())
@@ -46,7 +48,7 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
     sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")
                 << QString(QDir::homePath() + "/Video") << QString(QDir::homePath() + "/video")
                 << QString(QDir::homePath() + "/Videos") << QString(QDir::homePath() + "/videos")
-                << QString(QDir::homePath() + "/Wideo") << QString(QDir::homePath() + "/wideo");
+                << QString(QDir::homePath() + "/Filmy") << QString(QDir::homePath() + "/wideo");
 
     QList<QUrl> urls = sidebarUrls();
 

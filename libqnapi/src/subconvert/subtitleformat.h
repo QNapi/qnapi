@@ -22,16 +22,15 @@ class SubtitleFormat
 {
 public:
     virtual ~SubtitleFormat() {}
-    virtual bool isTimeBased() = 0;
-    virtual QString formatName() = 0;
-    virtual QString defaultExtension() = 0;
+    virtual bool isTimeBased() const = 0;
+    virtual QString formatName() const = 0;
+    virtual QString defaultExtension() const = 0;
 
-    virtual bool detect(const QStringList & lines) = 0;
-    virtual SubFile decode(const QStringList & lines) = 0;
-    virtual QStringList encode(const SubFile & subFile) = 0;
+    virtual bool detect(const QStringList & lines) const = 0;
+    virtual SubFile decode(const QStringList & lines) const = 0;
+    virtual QStringList encode(const SubFile & subFile) const = 0;
 
-    QVector<SubToken> decodeTokenStream(QString tokenStream);
-
+    QVector<SubToken> decodeTokenStream(QString tokenStream) const;
 };
 
 #endif // SUBTITLEFORMAT_H

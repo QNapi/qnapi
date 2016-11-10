@@ -23,17 +23,17 @@ class MicroDVDSubtitleFormat : public SubtitleFormat
 public:
     virtual ~MicroDVDSubtitleFormat() {}
 
-    bool isTimeBased() { return false; }
-    QString formatName() { return "mDVD"; }
-    QString defaultExtension() { return "sub"; }
+    bool isTimeBased() const { return false; }
+    QString formatName() const { return "mDVD"; }
+    QString defaultExtension() const { return "sub"; }
 
-    bool detect(const QStringList &lines);
-    SubFile decode(const QStringList &lines);
-    QStringList encode(const SubFile & subFile);
+    bool detect(const QStringList &lines) const;
+    SubFile decode(const QStringList &lines) const;
+    QStringList encode(const SubFile & subFile) const;
 
 private:
-    QString encodeEntry(const SubEntry & entry);
-    QString encodeToken(const SubToken & entry);
+    QString encodeEntry(const SubEntry & entry) const;
+    QString encodeToken(const SubToken & entry) const;
 };
 
 #endif // MICRODVD_H

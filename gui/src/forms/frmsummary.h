@@ -15,15 +15,14 @@
 #ifndef __FRMSUMMARY__H__
 #define __FRMSUMMARY__H__
 
-#include <QDesktopWidget>
-#include <QListWidget>
-#include <QFileInfo>
-#include <QtCore>
-
-#include "qnapiconfig.h"
+#include "engines/subtitledownloadenginesregistry.h"
 
 #include "ui_frmsummary.h"
-#include "qnapisubtitleinfo.h"
+#include "subtitleinfo.h"
+
+#include <QList>
+#include <QWidget>
+#include <QSharedPointer>
 
 class frmSummary: public QDialog
 {
@@ -32,10 +31,12 @@ Q_OBJECT
         frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
         ~frmSummary() {}
 
-        void setSummaryList(QList<QNapiSubtitleInfo> list);
+        void setSummaryList(QList<SubtitleInfo> list);
 
     private:
         Ui::frmSummary ui;
+
+        QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 };
 
 #endif

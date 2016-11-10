@@ -15,17 +15,9 @@
 #ifndef __QNAPIAPP__H__
 #define __QNAPIAPP__H__
 
-#include <QApplication>
-#include <QString>
-#include <QEvent>
-#include <QFileOpenEvent>
-#include <QMenu>
-#include <QAction>
-#include <QSystemTrayIcon>
-#include <QDesktopServices>
-#include <QDateTime>
+#include "engines/subtitledownloadenginesregistry.h"
 
-#include "qcumber/qsingleapplication.h"
+#include "qnapiopendialog.h"
 
 #include "forms/frmprogress.h"
 #include "forms/frmabout.h"
@@ -34,8 +26,18 @@
 #include "forms/frmsummary.h"
 #include "forms/frmconvert.h"
 
-#include "qnapiconfig.h"
-#include "qnapiopendialog.h"
+#include "qcumber/qsingleapplication.h"
+
+#include <QAction>
+#include <QApplication>
+#include <QDateTime>
+#include <QDesktopServices>
+#include <QEvent>
+#include <QFileOpenEvent>
+#include <QMenu>
+#include <QSharedPointer>
+#include <QString>
+#include <QSystemTrayIcon>
 
 
 class QNapiApp : public QSingleApplication
@@ -55,8 +57,8 @@ class QNapiApp : public QSingleApplication
         bool showOpenDialog(QString engine = "");
         bool showScanDialog(QString init_dir = "");
         void showConvertDialog();
-        void showCreateAccount(QString engine);
-        void showOSUploadDialog();
+        void showCreateAccount(const QString & engineName) const;
+        void showOSUploadDialog() const;
         void showSettings();
         void showAbout();
         void tryQuit();
@@ -85,6 +87,8 @@ class QNapiApp : public QSingleApplication
         frmConvert *f_convert;
 
         QDateTime creationDT;
+
+        QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 
     private slots:
 

@@ -12,53 +12,48 @@
 **
 *****************************************************************************/
 
-#ifndef __QOPENSUBTITLESENGINE__H__
-#define __QOPENSUBTITLESENGINE__H__
+#ifndef OPENSUBTITLESDOWNLOADENGINE_H
+#define OPENSUBTITLESDOWNLOADENGINE_H
 
-#include "qnapiabstractengine.h"
+#include "config/engineconfig.h"
+#include "engines/subtitledownloadengine.h"
 #include "utils/syncxmlrpc.h"
+#include "utils/p7zipdecoder.h"
 
-const QString openSubtitlesXmlRpcUrl = "http://api.opensubtitles.org/xml-rpc";
-
-class QOpenSubtitlesEngine : public QNapiAbstractEngine
+class OpenSubtitlesDownloadEngine : public SubtitleDownloadEngine
 {
 public:
 
-    QOpenSubtitlesEngine(const QString & qnapiDisplayableVersion);
-    ~QOpenSubtitlesEngine();
+    OpenSubtitlesDownloadEngine(const QString & tmpPath,
+                                const EngineConfig & config,
+                                const QSharedPointer<const P7ZipDecoder> & p7zipDecoder,
+                                const QString & qnapiDisplayableVersion,
+                                const QString & language);
+    ~OpenSubtitlesDownloadEngine();
 
-    // zwraca nazwe modulu
-    QString engineName();
-    // zwraca informacje nt. modulu
-    QString engineInfo();
-    // zwraca ikone silnika pobierania
+    static SubtitleDownloadEngineMetadata metadata;
+    static const char * const pixmapData[];
+
+    SubtitleDownloadEngineMetadata meta() const;
     const char * const * enginePixmapData() const;
 
-    QUrl registrationUrl() const {
-        return QUrl("http://www.opensubtitles.org/newuser");
-    }
-
-    // oblicza sume kontrolna pliku filmowego
     QString checksum(QString filename = "");
-    // szuka napisow
     bool lookForSubtitles(QString lang);
-    // wyniki wyszukiwania
-    QList<QNapiSubtitleInfo> listSubtitles();
-    // probuje pobrac napisy
+    QList<SubtitleInfo> listSubtitles();
     bool download(QUuid id);
-    // probuje rozpakowac napisy
     bool unpack(QUuid id);
-    // czysci smieci, pliki tymczasowe
     void cleanup();
 
 private:
 
-    QString p7zipPath, lang, subFileName;
-    quint64 fileSize;
-
-    SyncXmlRpc rpc;
-    QString token;
+    EngineConfig engineConfig;
+    QSharedPointer<const P7ZipDecoder> p7zipDecoder;
     QString qnapiDisplayableVersion;
+    QString language;
+    SyncXmlRpc rpc;
+
+    quint64 fileSize;
+    QString subFileName, token;
 
     // sprawdza czy dana instancja klasy jest zalogowana na sewerze
     bool isLogged() { return !token.isEmpty(); }

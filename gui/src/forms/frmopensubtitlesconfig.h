@@ -12,10 +12,11 @@
 **
 *****************************************************************************/
 
-#ifndef __FRMOpenSubtitlesCONFIG__H__
-#define __FRMOpenSubtitlesCONFIG__H__
+#ifndef __FRMOPENSUBTITLESCONFIG__H__
+#define __FRMOPENSUBTITLESCONFIG__H__
 
 #include <QDialog>
+#include "config/engineconfig.h"
 
 #include "ui_frmopensubtitlesconfig.h"
 
@@ -25,8 +26,12 @@ Q_OBJECT
 
     public:
 
-        frmOpenSubtitlesConfig(QWidget *parent = 0, Qt::WindowFlags f = 0);
+        frmOpenSubtitlesConfig(const EngineConfig & config,
+                               QWidget *parent = 0,
+                               Qt::WindowFlags f = 0);
         ~frmOpenSubtitlesConfig() {}
+
+        EngineConfig getConfig() const;
 
     public slots:
     
@@ -35,11 +40,8 @@ Q_OBJECT
 
     private:
         Ui::frmOpenSubtitlesConfig ui;
-        
-        void load();
+        EngineConfig config;
         
 };
-
-
 
 #endif

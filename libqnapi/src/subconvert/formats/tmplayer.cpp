@@ -14,7 +14,7 @@
 
 #include "tmplayer.h"
 
-bool TMPlayerSubtitleFormat::detect(const QStringList &lines)
+bool TMPlayerSubtitleFormat::detect(const QStringList &lines) const
 {
     foreach(QString line, lines)
     {
@@ -29,7 +29,7 @@ bool TMPlayerSubtitleFormat::detect(const QStringList &lines)
     return false;
 }
 
-SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines)
+SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines) const
 {
     SubFile sf;
 
@@ -68,7 +68,7 @@ SubFile TMPlayerSubtitleFormat::decode(const QStringList &lines)
     return sf;
 }
 
-QStringList TMPlayerSubtitleFormat::encode(const SubFile & subFile)
+QStringList TMPlayerSubtitleFormat::encode(const SubFile & subFile) const
 {
     QStringList lines;
     foreach(const SubEntry & entry, subFile.entries)
@@ -79,7 +79,7 @@ QStringList TMPlayerSubtitleFormat::encode(const SubFile & subFile)
 }
 
 
-QString TMPlayerSubtitleFormat::encodeEntry(const SubEntry & entry)
+QString TMPlayerSubtitleFormat::encodeEntry(const SubEntry & entry) const
 {
     QString tokensBuff;
     foreach(const SubToken & token, entry.tokens)
@@ -97,7 +97,7 @@ QString TMPlayerSubtitleFormat::encodeEntry(const SubEntry & entry)
             .arg(tokensBuff);
 }
 
-QString TMPlayerSubtitleFormat::encodeToken(const SubToken & entry)
+QString TMPlayerSubtitleFormat::encodeToken(const SubToken & entry) const
 {
     switch(entry.type)
     {

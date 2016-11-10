@@ -12,18 +12,25 @@
 **
 *****************************************************************************/
 
-#include "frmnapiprojektconfig.h"
-#include "../qnapi.h"
+#include <QDesktopWidget>
+#include <QDesktopServices>
 
-frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
-    : QDialog(parent, f)
+#include "frmnapiprojektconfig.h"
+#include "engines/napiprojektdownloadengine.h"
+
+frmNapiProjektConfig::frmNapiProjektConfig(const EngineConfig & config,
+                                           QWidget *parent,
+                                           Qt::WindowFlags f)
+    : QDialog(parent, f),
+      config(config)
 {
     ui.setupUi(this);
-    QNapi q;
-    q.addEngines(q.enumerateEngines());
-    setWindowIcon(QIcon(QPixmap(q.engineByName("NapiProjekt")->enginePixmapData())));
 
-    load();
+    ui.leNick->setText(config.nick());
+    ui.lePass->setText(config.password());
+
+    QIcon napiProjektIcon = QIcon(QPixmap(NapiProjektDownloadEngine::pixmapData));
+    setWindowIcon(napiProjektIcon);
 
     connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 
@@ -32,20 +39,25 @@ frmNapiProjektConfig::frmNapiProjektConfig(QWidget *parent, Qt::WindowFlags f)
     move(position.topLeft());
 }
 
+EngineConfig frmNapiProjektConfig::getConfig() const
+{
+    return config;
+}
+
 void frmNapiProjektConfig::accept()
 {
-    GlobalConfig().setNick("NapiProjekt", ui.leNick->text());
-    GlobalConfig().setPass("NapiProjekt", ui.lePass->text());
+    config = config
+      .setNick(ui.leNick->text())
+      .setPassword(ui.lePass->text());
     QDialog::accept();
 }
 
 void frmNapiProjektConfig::pbRegisterClicked()
 {
-    ((QNapiApp*)qApp)->showCreateAccount("NapiProjekt");
-}
+    Maybe<QUrl> maybeRegistrationUrl = NapiProjektDownloadEngine::metadata.registrationUrl();
 
-void frmNapiProjektConfig::load()
-{
-    ui.leNick->setText(GlobalConfig().nick("NapiProjekt"));
-    ui.lePass->setText(GlobalConfig().pass("NapiProjekt"));
+    if(maybeRegistrationUrl)
+    {
+        QDesktopServices::openUrl(maybeRegistrationUrl.value());
+    }
 }

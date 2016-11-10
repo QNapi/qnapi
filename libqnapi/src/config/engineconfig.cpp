@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -12,35 +12,16 @@
 **
 *****************************************************************************/
 
-#ifndef __QNAPILANGUAGE__H__
-#define __QNAPILANGUAGE__H__
+#include "config/engineconfig.h"
+#include <QTextStream>
 
-#include <QObject>
-#include <QStringList>
+EngineConfig EngineConfig::empty = EngineConfig();
 
-class QNapiLanguage : public QObject
+QString EngineConfig::toString() const
 {
-Q_OBJECT
-
-public:
-
-    QNapiLanguage(QString source = "");
-
-    void setLanguage(QString source);
-
-    QString toTwoLetter();
-    QString toTriLetter();
-    QString toFullName();
-
-    QStringList listLanguages();
-
-private:
-
-    QStringList codes2l, codes3l, names;
-    int idx;
-
-    void fill_tables();
-
-};
-
-#endif
+    QString s;
+    QTextStream(&s)
+      << "nick: " << nick() << endl
+      << "password: " << password() << endl;
+    return s;
+}

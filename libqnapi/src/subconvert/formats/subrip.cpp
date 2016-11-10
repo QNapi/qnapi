@@ -14,7 +14,7 @@
 
 #include "subrip.h"
 
-bool SubRipSubtitleFormat::detect(const QStringList &lines)
+bool SubRipSubtitleFormat::detect(const QStringList &lines) const
 {
     QStringList lines2 = lines;
     while(!lines2.isEmpty() && lines2.first().trimmed().isEmpty())
@@ -35,7 +35,7 @@ bool SubRipSubtitleFormat::detect(const QStringList &lines)
     return r.exactMatch(firstEntryBuff);
 }
 
-SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
+SubFile SubRipSubtitleFormat::decode(const QStringList &lines) const
 {
     SubFile sf;
 
@@ -96,7 +96,7 @@ SubFile SubRipSubtitleFormat::decode(const QStringList &lines)
     return sf;
 }
 
-QStringList SubRipSubtitleFormat::encode(const SubFile & subFile)
+QStringList SubRipSubtitleFormat::encode(const SubFile & subFile) const
 {
     QStringList lines;
     int i = 1;
@@ -108,7 +108,7 @@ QStringList SubRipSubtitleFormat::encode(const SubFile & subFile)
     return lines;
 }
 
-void SubRipSubtitleFormat::addEntry(QVector<SubEntry> & entries, QString & tokensBuff, SrtTimestamps & timestamps)
+void SubRipSubtitleFormat::addEntry(QVector<SubEntry> & entries, QString & tokensBuff, SrtTimestamps & timestamps) const
 {
     SubEntry se;
     se.frameStart = 3600000L * timestamps.h1 + 60000L * timestamps.m1 + 1000L * timestamps.s1 + timestamps.ms1;
@@ -122,7 +122,7 @@ void SubRipSubtitleFormat::addEntry(QVector<SubEntry> & entries, QString & token
     tokensBuff.clear();
 }
 
-QStringList SubRipSubtitleFormat::encodeEntry(const SubEntry & entry, int i)
+QStringList SubRipSubtitleFormat::encodeEntry(const SubEntry & entry, int i) const
 {
     QString tokensBuff;
     foreach(const SubToken & token, entry.tokens)
@@ -155,7 +155,7 @@ QStringList SubRipSubtitleFormat::encodeEntry(const SubEntry & entry, int i)
     return out;
 }
 
-QString SubRipSubtitleFormat::encodeToken(const SubToken & entry)
+QString SubRipSubtitleFormat::encodeToken(const SubToken & entry) const
 {
     switch(entry.type)
     {

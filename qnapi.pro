@@ -75,3 +75,6 @@ win32 {
     INSTALLS = p7zip doc icudlls libmediainfodlls platform
 }
 
+doxygen.commands = rm -fr doc/doxygen/* && doxygen Doxyfile && echo "Doxygen documentation generated in doc/doxygen/index.html"
+QMAKE_EXTRA_TARGETS += doxygen
+

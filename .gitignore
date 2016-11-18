@@ -14,4 +14,4 @@ win32/*.exe
 *.dmg
 .DS_Store
 .qmake.stash
-
+doc/doxygen/*

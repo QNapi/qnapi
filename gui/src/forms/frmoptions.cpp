@@ -432,8 +432,8 @@ void frmOptions::restoreDefaults()
 {
     GlobalConfig().setP7zipPath("");
     GlobalConfig().setTmpPath(QDir::tempPath());
-    GlobalConfig().setLanguage("pl");
-    GlobalConfig().setLanguageBackup("en");
+    GlobalConfig().setLanguage("en");
+    GlobalConfig().setLanguageBackup("de");
     GlobalConfig().setNoBackup(false);
     GlobalConfig().setQuietBatch(false);
     GlobalConfig().setChangePermissions(false);

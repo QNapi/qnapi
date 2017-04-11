@@ -169,7 +169,7 @@ bool SubtitleConverter::convertSubtitles(QString subtitleFile,
                 adEntry.frameStart = sf.entries.back().frameStop + 50L;
                 adEntry.frameStop = adEntry.frameStart + 200L;
             }
-            QString ad = QString("Napisy pobrane i przetworzone programem QNapi|");
+            QString ad = QString("QNapi has downloaded and processed the subtitles|");
             adEntry.tokens = targetFormat->decodeTokenStream(ad);
             SubToken urlToken;
             urlToken.type = STT_WORD;

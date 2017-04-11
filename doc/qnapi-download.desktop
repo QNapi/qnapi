@@ -1,14 +1,14 @@
 [Desktop Entry]
 Version=1.0
 Actions=QNapiDownload;
-Name=Pobierz napisy do filmu z QNapi
-GenericName=Pobierz napisy do filmu z QNapi
+Name=Download subtitles with QNapi
+GenericName=Download subtitles with QNapi
 Icon=qnapi-48
 ServiceTypes=video/x-msvideo,video/x-ms-asf,video/mpeg,video/x-ms-wmv,video/mp4,video/quicktime,video/x-theora,video/x-matroska,video/3gpp,application/vnd.rn-realmedia,application/vnd.rn-realmedia-vbr
 X-KDE-ServiceTypes=KonqPopupMenu/Plugin
 Type=Service
 
 [Desktop Action QNapiDownload]
-Name=Pobierz napisy do filmu z QNapi
+Name=Download subtitles with QNapi
 Exec=qnapi %F
 Icon=qnapi-48

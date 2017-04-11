@@ -86,43 +86,43 @@ frmProgress * QNapiApp::progress()
 
 void QNapiApp::createTrayIcon()
 {
-    getAction = new QAction(tr("Pobierz napisy"), 0);
+    getAction = new QAction(tr("Download subtitles"), 0);
     connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 
-    scanAction = new QAction(tr("Skanuj katalogi"), 0);
+    scanAction = new QAction(tr("Scan directories"), 0);
     connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
 
-    convertAction = new QAction(tr("Konwertuj napisy"), 0);
+    convertAction = new QAction(tr("Convert subtitles"), 0);
     connect(convertAction, SIGNAL(triggered()), this, SLOT(showConvertDialog()));
 
-    napiGetAction = new QAction(tr("Pobierz napisy"), 0);
+    napiGetAction = new QAction(tr("Download subtitles"), 0);
     connect(napiGetAction, &QAction::triggered, [this] { showOpenDialog("NapiProjekt"); });
 
-    napiCreateUserAction = new QAction(tr("Załóż konto"), 0);
+    napiCreateUserAction = new QAction(tr("Create an account"), 0);
     connect(napiCreateUserAction, &QAction::triggered, [this] { showCreateAccount("NapiProjekt"); });
 
-    osGetAction = new QAction(tr("Pobierz napisy"), 0);
+    osGetAction = new QAction(tr("Download subtitles"), 0);
     connect(osGetAction, &QAction::triggered, [this] { showOpenDialog("OpenSubtitles"); });
 
-    osAddAction = new QAction(tr("Dodaj napisy"), 0);
+    osAddAction = new QAction(tr("Upload subtitles"), 0);
     connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
 
-    osCreateUserAction = new QAction(tr("Załóż konto"), 0);
+    osCreateUserAction = new QAction(tr("Create an account"), 0);
     connect(osCreateUserAction, &QAction::triggered, [this] { showCreateAccount("OpenSubtitles"); });
 
-    napisy24GetAction = new QAction(tr("Pobierz napisy"), 0);
+    napisy24GetAction = new QAction(tr("Download subtitles"), 0);
     connect(napisy24GetAction, &QAction::triggered, [this] { showOpenDialog("Napisy24"); });
 
-    napisy24CreateUserAction = new QAction(tr("Załóż konto"), 0);
+    napisy24CreateUserAction = new QAction(tr("Create an account"), 0);
     connect(napisy24CreateUserAction, &QAction::triggered, [this] { showCreateAccount("OpenSNapisy24ubtitles"); });
 
-    settingsAction = new QAction(tr("Opcje"), 0);
+    settingsAction = new QAction(tr("Settings"), 0);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));
 
-    aboutAction = new QAction(tr("O programie"), 0);
+    aboutAction = new QAction(tr("About"), 0);
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
 
-    quitAction = new QAction(tr("Zakończ"), 0);
+    quitAction = new QAction(tr("Quit"), 0);
     connect(quitAction, SIGNAL(triggered()), this, SLOT(tryQuit()));
 
     napiSubMenu = new QMenu(0);
@@ -178,7 +178,7 @@ bool QNapiApp::showOpenDialog(QString engine)
     if(!openDialog)
     {
         openDialog = new QNapiOpenDialog(0,
-                            tr("Wybierz jeden lub więcej plików z filmami"),
+                            tr("Select one or more video files to download subtitles for"),
                             GlobalConfig().previousDialogPath(),
                             QNapiOpenDialog::Movies);
     }

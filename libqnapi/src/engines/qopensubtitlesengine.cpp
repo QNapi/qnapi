@@ -44,7 +44,7 @@ QString QOpenSubtitlesEngine::engineName()
 // zwraca informacje nt. modulu
 QString QOpenSubtitlesEngine::engineInfo()
 {
-    return "Moduł pobierania napisów z bazy <b>www.opensubtitles.org</b>";
+    return "Fetching from <b>www.opensubtitles.org</b>";
 }
 
 // zwraca ikone w formacie XMP

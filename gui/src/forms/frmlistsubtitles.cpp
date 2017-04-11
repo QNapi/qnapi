@@ -33,8 +33,8 @@ frmListSubtitles::frmListSubtitles(QWidget *parent, Qt::WindowFlags f)
 
 void frmListSubtitles::setFileName(const QString & name)
 {
-    ui.lbSelectSubtitles->setText(QString(  "Z poniższej listy wybierz napisy, które"
-                                            " chcesz dopasować do pliku<br><br><b>%1</b>")
+    ui.lbSelectSubtitles->setText(QString(  "Select the subtitle which you want to"
+                                            " adjust to the video file<br><br><b>%1</b>")
                                         .arg(name));
 }
 
@@ -92,8 +92,8 @@ void frmListSubtitles::accept()
     if(ui.twSubtitles->selectedItems().size() == 0)
     {
         QMessageBox::warning(   this,
-                                "Nie wybrano napisów z listy",
-                                "Musisz wybrać napisy z listy!");
+                                "No subtitle selected",
+                                "You need to select a subtitle from the list!");
     }
     else
     {

@@ -209,7 +209,7 @@ int QNapiCli::exec()
 
     foreach(QString movie, movieList)
     {
-        printCli(QString(QString(" * Download subtitle for '%1'")).arg(QFileInfo(movie).fileName()));
+        printCli(QString(QString(" * Downloading subtitles for '%1'")).arg(QFileInfo(movie).fileName()));
 
         napi.setMoviePath(movie);
 
@@ -231,9 +231,9 @@ int QNapiCli::exec()
         {
             foreach(QString e, napi.listLoadedEngines())
             {
-                printCli(QString(QString("   Searching subtitle [%1] (%2)...").arg(lang, e)));
+                printCli(QString(QString("   Searching subtitles [%1] (%2)...").arg(lang, e)));
                 found = napi.lookForSubtitles(lang, e) || found;
-                printCli(QString(QString("   Searching subtitle for another language [%1] (%2)...").arg(langBackup, e)));
+                printCli(QString(QString("   Searching alternative subtitles [%1] (%2)...").arg(langBackup, e)));
                 found = napi.lookForSubtitles(langBackup, e) || found;
             }
         }
@@ -241,7 +241,7 @@ int QNapiCli::exec()
         {
             foreach(QString e, napi.listLoadedEngines())
             {
-                printCli(QString(QString("   Searching subtitle [%1] (%2)...").arg(lang, e)));
+                printCli(QString(QString("   Searching subtitles [%1] (%2)...").arg(lang, e)));
                 found = napi.lookForSubtitles(lang, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found)
@@ -251,7 +251,7 @@ int QNapiCli::exec()
             if(!found && !langBackup.isEmpty()) {
                 foreach(QString e, napi.listLoadedEngines())
                 {
-                    printCli(QString(QString("   Searching subtitle for another language [%1] (%2)...").arg(langBackup, e)));
+                    printCli(QString(QString("   Searching alternative subtitles [%1] (%2)...").arg(langBackup, e)));
                     found = napi.lookForSubtitles(langBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)
@@ -310,7 +310,7 @@ int QNapiCli::exec()
 
             while(!ok)
             {
-                std::cout << "   Select subtitle file to download: ";
+                std::cout << "   Select subtitles to download: ";
                 char line[8];
                 std::cin.getline(line, 8);
 
@@ -318,7 +318,7 @@ int QNapiCli::exec()
 
                 if(!ok)
                 {
-                    printCli("   Enter a number!");
+                    printCli("   You must enter a number!");
                     std::cin.clear();
                 }
                 else if((selIdx > list.size()) || (selIdx < 0))
@@ -337,30 +337,30 @@ int QNapiCli::exec()
 
         if(selIdx == -1) continue;
 
-        printCli(QString(QString("   Download subtitles from server...")));
+        printCli(QString(QString("   Downloading subtitles...")));
         if(!napi.download(selIdx))
         {
             printCli(QString(QString("   Unable to download subtitles!")));
             return EC_COULD_NOT_DOWNLOAD;
         }
 
-        printCli(QString(QString("   Unpacking subtitle file...")));
+        printCli(QString(QString("   Unpacking subtitles...")));
         if(!napi.unpack(selIdx))
         {
-            printCli(QString(QString("   Failed to unpack the subtitle file!")));
+            printCli(QString(QString("   Failed to unpack subtitles!")));
             return EC_COULD_NOT_UNARCHIVE;
         }
 
         if(napi.ppEnabled())
         {
-            printCli(QString(QString("   Processing downloaded subtitle file...")));
+            printCli(QString(QString("   Post-processing subtitles file...")));
             napi.pp();
         }
 
-        printCli(QString(QString("   Adjusting the subtitle...")));
+        printCli(QString(QString("   Adjusting subtitles...")));
         if(!napi.match())
         {
-            printCli(QString(QString("   Could not adjust the subtitle!")));
+            printCli(QString(QString("   Could not adjust subtitles!")));
             return EC_COULD_NOT_MATCH;
         }
 

@@ -37,7 +37,7 @@ QString QNapisy24Engine::engineName()
 
 QString QNapisy24Engine::engineInfo()
 {
-    return "Moduł pobierania napisów z bazy <b>www.napisy24.pl</b><br />";
+    return "Fetching from <b>www.napisy24.pl</b><br />";
 }
 
 const char * const * QNapisy24Engine::enginePixmapData() const

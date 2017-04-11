@@ -22,7 +22,7 @@ frmAbout::frmAbout(QWidget * parent, Qt::WindowFlags f)
 
     setAttribute(Qt::WA_QuitOnClose, false);
     ui.lbTitle->setText(QString("QNapi ") + LibQNapi::displayableVersion());
-    ui.lbQtVersion->setText(QString("Wersja Qt: ") + qVersion());
+    ui.lbQtVersion->setText(QString("Qt version ") + qVersion());
 
     QRect position = frameGeometry();
     position.moveCenter(QDesktopWidget().availableGeometry().center());

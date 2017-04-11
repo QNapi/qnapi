@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Konwertuj napisy</string>
+   <string>Convert subtitles</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">
@@ -21,7 +21,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="lbSrcSubFile">
      <property name="text">
-      <string>Źródłowy plik z napisami:</string>
+      <string>Source subtitle file:</string>
      </property>
     </widget>
    </item>
@@ -63,7 +63,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Wykryto format:</string>
+        <string>Detected format:</string>
        </property>
       </widget>
      </item>
@@ -106,7 +106,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Docelowy format napisów:</string>
+        <string>Target subtitle format:</string>
        </property>
       </widget>
      </item>
@@ -172,7 +172,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Liczba klatek na sekundę filmu (FPS):</string>
+        <string>Video framerate (FPS):</string>
        </property>
       </widget>
      </item>
@@ -259,7 +259,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Wykryj docelowy FPS z pliku</string>
+      <string>Detected video framerate (FPS)</string>
      </property>
      <property name="text">
       <string/>
@@ -278,7 +278,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Docelowe rozszerzenie napisów:</string>
+        <string>File extension for target subtitle file:</string>
        </property>
       </widget>
      </item>
@@ -314,7 +314,7 @@
        </property>
        <item>
         <property name="text">
-         <string>Domyślne</string>
+         <string>Default</string>
         </property>
        </item>
        <item>
@@ -344,7 +344,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Zmień FPS (klatki/sekundę) napisów</string>
+        <string>Change FPS (frames/second) of subtitle</string>
        </property>
       </widget>
      </item>
@@ -367,7 +367,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>z</string>
+        <string>from</string>
        </property>
       </widget>
      </item>
@@ -433,7 +433,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>na</string>
+        <string>to</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -504,7 +504,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Wykryj docelowy FPS z pliku</string>
+      <string>Detect framerate for file</string>
      </property>
      <property name="text">
       <string/>
@@ -523,7 +523,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Przesuń napisy</string>
+        <string>Shift subtitles</string>
        </property>
       </widget>
      </item>
@@ -564,10 +564,10 @@
         </size>
        </property>
        <property name="prefix">
-        <string>o </string>
+        <string> </string>
        </property>
        <property name="suffix">
-        <string> sekund</string>
+        <string> seconds</string>
        </property>
        <property name="minimum">
         <double>-999999999.000000000000000</double>
@@ -585,7 +585,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Docelowa nazwa pliku:</string>
+      <string>Target subtitle file name:</string>
      </property>
     </widget>
    </item>
@@ -645,7 +645,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Konwertuj</string>
+        <string>Convert</string>
        </property>
       </widget>
      </item>

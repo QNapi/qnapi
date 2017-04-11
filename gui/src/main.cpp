@@ -73,9 +73,9 @@ int main(int argc, char **argv)
         
         if(GlobalConfig().firstRun())
         {
-            if(QMessageBox::question(0, QObject::tr("Pierwsze uruchomienie"),
-                    QObject::tr("To jest pierwsze uruchomienie programu QNapi. Czy chcesz go "
-                    "teraz skonfigurować?"), QMessageBox::Yes | QMessageBox::No )
+            if(QMessageBox::question(0, QObject::tr("First Run"),
+                    QObject::tr("This is the first launch of the program QNapi. Do you want to "
+                    "configure settings?"), QMessageBox::Yes | QMessageBox::No )
                 == QMessageBox::Yes )
             {
                 app.showSettings();
@@ -119,8 +119,8 @@ int main(int argc, char **argv)
 
             if(invalidLang)
             {
-                if(QMessageBox::question(0, "QNapi", "Niepoprawny kod językowy!\n"
-                        "Czy chcesz pobrać napisy w domyślnym języku?",
+                if(QMessageBox::question(0, "QNapi", "Invalid language code!\n"
+                        "Do you want to download the subtitles in the default language?",
                         QMessageBox::Yes | QMessageBox::No)
                     != QMessageBox::Yes)
                 {
@@ -216,7 +216,7 @@ void sigHandler(int sig)
 {
     Q_UNUSED(sig);
 
-    qDebug() << "\nQNapi: usuwanie plików tymczasowych...";
+    qDebug() << "\nQNapi: deleting temporary files...";
 
     QString tmpPath = GlobalConfig().tmpPath();
 

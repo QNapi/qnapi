@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>QNapi - informacje o programie</string>
+   <string>QNapi - About</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">
@@ -71,7 +71,7 @@
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="lbAbout">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;QNapi jest programem do automatycznego pobierania i dopasowywania napisów do filmów. &lt;/p&gt;&lt;p&gt;Program rozprowadzany jest na licencji GNU General Public License w wersji drugiej lub późniejszej.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://qnapi.github.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qnapi.github.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Dziękuję wszystkim osobom, które w jakikolwiek sposób wsparły rozwój projektu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;QNapi is a program for automatic downloading and matching subtitles for movies. &lt;/p&gt;&lt;p&gt;The program is distributed under the GNU General Public License version second or later.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://qnapi.github.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qnapi.github.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;I thank all those who in any way supported the development of the project.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -102,7 +102,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Wersja Qt: x.y.z</string>
+          <string>Qt version: x.y.z</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -125,7 +125,7 @@
        <item row="2" column="1">
         <widget class="QLabel" name="lbUseNP">
          <property name="text">
-          <string>Program korzysta z bazy www.napiprojekt.pl</string>
+          <string>The program uses www.napiprojekt.pl subtitle database</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -154,7 +154,7 @@
        <item row="3" column="1">
         <widget class="QLabel" name="lbUseOS">
          <property name="text">
-          <string>Program korzysta z bazy www.opensubtitles.org</string>
+          <string>The program uses www.opensubtitles.org subtitle database</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -180,7 +180,7 @@
        <item row="4" column="1">
         <widget class="QLabel" name="lbUseNP24">
          <property name="text">
-          <string>Program korzysta z bazy www.napisy24.pl</string>
+          <string>The program uses www.napisy24.pl subtitle database</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -197,7 +197,7 @@
    <item row="3" column="1">
     <widget class="QPushButton" name="pbClose">
      <property name="text">
-      <string>Zamknij</string>
+      <string>Close</string>
      </property>
     </widget>
    </item>

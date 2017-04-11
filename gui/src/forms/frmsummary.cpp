@@ -73,8 +73,8 @@ void frmSummary::setSummaryList(QList<QNapiSubtitleInfo> list)
     ui.lbSuccess->setVisible(goodCount != 0);
     ui.lbFail->setVisible(badCount != 0);
 
-    ui.lbSuccess->setText(tr("Pobrano napisy dla %1 %2")
-        .arg(goodCount).arg(tr(goodCount > 1 ? "plików" : "pliku")));
-    ui.lbFail->setText(tr("Nie pobrano napisów dla %1 %2")
-        .arg(badCount).arg(tr(badCount > 1 ? "plików" : "pliku")));
+    ui.lbSuccess->setText(tr("Downloading subtitle for %1 %2")
+        .arg(goodCount).arg(tr(goodCount > 1 ? "files" : "file")));
+    ui.lbFail->setText(tr("Could not download subtitle for %1 %2")
+        .arg(badCount).arg(tr(badCount > 1 ? "files" : "file")));
 }

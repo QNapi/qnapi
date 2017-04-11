@@ -95,7 +95,7 @@ void frmConvert::srcSubFileLoaded(const QString & srcSubFileName)
         QString detectedFormat = subConverter.detectFormat(srcSubFileName);
         if(detectedFormat.isEmpty())
         {
-            ui.lbDetectedFormatValue->setText(tr("niepoprawny"));
+            ui.lbDetectedFormatValue->setText(tr("incorrect"));
             ui.lbDetectedFormatValue->setStyleSheet("QLabel { color: red }");
         } else {
             ui.lbDetectedFormatValue->setText(detectedFormat);
@@ -140,7 +140,7 @@ void frmConvert::checkFPSNeeded()
         fpsNeeded = (srcSF->isTimeBased() != targetSF->isTimeBased()) || (ui.cbDelaySubtitles->isChecked() && !targetSF->isTimeBased());
 
         QString targetDefaultExt = targetSF->defaultExtension();
-        ui.cbTargetExtension->setItemText(0, tr("Domyślne (%1)").arg(targetDefaultExt));
+        ui.cbTargetExtension->setItemText(0, tr("Default (%1)").arg(targetDefaultExt));
         generateTargetFileName();
     }
 
@@ -172,7 +172,7 @@ void frmConvert::checkFPSNeeded()
 
 void frmConvert::movieFPSSelectClicked()
 {
-    QNapiOpenDialog openMovie(this, tr("Wybierz plik z filmem"),
+    QNapiOpenDialog openMovie(this, tr("Select a video file"),
                               QFileInfo(ui.leSrcSubFile->text()).path(),
                               QNapiOpenDialog::Movies);
     if(openMovie.selectFile())
@@ -198,7 +198,7 @@ Maybe<QString> frmConvert::determineMovieFPS(const QString & movieFilePath)
 
 void frmConvert::targetMovieFPSSelectClicked()
 {
-    QNapiOpenDialog openMovie(this, tr("Wybierz plik z filmem"),
+    QNapiOpenDialog openMovie(this, tr("Select a video file"),
                               QFileInfo(ui.leSrcSubFile->text()).path(),
                               QNapiOpenDialog::Movies);
     if(openMovie.selectFile())
@@ -265,11 +265,11 @@ void frmConvert::convertClicked()
                                      fpsRatio,
                                      delayOffset))
     {
-        QMessageBox::information(this, tr("Przekonwertowano napisy"),
-                                 tr("Poprawnie zmieniono format napisów z '%1' na '%2'").arg(srcFormat, targetFormat));
+        QMessageBox::information(this, tr("Converted subtitles"),
+                                 tr("Changed subtitles format from '%1' to '%2'").arg(srcFormat, targetFormat));
 
     } else {
-        QMessageBox::warning(this, tr("Problem podczas konwertowania napisów"),
-                                 tr("Wystąpił problem podczas zamiany formatu napisów!"));
+        QMessageBox::warning(this, tr("An error occured while converting strings"),
+                                 tr("Could not change subtitle format!"));
     }
 }

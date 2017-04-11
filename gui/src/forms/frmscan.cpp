@@ -141,7 +141,7 @@ void frmScan::pbScanClicked()
     else
     {
         scanThread.requestAbort();
-        ui.lbAction->setText(tr("Scanning of directories interrupted..."));
+        ui.lbAction->setText(tr("Interrupting directory scanning..."));
         ui.pbScan->setEnabled(false);
         qApp->processEvents();
         scanThread.wait();
@@ -174,7 +174,7 @@ void frmScan::scanFinished()
     ui.pbScan->setText("Scan");
     ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
                             ? "Select the videos you wish to download subtitles for."
-                            : "Not video files found."));
+                            : "No video files found."));
 }
 
 void frmScan::enableControlWidgets(bool enable)

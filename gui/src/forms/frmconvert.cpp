@@ -74,7 +74,7 @@ frmConvert::frmConvert(QWidget *parent, Qt::WindowFlags f)
 
 void frmConvert::srcSubSelectClicked()
 {
-    QNapiOpenDialog openSubtitle(this, tr("Wybierz plik z napisami"),
+    QNapiOpenDialog openSubtitle(this, tr("Choose a subtitles file"),
                                  QFileInfo(ui.leSrcSubFile->text()).path(),
                                  QNapiOpenDialog::Subtitles);
     if(openSubtitle.selectFile())
@@ -265,7 +265,7 @@ void frmConvert::convertClicked()
                                      fpsRatio,
                                      delayOffset))
     {
-        QMessageBox::information(this, tr("Converted subtitles"),
+        QMessageBox::information(this, tr("Subtitles converted"),
                                  tr("Changed subtitles format from '%1' to '%2'").arg(srcFormat, targetFormat));
 
     } else {

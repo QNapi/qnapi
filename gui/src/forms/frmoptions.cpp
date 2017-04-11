@@ -39,7 +39,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 #endif
 
     QString tlcode;
-    ui.cbLangBackup->addItem("Error", QVariant(""));
+    ui.cbLangBackup->addItem("None", QVariant(""));
     foreach(QString lang, QNapiLanguage("").listLanguages())
     {
         tlcode = QNapiLanguage(lang).toTwoLetter();
@@ -169,7 +169,7 @@ void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
         item->setCheckState(Qt::Checked);
         QMessageBox::warning(this,
                             "Warning",
-                            "At least one module collection must remain active!");
+                            "At least one subtitle engine must remain active!");
     }
     
 }
@@ -219,7 +219,7 @@ void frmOptions::pbEngineInfoClicked()
     QString engineInfo = n.engineByName(engineName)->engineInfo();
     
     QMessageBox::information(this,
-                             QString("Engine information %1").arg(engineName),
+                             QString("%1 subtitle engine info").arg(engineName),
                              engineInfo);
 }
 

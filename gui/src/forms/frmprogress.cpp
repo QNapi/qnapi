@@ -106,7 +106,7 @@ bool frmProgress::download()
     if(getThread.queue.isEmpty())
     {
         QMessageBox::warning(0, tr("No files!"),
-                                tr("Indicated movies to download the subtitles for!"));
+                                tr("Can't download subtitles as no movie files specified!"));
         return false;
     }
 
@@ -202,13 +202,13 @@ void frmProgress::closeEvent(QCloseEvent *event)
     if(getThread.isRunning())
     {
         if( QMessageBox::question(this, tr("QNapi"),
-                tr("Do you want to cancel downloading the subtitle?"),
+                tr("Do you want to cancel subtitles downloading?"),
                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
         {
             mutex.lock();
             showSummary = false;
             getThread.requestAbort();
-            ui.lbAction->setText(tr("Finishing the task..."));
+            ui.lbAction->setText(tr("Finishing the tasks..."));
             ui.lbFileName->setText("");
             ui.pbCancel->setEnabled(false);
             qApp->processEvents();
@@ -322,12 +322,12 @@ void GetThread::run()
             foreach(QString e, napi->listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Searching subtitle [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
                 ABORT_POINT
 
-                emit actionChange(tr("Searching alternative subtitle [%1] (%2)...").arg(languageBackup, e));
+                emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
                 found = napi->lookForSubtitles(languageBackup, e) || found;
 
                 ABORT_POINT
@@ -338,7 +338,7 @@ void GetThread::run()
             foreach(QString e, napi->listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Searching subtitle [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found){
@@ -352,7 +352,7 @@ void GetThread::run()
                 foreach(QString e, napi->listLoadedEngines())
                 {
                     emit progressChange(i, queue.size(), 0.45f);
-                    emit actionChange(tr("Searching alternative subtitle [%1] (%2)...").arg(languageBackup, e));
+                    emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
                     found = napi->lookForSubtitles(languageBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)
@@ -395,7 +395,7 @@ void GetThread::run()
         }
 
         emit progressChange(i, queue.size(), 0.5);
-        emit actionChange(tr("Downloading the subtitle file..."));
+        emit actionChange(tr("Downloading subtitles file..."));
 
         if(!napi->download(selIdx))
         {
@@ -409,7 +409,7 @@ void GetThread::run()
         ABORT_POINT
 
         emit progressChange(i, queue.size(), 0.65);
-        emit actionChange(tr("Unpacking the subtitle file..."));
+        emit actionChange(tr("Unpacking subtitles file..."));
 
         if(!napi->unpack(selIdx))
         {
@@ -421,12 +421,12 @@ void GetThread::run()
         if(napi->ppEnabled())
         {
             emit progressChange(i, queue.size(), 0.8f);
-            emit actionChange(tr("Processing the subtitle..."));
+            emit actionChange(tr("Post-processing subtitles..."));
             napi->pp();
         }
 
         emit progressChange(i, queue.size(), 0.9);
-        emit actionChange(tr("Adjusting the subtitle..."));
+        emit actionChange(tr("Adjusting subtitles..."));
 
         if(!napi->match())
         {
@@ -435,7 +435,7 @@ void GetThread::run()
             ++napiFail;
             subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
 
-            emit criticalError(tr("Could not adjust the subtitle!!"));
+            emit criticalError(tr("Could not adjust subtitles!"));
             return;
         }
 

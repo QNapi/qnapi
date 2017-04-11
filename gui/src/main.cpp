@@ -75,7 +75,7 @@ int main(int argc, char **argv)
         {
             if(QMessageBox::question(0, QObject::tr("First Run"),
                     QObject::tr("This is the first launch of the program QNapi. Do you want to "
-                    "configure settings?"), QMessageBox::Yes | QMessageBox::No )
+                    "configure it now?"), QMessageBox::Yes | QMessageBox::No )
                 == QMessageBox::Yes )
             {
                 app.showSettings();

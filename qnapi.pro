@@ -20,15 +20,15 @@ unix {
         doc/qnapi-scan.schemas
     man.path = $${INSTALL_PREFIX}/share/man/man1
     man.files = doc/qnapi.1.gz
-    icons16.files = res/icons/16x16/apps/qnapi.png
+    icons16.files = gui/res/icons/16x16/apps/qnapi.png
     icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/
-    icons32.files = res/icons/32x32/apps/qnapi.png
+    icons32.files = gui/res/icons/32x32/apps/qnapi.png
     icons32.path = $${DATADIR}/icons/hicolor/32x32/apps/
-    icons48.files = res/icons/48x48/apps/qnapi.png
+    icons48.files = gui/res/icons/48x48/apps/qnapi.png
     icons48.path = $${DATADIR}/icons/hicolor/48x48/apps/
-    icons128.files = res/icons/128x128/apps/qnapi.png
+    icons128.files = gui/res/icons/128x128/apps/qnapi.png
     icons128.path = $${DATADIR}/icons/hicolor/128x128/apps/
-    icons512.files = res/icons/512x512/apps/qnapi.png
+    icons512.files = gui/res/icons/512x512/apps/qnapi.png
     icons512.path = $${DATADIR}/icons/hicolor/512x512/apps/
     INSTALLS += icons16 icons32 icons48 icons128 icons512
 

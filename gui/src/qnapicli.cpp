@@ -109,7 +109,7 @@ bool QNapiCli::analyze()
             lang = QNapiLanguage(p).toTwoLetter();
             if(lang.isEmpty())
             {
-                printCli(QString("Niepoprawny kod jezykowy: %1").arg(p));
+                printCli(QString("Invalid language code: %1").arg(p));
                 return false;
             }
         }
@@ -172,7 +172,7 @@ int QNapiCli::exec()
     }
 
     if((mode == CM_CONSOLE || mode == CM_QUIET) && (movieList.isEmpty())) {
-        printCli("Nie znaleziono pliku!");
+        printCli("File not found!");
         return EC_MOVIE_FILE_NOT_FOUND;
     }
 
@@ -184,20 +184,20 @@ int QNapiCli::exec()
 
     if(!QNapi::checkP7ZipPath())
     {
-        printCli("Sciezka do programu p7zip jest nieprawidlowa! Sprawdz swoje ustawienia.");
+        printCli("Path to the program p7zip is incorrect! Check your settings..");
         return EC_P7ZIP_UNAVAILABLE;
     }
 
     if(!QNapi::checkTmpPath())
     {
-        printCli("Nie można pisac do katalogu tymczasowego! Sprawdz swoje ustawienia.");
+        printCli("Can not write to the temporary directory! Check your settings.");
         return EC_CANNOT_WRITE_TMP_DIR;
     }
 
     
     if(!napi.addEngines(GlobalConfig().enginesList()))
     {
-        printCli(QString("Blad: ") + napi.error());
+        printCli(QString("Error: ") + napi.error());
         return EC_UNSUPPORTED_ENGINE;
     }
 
@@ -209,19 +209,19 @@ int QNapiCli::exec()
 
     foreach(QString movie, movieList)
     {
-        printCli(QString(QString(" * Pobieranie napisow dla '%1'")).arg(QFileInfo(movie).fileName()));
+        printCli(QString(QString(" * Downloading subtitles for '%1'")).arg(QFileInfo(movie).fileName()));
 
         napi.setMoviePath(movie);
 
         if(!napi.checkWritePermissions())
         {
-            printCli(QString("   Brak uprawnien zapisu do katalogu '%1'!").arg(QFileInfo(movie).path()));
+            printCli(QString("   No permission to write to the directory '%1'!").arg(QFileInfo(movie).path()));
             return EC_NO_WRITE_PERMISSIONS;
         }
 
         napi.clearSubtitlesList();
 
-        printCli(QString(QString("   Obliczanie sum kontrolnych...")));
+        printCli(QString(QString("   Calculating checksums...")));
         napi.checksum();
 
         bool found = false;
@@ -231,9 +231,9 @@ int QNapiCli::exec()
         {
             foreach(QString e, napi.listLoadedEngines())
             {
-                printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
+                printCli(QString(QString("   Searching subtitles [%1] (%2)...").arg(lang, e)));
                 found = napi.lookForSubtitles(lang, e) || found;
-                printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
+                printCli(QString(QString("   Searching alternative subtitles [%1] (%2)...").arg(langBackup, e)));
                 found = napi.lookForSubtitles(langBackup, e) || found;
             }
         }
@@ -241,7 +241,7 @@ int QNapiCli::exec()
         {
             foreach(QString e, napi.listLoadedEngines())
             {
-                printCli(QString(QString("   Szukanie napisow [%1] (%2)...").arg(lang, e)));
+                printCli(QString(QString("   Searching subtitles [%1] (%2)...").arg(lang, e)));
                 found = napi.lookForSubtitles(lang, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found)
@@ -251,7 +251,7 @@ int QNapiCli::exec()
             if(!found && !langBackup.isEmpty()) {
                 foreach(QString e, napi.listLoadedEngines())
                 {
-                    printCli(QString(QString("   Szukanie napisow w jezyku zapasowym [%1] (%2)...").arg(langBackup, e)));
+                    printCli(QString(QString("   Searching alternative subtitles [%1] (%2)...").arg(langBackup, e)));
                     found = napi.lookForSubtitles(langBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)
@@ -263,7 +263,7 @@ int QNapiCli::exec()
 
         if(!found)
         {
-            printCli(QString(QString("   Nie znaleziono napisow!")));
+            printCli(QString(QString("   Subtitles not found!")));
             return EC_SUBTITLES_NOT_FOUND;
         }
 
@@ -282,8 +282,8 @@ int QNapiCli::exec()
         {
             bool ok = false;
 
-            printCli(QString("   0)\tNie pobieraj napisow dla tego filmu"));
-            printCli("   Znalezione napisy:");
+            printCli(QString("   0)\tDo not download subtitles for this video"));
+            printCli("   Found subtitles:");
 
             int i = 1;
 
@@ -310,7 +310,7 @@ int QNapiCli::exec()
 
             while(!ok)
             {
-                std::cout << "   Wybierz napisy do pobrania: ";
+                std::cout << "   Select subtitles to download: ";
                 char line[8];
                 std::cin.getline(line, 8);
 
@@ -318,13 +318,13 @@ int QNapiCli::exec()
 
                 if(!ok)
                 {
-                    printCli("   Wpisz liczbe!");
+                    printCli("   You must enter a number!");
                     std::cin.clear();
                 }
                 else if((selIdx > list.size()) || (selIdx < 0))
                 {
                     ok = false;
-                    printCli("   Wpisz liczbe z listy!");
+                    printCli("   Enter a number from the list!");
                 }
             }
 
@@ -337,30 +337,30 @@ int QNapiCli::exec()
 
         if(selIdx == -1) continue;
 
-        printCli(QString(QString("   Pobieranie napisow z serwera...")));
+        printCli(QString(QString("   Downloading subtitles...")));
         if(!napi.download(selIdx))
         {
-            printCli(QString(QString("   Nie udalo sie pobrac napisow!")));
+            printCli(QString(QString("   Unable to download subtitles!")));
             return EC_COULD_NOT_DOWNLOAD;
         }
 
-        printCli(QString(QString("   Rozpakowywanie napisow...")));
+        printCli(QString(QString("   Unpacking subtitles...")));
         if(!napi.unpack(selIdx))
         {
-            printCli(QString(QString("   Nie udało sie poprawnie rozpakowac napisow!")));
+            printCli(QString(QString("   Failed to unpack subtitles!")));
             return EC_COULD_NOT_UNARCHIVE;
         }
 
         if(napi.ppEnabled())
         {
-            printCli(QString(QString("   Przetwarzanie pobranych napisow...")));
+            printCli(QString(QString("   Post-processing subtitles file...")));
             napi.pp();
         }
 
-        printCli(QString(QString("   Dopasowywanie napisow...")));
+        printCli(QString(QString("   Adjusting subtitles...")));
         if(!napi.match())
         {
-            printCli(QString(QString("   Nie udalo sie dopasowac napisow!")));
+            printCli(QString(QString("   Could not adjust subtitles!")));
             return EC_COULD_NOT_MATCH;
         }
 
@@ -372,7 +372,7 @@ int QNapiCli::exec()
 
 void QNapiCli::printHeader()
 {
-    printCli(QString("QNapi %1, %2\nwersja Qt: %3\n")
+    printCli(QString("QNapi %1, %2\nQt version: %3\n")
                 .arg(LibQNapi::displayableVersion())
                 .arg(LibQNapi::webpageUrl())
                 .arg(qVersion()));
@@ -380,25 +380,25 @@ void QNapiCli::printHeader()
 
 void QNapiCli::printHelp()
 {
-    printCli(QString("QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.\n"));
-    printCli(QString("Skladnia: %1 [opcje] [lista plikow]").arg(QFileInfo(arguments().at(0)).fileName()));
-    printCli(QString("Dostepne opcje:"));
-    printCli(QString("   -c, --console              pobieranie napisow z konsoli"));
-    printCli(QString("   -q, --quiet                pobiera napisy nie wypisujac zadnych komunikatow"));
-    printCli(QString("                              ani nie pokazujac zadnych okien (implikuje -d)\n"));
-    printCli(QString("   -s, --show-list            pokazuj liste napisow (dziala tylko z -c)"));
-    printCli(QString("   -d, --dont-show-list       nie pokazuj listy napisow (dziala tylko z -c)\n"));
-    printCli(QString("   -l, --lang [jezyk]         preferowany jezyk napisow"));
-    printCli(QString("   -lb,--lang-backup [jezyk]  zapasowy jezyk napisow\n"));
-    printCli(QString("   -o, --options              wywoluje okno konfiguracji programu (tylko GUI)\n"));
-    printCli(QString("   -h, --help                 pokazuje tekst pomocy"));
-    printCli(QString("   -hl,--help-languages       listuje jezyki, w jakich mozna pobierac napisy\n"));
+    printCli(QString("QNapi is distributed under the GNU General Public License v2.\n"));
+    printCli(QString("Syntax: %1 [options] [list of files]").arg(QFileInfo(arguments().at(0)).fileName()));
+    printCli(QString("Available options:"));
+    printCli(QString("   -c, --console              Download subtitles with console"));
+    printCli(QString("   -q, --quiet                Download subtitles quietly without showing"));
+    printCli(QString("                              any messages or windows (implies -d)\n"));
+    printCli(QString("   -s, --show-list            Show a list of subtitles (works only with -c)"));
+    printCli(QString("   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)\n"));
+    printCli(QString("   -l, --lang                 Preferred subtitles language"));
+    printCli(QString("   -lb,--lang-backup          Alternative subtitles language\n"));
+    printCli(QString("   -o, --options              Show program options (only GUI)\n"));
+    printCli(QString("   -h, --help                 Show help text"));
+    printCli(QString("   -hl,--help-languages       List of available subtitles languages\n"));
 }
 
 void QNapiCli::printHelpLanguages()
 {
-    printCli(QString("Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym"));
-    printCli(QString("im dwuliterowych kodow:\n"));
+    printCli(QString("List of languages recognized by QNapi, including corresponding"));
+    printCli(QString("two-letter language codes:\n"));
 
     QNapiLanguage L, LB;
     QStringList langs = L.listLanguages();
@@ -412,13 +412,13 @@ void QNapiCli::printHelpLanguages()
     L.setLanguage(GlobalConfig().language());
     LB.setLanguage(GlobalConfig().languageBackup());
 
-    printCli(QString("\nAktualnie ustawiony domyslny jezyk napisow: %1 (%2)")
+    printCli(QString("\nCurrent default subtitles language: %1 (%2)")
                 .arg(L.toFullName()).arg(L.toTwoLetter()));
 
     if(LB.toFullName().isEmpty()) {
-        printCli(QString("Brak ustawionego zapasowego jezyka napisow"));
+        printCli(QString("No alternative subtitles language has been set"));
     } else {
-        printCli(QString("Aktualnie ustawiony zapasowy jezyk napisow: %1 (%2)")
+        printCli(QString("Current alternative subtitles language: %1 (%2)")
                     .arg(LB.toFullName()).arg(LB.toTwoLetter()));
     }
 }

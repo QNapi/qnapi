@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmNapisy24Config</class>
- <widget class="QDialog" name="frmNapisy24Config" >
-  <property name="geometry" >
+ <widget class="QDialog" name="frmNapisy24Config">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,59 +10,59 @@
     <height>150</height>
    </rect>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>330</width>
     <height>130</height>
    </size>
   </property>
-  <property name="maximumSize" >
+  <property name="maximumSize">
    <size>
     <width>450</width>
     <height>180</height>
    </size>
   </property>
-  <property name="windowTitle" >
-   <string>Napisy24 - konfiguracja</string>
+  <property name="windowTitle">
+   <string>QNapi - Napisy24 configuration</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <widget class="QLabel" name="lbNick" >
-     <property name="text" >
+  <layout class="QGridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbNick">
+     <property name="text">
       <string>Login:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="3" >
-    <widget class="QLineEdit" name="leNick" >
-     <property name="text" >
+   <item row="0" column="1" colspan="3">
+    <widget class="QLineEdit" name="leNick">
+     <property name="text">
       <string/>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QLabel" name="lbPass" >
-     <property name="text" >
-      <string>Hasło:</string>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbPass">
+     <property name="text">
+      <string>Password:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="3" >
-    <widget class="QLineEdit" name="lePass" >
-     <property name="text" >
+   <item row="1" column="1" colspan="3">
+    <widget class="QLineEdit" name="lePass">
+     <property name="text">
       <string/>
      </property>
-     <property name="echoMode" >
+     <property name="echoMode">
       <enum>QLineEdit::Password</enum>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4" >
+   <item row="2" column="0" colspan="4">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>318</width>
        <height>41</height>
@@ -69,19 +70,19 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="0" >
-    <widget class="QPushButton" name="pbRegister" >
-     <property name="text" >
-      <string>Załóż konto</string>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="pbRegister">
+     <property name="text">
+      <string>Create an account</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1" >
+   <item row="3" column="1">
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>108</width>
        <height>20</height>
@@ -89,25 +90,23 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="2" >
-    <widget class="QPushButton" name="pbCancel" >
-     <property name="text" >
-      <string>Anuluj</string>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="pbCancel">
+     <property name="text">
+      <string>Cancel</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="3" >
-    <widget class="QPushButton" name="pbSave" >
-     <property name="text" >
-      <string>Zapisz</string>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="pbSave">
+     <property name="text">
+      <string>Save</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../res/resources.qrc" />
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>pbCancel</sender>
@@ -115,11 +114,11 @@
    <receiver>frmNapisy24Config</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>236</x>
      <y>101</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>164</x>
      <y>59</y>
     </hint>
@@ -131,11 +130,11 @@
    <receiver>frmNapisy24Config</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>300</x>
      <y>101</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>164</x>
      <y>59</y>
     </hint>
@@ -147,11 +146,11 @@
    <receiver>frmNapisy24Config</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>220</x>
      <y>18</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>164</x>
      <y>59</y>
     </hint>
@@ -163,11 +162,11 @@
    <receiver>frmNapisy24Config</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>220</x>
      <y>51</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>164</x>
      <y>59</y>
     </hint>

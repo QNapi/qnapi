@@ -97,7 +97,7 @@ void frmScan::selectDirectory()
     QString dir = QFileInfo(ui.leDirectory->text()).path();
     dir = QDir().exists(dir) ? dir : GlobalConfig().lastScanDir();
 
-    QNapiOpenDialog openDialog(this, tr("Wskaż katalog do skanowania"),
+    QNapiOpenDialog openDialog(this, tr("Select the folder to scan"),
                                 dir, QNapiOpenDialog::None);
 
     if(openDialog.selectDirectory())
@@ -122,8 +122,8 @@ void frmScan::pbScanClicked()
     {
         ui.leDirectory->setEnabled(false);
         ui.pbDirectorySelect->setEnabled(false);
-        ui.pbScan->setText(tr("Przerwij"));
-        ui.lbAction->setText(tr("Skanowanie katalogów..."));
+        ui.pbScan->setText(tr("Cancel"));
+        ui.lbAction->setText(tr("Scanning directories..."));
         ui.pbGet->setEnabled(false);
         enableControlWidgets(false);
         enableFilesWidgets(false);
@@ -141,7 +141,7 @@ void frmScan::pbScanClicked()
     else
     {
         scanThread.requestAbort();
-        ui.lbAction->setText(tr("Przerywanie skanowania katalogów..."));
+        ui.lbAction->setText(tr("Interrupting directory scanning..."));
         ui.pbScan->setEnabled(false);
         qApp->processEvents();
         scanThread.wait();
@@ -164,17 +164,17 @@ void frmScan::addFile(const QString & fileName)
 
 void frmScan::folderChange(const QString & dirName)
 {
-    ui.lbAction->setText(QString("Skanowanie katalogu <b>%1</b>..").arg(dirName));
+    ui.lbAction->setText(QString("Scanning directory <b>%1</b>..").arg(dirName));
 }
 
 void frmScan::scanFinished()
 {
     enableControlWidgets(true);
     enableFilesWidgets(ui.lwMovies->count() > 0);
-    ui.pbScan->setText("Skanuj");
+    ui.pbScan->setText("Scan");
     ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
-                            ? "Zaznacz filmy, do których chcesz pobrać napisy."
-                            : "Nie znaleziono plików z filmami."));
+                            ? "Select the videos you wish to download subtitles for."
+                            : "No video files found."));
 }
 
 void frmScan::enableControlWidgets(bool enable)

@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>QNapi - rezultat dopasowania napisów</string>
+   <string>QNapi - subtitles download summary</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">
@@ -42,7 +42,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Pobrano napisy dla 5 plików</string>
+      <string>Downloaded subtitles for 5 video files</string>
      </property>
      <property name="textFormat">
       <enum>Qt::AutoText</enum>
@@ -58,7 +58,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Nie udało się znaleźć napisów dla 3 plików</string>
+      <string>Could not find the subtitles for 3 video files</string>
      </property>
     </widget>
    </item>

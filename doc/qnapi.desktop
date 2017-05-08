@@ -1,10 +1,13 @@
 [Desktop Entry]
 Exec=qnapi %U
 Name=QNapi
+Name[pl_PL]=QNapi
 Icon=qnapi
 Type=Application
 Categories=AudioVideo;
-Comment=Program do pobierania napisów do filmów
-GenericName=Program do pobierania napisów do filmów
+Comment=Program for downloading video subtitles
+GenericName=Program for downloading video subtitles
+Comment[pl_PL]=Program do pobierania napisów do filmów
+GenericName[pl_PL]=Program do pobierania napisów do filmów
 Terminal=false
 X-KDE-StartupNotify=false

@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>QNapi - wybierz napisy z listy</string>
+   <string>QNapi - Select subtitles from the list</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">
@@ -40,7 +40,7 @@
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="lbSelectSubtitles">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z poniższej listy wybierz napisy, które chcesz dopasować do pliku&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;film.avi&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the subtitles which you want to adjust to the video file&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;film.avi&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -50,21 +50,21 @@
    <item row="4" column="2">
     <widget class="QPushButton" name="pbDownload">
      <property name="text">
-      <string>Pobierz napisy</string>
+      <string>Download subtitles</string>
      </property>
     </widget>
    </item>
    <item row="4" column="0">
     <widget class="QPushButton" name="pbDontDownload">
      <property name="text">
-      <string>Nie pobieraj napisów dla tego filmu</string>
+      <string>Do not download subtitles for this video</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0" colspan="3">
     <widget class="QLabel" name="lbGreenHint">
      <property name="text">
-      <string>Na zielono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; pasujące do Twojego filmu.</string>
+      <string>Subtitles &lt;b&gt;likely matching&lt;/b&gt; with your video highlighted with green.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignJustify|Qt::AlignVCenter</set>
@@ -74,7 +74,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QLabel" name="lbRedHint">
      <property name="text">
-      <string>Na czerwono podświetlono napisy &lt;b&gt;prawdopodobnie&lt;/b&gt; niepasujące do Twojego filmu.</string>
+      <string>Subtitles &lt;b&gt;likely not matching&lt;/b&gt; with your video highlighted with red.</string>
      </property>
     </widget>
    </item>

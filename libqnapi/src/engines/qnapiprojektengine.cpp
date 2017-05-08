@@ -60,7 +60,7 @@ QString QNapiProjektEngine::engineName()
 // zwraca informacje nt. modulu
 QString QNapiProjektEngine::engineInfo()
 {
-    return "Moduł pobierania napisów z bazy <b>www.napiprojekt.pl</b>";
+    return "<b>www.napiprojekt.pl</b> subtitle downloading engine";
 }
 
 // zwraca ikone w formacie XMP

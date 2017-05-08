@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmProgress</class>
- <widget class="QWidget" name="frmProgress" >
-  <property name="geometry" >
+ <widget class="QWidget" name="frmProgress">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,94 +10,95 @@
     <height>140</height>
    </rect>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>580</width>
     <height>140</height>
    </size>
   </property>
-  <property name="maximumSize" >
+  <property name="maximumSize">
    <size>
     <width>800</width>
     <height>140</height>
    </size>
   </property>
-  <property name="acceptDrops" >
+  <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <property name="windowTitle" >
-   <string>QNapi - pobieranie napisów...</string>
+  <property name="windowTitle">
+   <string>QNapi - Downloading subtitles...</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi.png</iconset>
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
+    <normaloff>:/icon/qnapi.png</normaloff>:/icon/qnapi.png</iconset>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QLabel" name="lbFileName" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+    <widget class="QLabel" name="lbFileName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="font" >
+     <property name="font">
       <font>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
-     <property name="frameShape" >
+     <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
-     <property name="frameShadow" >
+     <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
-     <property name="text" >
+     <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="lbAction" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Minimum" hsizetype="Expanding" >
+    <widget class="QLabel" name="lbAction">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="font" >
+     <property name="font">
       <font>
        <weight>50</weight>
        <bold>false</bold>
       </font>
      </property>
-     <property name="text" >
-      <string>Pobieranie napisów do filmu...</string>
+     <property name="text">
+      <string>Downloading the subtitles...</string>
      </property>
-     <property name="textFormat" >
+     <property name="textFormat">
       <enum>Qt::AutoText</enum>
      </property>
-     <property name="scaledContents" >
+     <property name="scaledContents">
       <bool>false</bool>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QProgressBar" name="pbProgress" >
-       <property name="value" >
+      <widget class="QProgressBar" name="pbProgress">
+       <property name="value">
         <number>24</number>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbCancel" >
-       <property name="text" >
-        <string>Anuluj</string>
+      <widget class="QPushButton" name="pbCancel">
+       <property name="text">
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
@@ -105,7 +107,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -114,11 +116,11 @@
    <receiver>frmProgress</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>554</x>
      <y>99</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>299</x>
      <y>59</y>
     </hint>

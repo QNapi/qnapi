@@ -75,149 +75,149 @@ void QNapiLanguage::fill_tables()
 {
     codes2l << "sq";
     codes3l << "alb";
-    names << tr("Albański");
+    names << tr("Albanian");
 
     codes2l << "en";
     codes3l << "eng";
-    names << tr("Angielski");
+    names << tr("English");
 
     codes2l << "ar";
     codes3l << "ara";
-    names << tr("Arabski");
+    names << tr("Arabic");
 
     codes2l << "bg";
     codes3l << "bul";
-    names << tr("Bułgarski");
+    names << tr("Bulgarian");
 
     codes2l << "zh";
     codes3l << "chi";
-    names << tr("Chiński");
+    names << tr("Chinese");
 
     codes2l << "hr";
     codes3l << "hrv";
-    names << tr("Chorwacki");
+    names << tr("Croatian");
 
     codes2l << "cs";
     codes3l << "cze";
-    names << tr("Czeski");
+    names << tr("Czech");
 
     codes2l << "da";
     codes3l << "dan";
-    names << tr("Duński");
+    names << tr("Danish");
 
     codes2l << "et";
     codes3l << "est";
-    names << tr("Estoński");
+    names << tr("Estonian");
 
     codes2l << "fi";
     codes3l << "fin";
-    names << tr("Fiński");
+    names << tr("Finnish");
 
     codes2l << "fr";
     codes3l << "fre";
-    names << tr("Francuski");
+    names << tr("French");
 
     codes2l << "gl";
     codes3l << "glg";
-    names << tr("Galicyjski");
+    names << tr("Galician");
 
     codes2l << "el";
     codes3l << "ell";
-    names << tr("Grecki");
+    names << tr("Greek");
 
     codes2l << "he";
     codes3l << "heb";
-    names << tr("Hebrajski");
+    names << tr("Hebrew");
 
     codes2l << "es";
     codes3l << "spa";
-    names << tr("Hiszpanski");
+    names << tr("Spanish");
 
     codes2l << "nl";
     codes3l << "dut";
-    names << tr("Holenderski");
+    names << tr("Dutch");
 
     codes2l << "id";
     codes3l << "ind";
-    names << tr("Indonezyjski");
+    names << tr("Indonesian");
 
     codes2l << "ja";
     codes3l << "jpn";
-    names << tr("Japoński");
+    names << tr("Japanese");
 
     codes2l << "ko";
     codes3l << "kor";
-    names << tr("Koreański");
+    names << tr("Korean");
 
     codes2l << "mk";
     codes3l << "mac";
-    names << tr("Macedoński");
+    names << tr("Macedonian");
 
     codes2l << "de";
     codes3l << "ger";
-    names << tr("Niemiecki");
+    names << tr("German");
 
     codes2l << "no";
     codes3l << "nor";
-    names << tr("Norweski");
+    names << tr("Norwegian");
 
     codes2l << "oc";
     codes3l << "oci";
-    names << tr("Oksytański");
+    names << tr("Occitan");
 
     codes2l << "fa";
     codes3l << "per";
-    names << tr("Perski (farsi)");
+    names << tr("Persian (farsi)");
 
     codes2l << "pl";
     codes3l << "pol";
-    names << tr("Polski");
+    names << tr("Polish");
 
     codes2l << "pt";
     codes3l << "por";
-    names << tr("Portugalski");
+    names << tr("Portuguese");
 
     codes2l << "pb";
     codes3l << "pob";
-    names << tr("Portugalski-BR");
+    names << tr("Portuguese-BR");
 
     codes2l << "ru";
     codes3l << "rus";
-    names << tr("Rosyjski");
+    names << tr("Russian");
 
     codes2l << "ro";
     codes3l << "rum";
-    names << tr("Rumuński");
+    names << tr("Romanian");
 
     codes2l << "sr";
     codes3l << "scc";
-    names << tr("Serbski");
+    names << tr("Serbian");
 
     codes2l << "sl";
     codes3l << "slv";
-    names << tr("Słoweński");
+    names << tr("Slovenian");
 
     codes2l << "sv";
     codes3l << "swe";
-    names << tr("Szwedzki");
+    names << tr("Swedish");
 
     codes2l << "sk";
     codes3l << "slo";
-    names << tr("Słowacki");
+    names << tr("Slovak");
 
     codes2l << "tr";
     codes3l << "tur";
-    names << tr("Turecki");
+    names << tr("Turkish");
 
     codes2l << "vi";
     codes3l << "vie";
-    names << tr("Wietnamski");
+    names << tr("Vietnamese");
 
     codes2l << "hu";
     codes3l << "hun";
-    names << tr("Węgierski");
+    names << tr("Hungarian");
 
     codes2l << "it";
     codes3l << "ita";
-    names << tr("Włoski");
+    names << tr("Italian");
 }

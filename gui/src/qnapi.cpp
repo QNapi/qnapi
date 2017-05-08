@@ -79,7 +79,7 @@ bool QNapi::addEngine(QString engine)
     }
     else
     {
-        errorMsg = QString("Nieobsługiwany silnik pobierania: %1.").arg(engine);
+        errorMsg = QString("Unsupported download engine: %1.").arg(engine);
         return false;
     }
 }
@@ -152,7 +152,7 @@ bool QNapi::lookForSubtitles(QString lang, QString engine)
 
     if(!result)
     {
-        errorMsg = "Nie znaleziono napisów!";
+        errorMsg = "No subtitles found!";
     }
 
     return result;

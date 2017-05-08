@@ -39,7 +39,7 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f) : QDialog(parent, f)
 #endif
 
     QString tlcode;
-    ui.cbLangBackup->addItem("Brak", QVariant(""));
+    ui.cbLangBackup->addItem("None", QVariant(""));
     foreach(QString lang, QNapiLanguage("").listLanguages())
     {
         tlcode = QNapiLanguage(lang).toTwoLetter();
@@ -97,14 +97,14 @@ void frmOptions::le7zPathChanged()
 
 void frmOptions::select7zPath()
 {
-    QString path7z = QFileDialog::getOpenFileName(this, tr("Wskaż ścieżkę do programu 7z"),
+    QString path7z = QFileDialog::getOpenFileName(this, tr("Specify the path for 7z executable"),
                                                     QFileInfo(ui.le7zPath->text()).path());
     if(!path7z.isEmpty())
     {
         if(!QFileInfo(path7z).isExecutable())
-            QMessageBox::warning(this, tr("Niepoprawna ścieżka"),
-                tr("Wskazana przez Ciebie ścieżka do programu 7z jest niepoprawna. Jeśli nie możesz "
-                    "odnaleźć programu 7z, spróbuj zainstalować pakiet p7zip-full."));
+            QMessageBox::warning(this, tr("Invalid path"),
+                tr("Defined path to 7z executable is invalid. If you can not "
+                    "locate 7z executable, try installing p7zip-full package."));
         else
             ui.le7zPath->setText(path7z);
     }
@@ -123,7 +123,7 @@ void frmOptions::leTmpPathChanged()
 void frmOptions::selectTmpPath()
 {
     QString tmpDir = QFileDialog::getExistingDirectory(this,
-                                    tr("Wskaż katalog tymczasowy"),
+                                    tr("Specify temporary directory"),
                                     QFileInfo(ui.leTmpPath->text()).path(),
                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if(!tmpDir.isEmpty())
@@ -168,8 +168,8 @@ void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
     {
         item->setCheckState(Qt::Checked);
         QMessageBox::warning(this,
-                            "Ostrzeżenie",
-                            "Przynajmniej jeden moduł pobierania musi pozostać aktywny!");
+                            "Warning",
+                            "At least one subtitle engine must remain active!");
     }
     
 }
@@ -219,7 +219,7 @@ void frmOptions::pbEngineInfoClicked()
     QString engineInfo = n.engineByName(engineName)->engineInfo();
     
     QMessageBox::information(this,
-                             QString("Informacje o silniku %1").arg(engineName),
+                             QString("%1 subtitle engine info").arg(engineName),
                              engineInfo);
 }
 
@@ -227,14 +227,14 @@ void frmOptions::subFormatChanged(int format)
 {
     if(format == 0)
     {
-        ui.cbSubExtension->setItemText(0, tr("Domyślne"));
+        ui.cbSubExtension->setItemText(0, tr("Default"));
     }
     else
     {
         QString targetFormatName = ui.cbSubFormat->currentText();
         SubtitleFormat * targetSF = GlobalFormatsRegistry().select(targetFormatName);
         QString targetDefaultExt = targetSF->defaultExtension();
-        ui.cbSubExtension->setItemText(0, tr("Domyślne (%1)").arg(targetDefaultExt));
+        ui.cbSubExtension->setItemText(0, tr("Default (%1)").arg(targetDefaultExt));
     }
 }
 
@@ -432,8 +432,8 @@ void frmOptions::restoreDefaults()
 {
     GlobalConfig().setP7zipPath("");
     GlobalConfig().setTmpPath(QDir::tempPath());
-    GlobalConfig().setLanguage("pl");
-    GlobalConfig().setLanguageBackup("en");
+    GlobalConfig().setLanguage("en");
+    GlobalConfig().setLanguageBackup("de");
     GlobalConfig().setNoBackup(false);
     GlobalConfig().setQuietBatch(false);
     GlobalConfig().setChangePermissions(false);

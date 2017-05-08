@@ -91,22 +91,22 @@ bool frmProgress::download()
 
     if(!QNapi::checkP7ZipPath())
     {
-        QMessageBox::warning(0, tr("Brak programu p7zip!"),
-                                tr("Ścieżka do programu p7zip jest nieprawidłowa!"));
+        QMessageBox::warning(0, tr("Can not find p7zip!"),
+                                tr("The path to the program p7zip is incorrect!"));
         return false;
     }
 
     if(!QNapi::checkTmpPath())
     {
-        QMessageBox::warning(0, tr("Nieprawidłowy katalog tymczasowy!"),
-                                tr("Nie można pisać do katalogu tymczasowego! Sprawdź swoje ustawienia."));
+        QMessageBox::warning(0, tr("Invalid temporary directory!"),
+                                tr("Unable to write to the temporary directory! Check your settings."));
         return false;
     }
 
     if(getThread.queue.isEmpty())
     {
-        QMessageBox::warning(0, tr("Brak plików!"),
-                                tr("Nie wskazano filmów do pobrania napisów!"));
+        QMessageBox::warning(0, tr("No files!"),
+                                tr("Can't download subtitles as no movie files specified!"));
         return false;
     }
 
@@ -139,8 +139,8 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
     if(stageProgress >= 0) lastStageProgress = stageProgress;
 
     QString windowTitle = (lastAll > 1)
-                            ? QString(tr("QNapi - pobieranie napisów (%1/%2)")).arg(lastCurrent + 1).arg(lastAll)
-                            : QString(tr("QNapi - pobieranie napisów..."));
+                            ? QString(tr("QNapi - downloading subtitle (%1/%2)")).arg(lastCurrent + 1).arg(lastAll)
+                            : QString(tr("QNapi - downloading subtitle..."));
     setWindowTitle(windowTitle);
 
     ui.pbProgress->setMaximum(lastAll * 100);
@@ -180,7 +180,7 @@ void frmProgress::downloadFinished()
     {
         if(!getThread.criticalMessage.isEmpty())
         {
-            QMessageBox::critical(0, tr("Błąd krytyczny!"), getThread.criticalMessage);
+            QMessageBox::critical(0, tr("Critical error!"), getThread.criticalMessage);
         }
         else if(queue.size() > 0 && !getThread.subStatusList.isEmpty())
         {
@@ -202,13 +202,13 @@ void frmProgress::closeEvent(QCloseEvent *event)
     if(getThread.isRunning())
     {
         if( QMessageBox::question(this, tr("QNapi"),
-                tr("Czy chcesz przerwać pobieranie napisów?"),
+                tr("Do you want to cancel subtitles downloading?"),
                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes )
         {
             mutex.lock();
             showSummary = false;
             getThread.requestAbort();
-            ui.lbAction->setText(tr("Kończenie zadań..."));
+            ui.lbAction->setText(tr("Finishing the tasks..."));
             ui.lbFileName->setText("");
             ui.pbCancel->setEnabled(false);
             qApp->processEvents();
@@ -275,7 +275,7 @@ void GetThread::run()
     }
     else if(!napi->addEngines(GlobalConfig().enginesList()))
     {
-        emit criticalError(tr("Błąd: ") + napi->error());
+        emit criticalError(tr("Error: ") + napi->error());
         delete napi;
         return;
     }
@@ -295,11 +295,11 @@ void GetThread::run()
         napi->setMoviePath(queue[i]);
 
         emit progressChange(i, queue.size(), 0.1f);
-        emit actionChange(tr("Sprawdzanie uprawnień do katalogu z filmem..."));
+        emit actionChange(tr("Checking permissions of the video directory..."));
 
         if(!napi->checkWritePermissions())
         {
-            emit criticalError(tr("Brak uprawnień zapisu do katalogu '%1'!").arg(QFileInfo(queue[i]).path()));
+            emit criticalError(tr("No permission to write to the directory '%1'!").arg(QFileInfo(queue[i]).path()));
             delete napi;
             return;
         }
@@ -307,7 +307,7 @@ void GetThread::run()
         napi->clearSubtitlesList();
 
         emit progressChange(i, queue.size(), 0.3f);
-        emit actionChange(tr("Obliczanie sumy kontrolnej pliku..."));
+        emit actionChange(tr("Calculating checksum of the file..."));
 
         napi->checksum();
 
@@ -322,12 +322,12 @@ void GetThread::run()
             foreach(QString e, napi->listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
                 ABORT_POINT
 
-                emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
+                emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
                 found = napi->lookForSubtitles(languageBackup, e) || found;
 
                 ABORT_POINT
@@ -338,7 +338,7 @@ void GetThread::run()
             foreach(QString e, napi->listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Szukanie napisów [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
                 found = napi->lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found){
@@ -352,7 +352,7 @@ void GetThread::run()
                 foreach(QString e, napi->listLoadedEngines())
                 {
                     emit progressChange(i, queue.size(), 0.45f);
-                    emit actionChange(tr("Szukanie napisów w języku zapasowym [%1] (%2)...").arg(languageBackup, e));
+                    emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
                     found = napi->lookForSubtitles(languageBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)
@@ -395,7 +395,7 @@ void GetThread::run()
         }
 
         emit progressChange(i, queue.size(), 0.5);
-        emit actionChange(tr("Pobieranie napisów dla pliku..."));
+        emit actionChange(tr("Downloading subtitles file..."));
 
         if(!napi->download(selIdx))
         {
@@ -409,7 +409,7 @@ void GetThread::run()
         ABORT_POINT
 
         emit progressChange(i, queue.size(), 0.65);
-        emit actionChange(tr("Rozpakowywanie napisów..."));
+        emit actionChange(tr("Unpacking subtitles file..."));
 
         if(!napi->unpack(selIdx))
         {
@@ -421,12 +421,12 @@ void GetThread::run()
         if(napi->ppEnabled())
         {
             emit progressChange(i, queue.size(), 0.8f);
-            emit actionChange(tr("Przetwarzanie napisów..."));
+            emit actionChange(tr("Post-processing subtitles..."));
             napi->pp();
         }
 
         emit progressChange(i, queue.size(), 0.9);
-        emit actionChange(tr("Dopasowywanie napisów..."));
+        emit actionChange(tr("Adjusting subtitles..."));
 
         if(!napi->match())
         {
@@ -435,7 +435,7 @@ void GetThread::run()
             ++napiFail;
             subStatusList << QNapiSubtitleInfo::fromFailed(queue[i]);
 
-            emit criticalError(tr("Nie udało się dopasować napisów!!"));
+            emit criticalError(tr("Could not adjust subtitles!"));
             return;
         }
 

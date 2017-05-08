@@ -25,11 +25,11 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
 
     if(filterMode == Movies)
     {
-        setNameFilter(tr("Filmy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
+        setNameFilter(tr("Videos (%1);;All files (*.*)").arg(GlobalConfig().movieExtensionsFilter()));
     }
     else if(filterMode == Subtitles)
     {
-        setNameFilter(tr("Napisy (%1);;Wszystkie pliki (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
+        setNameFilter(tr("Subtitles (%1);;All files (*.*)").arg(GlobalConfig().subtitleExtensionsFilter()));
     }
 
     if(QFileInfo(init_path).isDir())
@@ -45,7 +45,7 @@ QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
 
     sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")
                 << QString(QDir::homePath() + "/Video") << QString(QDir::homePath() + "/video")
-                << QString(QDir::homePath() + "/Filmy") << QString(QDir::homePath() + "/filmy")
+                << QString(QDir::homePath() + "/Videos") << QString(QDir::homePath() + "/videos")
                 << QString(QDir::homePath() + "/Wideo") << QString(QDir::homePath() + "/wideo");
 
     QList<QUrl> urls = sidebarUrls();

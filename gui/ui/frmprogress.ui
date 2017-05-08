@@ -25,7 +25,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle" >
-   <string>QNapi - pobieranie napisów...</string>
+   <string>QNapi - downloading subtitle...</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../res/resources.qrc" >:/icon/qnapi.png</iconset>
@@ -71,7 +71,7 @@
       </font>
      </property>
      <property name="text" >
-      <string>Pobieranie napisów do filmu...</string>
+      <string>Downloading the subtitle...</string>
      </property>
      <property name="textFormat" >
       <enum>Qt::AutoText</enum>
@@ -96,7 +96,7 @@
      <item>
       <widget class="QPushButton" name="pbCancel" >
        <property name="text" >
-        <string>Anuluj</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>

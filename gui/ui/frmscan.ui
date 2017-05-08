@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>frmScan</class>
- <widget class="QDialog" name="frmScan" >
-  <property name="geometry" >
+ <widget class="QDialog" name="frmScan">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,32 +10,33 @@
     <height>520</height>
    </rect>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>740</width>
     <height>500</height>
    </size>
   </property>
-  <property name="windowTitle" >
-   <string>QNapi - Directory scanning and subtitle matching</string>
+  <property name="windowTitle">
+   <string>QNapi - Directory scanning</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../res/resources.qrc" >:/icon/qnapi.png</iconset>
+  <property name="windowIcon">
+   <iconset resource="../res/resources.qrc">
+    <normaloff>:/icon/qnapi.png</normaloff>:/icon/qnapi.png</iconset>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <widget class="QLabel" name="lbDirectory" >
-     <property name="text" >
+  <layout class="QGridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbDirectory">
+     <property name="text">
       <string>Select directory to search for video files:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <layout class="QHBoxLayout" >
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QLineEdit" name="leDirectory" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+      <widget class="QLineEdit" name="leDirectory">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -42,57 +44,58 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbDirectorySelect" >
-       <property name="text" >
+      <widget class="QPushButton" name="pbDirectorySelect">
+       <property name="text">
         <string/>
        </property>
-       <property name="icon" >
-        <iconset resource="../res/resources.qrc" >:/ui/folder.png</iconset>
+       <property name="icon">
+        <iconset resource="../res/resources.qrc">
+         <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pbScan" >
-       <property name="enabled" >
+      <widget class="QPushButton" name="pbScan">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Scan</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="2" column="0" >
-    <layout class="QHBoxLayout" >
-     <property name="topMargin" >
+   <item row="2" column="0">
+    <layout class="QHBoxLayout">
+     <property name="topMargin">
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbFilter" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+      <widget class="QLabel" name="lbFilter">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Filter file extensions:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="cbFilters" >
-       <property name="editable" >
+      <widget class="QComboBox" name="cbFilters">
+       <property name="editable">
         <bool>true</bool>
        </property>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>*.avi *.asf *.divx *.mkv *.mov *.mp4 *.mpeg *.mpg *.ogm *.rm *.rmvb *.wmv</string>
         </property>
        </item>
        <item>
-        <property name="text" >
+        <property name="text">
          <string>*.*</string>
         </property>
        </item>
@@ -100,104 +103,104 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" >
-    <layout class="QHBoxLayout" >
-     <property name="topMargin" >
+   <item row="3" column="0">
+    <layout class="QHBoxLayout">
+     <property name="topMargin">
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbSkip" >
-       <property name="text" >
+      <widget class="QLabel" name="lbSkip">
+       <property name="text">
         <string>Skip files whose names contain:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="leSkipFilters" >
-       <property name="text" >
+      <widget class="QLineEdit" name="leSkipFilters">
+       <property name="text">
         <string>PL dubbing</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="4" column="0" >
-    <widget class="QCheckBox" name="cbSkipIfSubtitlesExists" >
-     <property name="text" >
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="cbSkipIfSubtitlesExists">
+     <property name="text">
       <string>Skip video files which already have subtitles</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" >
-    <layout class="QVBoxLayout" >
-     <property name="topMargin" >
+   <item row="6" column="0">
+    <layout class="QVBoxLayout">
+     <property name="topMargin">
       <number>10</number>
      </property>
      <item>
-      <widget class="QLabel" name="lbMovies" >
-       <property name="text" >
+      <widget class="QLabel" name="lbMovies">
+       <property name="text">
         <string>Found video files:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckedListWidget" name="lwMovies" >
-       <property name="minimumSize" >
+      <widget class="QCheckedListWidget" name="lwMovies">
+       <property name="minimumSize">
         <size>
          <width>695</width>
          <height>170</height>
         </size>
        </property>
-       <property name="editTriggers" >
+       <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
-       <property name="selectionMode" >
+       <property name="selectionMode">
         <enum>QAbstractItemView::NoSelection</enum>
        </property>
-       <property name="verticalScrollMode" >
+       <property name="verticalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
        </property>
-       <property name="horizontalScrollMode" >
+       <property name="horizontalScrollMode">
         <enum>QAbstractItemView::ScrollPerPixel</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="lbAction" >
-       <property name="text" >
+      <widget class="QLabel" name="lbAction">
+       <property name="text">
         <string/>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" >
+      <layout class="QHBoxLayout">
        <item>
-        <widget class="QPushButton" name="pbSelectAll" >
-         <property name="text" >
+        <widget class="QPushButton" name="pbSelectAll">
+         <property name="text">
           <string>Select all</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbUnselectAll" >
-         <property name="text" >
+        <widget class="QPushButton" name="pbUnselectAll">
+         <property name="text">
           <string>Uncheck all</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbInvertSelection" >
-         <property name="text" >
+        <widget class="QPushButton" name="pbInvertSelection">
+         <property name="text">
           <string>Invert selection</string>
          </property>
         </widget>
        </item>
        <item>
         <spacer>
-         <property name="orientation" >
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>40</width>
            <height>20</height>
@@ -206,18 +209,18 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pbCancel" >
-         <property name="text" >
+        <widget class="QPushButton" name="pbCancel">
+         <property name="text">
           <string>Cancel</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbGet" >
-         <property name="enabled" >
+        <widget class="QPushButton" name="pbGet">
+         <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Download subtitles</string>
          </property>
         </widget>
@@ -226,12 +229,12 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0" >
-    <widget class="QCheckBox" name="cbFollowSymLinks" >
-     <property name="text" >
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="cbFollowSymLinks">
+     <property name="text">
       <string>Follow symbolic links</string>
      </property>
-     <property name="checked" >
+     <property name="checked">
       <bool>true</bool>
      </property>
     </widget>
@@ -254,7 +257,7 @@
   <tabstop>cbSkipIfSubtitlesExists</tabstop>
  </tabstops>
  <resources>
-  <include location="../res/resources.qrc" />
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -263,11 +266,11 @@
    <receiver>pbScan</receiver>
    <slot>click()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>302</x>
      <y>43</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>723</x>
      <y>37</y>
     </hint>
@@ -279,11 +282,11 @@
    <receiver>frmScan</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>570</x>
      <y>408</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>369</x>
      <y>214</y>
     </hint>
@@ -295,11 +298,11 @@
    <receiver>frmScan</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>671</x>
      <y>408</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>369</x>
      <y>214</y>
     </hint>

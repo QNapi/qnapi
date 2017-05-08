@@ -25,7 +25,7 @@
      </property>
      <widget class="QWidget" name="tabGeneral">
       <attribute name="title">
-       <string>Main</string>
+       <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="3">
@@ -42,7 +42,7 @@
        <item row="4" column="0" colspan="3">
         <widget class="QCheckBox" name="cbNoBackup">
          <property name="text">
-          <string>Do not create a copy of existing subtitles. Overwrite them without question.</string>
+          <string>Do not create a copy of existing subtitles. Overwrite them without confirmation.</string>
          </property>
         </widget>
        </item>
@@ -62,7 +62,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="lbLang">
          <property name="text">
-          <string>Preferred subtitle language:</string>
+          <string>Preferred subtitles language:</string>
          </property>
         </widget>
        </item>
@@ -152,7 +152,7 @@
        <item row="6" column="0" colspan="2">
         <widget class="QCheckBox" name="cbChangePermissions">
          <property name="text">
-          <string>Subtitle file permissions: </string>
+          <string>Subtitles file permissions: </string>
          </property>
         </widget>
        </item>
@@ -172,7 +172,7 @@
        <item row="3" column="0">
         <widget class="QLabel" name="lbLangBackup">
          <property name="text">
-          <string>Alternative subtitle language:</string>
+          <string>Alternative subtitles language:</string>
          </property>
         </widget>
        </item>
@@ -220,7 +220,7 @@
      </widget>
      <widget class="QWidget" name="tabDownloadEngines">
       <attribute name="title">
-       <string>Download engines</string>
+       <string>Subtitles download engines</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
@@ -239,7 +239,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Subtitle download policy:</string>
+          <string>Subtitles download policy:</string>
          </property>
         </widget>
        </item>
@@ -313,7 +313,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Search subtitles:</string>
+          <string>Subtitles search policy:</string>
          </property>
         </widget>
        </item>
@@ -362,11 +362,11 @@
        <item row="9" column="0">
         <widget class="QComboBox" name="cbSearchPolicy">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <item>
           <property name="text">
-           <string>Stop the search after finding a matching subtitle (faster)</string>
+           <string>Stop the search after finding a matching subtitles (faster)</string>
           </property>
          </item>
          <item>
@@ -385,13 +385,13 @@
      </widget>
      <widget class="QWidget" name="tabPostProcessing">
       <attribute name="title">
-       <string>Subtitle processing</string>
+       <string>Subtitles post-processing</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QGroupBox" name="gbPpEnable">
          <property name="title">
-          <string>Turn on processing for downloaded subtitles</string>
+          <string>Enable post-processing for downloaded subtitles</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -429,7 +429,7 @@
               </item>
               <item>
                <property name="text">
-                <string>Replace accented characters with their ASCII equivalents</string>
+                <string>Replace diacritic characters with their ASCII equivalents</string>
                </property>
               </item>
              </widget>
@@ -519,7 +519,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>to:</string>
+               <string>To:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -604,7 +604,7 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;movie info&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;synchro&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -616,7 +616,7 @@ p, li { white-space: pre-wrap; }
           <item row="6" column="0">
            <widget class="QLabel" name="lbSubFormat">
             <property name="text">
-             <string>Subtitle format:</string>
+             <string>Subtitles format:</string>
             </property>
            </widget>
           </item>
@@ -638,7 +638,7 @@ p, li { white-space: pre-wrap; }
           <item row="6" column="2">
            <widget class="QLabel" name="lbSubExtension">
             <property name="text">
-             <string>Subtitle extension:</string>
+             <string>Subtitles extension:</string>
             </property>
            </widget>
           </item>
@@ -698,7 +698,7 @@ p, li { white-space: pre-wrap; }
           <item row="4" column="0" colspan="4">
            <widget class="QCheckBox" name="cbRemoveLines">
             <property name="text">
-             <string>Remove subtitle lines that contain the following words:</string>
+             <string>Remove subtitles lines that contain the following words:</string>
             </property>
            </widget>
           </item>

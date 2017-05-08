@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
+    <width>593</width>
     <height>436</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="lbSrcSubFile">
      <property name="text">
-      <string>Source subtitle file:</string>
+      <string>Source subtitles file:</string>
      </property>
     </widget>
    </item>
@@ -106,7 +106,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Target subtitle format:</string>
+        <string>Target subtitles format:</string>
        </property>
       </widget>
      </item>
@@ -278,7 +278,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>File extension for target subtitle file:</string>
+        <string>File extension for target subtitles file:</string>
        </property>
       </widget>
      </item>
@@ -344,7 +344,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Change FPS (frames/second) of subtitle</string>
+        <string>Change FPS (frames/second) of subtitles</string>
        </property>
       </widget>
      </item>
@@ -564,7 +564,7 @@
         </size>
        </property>
        <property name="prefix">
-        <string> </string>
+        <string/>
        </property>
        <property name="suffix">
         <string> seconds</string>
@@ -585,7 +585,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Target subtitle file name:</string>
+      <string>Target subtitles file name:</string>
      </property>
     </widget>
    </item>

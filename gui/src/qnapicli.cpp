@@ -282,7 +282,7 @@ int QNapiCli::exec()
         {
             bool ok = false;
 
-            printCli(QString("   0)\tDo not download subtitle for this video"));
+            printCli(QString("   0)\tDo not download subtitles for this video"));
             printCli("   Found subtitles:");
 
             int i = 1;
@@ -388,11 +388,11 @@ void QNapiCli::printHelp()
     printCli(QString("                              any messages or windows (implies -d)\n"));
     printCli(QString("   -s, --show-list            Show a list of subtitles (works only with -c)"));
     printCli(QString("   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)\n"));
-    printCli(QString("   -l, --lang                 Preferred subtitle language"));
-    printCli(QString("   -lb,--lang-backup          Alternative subtitle language\n"));
+    printCli(QString("   -l, --lang                 Preferred subtitles language"));
+    printCli(QString("   -lb,--lang-backup          Alternative subtitles language\n"));
     printCli(QString("   -o, --options              Show program options (only GUI)\n"));
     printCli(QString("   -h, --help                 Show help text"));
-    printCli(QString("   -hl,--help-languages       List of available subtitle languages\n"));
+    printCli(QString("   -hl,--help-languages       List of available subtitles languages\n"));
 }
 
 void QNapiCli::printHelpLanguages()
@@ -412,13 +412,13 @@ void QNapiCli::printHelpLanguages()
     L.setLanguage(GlobalConfig().language());
     LB.setLanguage(GlobalConfig().languageBackup());
 
-    printCli(QString("\nCurrent default subtitle language: %1 (%2)")
+    printCli(QString("\nCurrent default subtitles language: %1 (%2)")
                 .arg(L.toFullName()).arg(L.toTwoLetter()));
 
     if(LB.toFullName().isEmpty()) {
-        printCli(QString("No alternative subtitle language has been set"));
+        printCli(QString("No alternative subtitles language has been set"));
     } else {
-        printCli(QString("Current alternative subtitle language: %1 (%2)")
+        printCli(QString("Current alternative subtitles language: %1 (%2)")
                     .arg(LB.toFullName()).arg(LB.toTwoLetter()));
     }
 }

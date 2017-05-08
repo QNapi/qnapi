@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Convert subtitles</string>
+   <string>QNapi - Convert subtitles</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">

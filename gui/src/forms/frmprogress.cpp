@@ -139,8 +139,8 @@ void frmProgress::updateProgress(int current, int all, float stageProgress)
     if(stageProgress >= 0) lastStageProgress = stageProgress;
 
     QString windowTitle = (lastAll > 1)
-                            ? QString(tr("QNapi - downloading subtitle (%1/%2)")).arg(lastCurrent + 1).arg(lastAll)
-                            : QString(tr("QNapi - downloading subtitle..."));
+                            ? QString(tr("QNapi - downloading subtitles (%1/%2)")).arg(lastCurrent + 1).arg(lastAll)
+                            : QString(tr("QNapi - downloading subtitles..."));
     setWindowTitle(windowTitle);
 
     ui.pbProgress->setMaximum(lastAll * 100);

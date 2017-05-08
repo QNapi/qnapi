@@ -26,7 +26,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>QNapi - downloading subtitle...</string>
+   <string>QNapi - Downloading subtitles...</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/resources.qrc">

@@ -169,7 +169,7 @@ void frmOptions::twEnginesItemChanged(QTableWidgetItem * item)
         item->setCheckState(Qt::Checked);
         QMessageBox::warning(this,
                             "Warning",
-                            "At least one subtitle engine must remain active!");
+                            "At least one subtitles engine must remain active!");
     }
     
 }
@@ -219,7 +219,7 @@ void frmOptions::pbEngineInfoClicked()
     QString engineInfo = n.engineByName(engineName)->engineInfo();
     
     QMessageBox::information(this,
-                             QString("%1 subtitle engine info").arg(engineName),
+                             QString("%1 subtitles engine info").arg(engineName),
                              engineInfo);
 }
 

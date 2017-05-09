@@ -314,12 +314,12 @@ void GetThread::run()
             foreach(QString e, napi.listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching for subtitles [%1] (%2)...").arg(language, e));
                 found = napi.lookForSubtitles(language, e) || found;
 
                 ABORT_POINT
 
-                emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
+                emit actionChange(tr("Searching for subtitles in alternative language [%1] (%2)...").arg(languageBackup, e));
                 found = napi.lookForSubtitles(languageBackup, e) || found;
 
                 ABORT_POINT
@@ -330,7 +330,7 @@ void GetThread::run()
             foreach(QString e, napi.listLoadedEngines())
             {
                 emit progressChange(i, queue.size(), 0.4f);
-                emit actionChange(tr("Searching subtitles [%1] (%2)...").arg(language, e));
+                emit actionChange(tr("Searching for subtitles [%1] (%2)...").arg(language, e));
                 found = napi.lookForSubtitles(language, e) || found;
 
                 if(sp == SP_BREAK_IF_FOUND && found){
@@ -344,7 +344,7 @@ void GetThread::run()
                 foreach(QString e, napi.listLoadedEngines())
                 {
                     emit progressChange(i, queue.size(), 0.45f);
-                    emit actionChange(tr("Searching alternative subtitles [%1] (%2)...").arg(languageBackup, e));
+                    emit actionChange(tr("Searching for subtitles in alternative language [%1] (%2)...").arg(languageBackup, e));
                     found = napi.lookForSubtitles(languageBackup, e) || found;
 
                     if(sp == SP_BREAK_IF_FOUND && found)

@@ -233,9 +233,9 @@ int QNapiCli::exec()
         {
             foreach(QString e, napi.listLoadedEngines())
             {
-                printCli(tr("   Searching subtitles [%1] (%2)...").arg(lang, e));
+                printCli(tr("   Searching for subtitles [%1] (%2)...").arg(lang, e));
                 found = napi.lookForSubtitles(lang, e) || found;
-                printCli(tr("   Searching alternative subtitles [%1] (%2)...").arg(langBackup, e));
+                printCli(tr("   Searching for subtitles in alternative language [%1] (%2)...").arg(langBackup, e));
                 found = napi.lookForSubtitles(langBackup, e) || found;
             }
         }

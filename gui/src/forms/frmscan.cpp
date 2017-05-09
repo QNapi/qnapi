@@ -38,11 +38,15 @@ frmScan::frmScan(QWidget *parent, Qt::WindowFlags f)
         ui.leDirectory->setText(scanConfig.lastDir());
 
     QList<QString> scanFilters = scanConfig.filters();
-    ui.cbFilters->clear();
 
-    for(int i = 0; i < scanFilters.size(); i++)
+    if(!scanFilters.isEmpty())
     {
-        ui.cbFilters->addItem(scanFilters[i]);
+        ui.cbFilters->clear();
+
+        for(int i = 0; i < scanFilters.size(); i++)
+        {
+            ui.cbFilters->addItem(scanFilters[i]);
+        }
     }
 
     ui.leSkipFilters->setText(scanConfig.skipFilters());
@@ -170,17 +174,17 @@ void frmScan::addFile(const QString & fileName)
 
 void frmScan::folderChange(const QString & dirName)
 {
-    ui.lbAction->setText(QString("Scanning directory <b>%1</b>..").arg(dirName));
+    ui.lbAction->setText(tr("Scanning directory <b>%1</b>...").arg(dirName));
 }
 
 void frmScan::scanFinished()
 {
     enableControlWidgets(true);
     enableFilesWidgets(ui.lwMovies->count() > 0);
-    ui.pbScan->setText("Scan");
-    ui.lbAction->setText(tr((ui.lwMovies->count() > 0)
-                            ? "Select the videos you wish to download subtitles for."
-                            : "No video files found."));
+    ui.pbScan->setText(tr("Scan"));
+    ui.lbAction->setText((ui.lwMovies->count() > 0)
+                            ? tr("Select the videos you wish to download subtitles for.")
+                            : tr("No video files found."));
 }
 
 void frmScan::enableControlWidgets(bool enable)

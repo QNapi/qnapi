@@ -52,7 +52,7 @@
        <item row="1" column="1" colspan="2">
         <widget class="QLineEdit" name="leTmpPath">
          <property name="text">
-          <string>/tmp</string>
+          <string notr="true">/tmp</string>
          </property>
         </widget>
        </item>
@@ -159,7 +159,7 @@
        <item row="0" column="1" colspan="2">
         <widget class="QLineEdit" name="le7zPath">
          <property name="text">
-          <string>/usr/bin/7z</string>
+          <string notr="true">/usr/bin/7z</string>
          </property>
          <property name="cursorPosition">
           <number>11</number>
@@ -486,7 +486,7 @@
               </property>
               <item>
                <property name="text">
-                <string>Windows-1250</string>
+                <string notr="true">Windows-1250</string>
                </property>
               </item>
              </widget>
@@ -539,7 +539,7 @@
               </property>
               <item>
                <property name="text">
-                <string>UTF-8</string>
+                <string notr="true">UTF-8</string>
                </property>
               </item>
              </widget>
@@ -601,12 +601,12 @@
              <bool>false</bool>
             </property>
             <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+             <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;movie info&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;&quot;&gt;&lt;span style=&quot; font-family:'DejaVu Sans'; font-size:10pt;&quot;&gt;synchro&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:12pt;&quot;&gt;movie info&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; -qt-user-state:0;&quot;&gt;&lt;span style=&quot; font-family:'sans-serif'; font-size:12pt;&quot;&gt;synchro&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="acceptRichText">
              <bool>false</bool>
@@ -657,17 +657,17 @@ p, li { white-space: pre-wrap; }
             </item>
             <item>
              <property name="text">
-              <string>srt</string>
+              <string notr="true">srt</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>sub</string>
+              <string notr="true">sub</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>txt</string>
+              <string notr="true">txt</string>
              </property>
             </item>
            </widget>

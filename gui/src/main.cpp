@@ -55,9 +55,14 @@ int main(int argc, char **argv)
         QNapiApp app(argc, argv, true, "QNapi");
 
         QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-        QTranslator cuteTranslator;
-        cuteTranslator.load("qt_" + QLocale::system().name(), resourceDir);
-        app.installTranslator(&cuteTranslator);
+
+        QTranslator qtTranslator, qnapiTranslator;
+        qtTranslator.load("qt_" + QLocale::system().name(), resourceDir);
+        app.installTranslator(&qtTranslator);
+
+        qnapiTranslator.load("qnapi_" + QLocale::system().name(), ":/translations");
+        app.installTranslator(&qnapiTranslator);
+
         app.setQuitOnLastWindowClosed(false);
 
         if(app.arguments().contains("-o") || app.arguments().contains("--options"))
@@ -173,6 +178,11 @@ int main(int argc, char **argv)
     else
     {
         QNapiCli app(argc, argv, config);
+
+        QTranslator qnapiTranslator;
+        qnapiTranslator.load("qnapi_" + QLocale::system().name(), ":/translations");
+        app.installTranslator(&qnapiTranslator);
+
         return app.exec();
     }
 }

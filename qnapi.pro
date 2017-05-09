@@ -4,6 +4,8 @@ CONFIG += ordered
 
 SUBDIRS = libqnapi gui
 
+TRANSLATIONS += translations/qnapi_pl.ts
+
 unix {
     INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share

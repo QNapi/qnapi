@@ -54,4 +54,7 @@
         <file alias="accept.png">ui/accept.png</file>
         <file alias="exclamation.png">ui/exclamation.png</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file alias="qnapi_pl.qm">../../translations/qnapi_pl.qm</file>
+    </qresource>
 </RCC>

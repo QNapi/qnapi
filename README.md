@@ -1,4 +1,4 @@
-# QNapi [![Build Status](https://travis-ci.org/QNapi/qnapi.svg?branch=master)](https://travis-ci.org/QNapi/qnapi) [![Build status](https://ci.appveyor.com/api/projects/status/mdebep2uhrc3oagq/branch/master?svg=true)](https://ci.appveyor.com/project/krzemin/qnapi/branch/master) [![GitHub release](https://img.shields.io/github/release/QNapi/qnapi.svg)](https://github.com/QNapi/qnapi/releases)
+# QNapi [![Build Status](https://travis-ci.org/QNapi/qnapi.svg?branch=master)](https://travis-ci.org/QNapi/qnapi) [![Build status](https://ci.appveyor.com/api/projects/status/mdebep2uhrc3oagq/branch/master?svg=true)](https://ci.appveyor.com/project/krzemin/qnapi/branch/master) [![GitHub release](https://img.shields.io/github/release/QNapi/qnapi.svg)](https://github.com/QNapi/qnapi/releases) [![Github All Releases](https://img.shields.io/github/downloads/QNapi/qnapi/total.svg)](https://qnapi.github.io/#download)
 
 QNapi is free software for automatic fetching subtitles for given movie file.
 It uses online databases such as NapiProjekt, OpenSubtitles and Napisy24.

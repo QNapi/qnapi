@@ -75,7 +75,7 @@ void frmSummary::setSummaryList(QList<SubtitleInfo> list)
     ui.lbFail->setVisible(badCount != 0);
 
     ui.lbSuccess->setText(tr("Subtitles downloaded for %1 %2")
-        .arg(goodCount).arg(tr(goodCount > 1 ? "files" : "file")));
+        .arg(goodCount).arg(goodCount > 1 ? tr("files") : tr("file")));
     ui.lbFail->setText(tr("Could not download subtitles for %1 %2")
-        .arg(badCount).arg(tr(badCount > 1 ? "files" : "file")));
+        .arg(badCount).arg(badCount > 1 ? tr("files") : tr("file")));
 }

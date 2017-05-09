@@ -38,7 +38,7 @@
    <item>
     <widget class="QLabel" name="place1">
      <property name="text">
-      <string>[]</string>
+      <string notr="true">[]</string>
      </property>
     </widget>
    </item>
@@ -51,21 +51,21 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>[]</string>
+      <string notr="true">[]</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="place3">
      <property name="text">
-      <string>[]</string>
+      <string notr="true">[]</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="place4">
      <property name="text">
-      <string>[]</string>
+      <string notr="true">[]</string>
      </property>
     </widget>
    </item>

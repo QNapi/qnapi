@@ -118,7 +118,7 @@
      <item>
       <widget class="QLineEdit" name="leSkipFilters">
        <property name="text">
-        <string>PL dubbing</string>
+        <string>EN dubbing</string>
        </property>
       </widget>
      </item>

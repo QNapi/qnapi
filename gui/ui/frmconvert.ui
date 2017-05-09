@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
+    <width>600</width>
     <height>436</height>
    </rect>
   </property>
@@ -140,24 +140,27 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="currentText">
+        <string notr="true">mDVD</string>
+       </property>
        <item>
         <property name="text">
-         <string>mDVD</string>
+         <string notr="true">mDVD</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>MPL2</string>
+         <string notr="true">MPL2</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>SRT</string>
+         <string notr="true">SRT</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>TMP</string>
+         <string notr="true">TMP</string>
         </property>
        </item>
       </widget>
@@ -209,6 +212,9 @@
        <property name="editable">
         <bool>true</bool>
        </property>
+       <property name="currentText">
+        <string>23.976</string>
+       </property>
        <item>
         <property name="text">
          <string>23.976</string>
@@ -259,7 +265,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Detected video framerate (FPS)</string>
+      <string>Detect video framerate (FPS) form file</string>
      </property>
      <property name="text">
       <string/>
@@ -385,6 +391,9 @@
        <property name="editable">
         <bool>true</bool>
        </property>
+       <property name="currentText">
+        <string>23.976</string>
+       </property>
        <item>
         <property name="text">
          <string>23.976</string>
@@ -504,7 +513,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Detect framerate for file</string>
+      <string>Detect video framerate (FPS) form file</string>
      </property>
      <property name="text">
       <string/>

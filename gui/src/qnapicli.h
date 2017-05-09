@@ -26,6 +26,8 @@
 
 class QNapiCli : public QCoreApplication
 {
+Q_OBJECT
+
 public:
 
     QNapiCli(int argc, char **argv, const QNapiConfig & config);

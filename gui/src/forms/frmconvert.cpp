@@ -270,11 +270,14 @@ void frmConvert::convertClicked()
                                      fpsRatio,
                                      delayOffset))
     {
-        QMessageBox::information(this, tr("Subtitles converted"),
+        QMessageBox::information(this,
+                                 tr("Subtitles converted"),
                                  tr("Changed subtitles format from '%1' to '%2'").arg(srcFormat, targetFormat));
-
-    } else {
-        QMessageBox::warning(this, tr("An error occured while converting strings"),
-                                 tr("Could not change subtitle format!"));
+    }
+    else
+    {
+        QMessageBox::warning(this,
+                             tr("Could not change subtitle format!"),
+                             tr("An error occured while converting subtitles!"));
     }
 }

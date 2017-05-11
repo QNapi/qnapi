@@ -169,8 +169,7 @@ const GeneralConfig ConfigReader::resolveP7zipPath(const GeneralConfig & config)
         {
             foreach(const QString p7zipBinary, p7zipBinaries)
             {
-                p7zipPath = sysPath + QDir::separator() + p7zipBinary;
-                QFileInfo fi(p7zipPath);
+                QFileInfo fi(sysPath + QDir::separator() + p7zipBinary);
                 if(fi.isExecutable())
                 {
                     p7zipPath = fi.absoluteFilePath();

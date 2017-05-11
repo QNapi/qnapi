@@ -30,7 +30,7 @@ Q_OBJECT
 
 public:
 
-    QNapiCli(int argc, char **argv, const QNapiConfig & config);
+    QNapiCli(int argc, char **argv, const QNapiConfig & config, const QString & uiLanguage);
 
     static bool isCliCall(int argc, char **argv);
     int exec();
@@ -39,6 +39,7 @@ private:
 
     QStringList movieList;
     const QNapiConfig config;
+    const QString uiLanguage;
     QNapi napi;
 
     enum CliExitCode {
@@ -71,7 +72,7 @@ private:
     QString langBackup;
     bool langBackupPassed;
 
-    bool analyze();
+    bool analyze(const QStringList & args);
     void printHeader();
     void printHelp();
     void printHelpLanguages();

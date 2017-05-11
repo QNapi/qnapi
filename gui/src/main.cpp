@@ -178,12 +178,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        QNapiCli app(argc, argv, config);
-
-        QTranslator qnapiTranslator;
-        qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
-        app.installTranslator(&qnapiTranslator);
-
+        QNapiCli app(argc, argv, config, uiLanguage);
         return app.exec();
     }
 }

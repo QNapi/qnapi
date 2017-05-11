@@ -16,13 +16,19 @@
 #include "libqnapi.h"
 #include "subtitlelanguage.h"
 
-QNapiCli::QNapiCli(int argc, char **argv, const QNapiConfig & config) :
-    QCoreApplication(argc, argv),
-    config(config),
-    napi(config),
-    mode(CM_UNSET),
-    showPolicy(SLP_USE_CONFIG),
-    langBackupPassed(false)
+#include <QTranslator>
+
+QNapiCli::QNapiCli(int argc,
+                   char **argv,
+                   const QNapiConfig & config,
+                   const QString & uiLanguage)
+    : QCoreApplication(argc, argv),
+      config(config),
+      uiLanguage(uiLanguage),
+      napi(config),
+      mode(CM_UNSET),
+      showPolicy(SLP_USE_CONFIG),
+      langBackupPassed(false)
 {}
 
 bool QNapiCli::isCliCall(int argc, char **argv)
@@ -72,10 +78,9 @@ bool QNapiCli::isCliCall(int argc, char **argv)
 #endif
 }
 
-bool QNapiCli::analyze()
+bool QNapiCli::analyze(const QStringList & args)
 {
     QString p;
-    QStringList args = arguments();
 
     for(int i = 1; i < args.size(); i++)
     {
@@ -165,7 +170,11 @@ bool QNapiCli::analyze()
 
 int QNapiCli::exec()
 {
-    if(!analyze())
+    QTranslator qnapiTranslator;
+    qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
+    installTranslator(&qnapiTranslator);
+
+    if(!analyze(arguments()))
         return EC_CMD_LINE_ARG_PARSING_ERROR;
 
     if(mode == CM_UNSET)

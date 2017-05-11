@@ -71,10 +71,11 @@ private:
     QString lang;
     QString langBackup;
     bool langBackupPassed;
+    QStringList args;
 
     bool analyze(const QStringList & args);
     void printHeader();
-    void printHelp();
+    void printHelp(const QString & binaryFileName);
     void printHelpLanguages();
     void printCli(const QString & string = "");
 };

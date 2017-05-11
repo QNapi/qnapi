@@ -29,7 +29,9 @@ QNapiCli::QNapiCli(int argc,
       mode(CM_UNSET),
       showPolicy(SLP_USE_CONFIG),
       langBackupPassed(false)
-{}
+{
+    args = arguments();
+}
 
 bool QNapiCli::isCliCall(int argc, char **argv)
 {
@@ -174,7 +176,7 @@ int QNapiCli::exec()
     qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
     installTranslator(&qnapiTranslator);
 
-    if(!analyze(arguments()))
+    if(!analyze(args))
         return EC_CMD_LINE_ARG_PARSING_ERROR;
 
     if(mode == CM_UNSET)
@@ -196,7 +198,7 @@ int QNapiCli::exec()
 
     if(mode == CM_HELP)
     {
-        printHelp();
+        printHelp(QFileInfo(args.first()).fileName());
         return EC_OK;
     }
 
@@ -390,11 +392,11 @@ void QNapiCli::printHeader()
     printCli();
 }
 
-void QNapiCli::printHelp()
+void QNapiCli::printHelp(const QString & binaryFileName)
 {
     printCli(tr("QNapi is distributed under the GNU General Public License v2."));
     printCli();
-    printCli(tr("Syntax: %1 [options] [list of files]").arg(QFileInfo(arguments().at(0)).fileName()));
+    printCli(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
     printCli(tr("Available options:"));
     printCli(tr("   -c, --console              Download subtitles with console"));
     printCli(tr("   -q, --quiet                Download subtitles quietly without showing"));

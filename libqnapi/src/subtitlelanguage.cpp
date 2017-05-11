@@ -71,6 +71,11 @@ QStringList SubtitleLanguage::listLanguages()
     return names;
 }
 
+QStringList SubtitleLanguage::listLanguageTwoLetterCodes()
+{
+    return codes2l;
+}
+
 void SubtitleLanguage::fill_tables()
 {
     codes2l << "sq";

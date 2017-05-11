@@ -31,6 +31,7 @@ public:
     QString toFullName();
 
     QStringList listLanguages();
+    QStringList listLanguageTwoLetterCodes();
 
 private:
 

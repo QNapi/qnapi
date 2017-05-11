@@ -13,8 +13,10 @@
 *****************************************************************************/
 
 #include "configreader.h"
+#include "subtitlelanguage.h"
 #include <QFileInfo>
 #include <QDir>
+#include <QLocale>
 #include <QProcess>
 #include <QCoreApplication>
 
@@ -49,11 +51,15 @@ const QNapiConfig ConfigReader::readConfig(const QSettings & settings) const
 
 const GeneralConfig ConfigReader::readGeneralConfig(const QSettings & settings) const
 {
+    QString sysLangCode = QLocale::system().name().left(2);
+    QString preferredLangCode = SubtitleLanguage().listLanguageTwoLetterCodes().contains(sysLangCode) ? sysLangCode : "en";
+    QString backupLangCode = (preferredLangCode != "en") ? "en" : "";
+
     auto cfg = GeneralConfig(settings.value("qnapi/ui_language", "").toString(),
                              settings.value("qnapi/7z_path", "").toString(),
                              settings.value("qnapi/tmp_path", "").toString(),
-                             settings.value("qnapi/language", "pl").toString(),
-                             settings.value("qnapi/language_backup", "en").toString(),
+                             settings.value("qnapi/language", preferredLangCode).toString(),
+                             settings.value("qnapi/language_backup", backupLangCode).toString(),
                              settings.value("qnapi/no_backup", false).toBool(),
                              settings.value("qnapi/quiet_batch", false).toBool(),
                              static_cast<SearchPolicy>(settings.value("qnapi/search_policy", SP_BREAK_IF_FOUND).toInt()),

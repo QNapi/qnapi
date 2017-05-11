@@ -1,32 +1,59 @@
+environment:
+  matrix:
+  - QT5: C:\Qt\5.4\mingw491_32
+    MINGW: C:\Qt\Tools\mingw491_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.5\mingw492_32
+    MINGW: C:\Qt\Tools\mingw492_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.6\mingw49_32
+    MINGW: C:\Qt\Tools\mingw492_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.7\mingw53_32
+    MINGW: C:\Qt\Tools\mingw530_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.8\mingw53_32
+    MINGW: C:\Qt\Tools\mingw530_32
+    DEPLOY: 1
+
+matrix:
+  fast_finish: true
+
 install:
-  - set QTDIR=C:\Qt\5.7\mingw53_32
-  - set MINGW=C:\Qt\Tools\mingw530_32
-  - set NSIS="C:\Program Files (x86)\NSIS"
-  - set PATH=%PATH%;%MINGW%\bin;%QTDIR%\bin;%NSIS%
   - appveyor-retry cinst nsis -y -version 2.51
   - appveyor-retry cinst 7zip.commandline -y -x86
   - appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip" -FileName NsProcess.zip
   - 7z e -o"C:\Program Files (x86)\NSIS\Include" NsProcess.zip Include\*.nsh
   - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" NsProcess.zip Plugin\*.dll
   - git submodule update --init --recursive
+
+before_build:
+  - set NSIS="C:\Program Files (x86)\NSIS"
+  - set PATH=%MINGW%\bin;%QT5%\bin;%NSIS%;%PATH%
+
 build_script:
+  - qmake -v
   - qmake qnapi.pro
   - mingw32-make -j4
   - mingw32-make install
-  - makensis win32/QNapi-setup.nsi
-  - scripts/version.bat > ver.txt
-  - set /p VERSION=<ver.txt
-  - rem ver.txt
-  - cd win32
-  - rename out QNapi
-  - cd QNapi
-  - copy /y nul qnapi.ini
-  - cd ..
-  - 7z a -tzip QNapi-%VERSION%-portable.zip QNapi 
-  - cd ..
+
+after_build:
+  - test %DEPLOY% -eq 1 && makensis win32\QNapi-setup.nsi || true
+  - test %DEPLOY% -eq 1 && scripts\version.bat > ver.txt || true
+  - test %DEPLOY% -eq 1 && set /p VERSION=<ver.txt || true
+  - test %DEPLOY% -eq 1 && del ver.txt || true
+  - test %DEPLOY% -eq 1 && cd win32 || true
+  - test %DEPLOY% -eq 1 && rename out QNapi || true
+  - test %DEPLOY% -eq 1 && cd QNapi || true
+  - test %DEPLOY% -eq 1 && copy /y nul qnapi.ini || true
+  - test %DEPLOY% -eq 1 && cd .. || true
+  - test %DEPLOY% -eq 1 && 7z a -tzip QNapi-%VERSION%-portable.zip QNapi || true
+  - test %DEPLOY% -eq 1 && cd .. || true
+
 artifacts:
   - path: win32\QNapi*zip
   - path: win32\QNapi*exe
+
 deploy:
   provider: GitHub
   description: This is latest snapshot release. Be careful - it may not be stable!
@@ -37,4 +64,3 @@ deploy:
   prerelease: true
   on:
     appveyor_repo_tag: true
-

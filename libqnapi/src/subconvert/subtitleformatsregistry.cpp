@@ -29,15 +29,20 @@ SubtitleFormatsRegistry::SubtitleFormatsRegistry()
 
 QStringList SubtitleFormatsRegistry::listFormatNames() const
 {
-    return formats.keys();
+    QStringList formatNames;
+    foreach(QString format, formats.keys())
+    {
+        formatNames << select(format)->formatName();
+    }
+    return formatNames;
 }
 
 QSharedPointer<const SubtitleFormat> SubtitleFormatsRegistry::select(const QString & format) const
 {
-    return formats.value(format, QSharedPointer<SubtitleFormat>(0));
+    return formats.value(format.toLower(), QSharedPointer<SubtitleFormat>(0));
 }
 
 void SubtitleFormatsRegistry::registerFormat(SubtitleFormat *format)
 {
-    formats.insert(format->formatName(), QSharedPointer<SubtitleFormat>(format));
+    formats.insert(format->formatName().toLower(), QSharedPointer<SubtitleFormat>(format));
 }

@@ -383,33 +383,40 @@ int QNapiCli::exec()
 
 void QNapiCli::printHeader()
 {
-    printCli(tr("QNapi %1, %2\nQt version: %3\n")
+    printCli(tr("QNapi %1, %2")
                 .arg(LibQNapi::displayableVersion())
-                .arg(LibQNapi::webpageUrl())
-                .arg(qVersion()));
+                .arg(LibQNapi::webpageUrl()));
+    printCli(tr("Qt version: %1").arg(qVersion()));
+    printCli();
 }
 
 void QNapiCli::printHelp()
 {
-    printCli(tr("QNapi is distributed under the GNU General Public License v2.\n"));
+    printCli(tr("QNapi is distributed under the GNU General Public License v2."));
+    printCli();
     printCli(tr("Syntax: %1 [options] [list of files]").arg(QFileInfo(arguments().at(0)).fileName()));
     printCli(tr("Available options:"));
     printCli(tr("   -c, --console              Download subtitles with console"));
     printCli(tr("   -q, --quiet                Download subtitles quietly without showing"));
-    printCli(tr("                              any messages or windows (implies -d)\n"));
+    printCli(tr("                              any messages or windows (implies -d)"));
+    printCli();
     printCli(tr("   -s, --show-list            Show a list of subtitles (works only with -c)"));
-    printCli(tr("   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)\n"));
+    printCli(tr("   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)"));
+    printCli();
     printCli(tr("   -l, --lang                 Preferred subtitles language"));
-    printCli(tr("   -lb,--lang-backup          Alternative subtitles language\n"));
-    printCli(tr("   -o, --options              Show program options (only GUI)\n"));
+    printCli(tr("   -lb,--lang-backup          Alternative subtitles language"));
+    printCli();
+    printCli(tr("   -o, --options              Show program options (only GUI)"));
     printCli(tr("   -h, --help                 Show help text"));
-    printCli(tr("   -hl,--help-languages       List of available subtitles languages\n"));
+    printCli(tr("   -hl,--help-languages       List of available subtitles languages"));
+    printCli();
 }
 
 void QNapiCli::printHelpLanguages()
 {
     printCli(tr("List of languages recognized by QNapi, including corresponding"));
-    printCli(tr("two-letter language codes:\n"));
+    printCli(tr("two-letter language codes:"));
+    printCli();
 
     SubtitleLanguage L, LB;
     QStringList langs = L.listLanguages();
@@ -423,7 +430,8 @@ void QNapiCli::printHelpLanguages()
     L.setLanguage(config.generalConfig().language());
     LB.setLanguage(config.generalConfig().backupLanguage());
 
-    printCli(tr("\nCurrent default subtitles language: %1 (%2)")
+    printCli();
+    printCli(tr("Current default subtitles language: %1 (%2)")
                 .arg(L.toFullName()).arg(L.toTwoLetter()));
 
     if(LB.toFullName().isEmpty()) {

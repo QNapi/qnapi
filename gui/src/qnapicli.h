@@ -76,7 +76,7 @@ private:
     void printHeader();
     void printHelp();
     void printHelpLanguages();
-    void printCli(const QString & string);
+    void printCli(const QString & string = "");
 };
 
 #endif

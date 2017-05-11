@@ -20,7 +20,6 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QFileInfo>
-#include <QLocale>
 #include "libqnapi.h"
 #include "qnapiapp.h"
 #include "qnapicli.h"
@@ -36,6 +35,8 @@ int main(int argc, char **argv)
     LibQNapi::init(argv[0]);
 
     const QNapiConfig config = LibQNapi::loadConfig();
+
+    QString uiLanguage = LibQNapi::uiLanguage(config.generalConfig());
 
     bool isCliCall = QNapiCli::isCliCall(argc, argv);
 
@@ -57,10 +58,10 @@ int main(int argc, char **argv)
         QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 
         QTranslator qtTranslator, qnapiTranslator;
-        qtTranslator.load("qt_" + QLocale::system().name(), resourceDir);
+        qtTranslator.load("qt_" + uiLanguage, resourceDir);
         app.installTranslator(&qtTranslator);
 
-        qnapiTranslator.load("qnapi_" + QLocale::system().name(), ":/translations");
+        qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
         app.installTranslator(&qnapiTranslator);
 
         app.setQuitOnLastWindowClosed(false);
@@ -180,7 +181,7 @@ int main(int argc, char **argv)
         QNapiCli app(argc, argv, config);
 
         QTranslator qnapiTranslator;
-        qnapiTranslator.load("qnapi_" + QLocale::system().name(), ":/translations");
+        qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
         app.installTranslator(&qnapiTranslator);
 
         return app.exec();
@@ -232,7 +233,7 @@ void sigHandler(int sig)
 {
     Q_UNUSED(sig);
 
-    qDebug() << "\nQNapi: deleting temporary files...";
+    qDebug() << QObject::tr("\nQNapi: deleting temporary files...");
 
     const QNapiConfig config = LibQNapi::loadConfig();
     QString tmpPath = config.generalConfig().tmpPath();
@@ -249,7 +250,7 @@ void sigHandler(int sig)
         QFile::remove(file.filePath());
     }
 
-    qDebug() << "\nQNapi: zakończono.";
+    qDebug() << QObject::tr("\nQNapi: finished.");
 
     exit(666);
 }

@@ -18,6 +18,7 @@
 
 #include <QFileInfo>
 #include <QDir>
+#include <QLocale>
 
 QString LibQNapi::appExecutablePath = "";
 
@@ -88,6 +89,19 @@ QString LibQNapi::portableConfigPath()
     QString appExecutableDir = QFileInfo(appExecutablePath).absoluteDir().path();
     return appExecutableDir + QDir::separator() + "qnapi.ini";
 }
+
+QString LibQNapi::uiLanguage(const GeneralConfig & generalConfig)
+{
+    if(generalConfig.uiLanguage().isEmpty())
+    {
+        return QLocale::system().name();
+    }
+    else
+    {
+        return generalConfig.uiLanguage();
+    }
+}
+
 
 QSharedPointer<const SubtitleDownloadEnginesRegistry>
 LibQNapi::subtitleDownloadEngineRegistry()

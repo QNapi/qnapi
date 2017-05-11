@@ -28,66 +28,74 @@
        <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="3">
-        <widget class="QPushButton" name="pb7zPathSelect">
-         <property name="text">
-          <string/>
+       <item row="10" column="0" colspan="3">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="icon">
-          <iconset resource="../res/resources.qrc">
-           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>568</width>
+           <height>172</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbQuietBatch">
+         <property name="toolTip">
+          <string>Do not show any windows while retrieving subtitles in command-line</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>5000</number>
+         </property>
+         <property name="text">
+          <string>Silent batch mode</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="3">
-        <widget class="QCheckBox" name="cbNoBackup">
+       <item row="2" column="0">
+        <widget class="QLabel" name="lb7zPath">
          <property name="text">
-          <string>Do not create a copy of existing subtitles. Overwrite them without confirmation.</string>
+          <string>Path to 7z executable:</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QComboBox" name="cbLangBackup"/>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="leTmpPath">
+       <item row="3" column="0">
+        <widget class="QLabel" name="lbTmpPath">
          <property name="text">
-          <string notr="true">/tmp</string>
+          <string>Path to temporary directory:</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1" colspan="2">
-        <widget class="QComboBox" name="cbLang"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lbLang">
+        <widget class="QLineEdit" name="le7zPath">
          <property name="text">
-          <string>Preferred subtitles language:</string>
+          <string notr="true">/usr/bin/7z</string>
+         </property>
+         <property name="cursorPosition">
+          <number>11</number>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="3">
-        <widget class="QCheckBox" name="cbShowDockIcon">
+       <item row="5" column="0">
+        <widget class="QLabel" name="lbLangBackup">
          <property name="text">
-          <string>Show icon in the system tray (requires application restart)</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
+          <string>Alternative subtitles language:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="pbTmpPathSelect">
+       <item row="8" column="0" colspan="2">
+        <widget class="QCheckBox" name="cbChangePermissions">
          <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../res/resources.qrc">
-           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
+          <string>Subtitles file permissions: </string>
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
+       <item row="8" column="2">
         <layout class="QHBoxLayout" name="_2">
          <property name="spacing">
           <number>6</number>
@@ -149,72 +157,113 @@
          </item>
         </layout>
        </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QCheckBox" name="cbChangePermissions">
+       <item row="9" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbShowDockIcon">
          <property name="text">
-          <string>Subtitles file permissions: </string>
+          <string>Show icon in the system tray (requires application restart)</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="le7zPath">
+       <item row="3" column="3">
+        <widget class="QPushButton" name="pbTmpPathSelect">
          <property name="text">
-          <string notr="true">/usr/bin/7z</string>
+          <string/>
          </property>
-         <property name="cursorPosition">
-          <number>11</number>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="lbLangBackup">
+       <item row="4" column="1" colspan="2">
+        <widget class="QComboBox" name="cbLang"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lbLang">
          <property name="text">
-          <string>Alternative subtitles language:</string>
+          <string>Preferred subtitles language:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lbTmpPath">
+       <item row="3" column="1" colspan="2">
+        <widget class="QLineEdit" name="leTmpPath">
          <property name="text">
-          <string>Path to temporary directory:</string>
+          <string notr="true">/tmp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1" colspan="2">
+        <widget class="QComboBox" name="cbLangBackup"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="pb7zPathSelect">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../res/resources.qrc">
+           <normaloff>:/ui/folder.png</normaloff>:/ui/folder.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="3">
+        <widget class="QCheckBox" name="cbNoBackup">
+         <property name="text">
+          <string>Do not create a copy of existing subtitles. Overwrite them without confirmation.</string>
          </property>
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="lb7zPath">
+        <widget class="QLabel" name="lbUiLanguage">
          <property name="text">
-          <string>Path to 7z executable:</string>
+          <string>User interface language:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="3">
-        <widget class="QCheckBox" name="cbQuietBatch">
-         <property name="toolTip">
-          <string>Do not show any windows while retrieving subtitles in command-line</string>
-         </property>
-         <property name="toolTipDuration">
-          <number>5000</number>
-         </property>
-         <property name="text">
-          <string>Silent batch mode</string>
-         </property>
+       <item row="0" column="1" colspan="2">
+        <widget class="QComboBox" name="cbUiLanguage">
+         <item>
+          <property name="text">
+           <string>Auto-detected based on system language (%1)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string comment="en">English</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/resources.qrc">
+            <normaloff>:/languages/en.png</normaloff>:/languages/en.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string comment="pl">Polish</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/resources.qrc">
+            <normaloff>:/languages/pl.png</normaloff>:/languages/pl.png</iconset>
+          </property>
+         </item>
         </widget>
        </item>
-       <item row="8" column="0" colspan="3">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="1" colspan="2">
+        <widget class="QLabel" name="lbUiLangChangeNotice">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>568</width>
-           <height>172</height>
-          </size>
+         <property name="styleSheet">
+          <string notr="true">color: red;</string>
          </property>
-        </spacer>
+         <property name="text">
+          <string>UI Language change will be applied on next application launch</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -758,29 +807,42 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabOptions</tabstop>
+  <tabstop>cbUiLanguage</tabstop>
   <tabstop>le7zPath</tabstop>
   <tabstop>pb7zPathSelect</tabstop>
   <tabstop>leTmpPath</tabstop>
   <tabstop>pbTmpPathSelect</tabstop>
   <tabstop>cbLang</tabstop>
+  <tabstop>cbLangBackup</tabstop>
   <tabstop>cbNoBackup</tabstop>
+  <tabstop>cbQuietBatch</tabstop>
+  <tabstop>cbChangePermissions</tabstop>
+  <tabstop>sbUPerm</tabstop>
+  <tabstop>sbGPerm</tabstop>
+  <tabstop>sbOPerm</tabstop>
   <tabstop>cbShowDockIcon</tabstop>
   <tabstop>twEngines</tabstop>
   <tabstop>pbMoveUp</tabstop>
   <tabstop>pbMoveDown</tabstop>
   <tabstop>pbEngineConf</tabstop>
   <tabstop>pbEngineInfo</tabstop>
+  <tabstop>cbSearchPolicy</tabstop>
   <tabstop>cbDownloadPolicy</tabstop>
+  <tabstop>gbPpEnable</tabstop>
+  <tabstop>cbEncodingMethod</tabstop>
   <tabstop>cbAutoDetectEncoding</tabstop>
   <tabstop>cbEncFrom</tabstop>
   <tabstop>cbEncTo</tabstop>
   <tabstop>cbShowAllEncodings</tabstop>
   <tabstop>cbRemoveLines</tabstop>
   <tabstop>teRemoveWords</tabstop>
+  <tabstop>cbSubFormat</tabstop>
+  <tabstop>cbSubExtension</tabstop>
+  <tabstop>cbSkipConvertAds</tabstop>
   <tabstop>pbRestoreDefaults</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
+  <tabstop>tabOptions</tabstop>
  </tabstops>
  <resources>
   <include location="../res/resources.qrc"/>
@@ -793,8 +855,8 @@ p, li { white-space: pre-wrap; }
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>607</x>
-     <y>404</y>
+     <x>689</x>
+     <y>439</y>
     </hint>
     <hint type="destinationlabel">
      <x>327</x>
@@ -809,8 +871,8 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
-     <y>404</y>
+     <x>603</x>
+     <y>439</y>
     </hint>
     <hint type="destinationlabel">
      <x>327</x>
@@ -841,12 +903,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>108</x>
-     <y>225</y>
+     <x>119</x>
+     <y>275</y>
     </hint>
     <hint type="destinationlabel">
-     <x>450</x>
-     <y>244</y>
+     <x>256</x>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -857,12 +919,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>224</y>
+     <x>187</x>
+     <y>275</y>
     </hint>
     <hint type="destinationlabel">
-     <x>496</x>
-     <y>244</y>
+     <x>302</x>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -873,12 +935,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>225</y>
+     <x>135</x>
+     <y>275</y>
     </hint>
     <hint type="destinationlabel">
-     <x>542</x>
-     <y>244</y>
+     <x>348</x>
+     <y>277</y>
     </hint>
    </hints>
   </connection>

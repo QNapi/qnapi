@@ -26,6 +26,8 @@
 
 #include "libqnapi.h"
 
+#include <QLocale>
+
 #ifdef Q_OS_MAC
 #include "utils/infoplistdockicon.h"
 #endif
@@ -37,6 +39,11 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f)
       enginesRegistry(LibQNapi::subtitleDownloadEngineRegistry())
 {
     ui.setupUi(this);
+
+    ui.cbUiLanguage->setItemData(0, "", Qt::UserRole);
+    ui.cbUiLanguage->setItemData(1, QLocale(QLocale::English).name(), Qt::UserRole);
+    ui.cbUiLanguage->setItemData(2, QLocale(QLocale::Polish).name(), Qt::UserRole);
+    ui.lbUiLangChangeNotice->setVisible(false);
 
 #ifdef Q_OS_MAC
     ui.cbQuietBatch->hide();
@@ -348,6 +355,7 @@ void frmOptions::writeConfig()
                                            .arg(ui.sbOPerm->value());
 
     auto updatedGeneralConfig = config.generalConfig()
+        .setUiLanguage(ui.cbUiLanguage->itemData(ui.cbUiLanguage->currentIndex()).toString())
         .setP7zipPath(ui.le7zPath->text())
         .setTmpPath(ui.leTmpPath->text())
         .setLanguage(ui.cbLang->itemData(ui.cbLang->currentIndex()).toString())
@@ -396,6 +404,18 @@ void frmOptions::readConfig(const QNapiConfig & config)
 #ifdef Q_OS_MAC
     ui.cbShowDockIcon->setChecked(InfoPlistDockIcon::readShowDockIcon());
 #endif
+
+    QString systemLang = QLocale::languageToString(QLocale::system().language());
+    QString localizedSystemLang = QCoreApplication::translate("frmOptions", systemLang.toStdString().data());
+    ui.cbUiLanguage->setItemText(0, tr("Auto-detected based on system language (%1)").arg(localizedSystemLang));
+    ui.cbUiLanguage->setCurrentIndex(
+        ui.cbUiLanguage->findData(config.generalConfig().uiLanguage(),
+                                  Qt::UserRole,
+                                  Qt::MatchStartsWith)
+    );
+
+    connect(ui.cbUiLanguage, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+        [=](){ ui.lbUiLangChangeNotice->setVisible(true); });
 
     ui.le7zPath->setText(config.generalConfig().p7zipPath());
     ui.leTmpPath->setText(config.generalConfig().tmpPath());

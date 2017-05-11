@@ -49,7 +49,8 @@ const QNapiConfig ConfigReader::readConfig(const QSettings & settings) const
 
 const GeneralConfig ConfigReader::readGeneralConfig(const QSettings & settings) const
 {
-    auto cfg = GeneralConfig(settings.value("qnapi/7z_path", "").toString(),
+    auto cfg = GeneralConfig(settings.value("qnapi/ui_language", "").toString(),
+                             settings.value("qnapi/7z_path", "").toString(),
                              settings.value("qnapi/tmp_path", "").toString(),
                              settings.value("qnapi/language", "pl").toString(),
                              settings.value("qnapi/language_backup", "en").toString(),

@@ -48,6 +48,7 @@ void ConfigWriter::writeConfig(const QNapiConfig & config, QSettings & settings)
 
 void ConfigWriter::writeGeneralConfig(const GeneralConfig & generalConfig, QSettings & settings) const
 {
+    settings.setValue("qnapi/ui_language", generalConfig.uiLanguage());
     settings.setValue("qnapi/7z_path", generalConfig.p7zipPath());
     settings.setValue("qnapi/tmp_path", generalConfig.tmpPath());
     settings.setValue("qnapi/language", generalConfig.language());

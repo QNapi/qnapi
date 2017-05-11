@@ -19,6 +19,7 @@ QString GeneralConfig::toString() const
 {
     QString s;
     QTextStream(&s)
+      << "uiLanguage: " << uiLanguage() << endl
       << "p7zipPath: " << p7zipPath() << endl
       << "tmpPath: " << tmpPath() << endl
       << "language: " << language() << endl
@@ -31,4 +32,3 @@ QString GeneralConfig::toString() const
       << "changePermissionsTo: " << changePermissionsTo() << endl;
     return s;
 }
-

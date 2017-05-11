@@ -14,7 +14,7 @@ Latest binary packages are available at http://qnapi.github.io/#download
 #### Prerequisites
 
 * C++ compiler with c++11 support installed (`clang++`, `g++` or *MinGW* for Windows), present in `PATH`
-* Qt 5.1+ (most recent 5.x recommended) installed with `qmake` present in `PATH` (you can find one at http://www.qt.io/download-open-source/)
+* Qt 5.2+ (most recent 5.x recommended) installed with `qmake` present in `PATH` (you can find one at http://www.qt.io/download-open-source/)
 
 #### Binary prerequisites
 

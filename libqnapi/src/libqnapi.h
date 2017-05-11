@@ -58,6 +58,8 @@ public:
     static bool isPortableMode();
     static QString portableConfigPath();
 
+    static QString uiLanguage(const GeneralConfig & generalConfig);
+
     static QSharedPointer<const SubtitleDownloadEnginesRegistry> subtitleDownloadEngineRegistry();
 
     static QSharedPointer<const MovieInfoProvider> movieInfoProvider();

@@ -399,15 +399,13 @@
     </message>
     <message>
         <location filename="../gui/src/main.cpp" line="231"/>
-        <source>
-QNapi: deleting temporary files...</source>
-        <translation>\nQNapi: usuwanie plików tymczasowych...</translation>
+        <source>QNapi: deleting temporary files...</source>
+        <translation>QNapi: usuwanie plików tymczasowych...</translation>
     </message>
     <message>
         <location filename="../gui/src/main.cpp" line="248"/>
-        <source>
-QNapi: finished.</source>
-        <translation>\nQNapi: zakończono.</translation>
+        <source>QNapi: finished.</source>
+        <translation>QNapi: zakończono.</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapi.cpp" line="115"/>

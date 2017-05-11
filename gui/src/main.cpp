@@ -228,7 +228,7 @@ void sigHandler(int sig)
 {
     Q_UNUSED(sig);
 
-    qDebug() << QObject::tr("\nQNapi: deleting temporary files...");
+    qDebug() << QObject::tr("QNapi: deleting temporary files...");
 
     const QNapiConfig config = LibQNapi::loadConfig();
     QString tmpPath = config.generalConfig().tmpPath();
@@ -245,7 +245,7 @@ void sigHandler(int sig)
         QFile::remove(file.filePath());
     }
 
-    qDebug() << QObject::tr("\nQNapi: finished.");
+    qDebug() << QObject::tr("QNapi: finished.");
 
     exit(666);
 }

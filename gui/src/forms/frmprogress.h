@@ -35,8 +35,8 @@ class GetThread : public QNapiThread
 Q_OBJECT
 
     public:
-        GetThread(const QNapiConfig & config)
-            : config(config), langBackupPassed(false)
+        GetThread()
+            : langBackupPassed(false)
         {
             connect(this, SIGNAL(criticalError(const QString &)),
                     this, SLOT(setCriticalMessage(const QString &)));            
@@ -65,7 +65,6 @@ Q_OBJECT
         }
         void run();
 
-        const QNapiConfig config;
         QStringList queue;
         Maybe<QString> specificEngine;
         QList<SubtitleInfo> subStatusList;
@@ -82,7 +81,7 @@ class frmProgress: public QWidget
     Q_OBJECT
 
     public:
-        frmProgress(const QNapiConfig & config, QWidget *parent = 0, Qt::WindowFlags f = 0);
+        frmProgress(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
         void clearSpecificEngine() { getThread.setSpecificEngine(nothing()); }
         void setSpecificEngine(QString engine) { getThread.setSpecificEngine(just(engine)); }
@@ -111,7 +110,6 @@ class frmProgress: public QWidget
         void dropEvent(QDropEvent *event);
 
         Ui::frmProgress ui;
-        const QNapiConfig config;
         GetThread getThread;    
         frmListSubtitles frmSelect;
         frmSummary summary;

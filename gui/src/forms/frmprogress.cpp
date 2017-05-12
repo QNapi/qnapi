@@ -14,6 +14,7 @@
 
 #include "frmprogress.h"
 #include "qnapiapp.h"
+#include "libqnapi.h"
 #include <QSystemTrayIcon>
 #include <QMessageBox>
 #include <QFileInfo>
@@ -23,10 +24,8 @@
 #include <QDesktopWidget>
 
 
-frmProgress::frmProgress(const QNapiConfig & config, QWidget * parent, Qt::WindowFlags f)
-    : QWidget(parent, f),
-      config(config),
-      getThread(config)
+frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
+    : QWidget(parent, f)
 {
     qRegisterMetaType<SubtitleInfoList>("QNapiSubtitleInfoList");
 
@@ -91,7 +90,7 @@ bool frmProgress::download()
     }
 
     // TODO: perform these checks earlier
-    QNapi napi(config);
+    QNapi napi(LibQNapi::loadConfig());
 
     if(!napi.checkP7ZipPath())
     {
@@ -271,6 +270,7 @@ void GetThread::run()
     napiSuccess = napiFail = 0;
     subStatusList.clear();
 
+    const QNapiConfig config = LibQNapi::loadConfig();
     QNapi napi(config, specificEngine);
 
     emit progressChange(0, queue.size(), 0.0f);

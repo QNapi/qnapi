@@ -78,7 +78,7 @@ frmProgress * QNapiApp::progress()
 {
     if(!f_progress)
     {
-        f_progress = new frmProgress(LibQNapi::loadConfig());
+        f_progress = new frmProgress();
         if(!f_progress) abort();
         connect(this, SIGNAL(request(QString)),
                 f_progress, SLOT(receiveRequest(QString)));

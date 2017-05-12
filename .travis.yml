@@ -26,8 +26,6 @@ matrix:
       compiler: gcc
       env:
         - QT_BASE=55
-        - BUILD_APPIMG=1
-        - MAKE_SRC_TARBALL=1
     - os: linux
       dist: trusty
       sudo: required
@@ -46,6 +44,8 @@ matrix:
       compiler: gcc
       env:
         - QT_BASE=58
+        - BUILD_APPIMG=1
+        - MAKE_SRC_TARBALL=1
     - os: osx
       compiler: clang
       env:

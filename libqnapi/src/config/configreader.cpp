@@ -160,7 +160,7 @@ const GeneralConfig ConfigReader::resolveP7zipPath(const GeneralConfig & config)
 
         if(sysPaths.isEmpty())
         {
-            sysPaths << "/bin" << "/usr/bin" << "/usr/local/bin";
+            sysPaths << "/bin" << "/usr/bin" << "/usr/local/bin" << QCoreApplication::applicationDirPath();
         }
 
         QStringList p7zipBinaries = { "7z", "7za" };

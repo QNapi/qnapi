@@ -50,6 +50,8 @@ macx {
 win32 {
     INSTALL_PREFIX = win32/out
 
+    QMAKE_STRIP = echo
+
     p7zip.files = win32/content/7z.exe
     p7zip.path = $${INSTALL_PREFIX}
 

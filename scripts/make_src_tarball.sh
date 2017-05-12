@@ -6,7 +6,7 @@ mkdir $DST_DIR
 cp -rv * $DST_DIR
 find $DST_DIR | grep .git | xargs rm -fr
 rm -fr $DST_DIR/deps/libmediainfo
-rm -fr $DST_DIR/win32/content/7za.exe
+rm -fr $DST_DIR/win32/content/7z*.exe
 rm -fr $DST_DIR/macx/content/7za
 rm -fr $DST_DIR/macx/QNapi*app
 rm -fr $DST_DIR/macx/QNapi*dmg

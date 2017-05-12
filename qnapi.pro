@@ -52,7 +52,7 @@ win32 {
 
     QMAKE_STRIP = echo
 
-    p7zip.files = win32/content/7z.exe
+    p7zip.files = win32/content/7za.exe
     p7zip.path = $${INSTALL_PREFIX}
 
     doc.files = doc/ChangeLog \

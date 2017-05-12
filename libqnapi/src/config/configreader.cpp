@@ -151,7 +151,7 @@ const GeneralConfig ConfigReader::resolveP7zipPath(const GeneralConfig & config)
 #if defined(Q_OS_MAC)
         p7zipPath = QFileInfo(QCoreApplication::applicationDirPath() + "/../Resources/7za").absoluteFilePath();
 #elif defined(Q_OS_WIN)
-        p7zipPath = QFileInfo(QCoreApplication::applicationDirPath() + "/7z.exe").absoluteFilePath();
+        p7zipPath = QFileInfo(QCoreApplication::applicationDirPath() + "/7za.exe").absoluteFilePath();
 #else
         QString pathEnv = QProcess::systemEnvironment().filter(QRegExp("^PATH=(.*)$")).value(0);
         QStringList sysPaths = pathEnv.mid(5).split(":");

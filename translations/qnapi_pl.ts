@@ -282,8 +282,13 @@
         <translation>   -d, --dont-show-list       Nie pokazuj listy napisow (dziala tylko z -c)</translation>
     </message>
     <message>
+        <location filename="../gui/src/qnapicli.cpp" line="408"/>
+        <source>   -l, --lang [code]          Preferred subtitles language</source>
+        <translation>   -l, --lang [jezyk]         Preferowany jezyk napisow</translation>
+    </message>
+    <message>
         <location filename="../gui/src/qnapicli.cpp" line="409"/>
-        <source>   -lb,--lang-backup          Alternative subtitles language</source>
+        <source>   -lb,--lang-backup [code]   Alternative subtitles language</source>
         <translation>   -lb,--lang-backup [jezyk]  Zapasowy jezyk napisow</translation>
     </message>
     <message>
@@ -330,11 +335,6 @@
         <location filename="../gui/src/qnapicli.cpp" line="405"/>
         <source>   -s, --show-list            Show a list of subtitles (works only with -c)</source>
         <translation>   -s, --show-list            Pokazuj liste napisow (dziala tylko z -c)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="408"/>
-        <source>   -l, --lang                 Preferred subtitles language</source>
-        <translation>   -l, --lang [jezyk]         Preferowany jezyk napisow</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="412"/>

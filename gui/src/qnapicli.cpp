@@ -405,8 +405,8 @@ void QNapiCli::printHelp(const QString & binaryFileName)
     printCli(tr("   -s, --show-list            Show a list of subtitles (works only with -c)"));
     printCli(tr("   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)"));
     printCli();
-    printCli(tr("   -l, --lang                 Preferred subtitles language"));
-    printCli(tr("   -lb,--lang-backup          Alternative subtitles language"));
+    printCli(tr("   -l, --lang [code]          Preferred subtitles language"));
+    printCli(tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
     printCli();
     printCli(tr("   -o, --options              Show program options (only GUI)"));
     printCli(tr("   -h, --help                 Show help text"));

@@ -89,7 +89,7 @@ QString MPL2SubtitleFormat::encodeToken(const SubToken & entry) const
     case STT_BOLD: return "{y:b}";
     case STT_ITALIC: return "{y:i}";
     case STT_UNDERLINE: return "{y:u}";
-    case STT_FONTCOLOR: return QString("{c:%1}").arg(entry.payload);
+    case STT_FONTCOLOR: return QString("{c:$%1}").arg(entry.payload);
     default: return "";
     }
 }

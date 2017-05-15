@@ -10,23 +10,24 @@ qnapi \- narzedzie do automatycznego pobierania i dopasowywania napisow do filmo
 \fBqnapi\fP potrafi pracowac w dwoch trybach: GUI oraz konsolowym. Aby pobrac napisy, nalezy podac liste plikow filmowych jako argument(y) wywolania programu lub skorzystac z odpowiedniej opcji w graficznym interfejsie uzytkownika. 
 .SH OPCJE
 
- -c,  \-\-console           pobieranie napisow z konsoli
- -q,  \-\-quiet             pobiera napisy nie wypisujac zadnych
-                          komunikatow ani nie pokazujac zadnych
-                          okien (implikuje -d)
- -s,  \-\-show\-list         pokazuj liste napisow (dziala tylko
-                          z opcja -c)
- -d,  \-\-dont\-show\-list    nie pokazuj listy napisow (dziala
-                          tylko z opcja -c)
- -o,  \-\-options           przywoluje okno konfiguracji programu 
- -l,  \-\-lang              preferowany jezyk napisow
- -lb, \-\-lang\-backup       zapasowy jezyk napisow
- -h,  \-\-help              pokazuje pomoc programu
- -hl, \-\-help\-languages    listuje jezyki, w jakich mozna
-                          pobierac napisy
+ -c, \-\-console         Pobierz napisy w trybie wiersza polecen
+ -q, \-\-quiet           Pobierz napisy nie wypisujac zadnych komunikatow
+                       ani nie pokazujac zadnych okien (implikuje -d)
+
+ -s, \-\-show\-list         Pokazuj liste napisow (dziala tylko z -c)
+ -d, \-\-dont\-show\-list    Nie pokazuj listy napisow (dziala tylko z -c)
+
+ -l, \-\-lang [jezyk]         Preferowany jezyk napisow
+ -lb,\-\-lang\-backup [jezyk]  Zapasowy jezyk napisow
+ -f, \-\-format [format]      Format napisow (mDVD,MPL2,SRT,TMP)
+ -e, \-\-extension [ext]      Rozszerzenie pliku z napisami
+
+ -o, \-\-options            Konfiguruj program (tylko w trybie GUI)
+ -h, \-\-help               Pokaz tekst pomocy
+ -hl,\-\-help\-languages     Lista jezykow, w jakich mozna pobierac napisy
 
 .SH AUTOR
-Copyright (C) 2008-2015 Piotr Krzeminski <pio.krzeminski@gmail.com>
+Copyright (C) 2008-2017 Piotr Krzeminski <pio.krzeminski@gmail.com>
 http://qnapi.github.io
 .SH LICENCJA
 Program QNapi rozprowadzany jest na licencji GNU General Public License w wersji drugiej lub kazdej pozniejszej.

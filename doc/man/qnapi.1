@@ -1,0 +1,37 @@
+.TH "qnapi" 1
+.SH NAME
+qnapi \- a tool for downloading subtitles for movies
+
+.SH SYNOPSIS
+\fBqnapi\fP [options] [list of files]
+.SH DESCRIPTION
+\fBqnapi\fP is a software for automatic downloading and matching subtitles for the movie files. It can use services like napiprojekt.pl, napisy24.pl and opensubtitles.com.
+
+\fBqnapi\fP works in two modes: GUI and CLI. You can download subtitles just by providing paths to the movie files as program arguments or use graphical interface and perform such an action there.
+.SH ARGUMENTS
+
+ -c, \-\-console         Download subtitles with console
+ -q, \-\-quiet           Download subtitles quietly without showing
+                       any messages or windows (implies -d)
+
+ -s, \-\-show\-list         Show a list of subtitles (works only with -c)
+ -d, \-\-dont\-show\-list    Do not show a list of subtitles
+                         (works only with -c)
+
+ -l, \-\-lang [jezyk]         Preferred subtitles language
+ -lb,\-\-lang\-backup [jezyk]  Alternative subtitles language
+ -f, \-\-format [format]      Select target subtitles file format
+                            (mDVD,MPL2,SRT,TMP)
+ -e, \-\-extension [ext]      Select target subtitles file extension
+
+ -o, \-\-options            Show program options (only GUI)
+ -h, \-\-help               Show help text
+ -hl,\-\-help\-languages     List of available subtitles languages
+
+.SH AUTHOR
+Copyright (C) 2008-2017 Piotr Krzeminski <pio.krzeminski@gmail.com>
+http://qnapi.github.io
+.SH LICENSE
+QNapi is distributed under the GNU General Public License v2 or later.
+.SH ISSUES
+All the issues may be reported using GitHub tracker: https://github.com/QNapi/qnapi/issues

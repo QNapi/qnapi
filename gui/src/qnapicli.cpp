@@ -438,8 +438,8 @@ void QNapiCli::printHelp(const QString & binaryFileName)
     printCli();
     printCli(tr("   -l, --lang [code]          Preferred subtitles language"));
     printCli(tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
-    printCli(tr("   -f ,--format [format]      Select target subtitles file format (%1)").arg(formats));
-    printCli(tr("   -e ,--extension [ext]      Select target subtitles file extension"));
+    printCli(tr("   -f, --format [format]      Select target subtitles file format (%1)").arg(formats));
+    printCli(tr("   -e, --extension [ext]      Select target subtitles file extension"));
     printCli();
     printCli(tr("   -o, --options              Show program options (only GUI)"));
     printCli(tr("   -h, --help                 Show help text"));

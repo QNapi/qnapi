@@ -168,7 +168,7 @@ QString SubRipSubtitleFormat::encodeToken(const SubToken & entry) const
     case STT_ITALIC_END: return "</i>";
     case STT_UNDERLINE: return "<u>";
     case STT_UNDERLINE_END: return "</u>";
-    case STT_FONTCOLOR: return QString("<font color=\"%1\">").arg(entry.payload);
+    case STT_FONTCOLOR: return QString("<font color=\"#%1\">").arg(entry.payload);
     case STT_FONTCOLOR_END: return "</font>";
     default: return "";
     }

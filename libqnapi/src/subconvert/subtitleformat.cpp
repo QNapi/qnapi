@@ -52,26 +52,25 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream) const
 
         if(!matched)
         {
-            QRegExp colorR1("^\\{c:[$#](.*)\\}");
+            QRegExp colorR1("^\\{c:(.*)\\}");
             colorR1.setPatternSyntax(QRegExp::RegExp2);
             colorR1.setCaseSensitivity(Qt::CaseInsensitive);
 
-            QRegExp colorR2("^<font color=\"[$#](.*)\">");
+            QRegExp colorR2("^<font color=(.*)>");
             colorR1.setPatternSyntax(QRegExp::RegExp2);
             colorR1.setCaseSensitivity(Qt::CaseInsensitive);
-
 
             if(colorR1.indexIn(tokenStream) == 0)
             {
                 tok.type = STT_FONTCOLOR;
-                tok.payload = colorR1.cap(2);
+                tok.payload = parseColor(colorR1.cap(1));
                 tokenStream.remove(0, colorR1.cap(0).size());
                 matched = true;
             }
             else if(colorR2.indexIn(tokenStream) == 0)
             {
                 tok.type = STT_FONTCOLOR;
-                tok.payload = colorR2.cap(2);
+                tok.payload = parseColor(colorR2.cap(1));
                 tokenStream.remove(0, colorR2.cap(0).size());
                 matched = true;
             }
@@ -124,4 +123,13 @@ QVector<SubToken> SubtitleFormat::decodeTokenStream(QString tokenStream) const
     }
 
     return tokens;
+}
+
+
+QString SubtitleFormat::parseColor(QString colorString) const
+{
+    return colorString
+        .replace('"', "")
+        .replace('#', "")
+        .replace('$', "");
 }

@@ -31,6 +31,8 @@ public:
     virtual QStringList encode(const SubFile & subFile) const = 0;
 
     QVector<SubToken> decodeTokenStream(QString tokenStream) const;
+private:
+    QString parseColor(QString colorString) const;
 };
 
 #endif // SUBTITLEFORMAT_H

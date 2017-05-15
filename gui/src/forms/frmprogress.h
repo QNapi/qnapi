@@ -35,12 +35,7 @@ class GetThread : public QNapiThread
 Q_OBJECT
 
     public:
-        GetThread()
-            : langBackupPassed(false)
-        {
-            connect(this, SIGNAL(criticalError(const QString &)),
-                    this, SLOT(setCriticalMessage(const QString &)));            
-        }
+        GetThread();
 
     signals:
         void fileNameChange(const QString & newfileName);
@@ -60,9 +55,15 @@ Q_OBJECT
 
         void setSpecificEngine(Maybe<QString> engine) { specificEngine = engine; }
 
-        void setLanguages(QString language, QString languageBackup, bool languageBackupPassed){
+        void setLanguages(QString language, QString languageBackup, bool languageBackupPassed)
+        {
             lang = language; langBackup = languageBackup; langBackupPassed = languageBackupPassed;
         }
+        void setConfig(const QNapiConfig & configuration)
+        {
+            config = configuration;
+        }
+
         void run();
 
         QStringList queue;
@@ -74,6 +75,7 @@ Q_OBJECT
         QString criticalMessage;
         QMutex waitForDlg;
         int selIdx;
+        QNapiConfig config;
 };
 
 class frmProgress: public QWidget
@@ -90,6 +92,8 @@ class frmProgress: public QWidget
         void setBatchLanguages(QString lang, QString langBackup, bool langBackupPassed) {
             getThread.setLanguages(lang, langBackup, langBackupPassed);
         }
+        void setTargetFormatOverride(QString value) { targetFormatOverride = value; }
+        void setTargetExtOverride(QString value) { targetExtOverride = value; }
         bool isBatchMode() { return batchMode; }
 
     signals:
@@ -113,6 +117,7 @@ class frmProgress: public QWidget
         GetThread getThread;    
         frmListSubtitles frmSelect;
         frmSummary summary;
+        QString targetFormatOverride, targetExtOverride;
 
         bool batchMode, showSummary, closeRequested;
         QMutex mutex;

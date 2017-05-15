@@ -17,7 +17,7 @@
 #include "subtitlelanguage.h"
 
 #include <QTranslator>
-#include <iostream>
+
 QNapiCli::QNapiCli(int argc,
                    char **argv,
                    const QNapiConfig & config,

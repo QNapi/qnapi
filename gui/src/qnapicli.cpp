@@ -17,7 +17,7 @@
 #include "subtitlelanguage.h"
 
 #include <QTranslator>
-
+#include <iostream>
 QNapiCli::QNapiCli(int argc,
                    char **argv,
                    const QNapiConfig & config,
@@ -25,7 +25,6 @@ QNapiCli::QNapiCli(int argc,
     : QCoreApplication(argc, argv),
       config(config),
       uiLanguage(uiLanguage),
-      napi(config),
       mode(CM_UNSET),
       showPolicy(SLP_USE_CONFIG),
       langBackupPassed(false)
@@ -120,7 +119,6 @@ bool QNapiCli::analyze(const QStringList & args)
             ++i;
             if(i >= args.size())
                 return false;
-
             p = args[i];
 
             lang = SubtitleLanguage(p).toTwoLetter();
@@ -135,11 +133,38 @@ bool QNapiCli::analyze(const QStringList & args)
             ++i;
             if(i >= args.size())
                 return false;
-
             p = args[i];
 
             langBackup = SubtitleLanguage(p).toTwoLetter();
             langBackupPassed = true;
+        }
+        else if((p == "--format") || (p == "-f"))
+        {
+            ++i;
+            if(i >= args.size())
+                return false;
+            p = args[i];
+
+            if(LibQNapi::subtitleFormatsRegistry()->select(p).isNull())
+            {
+                printCli(tr("Invalid target subtitles format: %1").arg(p));
+                return false;
+            }
+
+            config = config.setPostProcessingConfig(
+                config.postProcessingConfig().setSubFormat(p)
+            );
+        }
+        else if((p == "--extension") || (p == "-e"))
+        {
+            ++i;
+            if(i >= args.size())
+                return false;
+            p = args[i];
+
+            config = config.setPostProcessingConfig(
+                config.postProcessingConfig().setSubExtension(p)
+            );
         }
         else if((p == "--show-list") || (p == "-s"))
         {
@@ -201,6 +226,10 @@ int QNapiCli::exec()
         printHelp(QFileInfo(args.first()).fileName());
         return EC_OK;
     }
+
+    std::cout << config.toString().toStdString();
+
+    QNapi napi(config);
 
     if(!napi.checkP7ZipPath())
     {
@@ -394,6 +423,8 @@ void QNapiCli::printHeader()
 
 void QNapiCli::printHelp(const QString & binaryFileName)
 {
+    QString formats = LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
+
     printCli(tr("QNapi is distributed under the GNU General Public License v2."));
     printCli();
     printCli(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
@@ -407,6 +438,8 @@ void QNapiCli::printHelp(const QString & binaryFileName)
     printCli();
     printCli(tr("   -l, --lang [code]          Preferred subtitles language"));
     printCli(tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
+    printCli(tr("   -f ,--format [format]      Select target subtitles file format (%1)").arg(formats));
+    printCli(tr("   -e ,--extension [ext]      Select target subtitles file extension"));
     printCli();
     printCli(tr("   -o, --options              Show program options (only GUI)"));
     printCli(tr("   -h, --help                 Show help text"));

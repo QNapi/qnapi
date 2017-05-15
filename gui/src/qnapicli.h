@@ -38,9 +38,8 @@ public:
 private:
 
     QStringList movieList;
-    const QNapiConfig config;
+    QNapiConfig config;
     const QString uiLanguage;
-    QNapi napi;
 
     enum CliExitCode {
         EC_CMD_LINE_ARG_PARSING_ERROR = -1,

@@ -71,7 +71,7 @@ QString SubtitleMatcher::selectTargetExtension(QFileInfo subtitlesTmpFileInfo) c
 
     if(isPostProcessingEnabled)
     {
-        if(!ppSubFormat.isEmpty() && !ppSubExtension.isEmpty())
+        if(!ppSubFormat.isEmpty() && ppSubExtension.isEmpty())
         {
             targetExtension = subtitleFormatsRegistry->select(ppSubFormat)->defaultExtension();
         }

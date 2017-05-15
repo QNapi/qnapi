@@ -253,8 +253,8 @@ void frmConvert::convertClicked()
 
     if(ui.cbChangeFPS->isChecked())
     {
-        double fpsFrom = ui.cbFPSFrom->currentText().toDouble();
-        double fpsTo = ui.cbFPSTo->currentText().toDouble();
+        double fpsFrom = ui.cbFPSFrom->currentText().replace(',', '.').toDouble();
+        double fpsTo = ui.cbFPSTo->currentText().replace(',', '.').toDouble();
         fpsRatio = fpsTo / fpsFrom;
     }
 
@@ -266,7 +266,7 @@ void frmConvert::convertClicked()
     if(subConverter.convertSubtitles(ui.leSrcSubFile->text(),
                                      targetFormat,
                                      ui.leTargetFileName->text(),
-                                     ui.cbMovieFPS->currentText().toDouble(),
+                                     ui.cbMovieFPS->currentText().replace(',', '.').toDouble(),
                                      fpsRatio,
                                      delayOffset))
     {

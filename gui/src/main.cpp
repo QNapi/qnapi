@@ -99,7 +99,7 @@ int main(int argc, char **argv)
         {
             app.progress()->setBatchMode(true);
 
-            QString batchLang, batchLangBackup, p;
+            QString p, batchLang, batchLangBackup;
             bool invalidLang = false, batchLangBackupPassed = false;
 
             for(int i = 1; i < argc; i++)
@@ -113,9 +113,12 @@ int main(int argc, char **argv)
                     {
                         batchLang = SubtitleLanguage(argv[i]).toTwoLetter();
                         if(batchLang.isEmpty())
+                        {
                             invalidLang = true;
-                    } else invalidLang = true;
-
+                        }
+                    } else {
+                        invalidLang = true;
+                    }
                 }
                 else if((p == "-lb") || (p == "--lang-backup"))
                 {
@@ -126,6 +129,25 @@ int main(int argc, char **argv)
                         batchLangBackupPassed = true;
                     }
                     break;
+                }
+                else if((p == "--format") || (p == "-f"))
+                {
+                    ++i;
+                    if(i < argc)
+                    {
+                        if(!LibQNapi::subtitleFormatsRegistry()->select(argv[i]).isNull())
+                        {
+                            app.progress()->setTargetFormatOverride(argv[i]);
+                        }
+                    }
+                }
+                else if((p == "--extension") || (p == "-e"))
+                {
+                    ++i;
+                    if(i < argc)
+                    {
+                        app.progress()->setTargetExtOverride(argv[i]);
+                    }
                 }
             }
 

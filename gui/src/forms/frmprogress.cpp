@@ -23,7 +23,6 @@
 #include <QCloseEvent>
 #include <QDesktopWidget>
 
-
 frmProgress::frmProgress(QWidget * parent, Qt::WindowFlags f)
     : QWidget(parent, f)
 {
@@ -89,9 +88,23 @@ bool frmProgress::download()
         summary.close();
     }
 
-    // TODO: perform these checks earlier
-    QNapi napi(LibQNapi::loadConfig());
+    auto config = LibQNapi::loadConfig();
+    auto config1 = config;
+    if(!targetFormatOverride.isEmpty()) {
+        config1 = config1.setPostProcessingConfig(
+            config1.postProcessingConfig().setSubFormat(targetFormatOverride)
+        );
+    }
+    auto config2 = config1;
+    if(!targetExtOverride.isEmpty()) {
+        config2 = config2.setPostProcessingConfig(
+            config2.postProcessingConfig().setSubExtension(targetExtOverride)
+        );
+    }
 
+    QNapi napi(config2);
+
+    // TODO: perform these checks earlier
     if(!napi.checkP7ZipPath())
     {
         QMessageBox::warning(0, tr("Can not find p7zip!"),
@@ -125,6 +138,7 @@ bool frmProgress::download()
     closeRequested = false;
     ui.pbCancel->setEnabled(true);
 
+    getThread.setConfig(config2);
     getThread.start();
     return true;
 }
@@ -253,6 +267,15 @@ void frmProgress::dropEvent(QDropEvent *event)
     }
 }
 
+GetThread::GetThread()
+    : langBackupPassed(false),
+      config(LibQNapi::loadConfig())
+{
+    connect(this, SIGNAL(criticalError(const QString &)),
+            this, SLOT(setCriticalMessage(const QString &)));
+}
+
+
 void GetThread::subtitlesSelected(int idx)
 {
     selIdx = idx;
@@ -270,7 +293,6 @@ void GetThread::run()
     napiSuccess = napiFail = 0;
     subStatusList.clear();
 
-    const QNapiConfig config = LibQNapi::loadConfig();
     QNapi napi(config, specificEngine);
 
     emit progressChange(0, queue.size(), 0.0f);

@@ -103,7 +103,7 @@ void SubtitleMatcher::removeOrCopy(QString targetMoviefilePath, QString targetSu
         if(!noBackup)
         {
             QFileInfo targetSubtitlesFileInfo(targetSubtitlesFilePath);
-            QString newName = constructSubtitlePath(targetMoviefilePath, targetSubtitlesFileInfo.suffix(), "_copy");
+            QString newName = constructSubtitlePath(targetMoviefilePath, targetSubtitlesFileInfo.suffix(), tr("_copy"));
 
             if(QFile::exists(newName))
                 QFile::remove(newName);

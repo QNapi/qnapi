@@ -20,8 +20,9 @@
 #include <QFileInfo>
 #include <QSharedPointer>
 
-class SubtitleMatcher
+class SubtitleMatcher : public QObject
 {
+Q_OBJECT
 public:
     SubtitleMatcher(bool _noBackup,
                     bool _isPostProcessingEnabled,

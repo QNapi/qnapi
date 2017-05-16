@@ -619,6 +619,14 @@
     </message>
 </context>
 <context>
+    <name>SubtitleMatcher</name>
+    <message>
+        <location filename="../libqnapi/src/subtitlematcher.cpp" line="106"/>
+        <source>_copy</source>
+        <translation>_kopia</translation>
+    </message>
+</context>
+<context>
     <name>frmAbout</name>
     <message>
         <location filename="../gui/ui/frmabout.ui" line="20"/>

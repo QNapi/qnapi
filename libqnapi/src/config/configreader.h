@@ -29,7 +29,8 @@
 class ConfigReader
 {
 public:
-    ConfigReader(const QSharedPointer<const StaticConfig> & staticConfig,
+    ConfigReader(const QString & appExecutableDir,
+                 const QSharedPointer<const StaticConfig> & staticConfig,
                  const QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry);
 
     const QNapiConfig readUserConfig() const;
@@ -47,6 +48,7 @@ private:
     const GeneralConfig resolveP7zipPath(const GeneralConfig & config) const;
     const GeneralConfig resolveTmpPath(const GeneralConfig & config) const;
 
+    QString appExecutableDir;
     QSharedPointer<const StaticConfig> staticConfig;
     QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 };

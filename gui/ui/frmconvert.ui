@@ -265,7 +265,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Detect video framerate (FPS) form file</string>
+      <string>Detect video framerate (FPS) from file</string>
      </property>
      <property name="text">
       <string/>
@@ -513,7 +513,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Detect video framerate (FPS) form file</string>
+      <string>Detect video framerate (FPS) from file</string>
      </property>
      <property name="text">
       <string/>

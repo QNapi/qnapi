@@ -3,6 +3,8 @@ Version=1.0
 Actions=QNapiScan;
 Name=Scan directory and download subtitles
 GenericName=Scan directory and download subtitles
+Name[it_IT]=Scansiona cartella e scarica sottotitoli
+GenericName[it_IT]=Scansiona cartella e scarica sottotitoli
 Name[pl_PL]=Przeskanuj katalog i pobierz napisy
 GenericName[pl_PL]=Przeskanuj katalogu i pobierz napisy
 Icon=qnapi-48
@@ -12,6 +14,7 @@ Type=Service
 
 [Desktop Action QNapiScan]
 Name=Scan directory and download subtitles
+Name[it_IT]=Scansiona cartella e scarica sottotitoli
 Name[pl_PL]=Przeskanuj katalog i pobierz napisy
 Exec=qnapi %U
 Icon=qnapi-48

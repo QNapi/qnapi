@@ -1,0 +1,37 @@
+.TH "qnapi" 1
+.SH NAME
+qnapi \- uno strumento per scaricare sottotitoli di film
+
+.SH SYNOPSIS
+\fBqnapi\fP [opzioni] [lista file]
+.SH DESCRIPTION
+\fBqnapi\fP è un programma per lo scaricamento e l'abbinamento automatico di sottotitoli di film. Può usare servizi come napiprojekt.pl, napisy24.pl e opensubtitles.com.
+
+\fBqnapi\fP funziona in due modalità: GUI e CLI. Si possono scaricare sottotitoli semplicemente fornendo il percorso ai file dei film come argomenti del programma oppure usando l'interfaccia grafica ed effettuando questa operazione lì.
+.SH ARGUMENTS
+
+ -c, \-\-console         Scarica sottotitoli da console
+ -q, \-\-quiet           Scarica sottotitoli in silenzio senza mostrare
+                       alcun messaggio o finestra (sottintende -d)
+
+ -s, \-\-show\-list         Mostra una lista di sottotitoli (funziona solo con -c)
+ -d, \-\-dont\-show\-list    Non mostrare una lista di sottotitoli
+                         (funziona solo con -c)
+
+ -l, \-\-lang [codice]         Lingua sottotitoli preferita
+ -lb,\-\-lang\-backup [codice]  Lingua sottotitoli alternativa
+ -f, \-\-format [formato]     Seleziona formato file sottotitoli destinazione
+                            (mDVD,MPL2,SRT,TMP)
+ -e, \-\-extension [est]      Selezione estensione file sottotitoli destinazione
+
+ -o, \-\-options            Mostra opzioni programma (solo GUI)
+ -h, \-\-help               Mostra testo di aiuto
+ -hl,\-\-help\-languages     Lista delle lingue sottotitoli disponibili
+
+.SH AUTHOR
+Copyright (C) 2008-2017 Piotr Krzeminski <pio.krzeminski@gmail.com>
+http://qnapi.github.io
+.SH LICENSE
+QNapi è distribuito sotto la GNU General Public License v2 o successiva.
+.SH ISSUES
+Qualunque problema può essere segnalato attraverso la pagina GitHub: https://github.com/QNapi/qnapi/issues

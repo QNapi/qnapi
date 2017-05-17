@@ -12,6 +12,6 @@ Type=Service
 
 [Desktop Action QNapiScan]
 Name=Scan directory and download subtitles
-Name=Przeskanuj katalog i pobierz napisy
+Name[pl_PL]=Przeskanuj katalog i pobierz napisy
 Exec=qnapi %U
 Icon=qnapi-48

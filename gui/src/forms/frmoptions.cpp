@@ -42,7 +42,8 @@ frmOptions::frmOptions(QWidget * parent, Qt::WindowFlags f)
 
     ui.cbUiLanguage->setItemData(0, "", Qt::UserRole);
     ui.cbUiLanguage->setItemData(1, QLocale(QLocale::English).name(), Qt::UserRole);
-    ui.cbUiLanguage->setItemData(2, QLocale(QLocale::Polish).name(), Qt::UserRole);
+    ui.cbUiLanguage->setItemData(2, QLocale(QLocale::Italian).name(), Qt::UserRole);
+    ui.cbUiLanguage->setItemData(3, QLocale(QLocale::Polish).name(), Qt::UserRole);
     ui.lbUiLangChangeNotice->setVisible(false);
 
 #ifdef Q_OS_MAC

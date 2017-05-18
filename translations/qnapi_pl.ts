@@ -1073,7 +1073,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="230"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="410"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="411"/>
         <source>Auto-detected based on system language (%1)</source>
         <translation>Wykryty automatycznie z ustawień systemu (%1)</translation>
     </message>
@@ -1228,7 +1228,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="713"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="273"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="274"/>
         <source>Default</source>
         <translation>Domyślne</translation>
     </message>
@@ -1263,42 +1263,42 @@
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="122"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="123"/>
         <source>Specify the path for 7z executable</source>
         <translation>Wskaż ścieżkę do programu 7z</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="127"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="128"/>
         <source>Invalid path</source>
         <translation>Niepoprawna ścieżka</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="128"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="129"/>
         <source>Defined path to 7z executable is invalid. If you can not locate 7z executable, try installing p7zip-full package.</source>
         <translation>&quot;Wskazana przez Ciebie ścieżka do programu 7z jest niepoprawna. Jeśli nie możesz odnaleźć programu 7z, spróbuj zainstalować pakiet p7zip-full.</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="148"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="149"/>
         <source>Specify temporary directory</source>
         <translation>Wskaż katalog tymczasowy</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="190"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="191"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="191"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="192"/>
         <source>At least one subtitles engine must remain active!</source>
         <translation>Przynajmniej jeden moduł pobierania musi pozostać aktywny!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="265"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="266"/>
         <source>%1 subtitles engine info</source>
         <translation>Informacje o module pobierania napisów %1</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="280"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="281"/>
         <source>Default (%1)</source>
         <translation>Domyślne (%1)</translation>
     </message>

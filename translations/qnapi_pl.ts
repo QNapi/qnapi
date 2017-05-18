@@ -1085,174 +1085,180 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="244"/>
+        <source>Italian</source>
+        <comment>it</comment>
+        <translation>Włoski</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/frmoptions.ui" line="253"/>
         <source>Polish</source>
         <comment>pl</comment>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="264"/>
+        <location filename="../gui/ui/frmoptions.ui" line="273"/>
         <source>UI Language change will be applied on next application launch</source>
         <translation>Zmiana języka nastąpi przy następnym uruchomieniu aplikacji</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="272"/>
+        <location filename="../gui/ui/frmoptions.ui" line="281"/>
         <source>Subtitles download engines</source>
         <translation>Moduły pobierania napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="278"/>
+        <location filename="../gui/ui/frmoptions.ui" line="287"/>
         <source>Available engines to download subtitles from:</source>
         <translation>Dostępne moduły pobierania napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="291"/>
+        <location filename="../gui/ui/frmoptions.ui" line="300"/>
         <source>Subtitles download policy:</source>
         <translation>Polityka pobierania napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="305"/>
+        <location filename="../gui/ui/frmoptions.ui" line="314"/>
         <source>Always show a list of available subtitles</source>
         <translation>Zawsze pokazuj listę dostępnych napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="310"/>
+        <location filename="../gui/ui/frmoptions.ui" line="319"/>
         <source>Show a list of available subtitles only if needed</source>
         <translation>Pokazuj listę dostępnych napisów tylko wtedy, gdy potrzeba</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="315"/>
+        <location filename="../gui/ui/frmoptions.ui" line="324"/>
         <source>Always obtain first matching subtitles and never show a list</source>
         <translation>Zawsze pobieraj pierwsze pasujące napisy i nigdy nie pokazuj listy</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="348"/>
+        <location filename="../gui/ui/frmoptions.ui" line="357"/>
         <source>Move up</source>
         <translation>Przesuń do góry</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="365"/>
+        <location filename="../gui/ui/frmoptions.ui" line="374"/>
         <source>Subtitles search policy:</source>
         <translation>Wyszukiwanie napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="375"/>
+        <location filename="../gui/ui/frmoptions.ui" line="384"/>
         <source>Move down  </source>
         <translation>Przesuń na dół</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="389"/>
+        <location filename="../gui/ui/frmoptions.ui" line="398"/>
         <source>Information</source>
         <translation>Informacje</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="403"/>
+        <location filename="../gui/ui/frmoptions.ui" line="412"/>
         <source>Configure</source>
         <translation>Konfiguruj</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="418"/>
+        <location filename="../gui/ui/frmoptions.ui" line="427"/>
         <source>Stop the search after finding a matching subtitles (faster)</source>
         <translation>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="423"/>
+        <location filename="../gui/ui/frmoptions.ui" line="432"/>
         <source>Search all available subtitles (slower)</source>
         <translation>Wyszukaj wszystkie dostępne napisy (wolniej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="428"/>
+        <location filename="../gui/ui/frmoptions.ui" line="437"/>
         <source>Find all subtitles, also in alternative language (slowest)</source>
         <translation>Wyszukaj wszystkie napisy, także w zapasowym języku (najwolniej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="437"/>
+        <location filename="../gui/ui/frmoptions.ui" line="446"/>
         <source>Subtitles post-processing</source>
         <translation>Przetwarzanie napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="443"/>
+        <location filename="../gui/ui/frmoptions.ui" line="452"/>
         <source>Enable post-processing for downloaded subtitles</source>
         <translation>Włącz przetwarzanie pobranych napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="457"/>
+        <location filename="../gui/ui/frmoptions.ui" line="466"/>
         <source>Character encoding:</source>
         <translation>Kodowanie znaków:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="471"/>
-        <location filename="../gui/ui/frmoptions.ui" line="682"/>
+        <location filename="../gui/ui/frmoptions.ui" line="480"/>
+        <location filename="../gui/ui/frmoptions.ui" line="691"/>
         <source>Keep the original</source>
         <translation>Pozostaw oryginalne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="476"/>
+        <location filename="../gui/ui/frmoptions.ui" line="485"/>
         <source>Convert (settings below)</source>
         <translation>Konwertuj (ustawienia poniżej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="481"/>
+        <location filename="../gui/ui/frmoptions.ui" line="490"/>
         <source>Replace diacritic characters with their ASCII equivalents</source>
         <translation>Zamień znaki diakrytyczne na ich odpowiedniki ASCII</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="518"/>
+        <location filename="../gui/ui/frmoptions.ui" line="527"/>
         <source>From:</source>
         <translation>Z:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="571"/>
+        <location filename="../gui/ui/frmoptions.ui" line="580"/>
         <source>To:</source>
         <translation>Na:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="641"/>
+        <location filename="../gui/ui/frmoptions.ui" line="650"/>
         <source>Show all available character encodings</source>
         <translation>Pokaż wszystkie dostępne kodowania znaków</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="668"/>
+        <location filename="../gui/ui/frmoptions.ui" line="677"/>
         <source>Subtitles format:</source>
         <translation>Format napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="690"/>
+        <location filename="../gui/ui/frmoptions.ui" line="699"/>
         <source>Subtitles extension:</source>
         <translation>Rozszerzenie napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="704"/>
+        <location filename="../gui/ui/frmoptions.ui" line="713"/>
         <location filename="../gui/src/forms/frmoptions.cpp" line="273"/>
         <source>Default</source>
         <translation>Domyślne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="730"/>
+        <location filename="../gui/ui/frmoptions.ui" line="739"/>
         <source>Do not add information about QNapi while converting between formats</source>
         <translation>Nie dodawaj informacji o QNapi przy konwersji pomiędzy formatami</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="740"/>
+        <location filename="../gui/ui/frmoptions.ui" line="749"/>
         <source>Attempt to automatically detect encoding</source>
         <translation>Próbuj automatycznie wykrywać kodowanie źródłowe</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="750"/>
+        <location filename="../gui/ui/frmoptions.ui" line="759"/>
         <source>Remove subtitles lines that contain the following words:</source>
         <translation>Usuń z pliku z napisami linie, które zawierają następujące słowa:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="774"/>
+        <location filename="../gui/ui/frmoptions.ui" line="783"/>
         <source>Restore defaults</source>
         <translation>Przywróć domyślne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="794"/>
+        <location filename="../gui/ui/frmoptions.ui" line="803"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="801"/>
+        <location filename="../gui/ui/frmoptions.ui" line="810"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>

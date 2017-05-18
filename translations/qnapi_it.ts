@@ -154,7 +154,7 @@
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="254"/>
         <source> * Downloading subtitles for &apos;%1&apos;</source>
-        <translation> * Scaricamento sottotitioli per &apos;%1&apos;</translation>
+        <translation> * Scaricamento sottotitoli per &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="260"/>

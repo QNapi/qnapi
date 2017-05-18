@@ -174,8 +174,6 @@ int QNapiCli::exec() {
     return EC_OK;
   }
 
-  std::cout << config.toString().toStdString();
-
   QNapi napi(config);
 
   if (!napi.checkP7ZipPath()) {

@@ -757,7 +757,7 @@
     <message>
         <location filename="../gui/ui/frmconvert.ui" line="268"/>
         <location filename="../gui/ui/frmconvert.ui" line="516"/>
-        <source>Detect video framerate (FPS) form file</source>
+        <source>Detect video framerate (FPS) from file</source>
         <translation>Wykryj docelowy FPS z pliku</translation>
     </message>
     <message>

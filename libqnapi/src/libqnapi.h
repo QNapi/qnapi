@@ -41,7 +41,8 @@ class LibQNapi
 public:
     LibQNapi();
 
-    static QString appExecutablePath;
+    static QString appExecutableFilePath;
+    static QString appExecutableDir;
 
     static void init(const QString & appExecutablePath);
 

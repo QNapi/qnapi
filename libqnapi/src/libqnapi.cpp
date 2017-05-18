@@ -20,11 +20,13 @@
 #include <QDir>
 #include <QLocale>
 
-QString LibQNapi::appExecutablePath = "";
+QString LibQNapi::appExecutableFilePath = "";
+QString LibQNapi::appExecutableDir = "";
 
 void LibQNapi::init(const QString & appExecutablePath)
 {
-    LibQNapi::appExecutablePath = appExecutablePath;
+    LibQNapi::appExecutableFilePath = QFileInfo(appExecutablePath).absoluteFilePath();
+    LibQNapi::appExecutableDir = QFileInfo(appExecutableFilePath).absoluteDir().path();
 }
 
 QString LibQNapi::version()
@@ -52,7 +54,7 @@ QSharedPointer<const ConfigReader>
 LibQNapi::configReader()
 {
     return QSharedPointer<const ConfigReader>(
-        new ConfigReader(staticConfig(), subtitleDownloadEngineRegistry())
+        new ConfigReader(appExecutableDir, staticConfig(), subtitleDownloadEngineRegistry())
     );
 }
 
@@ -86,7 +88,6 @@ bool LibQNapi::isPortableMode()
 
 QString LibQNapi::portableConfigPath()
 {
-    QString appExecutableDir = QFileInfo(appExecutablePath).absoluteDir().path();
     return appExecutableDir + QDir::separator() + "qnapi.ini";
 }
 

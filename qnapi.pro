@@ -4,7 +4,7 @@ CONFIG += ordered
 
 SUBDIRS = libqnapi gui
 
-TRANSLATIONS += translations/qnapi_pl.ts
+TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
 
 unix {
     INSTALL_PREFIX = /usr

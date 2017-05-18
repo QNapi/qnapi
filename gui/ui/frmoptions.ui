@@ -241,6 +241,15 @@
          </item>
          <item>
           <property name="text">
+           <string comment="it">Italian</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../res/resources.qrc">
+            <normaloff>:/languages/it.png</normaloff>:/languages/it.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string comment="pl">Polish</string>
           </property>
           <property name="icon">

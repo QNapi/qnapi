@@ -3,6 +3,8 @@ Version=1.0
 Actions=QNapiDownload;
 Name=Download subtitles with QNapi
 GenericName=Download subtitles with QNapi
+Name[it_IT]=Scarica sottotitoli con QNapi
+GenericName[it_IT]=Scarica sottotitoli con QNapi
 Name[pl_PL]=Pobierz napisy do filmu z QNapi
 GenericName[pl_PL]=Pobierz napisy do filmu z QNapi
 Icon=qnapi-48
@@ -12,6 +14,7 @@ Type=Service
 
 [Desktop Action QNapiDownload]
 Name=Download subtitles with QNapi
+Name[it_IT]=Scarica sottotitoli con QNapi
 Name[pl_PL]=Pobierz napisy do filmu z QNapi
 Exec=qnapi %F
 Icon=qnapi-48

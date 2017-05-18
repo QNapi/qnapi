@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-%YEAR% Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -12,23 +12,3 @@
 **
 *****************************************************************************/
 
-#ifndef STATICCONFIG_H
-#define STATICCONFIG_H
-
-#include <QString>
-#include <QStringList>
-
-class StaticConfig {
- public:
-  StaticConfig();
-
-  QStringList movieExtensions() const;
-  QString movieExtensionsFilter() const;
-  QStringList subtitleExtensions() const;
-  QString subtitleExtensionsFilter() const;
-
- private:
-  QString makeFilter(const QStringList& extensions) const;
-};
-
-#endif  // STATICCONFIG_H

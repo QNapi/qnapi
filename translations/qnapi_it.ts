@@ -306,17 +306,17 @@
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="439"/>
         <source>   -l, --lang [code]          Preferred subtitles language</source>
-        <translation>   -l, --lang [codice]          Lingua sottotitoli preferita</translation>
+        <translation>   -l, --lang [codice]        Lingua sottotitoli preferita</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="440"/>
         <source>   -lb,--lang-backup [code]   Alternative subtitles language</source>
-        <translation>   -lb,--lang-backup [codice]   Lingua sottotitoli alternativa</translation>
+        <translation>   -lb,--lang-backup [codice] Lingua sottotitoli alternativa</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="441"/>
         <source>   -f, --format [format]      Select target subtitles file format (%1)</source>
-        <translation>   -f, --format [formato]      Seleziona formato file sottotitoli destinazione (%1)</translation>
+        <translation>   -f, --format [formato]     Seleziona formato file sottotitoli destinazione (%1)</translation>
     </message>
     <message>
         <location filename="../gui/src/qnapicli.cpp" line="442"/>
@@ -1066,7 +1066,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="230"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="410"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="411"/>
         <source>Auto-detected based on system language (%1)</source>
         <translation>Autorilevamento in base alla lingua di sistema (%1)</translation>
     </message>
@@ -1221,7 +1221,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="713"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="273"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="274"/>
         <source>Default</source>
         <translation>Predefinita</translation>
     </message>
@@ -1256,42 +1256,42 @@
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="122"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="123"/>
         <source>Specify the path for 7z executable</source>
         <translation>Specificare il percorso per l&apos;eseguibile 7z</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="127"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="128"/>
         <source>Invalid path</source>
         <translation>Percorso non valido</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="128"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="129"/>
         <source>Defined path to 7z executable is invalid. If you can not locate 7z executable, try installing p7zip-full package.</source>
         <translation>Il percorso all&apos;eseguibile 7z definito non è valido. Se non si riesce a trovare l&apos;eseguibile 7z, provare a installare il pacchetto completo p7zip.</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="148"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="149"/>
         <source>Specify temporary directory</source>
         <translation>Specificare cartella temporanea</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="190"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="191"/>
         <source>Warning</source>
         <translation>Avviso</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="191"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="192"/>
         <source>At least one subtitles engine must remain active!</source>
         <translation>Almeno uno dei motori sottotitoli deve rimanere attivo!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="265"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="266"/>
         <source>%1 subtitles engine info</source>
         <translation>Info motore sottotitoli %1</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="280"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="281"/>
         <source>Default (%1)</source>
         <translation>Predefinita (%1)</translation>
     </message>

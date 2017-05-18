@@ -13,52 +13,42 @@
 **
 *****************************************************************************/
 
-#include <QDesktopWidget>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 
-#include "frmnapisy24config.h"
 #include "engines/napisy24downloadengine.h"
+#include "frmnapisy24config.h"
 
-frmNapisy24Config::frmNapisy24Config(const EngineConfig & config,
-                                     QWidget *parent,
-                                     Qt::WindowFlags f)
-    : QDialog(parent, f),
-      config(config)
-{
-    ui.setupUi(this);
+frmNapisy24Config::frmNapisy24Config(const EngineConfig &config,
+                                     QWidget *parent, Qt::WindowFlags f)
+    : QDialog(parent, f), config(config) {
+  ui.setupUi(this);
 
-    ui.leNick->setText(config.nick());
-    ui.lePass->setText(config.password());
+  ui.leNick->setText(config.nick());
+  ui.lePass->setText(config.password());
 
-    QIcon napisy24Icon = QIcon(QPixmap(Napisy24DownloadEngine::pixmapData));
-    setWindowIcon(napisy24Icon);
+  QIcon napisy24Icon = QIcon(QPixmap(Napisy24DownloadEngine::pixmapData));
+  setWindowIcon(napisy24Icon);
 
-    connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
+  connect(ui.pbRegister, SIGNAL(clicked()), this, SLOT(pbRegisterClicked()));
 
-    QRect position = frameGeometry();
-    position.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(position.topLeft());
+  QRect position = frameGeometry();
+  position.moveCenter(QDesktopWidget().availableGeometry().center());
+  move(position.topLeft());
 }
 
-EngineConfig frmNapisy24Config::getConfig() const
-{
-    return config;
+EngineConfig frmNapisy24Config::getConfig() const { return config; }
+
+void frmNapisy24Config::accept() {
+  config = config.setNick(ui.leNick->text()).setPassword(ui.lePass->text());
+  QDialog::accept();
 }
 
-void frmNapisy24Config::accept()
-{
-    config = config
-      .setNick(ui.leNick->text())
-      .setPassword(ui.lePass->text());
-    QDialog::accept();
-}
+void frmNapisy24Config::pbRegisterClicked() {
+  Maybe<QUrl> maybeRegistrationUrl =
+      Napisy24DownloadEngine::metadata.registrationUrl();
 
-void frmNapisy24Config::pbRegisterClicked()
-{
-    Maybe<QUrl> maybeRegistrationUrl = Napisy24DownloadEngine::metadata.registrationUrl();
-
-    if(maybeRegistrationUrl)
-    {
-        QDesktopServices::openUrl(maybeRegistrationUrl.value());
-    }
+  if (maybeRegistrationUrl) {
+    QDesktopServices::openUrl(maybeRegistrationUrl.value());
+  }
 }

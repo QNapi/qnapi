@@ -17,22 +17,21 @@
 
 #include "subconvert/subtitleformat.h"
 
-class TMPlayerSubtitleFormat : public SubtitleFormat
-{
-public:
-    virtual ~TMPlayerSubtitleFormat() {}
+class TMPlayerSubtitleFormat : public SubtitleFormat {
+ public:
+  virtual ~TMPlayerSubtitleFormat() {}
 
-    bool isTimeBased() const { return true; }
-    QString formatName() const { return "TMP"; }
-    QString defaultExtension() const { return "txt"; }
+  bool isTimeBased() const { return true; }
+  QString formatName() const { return "TMP"; }
+  QString defaultExtension() const { return "txt"; }
 
-    bool detect(const QStringList &lines) const;
-    SubFile decode(const QStringList &lines) const;
-    QStringList encode(const SubFile & subFile) const;
+  bool detect(const QStringList &lines) const;
+  SubFile decode(const QStringList &lines) const;
+  QStringList encode(const SubFile &subFile) const;
 
-private:
-    QString encodeEntry(const SubEntry & entry) const;
-    QString encodeToken(const SubToken & entry) const;
+ private:
+  QString encodeEntry(const SubEntry &entry) const;
+  QString encodeToken(const SubToken &entry) const;
 };
 
-#endif // TMPLAYERSUBTITLEFORMAT_H
+#endif  // TMPLAYERSUBTITLEFORMAT_H

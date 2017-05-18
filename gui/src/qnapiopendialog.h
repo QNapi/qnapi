@@ -17,47 +17,40 @@
 
 #include "config/staticconfig.h"
 
+#include <QDesktopWidget>
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QSharedPointer>
 #include <QString>
 #include <QStringList>
-#include <QDir>
 #include <QUrl>
-#include <QDesktopWidget>
-#include <QSharedPointer>
 
-class QNapiOpenDialog : public QFileDialog
-{
-Q_OBJECT
-public:
+class QNapiOpenDialog : public QFileDialog {
+  Q_OBJECT
+ public:
+  enum FilterMode { None, Movies, Subtitles };
 
-    enum FilterMode {
-        None, Movies, Subtitles
-    };
+  QNapiOpenDialog(QWidget* parent = 0, const QString& caption = QString(),
+                  const QString& init_path = QString(),
+                  FilterMode filterMode = None);
 
-    QNapiOpenDialog(QWidget * parent = 0,
-                    const QString & caption = QString(),
-                    const QString & init_path = QString(),
-                    FilterMode filterMode = None);
-
-    bool selectFile();
-    bool selectFiles();
-    bool selectDirectory();
-    
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    QStringList selectedFiles() const;
-#endif
-
-private:
-
-    bool placeWindow();
-
-    QSharedPointer<const StaticConfig> staticConfig;
+  bool selectFile();
+  bool selectFiles();
+  bool selectDirectory();
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    QStringList files;
+  QStringList selectedFiles() const;
 #endif
 
+ private:
+  bool placeWindow();
+
+  QSharedPointer<const StaticConfig> staticConfig;
+
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+  QStringList files;
+#endif
 };
 
 #endif

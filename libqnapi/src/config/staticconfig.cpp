@@ -14,46 +14,31 @@
 
 #include "staticconfig.h"
 
+StaticConfig::StaticConfig() {}
 
-StaticConfig::StaticConfig()
-{}
-
-QStringList StaticConfig::movieExtensions() const
-{
-    static QStringList exts = {
-        "avi", "asf", "divx", "mkv", "mov", "mp4", "mpeg", "mpg", "ogm", "rm", "rmvb", "wmv"
-    };
-    return exts;
+QStringList StaticConfig::movieExtensions() const {
+  static QStringList exts = {"avi",  "asf", "divx", "mkv", "mov",  "mp4",
+                             "mpeg", "mpg", "ogm",  "rm",  "rmvb", "wmv"};
+  return exts;
 }
 
-QString StaticConfig::movieExtensionsFilter() const
-{
-    static QString movieExtFilter = makeFilter(movieExtensions());
-    return movieExtFilter;
+QString StaticConfig::movieExtensionsFilter() const {
+  static QString movieExtFilter = makeFilter(movieExtensions());
+  return movieExtFilter;
 }
 
-
-QStringList StaticConfig::subtitleExtensions() const
-{
-    static QStringList exts = {
-        "srt", "sub", "txt"
-    };
-    return exts;
+QStringList StaticConfig::subtitleExtensions() const {
+  static QStringList exts = {"srt", "sub", "txt"};
+  return exts;
 }
 
-QString StaticConfig::subtitleExtensionsFilter() const
-{
-    static QString subtitleExtFilter = makeFilter(subtitleExtensions());
-    return subtitleExtFilter;
+QString StaticConfig::subtitleExtensionsFilter() const {
+  static QString subtitleExtFilter = makeFilter(subtitleExtensions());
+  return subtitleExtFilter;
 }
 
-QString StaticConfig::makeFilter(const QStringList & extensions) const
-{
-    QStringList patterns;
-    foreach(QString extension, extensions)
-    {
-        patterns << "*." + extension;
-    }
-    return patterns.join(" ");
+QString StaticConfig::makeFilter(const QStringList& extensions) const {
+  QStringList patterns;
+  foreach (QString extension, extensions) { patterns << "*." + extension; }
+  return patterns.join(" ");
 }
-

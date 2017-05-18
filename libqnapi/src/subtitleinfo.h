@@ -15,55 +15,50 @@
 #ifndef SUBTITLEINFO_H
 #define SUBTITLEINFO_H
 
-#include <QUuid>
 #include <QMetaType>
+#include <QUuid>
 
 // Orientacyjne okreslenie czy napisy na pewno pasuja lub nie do naszego filmu
-enum SubtitleResolution
-{
-    // brak napisów
-    SUBTITLE_NONE,
-    // podejrzenie, ze napisy nie pasuja
-    // (np. zostaly oznaczone jako nieprawidlowe)
-    SUBTITLE_BAD,
-    // nie wiadomo (lub nie jestesmy pewni)
-    SUBTITLE_UNKNOWN,
-    // napisy prawdopodobnie pasuja (np. nazwa pliku czy releasu sie zgadza)
-    SUBTITLE_GOOD
+enum SubtitleResolution {
+  // brak napisów
+  SUBTITLE_NONE,
+  // podejrzenie, ze napisy nie pasuja
+  // (np. zostaly oznaczone jako nieprawidlowe)
+  SUBTITLE_BAD,
+  // nie wiadomo (lub nie jestesmy pewni)
+  SUBTITLE_UNKNOWN,
+  // napisy prawdopodobnie pasuja (np. nazwa pliku czy releasu sie zgadza)
+  SUBTITLE_GOOD
 };
 
 // struktura opisujaca napisy
-class SubtitleInfo
-{
-public:
-    SubtitleInfo(QString _lang = "",
-                 QString _engine = "",
-                 QString _sourceLocation = "",
-                 QString _name = "",
-                 QString _comment = "",
-                 QString _format = "",
-                 SubtitleResolution _resolution = SUBTITLE_UNKNOWN)
-        : lang(_lang.toLower()),
-          engine(_engine),
-          sourceLocation(_sourceLocation),
-          name(_name),
-          comment(_comment),
-          format(_format),
-          resolution(_resolution),
-          id(QUuid::createUuid()) {}
+class SubtitleInfo {
+ public:
+  SubtitleInfo(QString _lang = "", QString _engine = "",
+               QString _sourceLocation = "", QString _name = "",
+               QString _comment = "", QString _format = "",
+               SubtitleResolution _resolution = SUBTITLE_UNKNOWN)
+      : lang(_lang.toLower()),
+        engine(_engine),
+        sourceLocation(_sourceLocation),
+        name(_name),
+        comment(_comment),
+        format(_format),
+        resolution(_resolution),
+        id(QUuid::createUuid()) {}
 
-    QString lang;
-    QString engine;
-    QString sourceLocation;
-    QString name;
-    QString comment;
-    QString format;
-    SubtitleResolution resolution;
-    QUuid id;
+  QString lang;
+  QString engine;
+  QString sourceLocation;
+  QString name;
+  QString comment;
+  QString format;
+  SubtitleResolution resolution;
+  QUuid id;
 
-    bool operator<(const SubtitleInfo & other) const;
+  bool operator<(const SubtitleInfo &other) const;
 
-    static SubtitleInfo fromFailed(const QString &name);
+  static SubtitleInfo fromFailed(const QString &name);
 };
 
 Q_DECLARE_METATYPE(SubtitleInfo);
@@ -71,6 +66,5 @@ Q_DECLARE_METATYPE(SubtitleInfo);
 typedef QList<SubtitleInfo> SubtitleInfoList;
 
 Q_DECLARE_METATYPE(SubtitleInfoList);
-
 
 #endif

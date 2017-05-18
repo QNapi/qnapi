@@ -15,16 +15,15 @@
 #ifndef MOVIEINFOPROVIDER_H
 #define MOVIEINFOPROVIDER_H
 
-#include "movieinfo/movieinfo.h"
 #include <Maybe.h>
 #include <QString>
+#include "movieinfo/movieinfo.h"
 
-class MovieInfoProvider
-{
-public:
-    virtual ~MovieInfoProvider() {}
-    virtual const Maybe<MovieInfo> getMovieInfo(const QString & moviePath) const = 0;
+class MovieInfoProvider {
+ public:
+  virtual ~MovieInfoProvider() {}
+  virtual const Maybe<MovieInfo> getMovieInfo(
+      const QString& moviePath) const = 0;
 };
 
-
-#endif // MOVIEINFOPROVIDER_H
+#endif  // MOVIEINFOPROVIDER_H

@@ -15,20 +15,18 @@
 #include "config/generalconfig.h"
 #include <QTextStream>
 
-QString GeneralConfig::toString() const
-{
-    QString s;
-    QTextStream(&s)
-      << "uiLanguage: " << uiLanguage() << endl
-      << "p7zipPath: " << p7zipPath() << endl
-      << "tmpPath: " << tmpPath() << endl
-      << "language: " << language() << endl
-      << "backupLanguage: " << backupLanguage() << endl
-      << "noBackup: " << noBackup() << endl
-      << "quietBatch: " << quietBatch() << endl
-      << "searchPolicy: " << searchPolicy() << endl
-      << "downloadPolicy: " << downloadPolicy() << endl
-      << "changePermissions: " << changePermissionsEnabled() << endl
-      << "changePermissionsTo: " << changePermissionsTo() << endl;
-    return s;
+QString GeneralConfig::toString() const {
+  QString s;
+  QTextStream(&s) << "uiLanguage: " << uiLanguage() << endl
+                  << "p7zipPath: " << p7zipPath() << endl
+                  << "tmpPath: " << tmpPath() << endl
+                  << "language: " << language() << endl
+                  << "backupLanguage: " << backupLanguage() << endl
+                  << "noBackup: " << noBackup() << endl
+                  << "quietBatch: " << quietBatch() << endl
+                  << "searchPolicy: " << searchPolicy() << endl
+                  << "downloadPolicy: " << downloadPolicy() << endl
+                  << "changePermissions: " << changePermissionsEnabled() << endl
+                  << "changePermissionsTo: " << changePermissionsTo() << endl;
+  return s;
 }

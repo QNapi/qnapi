@@ -18,20 +18,17 @@
 #include <QString>
 #include <QStringList>
 
+class StaticConfig {
+ public:
+  StaticConfig();
 
-class StaticConfig
-{
-public:
-    StaticConfig();
+  QStringList movieExtensions() const;
+  QString movieExtensionsFilter() const;
+  QStringList subtitleExtensions() const;
+  QString subtitleExtensionsFilter() const;
 
-    QStringList movieExtensions() const;
-    QString movieExtensionsFilter() const;
-    QStringList subtitleExtensions() const;
-    QString subtitleExtensionsFilter() const;
-
-private:
-
-    QString makeFilter(const QStringList & extensions) const;
+ private:
+  QString makeFilter(const QStringList& extensions) const;
 };
 
-#endif // STATICCONFIG_H
+#endif  // STATICCONFIG_H

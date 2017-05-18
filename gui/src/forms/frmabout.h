@@ -15,20 +15,20 @@
 #ifndef __FRMABOUT__H__
 #define __FRMABOUT__H__
 
-#include <QDesktopWidget>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QUrl>
 
 #include "ui_frmabout.h"
 
-class frmAbout: public QDialog
-{
-Q_OBJECT
-    public:
-        frmAbout(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmAbout() {}
-    private:
-        Ui::frmAbout ui;
+class frmAbout : public QDialog {
+  Q_OBJECT
+ public:
+  frmAbout(QWidget *parent = 0, Qt::WindowFlags f = 0);
+  ~frmAbout() {}
+
+ private:
+  Ui::frmAbout ui;
 };
 
 #endif

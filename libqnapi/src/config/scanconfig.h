@@ -18,38 +18,41 @@
 #include <QString>
 #include <QStringList>
 
-
 class ScanConfig {
-private:
-    QString lastDir_;
-    bool skipIfSubtitlesExist_;
-    QStringList filters_;
-    QString skipFilters_;
+ private:
+  QString lastDir_;
+  bool skipIfSubtitlesExist_;
+  QStringList filters_;
+  QString skipFilters_;
 
-public:
-    ScanConfig(const QString & lastDir, const bool & skipIfSubtitlesExist, const QStringList & filters, const QString & skipFilters)
-        : lastDir_(lastDir), skipIfSubtitlesExist_(skipIfSubtitlesExist), filters_(filters), skipFilters_(skipFilters)
-        {}
+ public:
+  ScanConfig(const QString& lastDir, const bool& skipIfSubtitlesExist,
+             const QStringList& filters, const QString& skipFilters)
+      : lastDir_(lastDir),
+        skipIfSubtitlesExist_(skipIfSubtitlesExist),
+        filters_(filters),
+        skipFilters_(skipFilters) {}
 
-    QString lastDir() const { return lastDir_; }
-    bool skipIfSubtitlesExist() const { return skipIfSubtitlesExist_; }
-    QStringList filters() const { return filters_; }
-    QString skipFilters() const { return skipFilters_; }
+  QString lastDir() const { return lastDir_; }
+  bool skipIfSubtitlesExist() const { return skipIfSubtitlesExist_; }
+  QStringList filters() const { return filters_; }
+  QString skipFilters() const { return skipFilters_; }
 
-    const ScanConfig setLastDir(const QString & lastDir) const {
-        return ScanConfig(lastDir, skipIfSubtitlesExist_, filters_, skipFilters_);
-    }
-    const ScanConfig setSkipIfSubtitlesExist(const bool & skipIfSubtitlesExist) const {
-        return ScanConfig(lastDir_, skipIfSubtitlesExist, filters_, skipFilters_);
-    }
-    const ScanConfig setFilters(const QStringList & filters) const {
-        return ScanConfig(lastDir_, skipIfSubtitlesExist_, filters, skipFilters_);
-    }
-    const ScanConfig setSkipFilters(const QString & skipFilters) const {
-        return ScanConfig(lastDir_, skipIfSubtitlesExist_, filters_, skipFilters);
-    }
+  const ScanConfig setLastDir(const QString& lastDir) const {
+    return ScanConfig(lastDir, skipIfSubtitlesExist_, filters_, skipFilters_);
+  }
+  const ScanConfig setSkipIfSubtitlesExist(
+      const bool& skipIfSubtitlesExist) const {
+    return ScanConfig(lastDir_, skipIfSubtitlesExist, filters_, skipFilters_);
+  }
+  const ScanConfig setFilters(const QStringList& filters) const {
+    return ScanConfig(lastDir_, skipIfSubtitlesExist_, filters, skipFilters_);
+  }
+  const ScanConfig setSkipFilters(const QString& skipFilters) const {
+    return ScanConfig(lastDir_, skipIfSubtitlesExist_, filters_, skipFilters);
+  }
 
-    QString toString() const;
+  QString toString() const;
 };
 
 #endif

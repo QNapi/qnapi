@@ -17,50 +17,46 @@
 
 #include "config/engineconfig.h"
 #include "engines/subtitledownloadengine.h"
-#include "utils/syncxmlrpc.h"
 #include "utils/p7zipdecoder.h"
+#include "utils/syncxmlrpc.h"
 
-class OpenSubtitlesDownloadEngine : public SubtitleDownloadEngine
-{
-public:
+class OpenSubtitlesDownloadEngine : public SubtitleDownloadEngine {
+ public:
+  OpenSubtitlesDownloadEngine(
+      const QString& tmpPath, const EngineConfig& config,
+      const QSharedPointer<const P7ZipDecoder>& p7zipDecoder,
+      const QString& qnapiDisplayableVersion, const QString& language);
+  ~OpenSubtitlesDownloadEngine();
 
-    OpenSubtitlesDownloadEngine(const QString & tmpPath,
-                                const EngineConfig & config,
-                                const QSharedPointer<const P7ZipDecoder> & p7zipDecoder,
-                                const QString & qnapiDisplayableVersion,
-                                const QString & language);
-    ~OpenSubtitlesDownloadEngine();
+  static SubtitleDownloadEngineMetadata metadata;
+  static const char* const pixmapData[];
 
-    static SubtitleDownloadEngineMetadata metadata;
-    static const char * const pixmapData[];
+  SubtitleDownloadEngineMetadata meta() const;
+  const char* const* enginePixmapData() const;
 
-    SubtitleDownloadEngineMetadata meta() const;
-    const char * const * enginePixmapData() const;
+  QString checksum(QString filename = "");
+  bool lookForSubtitles(QString lang);
+  QList<SubtitleInfo> listSubtitles();
+  bool download(QUuid id);
+  bool unpack(QUuid id);
+  void cleanup();
 
-    QString checksum(QString filename = "");
-    bool lookForSubtitles(QString lang);
-    QList<SubtitleInfo> listSubtitles();
-    bool download(QUuid id);
-    bool unpack(QUuid id);
-    void cleanup();
+ private:
+  EngineConfig engineConfig;
+  QSharedPointer<const P7ZipDecoder> p7zipDecoder;
+  QString qnapiDisplayableVersion;
+  QString language;
+  SyncXmlRpc rpc;
 
-private:
+  quint64 fileSize;
+  QString subFileName, token;
 
-    EngineConfig engineConfig;
-    QSharedPointer<const P7ZipDecoder> p7zipDecoder;
-    QString qnapiDisplayableVersion;
-    QString language;
-    SyncXmlRpc rpc;
-
-    quint64 fileSize;
-    QString subFileName, token;
-
-    // sprawdza czy dana instancja klasy jest zalogowana na sewerze
-    bool isLogged() { return !token.isEmpty(); }
-    // loguje na serwer OpenSubtitles
-    bool login();
-    // wylogowuje z serwera
-    void logout();
+  // sprawdza czy dana instancja klasy jest zalogowana na sewerze
+  bool isLogged() { return !token.isEmpty(); }
+  // loguje na serwer OpenSubtitles
+  bool login();
+  // wylogowuje z serwera
+  void logout();
 };
 
 #endif

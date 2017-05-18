@@ -12,125 +12,114 @@
 **
 *****************************************************************************/
 
-#include "libqnapi.h"
 #include "qnapiopendialog.h"
+#include "libqnapi.h"
 
-QNapiOpenDialog::QNapiOpenDialog(QWidget * parent,
-                                 const QString & caption,
-                                 const QString & init_path,
+QNapiOpenDialog::QNapiOpenDialog(QWidget* parent, const QString& caption,
+                                 const QString& init_path,
                                  FilterMode filterMode)
-                            : QFileDialog(parent),
-                              staticConfig(LibQNapi::staticConfig())
-{
-    setAttribute(Qt::WA_QuitOnClose, false);
-    setWindowTitle(caption);
+    : QFileDialog(parent), staticConfig(LibQNapi::staticConfig()) {
+  setAttribute(Qt::WA_QuitOnClose, false);
+  setWindowTitle(caption);
 
-    if(filterMode == Movies)
-    {
-        setNameFilter(tr("Video files (%1);;All files (*.*)").arg(staticConfig->movieExtensionsFilter()));
-    }
-    else if(filterMode == Subtitles)
-    {
-        setNameFilter(tr("Subtitles files (%1);;All files (*.*)").arg(staticConfig->subtitleExtensionsFilter()));
-    }
+  if (filterMode == Movies) {
+    setNameFilter(tr("Video files (%1);;All files (*.*)")
+                      .arg(staticConfig->movieExtensionsFilter()));
+  } else if (filterMode == Subtitles) {
+    setNameFilter(tr("Subtitles files (%1);;All files (*.*)")
+                      .arg(staticConfig->subtitleExtensionsFilter()));
+  }
 
-    if(QFileInfo(init_path).isDir())
-        setDirectory(init_path);
-    else
-        setDirectory(QDir::currentPath());
+  if (QFileInfo(init_path).isDir())
+    setDirectory(init_path);
+  else
+    setDirectory(QDir::currentPath());
 
-    QStringList sideUrls;
-    
+  QStringList sideUrls;
+
 #ifdef Q_OS_MAC
-    sideUrls << "/Volumes";
+  sideUrls << "/Volumes";
 #endif
 
-    sideUrls << QString(QDir::homePath() + "/Movies") << QString(QDir::homePath() + "/movies")
-                << QString(QDir::homePath() + "/Video") << QString(QDir::homePath() + "/video")
-                << QString(QDir::homePath() + "/Videos") << QString(QDir::homePath() + "/videos")
-                << QString(QDir::homePath() + "/Filmy") << QString(QDir::homePath() + "/wideo");
+  sideUrls << QString(QDir::homePath() + "/Movies")
+           << QString(QDir::homePath() + "/movies")
+           << QString(QDir::homePath() + "/Video")
+           << QString(QDir::homePath() + "/video")
+           << QString(QDir::homePath() + "/Videos")
+           << QString(QDir::homePath() + "/videos")
+           << QString(QDir::homePath() + "/Filmy")
+           << QString(QDir::homePath() + "/wideo");
 
-    QList<QUrl> urls = sidebarUrls();
+  QList<QUrl> urls = sidebarUrls();
 
-    foreach(QString sideUrl, sideUrls)
-    {
-        if(!QDir().exists(sideUrl)) continue;
-        QUrl url = QUrl::fromLocalFile(sideUrl);
-        if(!urls.contains(url))
-            urls << url;
-    }
+  foreach (QString sideUrl, sideUrls) {
+    if (!QDir().exists(sideUrl)) continue;
+    QUrl url = QUrl::fromLocalFile(sideUrl);
+    if (!urls.contains(url)) urls << url;
+  }
 
-    setSidebarUrls(urls);
+  setSidebarUrls(urls);
 }
 
-bool QNapiOpenDialog::selectFile()
-{
+bool QNapiOpenDialog::selectFile() {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    files.clear();
-    QString file = getOpenFileName(this, windowTitle(), directory().path(),nameFilters().join("\n"));
+  files.clear();
+  QString file = getOpenFileName(this, windowTitle(), directory().path(),
+                                 nameFilters().join("\n"));
 
-    if(!file.isEmpty())
-        files << file;
+  if (!file.isEmpty()) files << file;
 
-    return !file.isEmpty();
+  return !file.isEmpty();
 #else
-    if(!placeWindow()) return false;
-    setFileMode(QFileDialog::ExistingFile);
-    return exec();
+  if (!placeWindow()) return false;
+  setFileMode(QFileDialog::ExistingFile);
+  return exec();
 #endif
 }
 
-bool QNapiOpenDialog::selectFiles()
-{
+bool QNapiOpenDialog::selectFiles() {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    files = getOpenFileNames(this, windowTitle(), directory().path(),nameFilters().join("\n"));
-    return !files.isEmpty();    
+  files = getOpenFileNames(this, windowTitle(), directory().path(),
+                           nameFilters().join("\n"));
+  return !files.isEmpty();
 #else
-    if(!placeWindow()) return false;
-    setFileMode(QFileDialog::ExistingFiles);
-    return exec();
+  if (!placeWindow()) return false;
+  setFileMode(QFileDialog::ExistingFiles);
+  return exec();
 #endif
 }
 
-bool QNapiOpenDialog::selectDirectory()
-{
+bool QNapiOpenDialog::selectDirectory() {
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    files.clear();
-    QString dir = getExistingDirectory(this, windowTitle(), directory().path());
+  files.clear();
+  QString dir = getExistingDirectory(this, windowTitle(), directory().path());
 
-    if(dir == directory().path())
-        dir = "";
+  if (dir == directory().path()) dir = "";
 
-    if(!dir.isEmpty())
-        files << dir;
+  if (!dir.isEmpty()) files << dir;
 
-    return !dir.isEmpty();
+  return !dir.isEmpty();
 #else
-    if(!placeWindow()) return false;
-    // QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks ?
-    setFileMode(QFileDialog::DirectoryOnly);
-    return exec();
+  if (!placeWindow()) return false;
+  // QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks ?
+  setFileMode(QFileDialog::DirectoryOnly);
+  return exec();
 #endif
 }
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-QStringList QNapiOpenDialog::selectedFiles() const
-{
-    return files;
-}
+QStringList QNapiOpenDialog::selectedFiles() const { return files; }
 #endif
 
-bool QNapiOpenDialog::placeWindow()
-{
-    if(isVisible())
-    {
-        raise();
-        return false;
-    }
+bool QNapiOpenDialog::placeWindow() {
+  if (isVisible()) {
+    raise();
+    return false;
+  }
 
-    QRect position = frameGeometry();
-    position.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(position.topLeft());
+  QRect position = frameGeometry();
+  position.moveCenter(QDesktopWidget().availableGeometry().center());
+  move(position.topLeft());
 
-    return true;
+  return true;
 }

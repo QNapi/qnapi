@@ -17,22 +17,21 @@
 
 #include "subconvert/subtitleformat.h"
 
-class MPL2SubtitleFormat : public SubtitleFormat
-{
-public:
-    virtual ~MPL2SubtitleFormat() {}
+class MPL2SubtitleFormat : public SubtitleFormat {
+ public:
+  virtual ~MPL2SubtitleFormat() {}
 
-    bool isTimeBased() const { return true; }
-    QString formatName() const { return "MPL2"; }
-    QString defaultExtension() const { return "txt"; }
+  bool isTimeBased() const { return true; }
+  QString formatName() const { return "MPL2"; }
+  QString defaultExtension() const { return "txt"; }
 
-    bool detect(const QStringList &lines) const;
-    SubFile decode(const QStringList &lines) const;
-    QStringList encode(const SubFile & subFile) const;
+  bool detect(const QStringList &lines) const;
+  SubFile decode(const QStringList &lines) const;
+  QStringList encode(const SubFile &subFile) const;
 
-private:
-    QString encodeEntry(const SubEntry & entry) const;
-    QString encodeToken(const SubToken & entry) const;
+ private:
+  QString encodeEntry(const SubEntry &entry) const;
+  QString encodeToken(const SubToken &entry) const;
 };
 
-#endif // MPL2SUBTITLEFORMAT_H
+#endif  // MPL2SUBTITLEFORMAT_H

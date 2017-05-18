@@ -17,8 +17,8 @@
 
 #include "config/configreader.h"
 #include "config/configwriter.h"
-#include "config/staticconfig.h"
 #include "config/qnapiconfig.h"
+#include "config/staticconfig.h"
 
 #include "engines/subtitledownloadenginesregistry.h"
 
@@ -32,46 +32,50 @@
 #include "subtitlematcher.h"
 #include "subtitlepostprocessor.h"
 
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
 
-class LibQNapi
-{
+class LibQNapi {
+ public:
+  LibQNapi();
 
-public:
-    LibQNapi();
+  static QString appExecutableFilePath;
+  static QString appExecutableDir;
 
-    static QString appExecutableFilePath;
-    static QString appExecutableDir;
+  static void init(const QString& appExecutablePath);
 
-    static void init(const QString & appExecutablePath);
+  static QString version();
+  static QString displayableVersion();
+  static QString webpageUrl();
 
-    static QString version();
-    static QString displayableVersion();
-    static QString webpageUrl();
+  static QSharedPointer<const StaticConfig> staticConfig();
+  static QSharedPointer<const ConfigReader> configReader();
+  static QSharedPointer<const ConfigWriter> configWriter();
 
-    static QSharedPointer<const StaticConfig> staticConfig();
-    static QSharedPointer<const ConfigReader> configReader();
-    static QSharedPointer<const ConfigWriter> configWriter();
+  static const QNapiConfig loadConfig();
+  static void writeConfig(const QNapiConfig& config);
+  static bool isPortableMode();
+  static QString portableConfigPath();
 
-    static const QNapiConfig loadConfig();
-    static void writeConfig(const QNapiConfig & config);
-    static bool isPortableMode();
-    static QString portableConfigPath();
+  static QString uiLanguage(const GeneralConfig& generalConfig);
 
-    static QString uiLanguage(const GeneralConfig & generalConfig);
+  static QSharedPointer<const SubtitleDownloadEnginesRegistry>
+  subtitleDownloadEngineRegistry();
 
-    static QSharedPointer<const SubtitleDownloadEnginesRegistry> subtitleDownloadEngineRegistry();
+  static QSharedPointer<const MovieInfoProvider> movieInfoProvider();
 
-    static QSharedPointer<const MovieInfoProvider> movieInfoProvider();
+  static QSharedPointer<const SubtitleFormatsRegistry>
+  subtitleFormatsRegistry();
+  static QSharedPointer<const SubtitleConverter> subtitleConverter(
+      const PostProcessingConfig& ppConfig);
 
-    static QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry();
-    static QSharedPointer<const SubtitleConverter> subtitleConverter(const PostProcessingConfig & ppConfig);
+  static QSharedPointer<const P7ZipDecoder> p7zipDecoder(
+      const QString& p7zipPath);
 
-    static QSharedPointer<const P7ZipDecoder> p7zipDecoder(const QString & p7zipPath);
-
-    static QSharedPointer<const SubtitleMatcher> subtitleMatcher(const QNapiConfig & config);
-    static QSharedPointer<const SubtitlePostProcessor> subtitlePostProcessor(const PostProcessingConfig & config);
+  static QSharedPointer<const SubtitleMatcher> subtitleMatcher(
+      const QNapiConfig& config);
+  static QSharedPointer<const SubtitlePostProcessor> subtitlePostProcessor(
+      const PostProcessingConfig& config);
 };
 
-#endif // LIBQNAPI_H
+#endif  // LIBQNAPI_H

@@ -13,73 +13,51 @@
 *****************************************************************************/
 
 #include "engines/subtitledownloadengine.h"
-#include "subconvert/subtitleformatsregistry.h"
-#include <QFlags>
 #include <QDir>
+#include <QFlags>
+#include "subconvert/subtitleformatsregistry.h"
 
-SubtitleDownloadEngine::SubtitleDownloadEngine(const QString & tmpPath)
-    : tmpPath(tmpPath)
-{}
+SubtitleDownloadEngine::SubtitleDownloadEngine(const QString& tmpPath)
+    : tmpPath(tmpPath) {}
 
-void SubtitleDownloadEngine::setMoviePath(const QString & path)
-{
-    movie = path;
+void SubtitleDownloadEngine::setMoviePath(const QString& path) { movie = path; }
+
+QString SubtitleDownloadEngine::moviePath() { return movie; }
+
+void SubtitleDownloadEngine::clearSubtitlesList() {
+  foreach (SubtitleInfo s, subtitlesList) {
+    if (QFile::exists(s.sourceLocation)) QFile::remove(s.sourceLocation);
+  }
+  subtitlesList.clear();
 }
 
-QString SubtitleDownloadEngine::moviePath()
-{
-    return movie;
+Maybe<SubtitleInfo> SubtitleDownloadEngine::resolveById(QUuid id) {
+  foreach (SubtitleInfo s, subtitlesList) {
+    if (s.id == id) return just(s);
+  }
+  return nothing();
 }
 
-void SubtitleDownloadEngine::clearSubtitlesList()
-{
-    foreach(SubtitleInfo s, subtitlesList)
-    {
-        if(QFile::exists(s.sourceLocation))
-            QFile::remove(s.sourceLocation);
+void SubtitleDownloadEngine::updateSubtitleInfo(const SubtitleInfo& si) {
+  for (int i = 0; i < subtitlesList.size(); ++i) {
+    if (subtitlesList[i].id == si.id) {
+      subtitlesList[i] = si;
+      break;
     }
-    subtitlesList.clear();
+  }
 }
 
-Maybe<SubtitleInfo> SubtitleDownloadEngine::resolveById(QUuid id)
-{
-    foreach(SubtitleInfo s, subtitlesList)
-    {
-        if(s.id == id)
-            return just(s);
-    }
-    return nothing();
+QString SubtitleDownloadEngine::generateTmpFileName() const {
+  static bool gen_inited;
+  if (!gen_inited) {
+    qsrand(time(0));
+    gen_inited = true;
+  }
+  return QString("QNapi.%1.tmp").arg(qrand());
 }
 
-void SubtitleDownloadEngine::updateSubtitleInfo(const SubtitleInfo & si)
-{
-    for(int i = 0; i < subtitlesList.size(); ++i)
-    {
-        if(subtitlesList[i].id == si.id)
-        {
-            subtitlesList[i] = si;
-            break;
-        }
-    }
-
+QString SubtitleDownloadEngine::generateTmpPath() const {
+  QString newTmpFilePath =
+      QString("%1/%2").arg(tmpPath).arg(generateTmpFileName());
+  return QDir::toNativeSeparators(newTmpFilePath);
 }
-
-QString SubtitleDownloadEngine::generateTmpFileName() const
-{
-    static bool gen_inited;
-    if(!gen_inited)
-    {
-        qsrand(time(0));
-        gen_inited = true;
-    }
-    return QString("QNapi.%1.tmp").arg(qrand());
-}
-
-QString SubtitleDownloadEngine::generateTmpPath() const
-{
-    QString newTmpFilePath = QString("%1/%2")
-            .arg(tmpPath)
-            .arg(generateTmpFileName());
-    return QDir::toNativeSeparators(newTmpFilePath);
-}
-

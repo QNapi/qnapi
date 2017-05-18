@@ -26,31 +26,35 @@
 
 #include <engines/subtitledownloadenginesregistry.h>
 
-class ConfigReader
-{
-public:
-    ConfigReader(const QString & appExecutableDir,
-                 const QSharedPointer<const StaticConfig> & staticConfig,
-                 const QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry);
+class ConfigReader {
+ public:
+  ConfigReader(const QString& appExecutableDir,
+               const QSharedPointer<const StaticConfig>& staticConfig,
+               const QSharedPointer<const SubtitleDownloadEnginesRegistry>
+                   enginesRegistry);
 
-    const QNapiConfig readUserConfig() const;
-    const QNapiConfig readPortableConfig(const QString & configFilePath) const;
-    const QNapiConfig readConfig(const QSettings & settings) const;
+  const QNapiConfig readUserConfig() const;
+  const QNapiConfig readPortableConfig(const QString& configFilePath) const;
+  const QNapiConfig readConfig(const QSettings& settings) const;
 
-private:
-    const GeneralConfig readGeneralConfig(const QSettings & settings) const;
-    const QList<QPair<QString, bool>> readEnabledEngines(const QSettings & settings) const;
-    const QMap<QString, EngineConfig> readEnginesConfig(const QSettings & settings) const;
-    const EngineConfig readEngineConfig(QString engineName, const QSettings & settings) const;
-    const PostProcessingConfig readPostProcessingConfig(const QSettings & settings) const;
-    const ScanConfig readScanConfig(const QSettings & settings) const;
+ private:
+  const GeneralConfig readGeneralConfig(const QSettings& settings) const;
+  const QList<QPair<QString, bool>> readEnabledEngines(
+      const QSettings& settings) const;
+  const QMap<QString, EngineConfig> readEnginesConfig(
+      const QSettings& settings) const;
+  const EngineConfig readEngineConfig(QString engineName,
+                                      const QSettings& settings) const;
+  const PostProcessingConfig readPostProcessingConfig(
+      const QSettings& settings) const;
+  const ScanConfig readScanConfig(const QSettings& settings) const;
 
-    const GeneralConfig resolveP7zipPath(const GeneralConfig & config) const;
-    const GeneralConfig resolveTmpPath(const GeneralConfig & config) const;
+  const GeneralConfig resolveP7zipPath(const GeneralConfig& config) const;
+  const GeneralConfig resolveTmpPath(const GeneralConfig& config) const;
 
-    QString appExecutableDir;
-    QSharedPointer<const StaticConfig> staticConfig;
-    QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
+  QString appExecutableDir;
+  QSharedPointer<const StaticConfig> staticConfig;
+  QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 };
 
-#endif // CONFIGREADER_H
+#endif  // CONFIGREADER_H

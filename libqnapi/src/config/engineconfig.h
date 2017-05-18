@@ -18,29 +18,27 @@
 #include <QString>
 
 class EngineConfig {
-private:
-    QString nick_;
-    QString password_;
+ private:
+  QString nick_;
+  QString password_;
 
-public:
-    EngineConfig(const QString & nick = "", const QString & password = "")
-        : nick_(nick),
-          password_(password)
-        {}
+ public:
+  EngineConfig(const QString& nick = "", const QString& password = "")
+      : nick_(nick), password_(password) {}
 
-    static EngineConfig empty;
+  static EngineConfig empty;
 
-    QString nick() const { return nick_; }
-    QString password() const { return password_; }
+  QString nick() const { return nick_; }
+  QString password() const { return password_; }
 
-    const EngineConfig setNick(const QString & nick) const {
-        return EngineConfig(nick, password_);
-    }
-    const EngineConfig setPassword(const QString & password) const {
-        return EngineConfig(nick_, password);
-    }
+  const EngineConfig setNick(const QString& nick) const {
+    return EngineConfig(nick, password_);
+  }
+  const EngineConfig setPassword(const QString& password) const {
+    return EngineConfig(nick_, password);
+  }
 
-    QString toString() const;
+  QString toString() const;
 };
 
 #endif

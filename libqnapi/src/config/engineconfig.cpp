@@ -17,11 +17,9 @@
 
 EngineConfig EngineConfig::empty = EngineConfig();
 
-QString EngineConfig::toString() const
-{
-    QString s;
-    QTextStream(&s)
-      << "nick: " << nick() << endl
-      << "password: " << password() << endl;
-    return s;
+QString EngineConfig::toString() const {
+  QString s;
+  QTextStream(&s) << "nick: " << nick() << endl
+                  << "password: " << password() << endl;
+  return s;
 }

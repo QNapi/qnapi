@@ -21,41 +21,38 @@
 
 #include <QSharedPointer>
 
-class NapiProjektDownloadEngine : public SubtitleDownloadEngine
-{
-public:
+class NapiProjektDownloadEngine : public SubtitleDownloadEngine {
+ public:
+  NapiProjektDownloadEngine(
+      const QString& tmpPath, const EngineConfig& config,
+      const QSharedPointer<const P7ZipDecoder>& p7zipDecoder);
+  ~NapiProjektDownloadEngine();
 
-    NapiProjektDownloadEngine(const QString & tmpPath,
-                              const EngineConfig & config,
-                              const QSharedPointer<const P7ZipDecoder> & p7zipDecoder);
-    ~NapiProjektDownloadEngine();
+  static SubtitleDownloadEngineMetadata metadata;
+  static const char* const pixmapData[];
 
-    static SubtitleDownloadEngineMetadata metadata;
-    static const char * const pixmapData[];
+  SubtitleDownloadEngineMetadata meta() const;
+  const char* const* enginePixmapData() const;
 
-    SubtitleDownloadEngineMetadata meta() const;
-    const char * const * enginePixmapData() const;
+  QString checksum(QString filename = "");
+  bool lookForSubtitles(QString lang);
+  QList<SubtitleInfo> listSubtitles();
+  bool download(QUuid id);
+  bool unpack(QUuid id);
+  void cleanup();
 
-    QString checksum(QString filename = "");
-    bool lookForSubtitles(QString lang);
-    QList<SubtitleInfo> listSubtitles();
-    bool download(QUuid id);
-    bool unpack(QUuid id);
-    void cleanup();
+  static bool checkUser(const QString& nick, const QString& pass);
 
-    static bool checkUser(const QString & nick, const QString & pass);
+ private:
+  EngineConfig engineConfig;
+  QSharedPointer<const P7ZipDecoder> p7zipDecoder;
 
-private:
-
-    EngineConfig engineConfig;
-    QSharedPointer<const P7ZipDecoder> p7zipDecoder;
-
-    QString checksum(QString filename, bool limit10M);
-    Maybe<QString> downloadByLangAndChecksum(QString lang, QString checksum) const;
-    QString npFDigest(const QString & input) const;
-    QString npLangWrapper(QString lang) const;
-    QString napiOS() const;
-
+  QString checksum(QString filename, bool limit10M);
+  Maybe<QString> downloadByLangAndChecksum(QString lang,
+                                           QString checksum) const;
+  QString npFDigest(const QString& input) const;
+  QString npLangWrapper(QString lang) const;
+  QString napiOS() const;
 };
 
 #endif

@@ -15,23 +15,22 @@
 #ifndef ENCODINGUTILS_H
 #define ENCODINGUTILS_H
 
+#include <QByteArray>
 #include <QString>
 #include <QStringList>
-#include <QByteArray>
 
-class EncodingUtils
-{
-public:
-    EncodingUtils();
+class EncodingUtils {
+ public:
+  EncodingUtils();
 
-    QString replaceDiacriticsWithASCII(const QString & str) const;
-    QString detectBufferEncoding(const QByteArray & buffer) const;
-    QString detectFileEncoding(const QString & filename) const;
+  QString replaceDiacriticsWithASCII(const QString& str) const;
+  QString detectBufferEncoding(const QByteArray& buffer) const;
+  QString detectFileEncoding(const QString& filename) const;
 
-private:
-    QString diacritics;
-    QStringList replacements;
-    QStringList codecs;
+ private:
+  QString diacritics;
+  QStringList replacements;
+  QStringList codecs;
 };
 
-#endif // ENCODINGUTILS_H
+#endif  // ENCODINGUTILS_H

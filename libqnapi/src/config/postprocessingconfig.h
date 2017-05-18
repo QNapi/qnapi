@@ -18,80 +18,138 @@
 #include <QString>
 #include <QStringList>
 
-
-enum EncodingChangeMethod
-{
-    ECM_ORIGINAL = 0,
-    ECM_CHANGE = 1,
-    ECM_REPLACE_DIACRITICS = 2
+enum EncodingChangeMethod {
+  ECM_ORIGINAL = 0,
+  ECM_CHANGE = 1,
+  ECM_REPLACE_DIACRITICS = 2
 };
 
 class PostProcessingConfig {
-private:
-    bool enabled_;
-    EncodingChangeMethod encodingChangeMethod_;
-    QString encodingFrom_;
-    bool encodingAutoDetectFrom_;
-    QString encodingTo_;
-    bool showAllEncodings_;
-    QString subFormat_;
-    QString subExtension_;
-    bool skipConvertAds_;
-    bool removeWordsEnabled_;
-    QStringList removeWords_;
+ private:
+  bool enabled_;
+  EncodingChangeMethod encodingChangeMethod_;
+  QString encodingFrom_;
+  bool encodingAutoDetectFrom_;
+  QString encodingTo_;
+  bool showAllEncodings_;
+  QString subFormat_;
+  QString subExtension_;
+  bool skipConvertAds_;
+  bool removeWordsEnabled_;
+  QStringList removeWords_;
 
-public:
-    PostProcessingConfig(const bool & enabled, const EncodingChangeMethod & encodingChangeMethod, const QString & encodingFrom, const bool & encodingAutoDetectFrom, const QString & encodingTo, const bool & showAllEncodings, const QString & subFormat, const QString & subExtension, const bool & skipConvertAds, const bool & removeWordsEnabled, const QStringList & removeWords)
-        : enabled_(enabled), encodingChangeMethod_(encodingChangeMethod), encodingFrom_(encodingFrom), encodingAutoDetectFrom_(encodingAutoDetectFrom), encodingTo_(encodingTo), showAllEncodings_(showAllEncodings), subFormat_(subFormat), subExtension_(subExtension), skipConvertAds_(skipConvertAds), removeWordsEnabled_(removeWordsEnabled), removeWords_(removeWords)
-        {}
+ public:
+  PostProcessingConfig(const bool& enabled,
+                       const EncodingChangeMethod& encodingChangeMethod,
+                       const QString& encodingFrom,
+                       const bool& encodingAutoDetectFrom,
+                       const QString& encodingTo, const bool& showAllEncodings,
+                       const QString& subFormat, const QString& subExtension,
+                       const bool& skipConvertAds,
+                       const bool& removeWordsEnabled,
+                       const QStringList& removeWords)
+      : enabled_(enabled),
+        encodingChangeMethod_(encodingChangeMethod),
+        encodingFrom_(encodingFrom),
+        encodingAutoDetectFrom_(encodingAutoDetectFrom),
+        encodingTo_(encodingTo),
+        showAllEncodings_(showAllEncodings),
+        subFormat_(subFormat),
+        subExtension_(subExtension),
+        skipConvertAds_(skipConvertAds),
+        removeWordsEnabled_(removeWordsEnabled),
+        removeWords_(removeWords) {}
 
-    bool enabled() const { return enabled_; }
-    EncodingChangeMethod encodingChangeMethod() const { return encodingChangeMethod_; }
-    QString encodingFrom() const { return encodingFrom_; }
-    bool encodingAutoDetectFrom() const { return encodingAutoDetectFrom_; }
-    QString encodingTo() const { return encodingTo_; }
-    bool showAllEncodings() const { return showAllEncodings_; }
-    QString subFormat() const { return subFormat_; }
-    QString subExtension() const { return subExtension_; }
-    bool skipConvertAds() const { return skipConvertAds_; }
-    bool removeWordsEnabled() const { return removeWordsEnabled_; }
-    QStringList removeWords() const { return removeWords_; }
+  bool enabled() const { return enabled_; }
+  EncodingChangeMethod encodingChangeMethod() const {
+    return encodingChangeMethod_;
+  }
+  QString encodingFrom() const { return encodingFrom_; }
+  bool encodingAutoDetectFrom() const { return encodingAutoDetectFrom_; }
+  QString encodingTo() const { return encodingTo_; }
+  bool showAllEncodings() const { return showAllEncodings_; }
+  QString subFormat() const { return subFormat_; }
+  QString subExtension() const { return subExtension_; }
+  bool skipConvertAds() const { return skipConvertAds_; }
+  bool removeWordsEnabled() const { return removeWordsEnabled_; }
+  QStringList removeWords() const { return removeWords_; }
 
-    const PostProcessingConfig setEnabled(const bool & enabled) const {
-        return PostProcessingConfig(enabled, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setEncodingChangeMethod(const EncodingChangeMethod & encodingChangeMethod) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setEncodingFrom(const QString & encodingFrom) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setEncodingAutoDetectFrom(const bool & encodingAutoDetectFrom) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setEncodingTo(const QString & encodingTo) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setShowAllEncodings(const bool & showAllEncodings) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setSubFormat(const QString & subFormat) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setSubExtension(const QString & subExtension) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension, skipConvertAds_, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setSkipConvertAds(const bool & skipConvertAds) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds, removeWordsEnabled_, removeWords_);
-    }
-    const PostProcessingConfig setRemoveWordsEnabled(const bool & removeWordsEnabled) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled, removeWords_);
-    }
-    const PostProcessingConfig setRemoveWords(const QStringList & removeWords) const {
-        return PostProcessingConfig(enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_, encodingTo_, showAllEncodings_, subFormat_, subExtension_, skipConvertAds_, removeWordsEnabled_, removeWords);
-    }
+  const PostProcessingConfig setEnabled(const bool& enabled) const {
+    return PostProcessingConfig(
+        enabled, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setEncodingChangeMethod(
+      const EncodingChangeMethod& encodingChangeMethod) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setEncodingFrom(
+      const QString& encodingFrom) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setEncodingAutoDetectFrom(
+      const bool& encodingAutoDetectFrom) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setEncodingTo(const QString& encodingTo) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setShowAllEncodings(
+      const bool& showAllEncodings) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setSubFormat(const QString& subFormat) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setSubExtension(
+      const QString& subExtension) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension,
+        skipConvertAds_, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setSkipConvertAds(
+      const bool& skipConvertAds) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds, removeWordsEnabled_, removeWords_);
+  }
+  const PostProcessingConfig setRemoveWordsEnabled(
+      const bool& removeWordsEnabled) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled, removeWords_);
+  }
+  const PostProcessingConfig setRemoveWords(
+      const QStringList& removeWords) const {
+    return PostProcessingConfig(
+        enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
+        encodingTo_, showAllEncodings_, subFormat_, subExtension_,
+        skipConvertAds_, removeWordsEnabled_, removeWords);
+  }
 
-    QString toString() const;
+  QString toString() const;
 };
 
 #endif

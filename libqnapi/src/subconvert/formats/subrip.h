@@ -17,35 +17,34 @@
 
 #include "subconvert/subtitleformat.h"
 
-class SubRipSubtitleFormat : public SubtitleFormat
-{
-public:
-    virtual ~SubRipSubtitleFormat() {}
+class SubRipSubtitleFormat : public SubtitleFormat {
+ public:
+  virtual ~SubRipSubtitleFormat() {}
 
-    bool isTimeBased() const { return true; }
-    QString formatName() const { return "SRT"; }
-    QString defaultExtension() const { return "srt"; }
+  bool isTimeBased() const { return true; }
+  QString formatName() const { return "SRT"; }
+  QString defaultExtension() const { return "srt"; }
 
-    bool detect(const QStringList &lines) const;
-    SubFile decode(const QStringList &lines) const;
-    QStringList encode(const SubFile & subFile) const;
+  bool detect(const QStringList &lines) const;
+  SubFile decode(const QStringList &lines) const;
+  QStringList encode(const SubFile &subFile) const;
 
-private:
-    struct SrtTimestamps
-    {
-        int h1;
-        int m1;
-        int s1;
-        int ms1;
-        int h2;
-        int m2;
-        int s2;
-        int ms2;
-    };
+ private:
+  struct SrtTimestamps {
+    int h1;
+    int m1;
+    int s1;
+    int ms1;
+    int h2;
+    int m2;
+    int s2;
+    int ms2;
+  };
 
-    void addEntry(QVector<SubEntry> & entries, QString & tokensBuff, SrtTimestamps & timestamps) const;
-    QStringList encodeEntry(const SubEntry & entry, int i) const;
-    QString encodeToken(const SubToken & entry) const;
+  void addEntry(QVector<SubEntry> &entries, QString &tokensBuff,
+                SrtTimestamps &timestamps) const;
+  QStringList encodeEntry(const SubEntry &entry, int i) const;
+  QString encodeToken(const SubToken &entry) const;
 };
 
-#endif // SUBRIPSUBTITLEFORMAT_H
+#endif  // SUBRIPSUBTITLEFORMAT_H

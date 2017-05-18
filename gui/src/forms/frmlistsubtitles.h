@@ -12,39 +12,35 @@
 **
 *****************************************************************************/
 
-
 #ifndef __FRMLISTSUBTITLES__H__
 #define __FRMLISTSUBTITLES__H__
 
 #include "engines/subtitledownloadenginesregistry.h"
 
-#include "ui_frmlistsubtitles.h"
 #include "subtitleinfo.h"
+#include "ui_frmlistsubtitles.h"
 
 #include <QDialog>
 #include <QSharedPointer>
 
-class frmListSubtitles : public QDialog
-{
-Q_OBJECT
+class frmListSubtitles : public QDialog {
+  Q_OBJECT
 
-    public:
+ public:
+  frmListSubtitles(QWidget *parent = 0, Qt::WindowFlags f = 0);
+  ~frmListSubtitles() {}
 
-        frmListSubtitles(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmListSubtitles() {}
+ public slots:
 
-    public slots:
+  void setFileName(const QString &name);
+  void setSubtitlesList(QList<SubtitleInfo> list);
+  int getSelectedIndex();
+  void accept();
 
-        void setFileName(const QString & name);
-        void setSubtitlesList(QList<SubtitleInfo> list);
-        int getSelectedIndex();
-        void accept();
+ private:
+  Ui::frmListSubtitles ui;
 
-    private:
-        Ui::frmListSubtitles ui;
-
-        QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
-        
+  QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 };
 
 #endif

@@ -18,24 +18,23 @@
 #ifndef SYNCHTTP_H
 #define SYNCHTTP_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
 #include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QObject>
 
-class SyncHTTP : public QObject
-{
-    Q_OBJECT
-    public:
-        SyncHTTP();
+class SyncHTTP : public QObject {
+  Q_OBJECT
+ public:
+  SyncHTTP();
 
-        QNetworkReply* syncGet(const QNetworkRequest & req);
-        QNetworkReply* syncPost(const QNetworkRequest & req, const QByteArray& data);
+  QNetworkReply* syncGet(const QNetworkRequest& req);
+  QNetworkReply* syncPost(const QNetworkRequest& req, const QByteArray& data);
 
-    private:
-        QEventLoop loop;
-        QNetworkAccessManager manager;
+ private:
+  QEventLoop loop;
+  QNetworkAccessManager manager;
 };
 
 #endif

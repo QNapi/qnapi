@@ -14,180 +14,161 @@
 *****************************************************************************/
 
 #include "napisy24downloadengine.h"
-#include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QProcess>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QProcess>
 
 SubtitleDownloadEngineMetadata Napisy24DownloadEngine::metadata =
     SubtitleDownloadEngineMetadata(
         "Napisy24",
         QObject::tr("<b>www.napisy24.pl</b> subtitle download engine"),
         just(QUrl("http://napisy24.pl/cb-registration/registers")),
-        just(QUrl("http://napisy24.pl/dodaj-napisy"))
-    );
+        just(QUrl("http://napisy24.pl/dodaj-napisy")));
 
-Napisy24DownloadEngine::Napisy24DownloadEngine(const QString & tmpPath,
-                                               const EngineConfig & config,
-                                               const QSharedPointer<const P7ZipDecoder> & p7zipDecoder,
-                                               const QStringList & subtitleExtensions)
-  : SubtitleDownloadEngine(tmpPath),
-    engineConfig(config),
-    p7zipDecoder(p7zipDecoder),
-    subtitleExtensions(subtitleExtensions)
-{}
+Napisy24DownloadEngine::Napisy24DownloadEngine(
+    const QString &tmpPath, const EngineConfig &config,
+    const QSharedPointer<const P7ZipDecoder> &p7zipDecoder,
+    const QStringList &subtitleExtensions)
+    : SubtitleDownloadEngine(tmpPath),
+      engineConfig(config),
+      p7zipDecoder(p7zipDecoder),
+      subtitleExtensions(subtitleExtensions) {}
 
-Napisy24DownloadEngine::~Napisy24DownloadEngine()
-{
-    cleanup();
+Napisy24DownloadEngine::~Napisy24DownloadEngine() { cleanup(); }
+
+SubtitleDownloadEngineMetadata Napisy24DownloadEngine::meta() const {
+  return Napisy24DownloadEngine::metadata;
 }
 
-SubtitleDownloadEngineMetadata Napisy24DownloadEngine::meta() const
-{
-    return Napisy24DownloadEngine::metadata;
+const char *const *Napisy24DownloadEngine::enginePixmapData() const {
+  return Napisy24DownloadEngine::pixmapData;
 }
 
-const char * const * Napisy24DownloadEngine::enginePixmapData() const
-{
-    return Napisy24DownloadEngine::pixmapData;
+QString Napisy24DownloadEngine::checksum(QString filename) {
+  if (filename.isEmpty()) filename = movie;
+
+  QFile file(filename);
+  if (!file.open(QIODevice::ReadOnly)) return QString("");
+
+  fileSize = file.size();
+  quint64 hash = fileSize;
+  quint64 tmp, i;
+
+  for (tmp = 0, i = 0;
+       i < 65536 / sizeof(tmp) && file.read((char *)&tmp, sizeof(tmp));
+       i++, hash += tmp)
+    ;
+  file.seek(qMax(0, (int)((qint64)fileSize - 65536)));
+  for (tmp = 0, i = 0;
+       i < 65536 / sizeof(tmp) && file.read((char *)&tmp, sizeof(tmp));
+       i++, hash += tmp)
+    ;
+
+  return (checkSum = QString("%1").arg(hash, 16, 16, QChar('0')));
 }
 
-QString Napisy24DownloadEngine::checksum(QString filename)
-{
-    if(filename.isEmpty())
-        filename = movie;
+bool Napisy24DownloadEngine::lookForSubtitles(QString lang) {
+  if (lang != "pl") return false;
 
-    QFile file(filename);
-    if(!file.open(QIODevice::ReadOnly))
-        return QString("");
+  const QUrl url = QUrl("http://napisy24.pl/run/CheckSubAgent.php");
 
-    fileSize = file.size();
-    quint64 hash = fileSize;
-    quint64 tmp, i;
+  auto credentials = getCredentials();
 
-    for(tmp = 0, i = 0; i < 65536/sizeof(tmp) && file.read((char*)&tmp, sizeof(tmp)); i++, hash += tmp) ;
-    file.seek(qMax(0, (int)((qint64)fileSize - 65536)));
-    for(tmp = 0, i = 0; i < 65536/sizeof(tmp) && file.read((char*)&tmp, sizeof(tmp)); i++, hash += tmp) ;
+  QUrlQuery params(url);
+  params.addQueryItem("postAction", "CheckSub");
+  params.addQueryItem("ua", credentials.first);
+  params.addQueryItem("ap", credentials.second);
+  params.addQueryItem("fh", checkSum);
+  params.addQueryItem("fs", QString::number(fileSize));
+  params.addQueryItem("fn", QFileInfo(movie).fileName());
+  // API N24 ignoruje ten parametr; jeśli nie ma napisów w żądanym języku, to i
+  // tak zwraca napisy w jęz. polskim params.addQueryItem("nl", lang);
+  QByteArray data = params.query().toUtf8();
 
-    return (checkSum = QString("%1").arg(hash, 16, 16, QChar('0')));
+  SyncHTTP http;
+  QNetworkRequest req(url);
+  req.setHeader(QNetworkRequest::ContentTypeHeader,
+                "application/x-www-form-urlencoded");
+
+  QNetworkReply *reply = http.syncPost(req, data);
+  if (reply->error() != QNetworkReply::NoError) return false;
+
+  QByteArray respData = reply->readAll();
+  if (!respData.startsWith("OK-2")) return false;
+
+  QString tmpPackedFile = generateTmpPath();
+
+  QFile file(tmpPackedFile);
+  if (file.exists()) file.remove();
+  if (!file.open(QIODevice::WriteOnly)) return false;
+
+  long r = file.write(respData.mid(respData.indexOf("||") + 2));
+  file.close();
+  if (!r) return false;
+
+  subtitlesList << SubtitleInfo(lang, meta().name(), tmpPackedFile,
+                                QFileInfo(movie).completeBaseName(), "", "txt",
+                                SUBTITLE_UNKNOWN);
+
+  return true;
 }
 
-bool Napisy24DownloadEngine::lookForSubtitles(QString lang)
-{
-    if(lang != "pl") return false;
-
-    const QUrl url = QUrl("http://napisy24.pl/run/CheckSubAgent.php");
-
-    auto credentials = getCredentials();
-
-    QUrlQuery params(url);
-    params.addQueryItem("postAction", "CheckSub");
-    params.addQueryItem("ua", credentials.first);
-    params.addQueryItem("ap", credentials.second);
-    params.addQueryItem("fh", checkSum);
-    params.addQueryItem("fs", QString::number(fileSize));
-    params.addQueryItem("fn", QFileInfo(movie).fileName());
-    // API N24 ignoruje ten parametr; jeśli nie ma napisów w żądanym języku, to i tak
-    // zwraca napisy w jęz. polskim
-    // params.addQueryItem("nl", lang);
-    QByteArray data = params.query().toUtf8();
-
-    SyncHTTP http;
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-
-    QNetworkReply *reply = http.syncPost(req, data);
-    if(reply->error() != QNetworkReply::NoError)
-        return false;
-
-    QByteArray respData = reply->readAll();
-    if (!respData.startsWith("OK-2"))
-        return false;
-
-    QString tmpPackedFile = generateTmpPath();
-
-    QFile file(tmpPackedFile);
-    if(file.exists()) file.remove();
-    if(!file.open(QIODevice::WriteOnly))
-        return false;
-
-    long r = file.write(respData.mid(respData.indexOf("||")+2));
-    file.close();
-    if (!r)
-        return false;
-
-    subtitlesList << SubtitleInfo(lang,
-                                       meta().name(),
-                                       tmpPackedFile,
-                                       QFileInfo(movie).completeBaseName(),
-                                       "",
-                                       "txt",
-                                       SUBTITLE_UNKNOWN);
-
-    return true;
+QList<SubtitleInfo> Napisy24DownloadEngine::listSubtitles() {
+  return subtitlesList;
 }
 
-QList<SubtitleInfo> Napisy24DownloadEngine::listSubtitles()
-{
-    return subtitlesList;
+bool Napisy24DownloadEngine::download(QUuid id) {
+  Maybe<SubtitleInfo> ms = resolveById(id);
+
+  return ms && QFile::exists(ms.value().sourceLocation);
 }
 
-bool Napisy24DownloadEngine::download(QUuid id)
-{
-    Maybe<SubtitleInfo> ms = resolveById(id);
+bool Napisy24DownloadEngine::unpack(QUuid id) {
+  Maybe<SubtitleInfo> ms = resolveById(id);
+  if (!ms) return false;
 
-    return ms && QFile::exists(ms.value().sourceLocation);
-}
+  if (!QFile::exists(movie)) return false;
 
-bool Napisy24DownloadEngine::unpack(QUuid id)
-{
-    Maybe<SubtitleInfo> ms = resolveById(id);
-    if(!ms) return false;
+  QString archivePath = ms.value().sourceLocation;
 
-    if(!QFile::exists(movie)) return false;
+  QStringList archiveFileNames = p7zipDecoder->listArchiveFiles(archivePath);
 
-    QString archivePath = ms.value().sourceLocation;
-
-    QStringList archiveFileNames = p7zipDecoder->listArchiveFiles(archivePath);
-
-    QString subFileName = "";
-    foreach (QString archiveFileName, archiveFileNames) {
-        if(subtitleExtensions.contains(QFileInfo(archiveFileName).suffix(), Qt::CaseInsensitive)) {
-            subFileName = archiveFileName;
-            break;
-        }
+  QString subFileName = "";
+  foreach (QString archiveFileName, archiveFileNames) {
+    if (subtitleExtensions.contains(QFileInfo(archiveFileName).suffix(),
+                                    Qt::CaseInsensitive)) {
+      subFileName = archiveFileName;
+      break;
     }
+  }
 
-    if(subFileName.isEmpty())
-        return false;
+  if (subFileName.isEmpty()) return false;
 
-    subtitlesTmp = tmpPath + "/" + subFileName;
-    if(QFile::exists(subtitlesTmp))
-        QFile::remove(subtitlesTmp);
+  subtitlesTmp = tmpPath + "/" + subFileName;
+  if (QFile::exists(subtitlesTmp)) QFile::remove(subtitlesTmp);
 
-    bool unpacked = p7zipDecoder->unpackArchiveFile(archivePath, subFileName, tmpPath);
+  bool unpacked =
+      p7zipDecoder->unpackArchiveFile(archivePath, subFileName, tmpPath);
 
-    return unpacked && QFile::exists(subtitlesTmp);
+  return unpacked && QFile::exists(subtitlesTmp);
 }
 
-void Napisy24DownloadEngine::cleanup()
-{
-    clearSubtitlesList();
-    if(QFile::exists(subtitlesTmp))
-        QFile::remove(subtitlesTmp);
+void Napisy24DownloadEngine::cleanup() {
+  clearSubtitlesList();
+  if (QFile::exists(subtitlesTmp)) QFile::remove(subtitlesTmp);
 }
 
-QPair<QString, QString> Napisy24DownloadEngine::getCredentials() const
-{
-    if(!engineConfig.nick().isEmpty() && !engineConfig.password().isEmpty()) {
-        return qMakePair(engineConfig.nick(), engineConfig.password());
-    } else {
-        return qMakePair(QString("tantalosus"), QString("susolatnat"));
-    }
+QPair<QString, QString> Napisy24DownloadEngine::getCredentials() const {
+  if (!engineConfig.nick().isEmpty() && !engineConfig.password().isEmpty()) {
+    return qMakePair(engineConfig.nick(), engineConfig.password());
+  } else {
+    return qMakePair(QString("tantalosus"), QString("susolatnat"));
+  }
 }
 
-const char * const Napisy24DownloadEngine::pixmapData[] = {
+const char *const Napisy24DownloadEngine::pixmapData[] = {
     "16 16 256 2",
     "  	c #D6D9DB",
     ". 	c #F5F6F7",
@@ -460,5 +441,4 @@ const char * const Napisy24DownloadEngine::pixmapData[] = {
     "| [.o+l+D.| #.D.t 4 R : Q >.>.m ",
     "g | { q+g   U & %.& | U g i N.{ ",
     "& ^ & ^ ^ & ^ & ^ ^ & ^ ^ & ^ & ",
-    "{ ) { { ) { { { { ) { ) ) { ) { "
-};
+    "{ ) { { ) { { { { ) { ) ) { ) { "};

@@ -17,14 +17,14 @@
 
 #include <QThread>
 
-class QNapiThread : public QThread
-{
-Q_OBJECT
-    public:
-        QNapiThread() : abort(false) {}
-        void requestAbort() { abort = true; }
-    protected:
-        bool abort;
+class QNapiThread : public QThread {
+  Q_OBJECT
+ public:
+  QNapiThread() : abort(false) {}
+  void requestAbort() { abort = true; }
+
+ protected:
+  bool abort;
 };
 
 #endif

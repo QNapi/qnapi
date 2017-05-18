@@ -17,26 +17,25 @@
 
 #include "engines/subtitledownloadenginesregistry.h"
 
-#include "ui_frmsummary.h"
 #include "subtitleinfo.h"
+#include "ui_frmsummary.h"
 
 #include <QList>
-#include <QWidget>
 #include <QSharedPointer>
+#include <QWidget>
 
-class frmSummary: public QDialog
-{
-Q_OBJECT
-    public:
-        frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
-        ~frmSummary() {}
+class frmSummary : public QDialog {
+  Q_OBJECT
+ public:
+  frmSummary(QWidget *parent = 0, Qt::WindowFlags f = 0);
+  ~frmSummary() {}
 
-        void setSummaryList(QList<SubtitleInfo> list);
+  void setSummaryList(QList<SubtitleInfo> list);
 
-    private:
-        Ui::frmSummary ui;
+ private:
+  Ui::frmSummary ui;
 
-        QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
+  QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
 };
 
 #endif

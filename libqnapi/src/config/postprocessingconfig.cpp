@@ -15,20 +15,19 @@
 #include "config/postprocessingconfig.h"
 #include <QTextStream>
 
-QString PostProcessingConfig::toString() const
-{
-    QString s;
-    QTextStream(&s)
-      << "enabled: " << enabled() << endl
-      << "encodingChangeMethod: " << encodingChangeMethod() << endl
-      << "encodingFrom: " << encodingFrom() << endl
-      << "encodingAutoDetectFrom: " << encodingAutoDetectFrom() << endl
-      << "encodingTo: " << encodingTo() << endl
-      << "showAllEncodings: " << showAllEncodings() << endl
-      << "subFormat: " << subFormat() << endl
-      << "subExtension: " << subExtension() << endl
-      << "skipConvertAds: " << skipConvertAds() << endl
-      << "removeWordsEnabled: " << removeWordsEnabled() << endl
-      << "removeWords: " << removeWords().join("; ") << endl;
-    return s;
+QString PostProcessingConfig::toString() const {
+  QString s;
+  QTextStream(&s) << "enabled: " << enabled() << endl
+                  << "encodingChangeMethod: " << encodingChangeMethod() << endl
+                  << "encodingFrom: " << encodingFrom() << endl
+                  << "encodingAutoDetectFrom: " << encodingAutoDetectFrom()
+                  << endl
+                  << "encodingTo: " << encodingTo() << endl
+                  << "showAllEncodings: " << showAllEncodings() << endl
+                  << "subFormat: " << subFormat() << endl
+                  << "subExtension: " << subExtension() << endl
+                  << "skipConvertAds: " << skipConvertAds() << endl
+                  << "removeWordsEnabled: " << removeWordsEnabled() << endl
+                  << "removeWords: " << removeWords().join("; ") << endl;
+  return s;
 }

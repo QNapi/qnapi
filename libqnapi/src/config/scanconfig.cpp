@@ -15,13 +15,11 @@
 #include "config/scanconfig.h"
 #include <QTextStream>
 
-QString ScanConfig::toString() const
-{
-    QString s;
-    QTextStream(&s)
-      << "lastDir: " << lastDir() << endl
-      << "skipIfSubtitlesExist: " << skipIfSubtitlesExist() << endl
-      << "filters: " << filters().join("; ") << endl
-      << "skipFilters: " << skipFilters() << endl;
-    return s;
+QString ScanConfig::toString() const {
+  QString s;
+  QTextStream(&s) << "lastDir: " << lastDir() << endl
+                  << "skipIfSubtitlesExist: " << skipIfSubtitlesExist() << endl
+                  << "filters: " << filters().join("; ") << endl
+                  << "skipFilters: " << skipFilters() << endl;
+  return s;
 }

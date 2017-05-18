@@ -1,183 +1,162 @@
 #include "subtitlepostprocessor.h"
 
-#include <QTextCodec>
-#include <QTextStream>
 #include <QFile>
 #include <QFileInfo>
+#include <QTextCodec>
+#include <QTextStream>
 
+SubtitlePostProcessor::SubtitlePostProcessor(
+    const PostProcessingConfig& ppConfig,
+    const QSharedPointer<const SubtitleConverter>& subtitleConverter)
+    : ppConfig(ppConfig), subtitleConverter(subtitleConverter) {}
 
-SubtitlePostProcessor::SubtitlePostProcessor(const PostProcessingConfig & ppConfig,
-                                             const QSharedPointer<const SubtitleConverter> & subtitleConverter)
-    : ppConfig(ppConfig),
-      subtitleConverter(subtitleConverter)
-{}
+void SubtitlePostProcessor::perform(const QString& movieFilePath,
+                                    const QString& subtitleFilePath) const {
+  if (ppConfig.removeWordsEnabled()) {
+    ppRemoveLinesContainingWords(subtitleFilePath, ppConfig.removeWords());
+  }
 
+  switch (ppConfig.encodingChangeMethod()) {
+    case ECM_REPLACE_DIACRITICS:
+      ppReplaceDiacriticsWithASCII(subtitleFilePath);
+      break;
+    case ECM_CHANGE:
+      if (!ppConfig.encodingAutoDetectFrom() ||
+          !ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingTo())) {
+        ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingFrom(),
+                                  ppConfig.encodingTo());
+      }
+      break;
+    case ECM_ORIGINAL:
+      // Nie ruszaj pobranych napisów!
+      break;
+  }
 
-void SubtitlePostProcessor::perform(const QString & movieFilePath, const QString & subtitleFilePath) const
-{
-    if(ppConfig.removeWordsEnabled())
-    {
-        ppRemoveLinesContainingWords(subtitleFilePath, ppConfig.removeWords());
-    }
-
-    switch (ppConfig.encodingChangeMethod()) {
-        case ECM_REPLACE_DIACRITICS:
-            ppReplaceDiacriticsWithASCII(subtitleFilePath);
-        break;
-        case ECM_CHANGE:
-            if(!ppConfig.encodingAutoDetectFrom() || !ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingTo()))
-            {
-                ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingFrom(), ppConfig.encodingTo());
-            }
-        break;
-        case ECM_ORIGINAL:
-            // Nie ruszaj pobranych napisów!
-        break;
-    }
-
-    if(!ppConfig.subFormat().isEmpty())
-    {
-        QString targetFormat = ppConfig.subFormat();
-        subtitleConverter->convertSubtitles(subtitleFilePath, targetFormat, subtitleFilePath, movieFilePath);
-    }
+  if (!ppConfig.subFormat().isEmpty()) {
+    QString targetFormat = ppConfig.subFormat();
+    subtitleConverter->convertSubtitles(subtitleFilePath, targetFormat,
+                                        subtitleFilePath, movieFilePath);
+  }
 }
 
+bool SubtitlePostProcessor::ppReplaceDiacriticsWithASCII(
+    const QString& subtitleFilePath) const {
+  if (!QFileInfo(subtitleFilePath).exists()) return false;
 
-bool SubtitlePostProcessor::ppReplaceDiacriticsWithASCII(const QString & subtitleFilePath) const
-{
-    if(!QFileInfo(subtitleFilePath).exists())
-        return false;
+  QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
 
-    QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
+  if (from.isEmpty()) return false;
 
-    if(from.isEmpty())
-        return false;
+  QFile f(subtitleFilePath);
+  if (!f.open(QIODevice::ReadOnly)) return false;
 
-    QFile f(subtitleFilePath);
-    if(!f.open(QIODevice::ReadOnly))
-        return false;
+  QByteArray fileContent = f.readAll();
 
-    QByteArray fileContent = f.readAll();
+  QString contentStr =
+      QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
+  f.close();
 
-    QString contentStr = QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
-    f.close();
+  fileContent.clear();
+  fileContent.append(encodingUtils.replaceDiacriticsWithASCII(contentStr));
 
+  if (!f.open(QIODevice::WriteOnly)) return false;
+
+  f.write(fileContent);
+  f.close();
+
+  return true;
+}
+
+bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
+    const QString& subtitleFilePath, const QString& from,
+    const QString& to) const {
+  QFile f(subtitleFilePath);
+  if (!f.open(QIODevice::ReadOnly)) return false;
+
+  QByteArray fileContent = f.readAll();
+
+  QString contentStr =
+      QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
+  f.close();
+
+  if (to.compare("UTF-8", Qt::CaseInsensitive) != 0) {
+    fileContent = QTextCodec::codecForName(qPrintable(to))
+                      ->fromUnicode(contentStr.constData(), contentStr.size());
+  } else {
     fileContent.clear();
-    fileContent.append(encodingUtils.replaceDiacriticsWithASCII(contentStr));
+    fileContent.append(contentStr);
+  }
 
-    if(!f.open(QIODevice::WriteOnly))
-        return false;
+  if (!f.open(QIODevice::WriteOnly)) return false;
 
-    f.write(fileContent);
-    f.close();
+  f.write(fileContent);
+  f.close();
 
-    return true;
+  return true;
 }
 
-bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(const QString & subtitleFilePath, const QString & from, const QString & to) const
-{
-    QFile f(subtitleFilePath);
-    if(!f.open(QIODevice::ReadOnly))
-        return false;
+bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
+    const QString& subtitleFilePath, const QString& to) const {
+  if (!QFileInfo(subtitleFilePath).exists()) return false;
 
-    QByteArray fileContent = f.readAll();
+  QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
 
-    QString contentStr = QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
-    f.close();
+  if (from.isEmpty()) return false;
 
-    if(to.compare("UTF-8", Qt::CaseInsensitive) != 0)
-    {
-        fileContent = QTextCodec::codecForName(qPrintable(to))
-                        ->fromUnicode(contentStr.constData(), contentStr.size());
-    }
-    else
-    {
-        fileContent.clear();
-        fileContent.append(contentStr);
-    }
-
-    if(!f.open(QIODevice::WriteOnly))
-        return false;
-
-    f.write(fileContent);
-    f.close();
-
-    return true;
+  return ppChangeSubtitlesEncoding(from, to);
 }
 
-bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(const QString & subtitleFilePath, const QString & to) const
-{
-    if(!QFileInfo(subtitleFilePath).exists())
-        return false;
+bool SubtitlePostProcessor::ppRemoveLinesContainingWords(
+    const QString& subtitleFilePath, QStringList wordList) const {
+  if (!QFileInfo(subtitleFilePath).exists()) return false;
 
-    QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
+  wordList = wordList.filter(QRegExp("^(.+)$"));
 
-    if(from.isEmpty())
-        return false;
+  QString fromCodec = encodingUtils.detectFileEncoding(subtitleFilePath);
 
-    return ppChangeSubtitlesEncoding(from, to);
-}
+  if (fromCodec.isEmpty()) fromCodec = ppConfig.encodingFrom();
 
-bool SubtitlePostProcessor::ppRemoveLinesContainingWords(const QString & subtitleFilePath, QStringList wordList) const
-{
-    if(!QFileInfo(subtitleFilePath).exists())
-        return false;
+  QFile f(subtitleFilePath);
+  if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) return false;
 
-    wordList = wordList.filter(QRegExp("^(.+)$"));
+  QList<QByteArray> lines = f.readAll().split('\n');
+  QList<QByteArray> out;
 
-    QString fromCodec = encodingUtils.detectFileEncoding(subtitleFilePath);
+  foreach (QByteArray line, lines) {
+    int i;
+    while ((i = line.indexOf('\r')) >= 0) line.remove(i, 1);
 
-    if(fromCodec.isEmpty())
-        fromCodec = ppConfig.encodingFrom();
+    QTextStream ts(line);
+    ts.setCodec(qPrintable(fromCodec));
+    QString encLine = ts.readAll();
 
-    QFile f(subtitleFilePath);
-    if(!f.open(QIODevice::ReadOnly | QIODevice::Text))
-        return false;
-
-    QList<QByteArray> lines = f.readAll().split('\n');
-    QList<QByteArray> out;
-
-    foreach(QByteArray line, lines)
-    {
-        int i;
-        while((i = line.indexOf('\r')) >= 0)
-            line.remove(i, 1);
-
-        QTextStream ts(line);
-        ts.setCodec(qPrintable(fromCodec));
-        QString encLine = ts.readAll();
-
-        if(encLine.isEmpty())
-        {
-            out << line;
-            continue;
-        }
-
-        bool found = false;
-        foreach(QString word, wordList)
-        {
-            if(encLine.contains(word, Qt::CaseInsensitive))
-            {
-                found = true;
-                break;
-            }
-        }
-        if(found) continue;
-
-        out << line;
+    if (encLine.isEmpty()) {
+      out << line;
+      continue;
     }
 
-    f.close();
-
-    if(!f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
-        return false;
-
-    foreach(QByteArray line, out)
-    {
-        f.write(line);
-        f.write("\n", 1);
+    bool found = false;
+    foreach (QString word, wordList) {
+      if (encLine.contains(word, Qt::CaseInsensitive)) {
+        found = true;
+        break;
+      }
     }
-    f.close();
+    if (found) continue;
 
-    return true;
+    out << line;
+  }
+
+  f.close();
+
+  if (!f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    return false;
+
+  foreach (QByteArray line, out) {
+    f.write(line);
+    f.write("\n", 1);
+  }
+  f.close();
+
+  return true;
 }

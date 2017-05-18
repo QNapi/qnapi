@@ -15,136 +15,124 @@
 #include "subtitlematcher.h"
 #include <QDir>
 
-SubtitleMatcher::SubtitleMatcher(bool _noBackup,
-                                 bool _isPostProcessingEnabled,
-                                 QString _ppSubFormat,
-                                 QString _ppSubExtension,
-                                 bool _changePermissions,
-                                 QString _changePermissionsTo,
-                                 const QSharedPointer<const SubtitleFormatsRegistry> & subtitleFormatsRegistry)
+SubtitleMatcher::SubtitleMatcher(
+    bool _noBackup, bool _isPostProcessingEnabled, QString _ppSubFormat,
+    QString _ppSubExtension, bool _changePermissions,
+    QString _changePermissionsTo,
+    const QSharedPointer<const SubtitleFormatsRegistry>&
+        subtitleFormatsRegistry)
     : noBackup(_noBackup),
       isPostProcessingEnabled(_isPostProcessingEnabled),
       ppSubFormat(_ppSubFormat),
       ppSubExtension(_ppSubExtension),
       changePermissions(_changePermissions),
       changePermissionsTo(_changePermissionsTo),
-      subtitleFormatsRegistry(subtitleFormatsRegistry)
-{}
+      subtitleFormatsRegistry(subtitleFormatsRegistry) {}
 
-bool SubtitleMatcher::matchSubtitles(QString subtitlesTmpFilePath, QString targetMovieFilePath) const
-{
-    QFileInfo subtitlesTmpFileInfo(subtitlesTmpFilePath);
+bool SubtitleMatcher::matchSubtitles(QString subtitlesTmpFilePath,
+                                     QString targetMovieFilePath) const {
+  QFileInfo subtitlesTmpFileInfo(subtitlesTmpFilePath);
 
-    if(!subtitlesTmpFileInfo.exists())
-        return false;
+  if (!subtitlesTmpFileInfo.exists()) return false;
 
-    QString targetExtension = selectTargetExtension(subtitlesTmpFileInfo);
+  QString targetExtension = selectTargetExtension(subtitlesTmpFileInfo);
 
-    QString targetSubtitlesFilePath = constructSubtitlePath(targetMovieFilePath, targetExtension);
+  QString targetSubtitlesFilePath =
+      constructSubtitlePath(targetMovieFilePath, targetExtension);
 
-    if(!isWritablePath(targetSubtitlesFilePath))
-        return false;
+  if (!isWritablePath(targetSubtitlesFilePath)) return false;
 
-    removeOrCopy(targetMovieFilePath, targetSubtitlesFilePath);
+  removeOrCopy(targetMovieFilePath, targetSubtitlesFilePath);
 
-    bool result = false;
+  bool result = false;
 
 #ifdef Q_OS_WIN
-    // Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
-    result = dryCopy(subtitlesTmpFilePath, targetSubtitlesFilePath);
+  // Pod windowsem, aby "wyczyscic" atrybuty pliku, tworzymy go na nowo
+  result = dryCopy(subtitlesTmpFilePath, targetSubtitlesFilePath);
 #else
-    // pod innymi OS-ami wystarczy skopiowac plik
-    result = QFile::copy(subtitlesTmpFilePath, targetSubtitlesFilePath);
+  // pod innymi OS-ami wystarczy skopiowac plik
+  result = QFile::copy(subtitlesTmpFilePath, targetSubtitlesFilePath);
 #endif
 
-    if(changePermissions)
-    {
-        fixFilePermissions(targetSubtitlesFilePath, changePermissionsTo);
-    }
+  if (changePermissions) {
+    fixFilePermissions(targetSubtitlesFilePath, changePermissionsTo);
+  }
 
-    return result;
+  return result;
 }
 
-QString SubtitleMatcher::selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const
-{
-    QString targetExtension = subtitlesTmpFileInfo.suffix();
+QString SubtitleMatcher::selectTargetExtension(
+    QFileInfo subtitlesTmpFileInfo) const {
+  QString targetExtension = subtitlesTmpFileInfo.suffix();
 
-    if(isPostProcessingEnabled)
-    {
-        if(!ppSubFormat.isEmpty() && ppSubExtension.isEmpty())
-        {
-            targetExtension = subtitleFormatsRegistry->select(ppSubFormat)->defaultExtension();
-        }
-        else if(!ppSubExtension.isEmpty())
-        {
-            targetExtension = ppSubExtension;
-        }
+  if (isPostProcessingEnabled) {
+    if (!ppSubFormat.isEmpty() && ppSubExtension.isEmpty()) {
+      targetExtension =
+          subtitleFormatsRegistry->select(ppSubFormat)->defaultExtension();
+    } else if (!ppSubExtension.isEmpty()) {
+      targetExtension = ppSubExtension;
     }
+  }
 
-    return targetExtension;
+  return targetExtension;
 }
 
-QString SubtitleMatcher::constructSubtitlePath(QString targetMovieFilePath, QString targetExtension, QString baseSuffix) const
-{
-    QFileInfo targetMovieFileInfo(targetMovieFilePath);
-    return targetMovieFileInfo.path() + QDir::separator() + targetMovieFileInfo.completeBaseName() + baseSuffix + "." + targetExtension;
+QString SubtitleMatcher::constructSubtitlePath(QString targetMovieFilePath,
+                                               QString targetExtension,
+                                               QString baseSuffix) const {
+  QFileInfo targetMovieFileInfo(targetMovieFilePath);
+  return targetMovieFileInfo.path() + QDir::separator() +
+         targetMovieFileInfo.completeBaseName() + baseSuffix + "." +
+         targetExtension;
 }
 
-bool SubtitleMatcher::isWritablePath(QString path) const
-{
-    QFileInfo pathFileInfo(path);
-    return QFileInfo(pathFileInfo.absolutePath()).isWritable();
+bool SubtitleMatcher::isWritablePath(QString path) const {
+  QFileInfo pathFileInfo(path);
+  return QFileInfo(pathFileInfo.absolutePath()).isWritable();
 }
 
-void SubtitleMatcher::removeOrCopy(QString targetMoviefilePath, QString targetSubtitlesFilePath) const
-{
-    if(QFile::exists(targetSubtitlesFilePath))
-    {
-        if(!noBackup)
-        {
-            QFileInfo targetSubtitlesFileInfo(targetSubtitlesFilePath);
-            QString newName = constructSubtitlePath(targetMoviefilePath, targetSubtitlesFileInfo.suffix(), tr("_copy"));
+void SubtitleMatcher::removeOrCopy(QString targetMoviefilePath,
+                                   QString targetSubtitlesFilePath) const {
+  if (QFile::exists(targetSubtitlesFilePath)) {
+    if (!noBackup) {
+      QFileInfo targetSubtitlesFileInfo(targetSubtitlesFilePath);
+      QString newName = constructSubtitlePath(
+          targetMoviefilePath, targetSubtitlesFileInfo.suffix(), tr("_copy"));
 
-            if(QFile::exists(newName))
-                QFile::remove(newName);
+      if (QFile::exists(newName)) QFile::remove(newName);
 
-            QFile::rename(targetSubtitlesFilePath, newName);
-        }
-        else
-            QFile::remove(targetSubtitlesFilePath);
-    }
+      QFile::rename(targetSubtitlesFilePath, newName);
+    } else
+      QFile::remove(targetSubtitlesFilePath);
+  }
 }
 
-bool SubtitleMatcher::dryCopy(QString srcFilePath, QString dstFilePath) const
-{
-    QFile dstFile(dstFilePath), srcFile(srcFilePath);
-    bool result = false;
+bool SubtitleMatcher::dryCopy(QString srcFilePath, QString dstFilePath) const {
+  QFile dstFile(dstFilePath), srcFile(srcFilePath);
+  bool result = false;
 
-    if(!dstFile.open(QIODevice::WriteOnly) || !srcFile.open(QIODevice::ReadOnly))
-    {
-        dstFile.close();
-    }
-    else
-    {
-        result = dstFile.write(srcFile.readAll()) > 0;
-        srcFile.close();
-        dstFile.close();
-    }
+  if (!dstFile.open(QIODevice::WriteOnly) ||
+      !srcFile.open(QIODevice::ReadOnly)) {
+    dstFile.close();
+  } else {
+    result = dstFile.write(srcFile.readAll()) > 0;
+    srcFile.close();
+    dstFile.close();
+  }
 
-    return result;
+  return result;
 }
 
-void SubtitleMatcher::fixFilePermissions(QString targetSubtitlesFilePath, QString changePermissionsTo) const
-{
-    bool validPermissions;
-    int permInt = changePermissionsTo.toInt(&validPermissions, 8);
+void SubtitleMatcher::fixFilePermissions(QString targetSubtitlesFilePath,
+                                         QString changePermissionsTo) const {
+  bool validPermissions;
+  int permInt = changePermissionsTo.toInt(&validPermissions, 8);
 
-    if(validPermissions)
-    {
-        int perm = 0;
-        perm |= (permInt & 0700) << 2;
-        perm |= (permInt & 0070) << 1;
-        perm |= (permInt & 0007);
-        QFile::setPermissions(targetSubtitlesFilePath, QFile::Permissions(perm));
-    }
+  if (validPermissions) {
+    int perm = 0;
+    perm |= (permInt & 0700) << 2;
+    perm |= (permInt & 0070) << 1;
+    perm |= (permInt & 0007);
+    QFile::setPermissions(targetSubtitlesFilePath, QFile::Permissions(perm));
+  }
 }

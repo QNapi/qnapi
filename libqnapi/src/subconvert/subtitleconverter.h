@@ -18,50 +18,45 @@
 #include "movieinfo/movieinfoprovider.h"
 #include "subconvert/subtitleformatsregistry.h"
 
+#include <QSharedPointer>
 #include <QString>
 #include <QStringList>
 #include <functional>
-#include <QSharedPointer>
 
-class SubtitleConverter
-{
-public:
-    SubtitleConverter(QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry,
-                      QSharedPointer<const MovieInfoProvider> movieInfoProvider,
-                      bool skipConvertAds);
+class SubtitleConverter {
+ public:
+  SubtitleConverter(
+      QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry,
+      QSharedPointer<const MovieInfoProvider> movieInfoProvider,
+      bool skipConvertAds);
 
-    QString detectFormat(const QString &subtitleFile) const;
-    QString detectFormat(const QStringList &subtitleLines) const;
+  QString detectFormat(const QString &subtitleFile) const;
+  QString detectFormat(const QStringList &subtitleLines) const;
 
-    bool convertSubtitles(QString subtitleFile,
-                          QString targetFormatName,
-                          QString targetFileName,
-                          double movieFPS,
-                          double fpsRatio,
-                          double delayOffset) const;
+  bool convertSubtitles(QString subtitleFile, QString targetFormatName,
+                        QString targetFileName, double movieFPS,
+                        double fpsRatio, double delayOffset) const;
 
-    bool convertSubtitles(QString subtitleFile,
-                          QString targetFormatName,
-                          QString targetFileName,
-                          QString movieFile) const;
+  bool convertSubtitles(QString subtitleFile, QString targetFormatName,
+                        QString targetFileName, QString movieFile) const;
 
-    bool convertSubtitles(QString subtitleFile,
-                          QString targetFormatName,
-                          QString targetFileName,
-                          std::function<double ()> determineFPS,
-                          double fpsRatio = 1.0,
-                          double delayOffset = 0.0) const;
+  bool convertSubtitles(QString subtitleFile, QString targetFormatName,
+                        QString targetFileName,
+                        std::function<double()> determineFPS,
+                        double fpsRatio = 1.0, double delayOffset = 0.0) const;
 
-private:
-    QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
-    QSharedPointer<const MovieInfoProvider> movieInfoProvider;
-    bool skipConvertAds;
+ private:
+  QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
+  QSharedPointer<const MovieInfoProvider> movieInfoProvider;
+  bool skipConvertAds;
 
-    long ts2frame(long ts, double frameRate) const;
-    long frame2ts(long frame, double frameRate) const;
+  long ts2frame(long ts, double frameRate) const;
+  long frame2ts(long frame, double frameRate) const;
 
-    QStringList readFile(const QString & filename, QString encoding, long atMostLines = 0) const;
-    bool writeFile(const QString & filename, QString encoding, const QStringList & lines) const;
+  QStringList readFile(const QString &filename, QString encoding,
+                       long atMostLines = 0) const;
+  bool writeFile(const QString &filename, QString encoding,
+                 const QStringList &lines) const;
 };
 
-#endif // SUBTITLECONVERTER_H
+#endif  // SUBTITLECONVERTER_H

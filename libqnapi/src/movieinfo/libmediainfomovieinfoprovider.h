@@ -17,12 +17,11 @@
 
 #include "movieinfoprovider.h"
 
-class LibmediainfoMovieInfoProvider : public MovieInfoProvider
-{
-public:
-    virtual ~LibmediainfoMovieInfoProvider() {}
+class LibmediainfoMovieInfoProvider : public MovieInfoProvider {
+ public:
+  virtual ~LibmediainfoMovieInfoProvider() {}
 
-    const Maybe<MovieInfo> getMovieInfo(const QString & moviePath) const;
+  const Maybe<MovieInfo> getMovieInfo(const QString& moviePath) const;
 };
 
-#endif // LIBMEDIAINFOMOVIEINFOPARSER_H
+#endif  // LIBMEDIAINFOMOVIEINFOPARSER_H

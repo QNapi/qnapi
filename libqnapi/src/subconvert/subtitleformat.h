@@ -15,25 +15,24 @@
 #ifndef SUBTITLEFORMAT_H
 #define SUBTITLEFORMAT_H
 
-#include "subconvert/subfile.h"
 #include <QString>
+#include "subconvert/subfile.h"
 
-class SubtitleFormat
-{
-public:
-    virtual ~SubtitleFormat() {}
-    virtual bool isTimeBased() const = 0;
-    virtual QString formatName() const = 0;
-    virtual QString defaultExtension() const = 0;
+class SubtitleFormat {
+ public:
+  virtual ~SubtitleFormat() {}
+  virtual bool isTimeBased() const = 0;
+  virtual QString formatName() const = 0;
+  virtual QString defaultExtension() const = 0;
 
-    virtual bool detect(const QStringList & lines) const = 0;
-    virtual SubFile decode(const QStringList & lines) const = 0;
-    virtual QStringList encode(const SubFile & subFile) const = 0;
+  virtual bool detect(const QStringList& lines) const = 0;
+  virtual SubFile decode(const QStringList& lines) const = 0;
+  virtual QStringList encode(const SubFile& subFile) const = 0;
 
-    QVector<SubToken> decodeTokenStream(QString tokenStream) const;
-private:
-    QString parseColor(QString colorString) const;
+  QVector<SubToken> decodeTokenStream(QString tokenStream) const;
+
+ private:
+  QString parseColor(QString colorString) const;
 };
 
-#endif // SUBTITLEFORMAT_H
-
+#endif  // SUBTITLEFORMAT_H

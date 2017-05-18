@@ -16,45 +16,40 @@
 #include <QTextStream>
 
 QString QNapiConfig::toString() const {
+  QString enabledEnginesStr, enginesCfgStr;
 
-    QString enabledEnginesStr, enginesCfgStr;
+  QTextStream ees(&enabledEnginesStr);
+  typedef QPair<QString, bool> EngineEnableCfg;
+  foreach (EngineEnableCfg engineCfg, enabledEngines()) {
+    QString engineName = engineCfg.first;
+    bool engineEnabled = engineCfg.second;
+    QString engineEnabledStr = engineEnabled ? "enabled" : "disabled";
+    ees << " " << engineName << ": " << engineEnabledStr << endl;
+  }
 
-    QTextStream ees(&enabledEnginesStr);
-    typedef QPair<QString, bool> EngineEnableCfg;
-    foreach(EngineEnableCfg engineCfg, enabledEngines())
-    {
-        QString engineName = engineCfg.first;
-        bool engineEnabled = engineCfg.second;
-        QString engineEnabledStr = engineEnabled ? "enabled" : "disabled";
-        ees << " " << engineName << ": " << engineEnabledStr << endl;
-    }
+  QTextStream es(&enginesCfgStr);
+  foreach (QString engineName, enginesConfig().keys()) {
+    EngineConfig cfg = *enginesConfig().find(engineName);
+    es << " " << engineName << ": " << endl
+       << "  nick: " << cfg.nick() << endl
+       << "  password: " << cfg.password() << endl;
+  }
 
-    QTextStream es(&enginesCfgStr);
-    foreach(QString engineName, enginesConfig().keys())
-    {
-        EngineConfig cfg = *enginesConfig().find(engineName);
-        es << " " << engineName << ": " << endl
-           << "  nick: " << cfg.nick() << endl
-           << "  password: " << cfg.password() << endl;
-    }
-
-    QString s;
-    QTextStream(&s)
-      << "Version: " << version() << endl
-      << "First run? " << (firstrun() ? "yes" : "no") << endl
-      << endl
-      << "General config:" << endl
-      << generalConfig().toString() << endl
-      << "Enabled Engines:" << endl
-      << enabledEnginesStr << endl
-      << "Engines config:" << endl
-      << enginesCfgStr << endl
-      << "Post-processing config:" << endl
-      << postProcessingConfig().toString() << endl
-      << "Scan config:" << endl
-      << scanConfig().toString() << endl
-      << "Last open-dialog dir:" << endl
-      << lastOpenedDir() << endl;
-    return s;
+  QString s;
+  QTextStream(&s) << "Version: " << version() << endl
+                  << "First run? " << (firstrun() ? "yes" : "no") << endl
+                  << endl
+                  << "General config:" << endl
+                  << generalConfig().toString() << endl
+                  << "Enabled Engines:" << endl
+                  << enabledEnginesStr << endl
+                  << "Engines config:" << endl
+                  << enginesCfgStr << endl
+                  << "Post-processing config:" << endl
+                  << postProcessingConfig().toString() << endl
+                  << "Scan config:" << endl
+                  << scanConfig().toString() << endl
+                  << "Last open-dialog dir:" << endl
+                  << lastOpenedDir() << endl;
+  return s;
 }
-

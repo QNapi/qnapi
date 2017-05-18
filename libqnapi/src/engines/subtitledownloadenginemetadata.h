@@ -20,21 +20,26 @@
 #include <QString>
 
 class SubtitleDownloadEngineMetadata {
-private:
-    QString name_;
-    QString description_;
-    Maybe<QUrl> registrationUrl_;
-    Maybe<QUrl> uploadUrl_;
+ private:
+  QString name_;
+  QString description_;
+  Maybe<QUrl> registrationUrl_;
+  Maybe<QUrl> uploadUrl_;
 
-public:
-    SubtitleDownloadEngineMetadata(const QString & name, const QString & description, const Maybe<QUrl> & registrationUrl, const Maybe<QUrl> & uploadUrl)
-        : name_(name), description_(description), registrationUrl_(registrationUrl), uploadUrl_(uploadUrl)
-        {}
+ public:
+  SubtitleDownloadEngineMetadata(const QString& name,
+                                 const QString& description,
+                                 const Maybe<QUrl>& registrationUrl,
+                                 const Maybe<QUrl>& uploadUrl)
+      : name_(name),
+        description_(description),
+        registrationUrl_(registrationUrl),
+        uploadUrl_(uploadUrl) {}
 
-    QString name() const { return name_; }
-    QString description() const { return description_; }
-    Maybe<QUrl> registrationUrl() const { return registrationUrl_; }
-    Maybe<QUrl> uploadUrl() const { return uploadUrl_; }
+  QString name() const { return name_; }
+  QString description() const { return description_; }
+  Maybe<QUrl> registrationUrl() const { return registrationUrl_; }
+  Maybe<QUrl> uploadUrl() const { return uploadUrl_; }
 };
 
 #endif

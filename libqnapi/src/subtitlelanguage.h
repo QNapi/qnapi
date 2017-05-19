@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -18,28 +18,24 @@
 #include <QObject>
 #include <QStringList>
 
-class SubtitleLanguage
-{
-public:
+class SubtitleLanguage {
+ public:
+  SubtitleLanguage(QString source = "");
 
-    SubtitleLanguage(QString source = "");
+  void setLanguage(QString source);
 
-    void setLanguage(QString source);
+  QString toTwoLetter();
+  QString toTriLetter();
+  QString toFullName();
 
-    QString toTwoLetter();
-    QString toTriLetter();
-    QString toFullName();
+  QStringList listLanguages();
+  QStringList listLanguageTwoLetterCodes();
 
-    QStringList listLanguages();
-    QStringList listLanguageTwoLetterCodes();
+ private:
+  QStringList codes2l, codes3l, names;
+  int idx;
 
-private:
-
-    QStringList codes2l, codes3l, names;
-    int idx;
-
-    void fill_tables();
-
+  void fill_tables();
 };
 
 #endif

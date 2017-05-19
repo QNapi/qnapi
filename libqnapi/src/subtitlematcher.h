@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -20,38 +20,38 @@
 #include <QFileInfo>
 #include <QSharedPointer>
 
-class SubtitleMatcher : public QObject
-{
-Q_OBJECT
-public:
-    SubtitleMatcher(bool _noBackup,
-                    bool _isPostProcessingEnabled,
-                    QString _ppSubFormat,
-                    QString _ppSubExtension,
-                    bool _changePermissions,
-                    QString _changePermissionsTo,
-                    const QSharedPointer<const SubtitleFormatsRegistry> &subtitleFormatsRegistry);
+class SubtitleMatcher : public QObject {
+  Q_OBJECT
+ public:
+  SubtitleMatcher(bool _noBackup, bool _isPostProcessingEnabled,
+                  QString _ppSubFormat, QString _ppSubExtension,
+                  bool _changePermissions, QString _changePermissionsTo,
+                  const QSharedPointer<const SubtitleFormatsRegistry>
+                      &subtitleFormatsRegistry);
 
-    bool matchSubtitles(QString subtitlesTmpFilePath, QString targetMovieFilePath) const;
+  bool matchSubtitles(QString subtitlesTmpFilePath,
+                      QString targetMovieFilePath) const;
 
-private:
+ private:
+  QString selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const;
+  QString constructSubtitlePath(QString targetMovieFilePath,
+                                QString targetExtension,
+                                QString baseSuffix = "") const;
+  bool isWritablePath(QString path) const;
+  void removeOrCopy(QString targetMoviefilePath,
+                    QString targetSubtitlesFilePath) const;
+  bool dryCopy(QString srcFilePath, QString dstFilePath) const;
+  void fixFilePermissions(QString targetSubtitlesFilePath,
+                          QString changePermissionsTo) const;
 
-    QString selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const;
-    QString constructSubtitlePath(QString targetMovieFilePath, QString targetExtension, QString baseSuffix = "") const;
-    bool isWritablePath(QString path) const;
-    void removeOrCopy(QString targetMoviefilePath, QString targetSubtitlesFilePath) const;
-    bool dryCopy(QString srcFilePath, QString dstFilePath) const;
-    void fixFilePermissions(QString targetSubtitlesFilePath, QString changePermissionsTo) const;
+  bool noBackup;
+  bool isPostProcessingEnabled;
+  QString ppSubFormat;
+  QString ppSubExtension;
+  bool changePermissions;
+  QString changePermissionsTo;
 
-    bool noBackup;
-    bool isPostProcessingEnabled;
-    QString ppSubFormat;
-    QString ppSubExtension;
-    bool changePermissions;
-    QString changePermissionsTo;
-
-    QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
-
+  QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
 };
 
-#endif // SUBTITLE_MATCHER_H
+#endif  // SUBTITLE_MATCHER_H

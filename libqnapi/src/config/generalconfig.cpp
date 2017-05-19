@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,20 +15,18 @@
 #include "config/generalconfig.h"
 #include <QTextStream>
 
-QString GeneralConfig::toString() const
-{
-    QString s;
-    QTextStream(&s)
-      << "uiLanguage: " << uiLanguage() << endl
-      << "p7zipPath: " << p7zipPath() << endl
-      << "tmpPath: " << tmpPath() << endl
-      << "language: " << language() << endl
-      << "backupLanguage: " << backupLanguage() << endl
-      << "noBackup: " << noBackup() << endl
-      << "quietBatch: " << quietBatch() << endl
-      << "searchPolicy: " << searchPolicy() << endl
-      << "downloadPolicy: " << downloadPolicy() << endl
-      << "changePermissions: " << changePermissionsEnabled() << endl
-      << "changePermissionsTo: " << changePermissionsTo() << endl;
-    return s;
+QString GeneralConfig::toString() const {
+  QString s;
+  QTextStream(&s) << "uiLanguage: " << uiLanguage() << endl
+                  << "p7zipPath: " << p7zipPath() << endl
+                  << "tmpPath: " << tmpPath() << endl
+                  << "language: " << language() << endl
+                  << "backupLanguage: " << backupLanguage() << endl
+                  << "noBackup: " << noBackup() << endl
+                  << "quietBatch: " << quietBatch() << endl
+                  << "searchPolicy: " << searchPolicy() << endl
+                  << "downloadPolicy: " << downloadPolicy() << endl
+                  << "changePermissions: " << changePermissionsEnabled() << endl
+                  << "changePermissionsTo: " << changePermissionsTo() << endl;
+  return s;
 }

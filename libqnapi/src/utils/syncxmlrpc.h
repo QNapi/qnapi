@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,35 +15,34 @@
 #ifndef SYNCXMLRPC_H
 #define SYNCXMLRPC_H
 
+#include <QEventLoop>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QEventLoop>
 #include <QObject>
 #include "maiaXmlRpcClient.h"
 
-class SyncXmlRpc : public QObject
-{
-Q_OBJECT
-    public:
-        SyncXmlRpc(const QUrl & endPoint);
+class SyncXmlRpc : public QObject {
+  Q_OBJECT
+ public:
+  SyncXmlRpc(const QUrl& endPoint);
 
-        bool request(const QString & method, const QVariantList & args);
-        QVariant getResponse() const;
-        QVariant getError() const;
+  bool request(const QString& method, const QVariantList& args);
+  QVariant getResponse() const;
+  QVariant getError() const;
 
-    private slots:
+ private slots:
 
-        void whenResponse(QVariant & response);
+  void whenResponse(QVariant& response);
 
-        void whenFault(int err, const QString & msg);
+  void whenFault(int err, const QString& msg);
 
-    private:
-        bool result;
-        int error;
-        QString message;
-        QVariant resp;
-        QEventLoop loop;
-        MaiaXmlRpcClient rpc;
+ private:
+  bool result;
+  int error;
+  QString message;
+  QVariant resp;
+  QEventLoop loop;
+  MaiaXmlRpcClient rpc;
 };
 
 #endif

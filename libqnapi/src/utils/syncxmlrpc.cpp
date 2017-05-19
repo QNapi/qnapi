@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -14,33 +14,30 @@
 
 #include "syncxmlrpc.h"
 
-SyncXmlRpc::SyncXmlRpc(const QUrl & endPoint) : rpc(endPoint) {}
+SyncXmlRpc::SyncXmlRpc(const QUrl &endPoint) : rpc(endPoint) {}
 
-bool SyncXmlRpc::request(const QString & method, const QVariantList & args) {
-    rpc.call(method, args,
-             this, SLOT(whenResponse(QVariant&)),
-             this, SLOT(whenFault(int, const QString &)));
-    loop.exec();
-    return result;
+bool SyncXmlRpc::request(const QString &method, const QVariantList &args) {
+  rpc.call(method, args, this, SLOT(whenResponse(QVariant &)), this,
+           SLOT(whenFault(int, const QString &)));
+  loop.exec();
+  return result;
 }
 
-QVariant SyncXmlRpc::getResponse() const {
-    return resp;
-}
+QVariant SyncXmlRpc::getResponse() const { return resp; }
 
 QVariant SyncXmlRpc::getError() const {
-    return QString::number(error) + " " + message;
+  return QString::number(error) + " " + message;
 }
 
-void SyncXmlRpc::whenResponse(QVariant & response) {
-    result = true;
-    resp = response;
-    loop.exit();
+void SyncXmlRpc::whenResponse(QVariant &response) {
+  result = true;
+  resp = response;
+  loop.exit();
 }
 
-void SyncXmlRpc::whenFault(int err, const QString & msg) {
-    result = false;
-    error = err;
-    message = msg;
-    loop.exit();
+void SyncXmlRpc::whenFault(int err, const QString &msg) {
+  result = false;
+  error = err;
+  message = msg;
+  loop.exit();
 }

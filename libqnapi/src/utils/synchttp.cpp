@@ -3,7 +3,7 @@
 **  eti@erata.net
 **
 **  modifications by Piotr Krzemiński
-**  Copyright (C) 2008-2015
+**  Copyright (C) 2008-2017
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -19,20 +19,21 @@
 
 SyncHTTP::SyncHTTP() : manager(this) {}
 
-QNetworkReply* SyncHTTP::syncGet(const QNetworkRequest & req)
-{
-    QNetworkReply *reply = manager.get(req);
-    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
-    loop.exec();
-    return reply;
+QNetworkReply* SyncHTTP::syncGet(const QNetworkRequest& req) {
+  QNetworkReply* reply = manager.get(req);
+  connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+  connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop,
+          SLOT(quit()));
+  loop.exec();
+  return reply;
 }
 
-QNetworkReply* SyncHTTP::syncPost(const QNetworkRequest & req, const QByteArray& data)
-{
-    QNetworkReply *reply = manager.post(req, data);
-    connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
-    loop.exec();
-    return reply;
+QNetworkReply* SyncHTTP::syncPost(const QNetworkRequest& req,
+                                  const QByteArray& data) {
+  QNetworkReply* reply = manager.post(req, data);
+  connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+  connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), &loop,
+          SLOT(quit()));
+  loop.exec();
+  return reply;
 }

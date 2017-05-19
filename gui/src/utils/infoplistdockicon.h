@@ -15,11 +15,10 @@
 #ifndef INFOPLISTDOCKICON_H
 #define INFOPLISTDOCKICON_H
 
-class InfoPlistDockIcon
-{
-public:
-    static bool readShowDockIcon();
-    static void setShowDockIcon(bool show);
+class InfoPlistDockIcon {
+ public:
+  static bool readShowDockIcon();
+  static void setShowDockIcon(bool show);
 };
 
-#endif // INFOPLISTDOCKICON_H
+#endif  // INFOPLISTDOCKICON_H

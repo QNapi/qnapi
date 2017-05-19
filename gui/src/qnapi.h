@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -20,64 +20,59 @@
 #include "engines/subtitledownloadenginesregistry.h"
 #include "subtitleinfo.h"
 
+#include <Maybe.h>
 #include <QList>
 #include <QSharedPointer>
 #include <QString>
 #include <QStringList>
-#include <Maybe.h>
 
+class QNapi {
+ public:
+  QNapi(const QNapiConfig& config,
+        const Maybe<QString>& specificEngine = nothing());
+  ~QNapi();
 
-class QNapi
-{
-    public:
+  bool checkP7ZipPath();
+  bool checkTmpPath();
+  bool ppEnabled();
 
-        QNapi(const QNapiConfig & config,
-              const Maybe<QString> & specificEngine = nothing());
-        ~QNapi();
+  void setMoviePath(QString path);
+  QString moviePath();
+  bool checkWritePermissions();
 
-        bool checkP7ZipPath();
-        bool checkTmpPath();
-        bool ppEnabled();
+  void clearSubtitlesList();
+  void checksum();
+  bool lookForSubtitles(QString lang, QString engine = "");
+  bool lookForSubtitles(QStringList languages, QString engine = "");
+  QList<SubtitleInfo> listSubtitles();
 
-        void setMoviePath(QString path);
-        QString moviePath();
-        bool checkWritePermissions();
+  bool needToShowList();
+  int bestIdx();
 
-        void clearSubtitlesList();
-        void checksum();
-        bool lookForSubtitles(QString lang, QString engine = "");
-        bool lookForSubtitles(QStringList languages, QString engine = "");
-        QList<SubtitleInfo> listSubtitles();
+  bool download(int i);
+  bool unpack(int i);
+  bool matchSubtitles();
+  void postProcessSubtitles() const;
 
-        bool needToShowList();
-        int bestIdx();
+  void cleanup();
+  QString error();
 
-        bool download(int i);
-        bool unpack(int i);
-        bool matchSubtitles();
-        void postProcessSubtitles() const;
+  QStringList listLoadedEngines() const;
 
-        void cleanup();
-        QString error();
+ private:
+  QSharedPointer<SubtitleDownloadEngine> engineByName(QString name) const;
 
-        QStringList listLoadedEngines() const;
+  QString movie;
+  QString errorMsg;
+  QList<QSharedPointer<SubtitleDownloadEngine>> enginesList;
+  QList<SubtitleInfo> subtitlesList;
+  QSharedPointer<SubtitleDownloadEngine> currentEngine;
 
-    private:
+  // najlepszy indeks napisow
+  int theBestIdx;
 
-        QSharedPointer<SubtitleDownloadEngine> engineByName(QString name) const;
-
-        QString movie;
-        QString errorMsg;
-        QList<QSharedPointer<SubtitleDownloadEngine>> enginesList;
-        QList<SubtitleInfo> subtitlesList;
-        QSharedPointer<SubtitleDownloadEngine> currentEngine;
-        
-        // najlepszy indeks napisow
-        int theBestIdx;
-
-        const QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
-        const QNapiConfig config;
+  const QSharedPointer<const SubtitleDownloadEnginesRegistry> enginesRegistry;
+  const QNapiConfig config;
 };
 
-
-#endif // __QNAPI__H__
+#endif  // __QNAPI__H__

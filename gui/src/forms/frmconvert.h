@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,44 +15,44 @@
 #ifndef __FRMCONVERT_H__
 #define __FRMCONVERT_H__
 
-#include "ui_frmconvert.h"
-#include "subconvert/subtitleconverter.h"
-#include "subconvert/subtitleformatsregistry.h"
-#include "config/staticconfig.h"
-#include "config/postprocessingconfig.h"
 #include <Maybe.h>
 #include <QDialog>
 #include <QSharedPointer>
+#include "config/postprocessingconfig.h"
+#include "config/staticconfig.h"
+#include "subconvert/subtitleconverter.h"
+#include "subconvert/subtitleformatsregistry.h"
+#include "ui_frmconvert.h"
 
-class frmConvert : public QDialog
-{
-Q_OBJECT
-public:
-    frmConvert(QWidget *parent = 0, Qt::WindowFlags f = 0);
-    ~frmConvert() {}
-private:
-    Ui::frmConvert ui;
-    QSharedPointer<const StaticConfig> staticConfig;
-    const PostProcessingConfig ppConfig;
-    QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
-    SubtitleConverter subConverter;
-    bool targetFileNameSelected;
-    QString srcFormat, targetFormat;
+class frmConvert : public QDialog {
+  Q_OBJECT
+ public:
+  frmConvert(QWidget *parent = 0, Qt::WindowFlags f = 0);
+  ~frmConvert() {}
 
-    void checkFPSNeeded();
-    Maybe<QString> determineMovieFPS(const QString & defaultMovieFilePath);
-    void generateTargetFileName();
+ private:
+  Ui::frmConvert ui;
+  QSharedPointer<const StaticConfig> staticConfig;
+  const PostProcessingConfig ppConfig;
+  QSharedPointer<const SubtitleFormatsRegistry> subtitleFormatsRegistry;
+  SubtitleConverter subConverter;
+  bool targetFileNameSelected;
+  QString srcFormat, targetFormat;
 
-private slots:
+  void checkFPSNeeded();
+  Maybe<QString> determineMovieFPS(const QString &defaultMovieFilePath);
+  void generateTargetFileName();
 
-    void srcSubSelectClicked();
-    void srcSubFileLoaded(const QString & srcSubFileName);
-    void targetFormatChanged(int targetFormatIdx);
-    void movieFPSSelectClicked();
-    void targetMovieFPSSelectClicked();
-    void targetExtensionChanged();
-    void subDelayToggled();
-    void convertClicked();
+ private slots:
+
+  void srcSubSelectClicked();
+  void srcSubFileLoaded(const QString &srcSubFileName);
+  void targetFormatChanged(int targetFormatIdx);
+  void movieFPSSelectClicked();
+  void targetMovieFPSSelectClicked();
+  void targetExtensionChanged();
+  void subDelayToggled();
+  void convertClicked();
 };
 
-#endif // __FRMCONVERT_H__
+#endif  // __FRMCONVERT_H__

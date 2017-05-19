@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -18,23 +18,26 @@
 #include <QString>
 #include <QStringList>
 
-class P7ZipDecoder
-{
-public:
-    P7ZipDecoder(const QString & p7zipPath, int operationTimeoutMsecs = 10000);
+class P7ZipDecoder {
+ public:
+  P7ZipDecoder(const QString& p7zipPath, int operationTimeoutMsecs = 10000);
 
-    QStringList listArchiveFiles(const QString & archivePath) const;
+  QStringList listArchiveFiles(const QString& archivePath) const;
 
-    bool unpackArchiveFile(const QString & archivePath, const QString & filename, const QString & targetPath) const;
-    bool unpackArchiveFiles(const QString & archivePath, const QString & targetPath) const;
-    bool unpackSecureArchiveFiles(const QString & archivePath, const QString & password, const QString & targetPath) const;
+  bool unpackArchiveFile(const QString& archivePath, const QString& filename,
+                         const QString& targetPath) const;
+  bool unpackArchiveFiles(const QString& archivePath,
+                          const QString& targetPath) const;
+  bool unpackSecureArchiveFiles(const QString& archivePath,
+                                const QString& password,
+                                const QString& targetPath) const;
 
-private:
-    const QString p7zipPath;
-    int operationTimeoutMsecs;
+ private:
+  const QString p7zipPath;
+  int operationTimeoutMsecs;
 
-    bool runP7Zip(const QStringList & args) const;
-    QString readP7ZipOutput(const QStringList & args) const;
+  bool runP7Zip(const QStringList& args) const;
+  QString readP7ZipOutput(const QStringList& args) const;
 };
 
-#endif // P7ZIPDECODER_H
+#endif  // P7ZIPDECODER_H

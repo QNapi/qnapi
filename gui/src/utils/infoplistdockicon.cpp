@@ -21,152 +21,125 @@
 #include <QFileInfo>
 #include <QTextStream>
 
+bool InfoPlistDockIcon::readShowDockIcon() {
+  const bool show_default = true;
 
-bool InfoPlistDockIcon::readShowDockIcon()
-{
-    const bool show_default = true;
+  QString infoPlistPath =
+      QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist")
+          .canonicalFilePath();
 
-    QString infoPlistPath = QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
+  QFile plistFile(infoPlistPath);
 
-    QFile plistFile(infoPlistPath);
+  QDomDocument doc;
+  if (!doc.setContent(&plistFile)) return show_default;
 
-    QDomDocument doc;
-    if(!doc.setContent(&plistFile))
-        return show_default;
+  if (!doc.hasChildNodes()) return show_default;
 
-    if(!doc.hasChildNodes())
-        return show_default;
+  QDomNodeList nodes = doc.childNodes();
 
-    QDomNodeList nodes = doc.childNodes();
+  QDomNode node;
+  int i;
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+    if (node.nodeName() == "plist") break;
+  }
 
-    QDomNode node;
-    int i;
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
-        if(node.nodeName() == "plist")
-            break;
+  if (i == nodes.size()) return show_default;
+
+  if (!node.hasChildNodes()) return show_default;
+
+  nodes = node.childNodes();
+
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+    if (node.nodeName() == "dict") break;
+  }
+
+  if (i == nodes.size()) return show_default;
+
+  if (!node.hasChildNodes()) return show_default;
+
+  nodes = node.childNodes();
+
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+
+    QString subText;
+
+    if (node.hasChildNodes()) {
+      subText = node.childNodes().at(0).toText().data();
     }
 
-    if(i == nodes.size())
-        return show_default;
+    if (subText == "LSUIElement") break;
+  }
 
-    if(!node.hasChildNodes())
-        return show_default;
+  if (i < nodes.size()) {
+    node = node.nextSibling();
+    return (node.nodeName() != "true");
+  }
 
-    nodes = node.childNodes();
-
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
-        if(node.nodeName() == "dict")
-            break;
-    }
-
-    if(i == nodes.size())
-        return show_default;
-
-    if(!node.hasChildNodes())
-        return show_default;
-
-    nodes = node.childNodes();
-
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
-
-        QString subText;
-
-        if(node.hasChildNodes())
-        {
-            subText = node.childNodes().at(0).toText().data();
-        }
-
-        if(subText == "LSUIElement")
-            break;
-    }
-
-    if(i < nodes.size())
-    {
-        node = node.nextSibling();
-        return (node.nodeName() != "true");
-    }
-
-    return show_default;
-
-
+  return show_default;
 }
 
-void InfoPlistDockIcon::setShowDockIcon(bool show)
-{
-    QString infoPlistPath = QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist").canonicalFilePath();
+void InfoPlistDockIcon::setShowDockIcon(bool show) {
+  QString infoPlistPath =
+      QFileInfo(QCoreApplication::applicationDirPath() + "/../Info.plist")
+          .canonicalFilePath();
 
-    QFile plistFile(infoPlistPath);
+  QFile plistFile(infoPlistPath);
 
-    QDomDocument doc;
-    if(!doc.setContent(&plistFile) || !doc.hasChildNodes())
-        return;
+  QDomDocument doc;
+  if (!doc.setContent(&plistFile) || !doc.hasChildNodes()) return;
 
-    QDomNodeList nodes = doc.childNodes();
+  QDomNodeList nodes = doc.childNodes();
 
-    QDomNode node;
-    int i;
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
-        if(node.nodeName() == "plist")
-            break;
+  QDomNode node;
+  int i;
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+    if (node.nodeName() == "plist") break;
+  }
+
+  if ((i == nodes.size()) || !node.hasChildNodes()) return;
+
+  nodes = node.childNodes();
+
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+    if (node.nodeName() == "dict") break;
+  }
+
+  if ((i == nodes.size()) || !node.hasChildNodes()) return;
+
+  nodes = node.childNodes();
+
+  for (i = 0; i < nodes.size(); ++i) {
+    node = nodes.at(i);
+
+    QString subText;
+
+    if (node.hasChildNodes()) {
+      subText = node.childNodes().at(0).toText().data();
     }
 
-    if((i == nodes.size()) || !node.hasChildNodes())
-        return;
+    if (subText == "LSUIElement") break;
+  }
 
-    nodes = node.childNodes();
+  if (i >= nodes.size()) return;
 
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
-        if(node.nodeName() == "dict")
-            break;
-    }
+  node = node.nextSibling();
 
-    if((i == nodes.size()) || !node.hasChildNodes())
-        return;
+  node.toElement().setTagName(show ? "false" : "true");
 
-    nodes = node.childNodes();
+  QString modifiedContent = doc.toString(4);
 
-    for(i = 0; i < nodes.size(); ++i)
-    {
-        node = nodes.at(i);
+  plistFile.close();
 
-        QString subText;
+  if (!plistFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) return;
 
-        if(node.hasChildNodes())
-        {
-            subText = node.childNodes().at(0).toText().data();
-        }
+  QTextStream plistStream(&plistFile);
 
-        if(subText == "LSUIElement")
-            break;
-    }
+  plistStream << modifiedContent;
 
-    if(i >= nodes.size())
-        return;
-
-    node = node.nextSibling();
-
-    node.toElement().setTagName(show ? "false" : "true");
-
-    QString modifiedContent = doc.toString(4);
-
-    plistFile.close();
-
-    if(!plistFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
-        return;
-
-    QTextStream plistStream(&plistFile);
-
-    plistStream << modifiedContent;
-
-    plistFile.close();
+  plistFile.close();
 }

@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -20,30 +20,24 @@
 
 #include "ui_frmnapisy24config.h"
 
-class frmNapisy24Config : public QDialog
-{
-Q_OBJECT
+class frmNapisy24Config : public QDialog {
+  Q_OBJECT
 
-    public:
+ public:
+  frmNapisy24Config(const EngineConfig &config, QWidget *parent = 0,
+                    Qt::WindowFlags f = 0);
+  ~frmNapisy24Config() {}
 
-        frmNapisy24Config(const EngineConfig & config,
-                          QWidget *parent = 0,
-                          Qt::WindowFlags f = 0);
-        ~frmNapisy24Config() {}
+  EngineConfig getConfig() const;
 
-        EngineConfig getConfig() const;
+ public slots:
 
-    public slots:
+  void accept();
+  void pbRegisterClicked();
 
-        void accept();
-        void pbRegisterClicked();
-
-    private:
-        Ui::frmNapisy24Config ui;
-        EngineConfig config;
-
+ private:
+  Ui::frmNapisy24Config ui;
+  EngineConfig config;
 };
-
-
 
 #endif

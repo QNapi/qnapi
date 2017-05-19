@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,16 +15,15 @@
 #ifndef MOVIEINFOPROVIDER_H
 #define MOVIEINFOPROVIDER_H
 
-#include "movieinfo/movieinfo.h"
 #include <Maybe.h>
 #include <QString>
+#include "movieinfo/movieinfo.h"
 
-class MovieInfoProvider
-{
-public:
-    virtual ~MovieInfoProvider() {}
-    virtual const Maybe<MovieInfo> getMovieInfo(const QString & moviePath) const = 0;
+class MovieInfoProvider {
+ public:
+  virtual ~MovieInfoProvider() {}
+  virtual const Maybe<MovieInfo> getMovieInfo(
+      const QString& moviePath) const = 0;
 };
 
-
-#endif // MOVIEINFOPROVIDER_H
+#endif  // MOVIEINFOPROVIDER_H

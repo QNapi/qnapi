@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,18 +22,17 @@
 #include <QString>
 #include <QStringList>
 
-class SubtitleFormatsRegistry
-{
-public:
-    SubtitleFormatsRegistry();
+class SubtitleFormatsRegistry {
+ public:
+  SubtitleFormatsRegistry();
 
-    QStringList listFormatNames() const;
-    QSharedPointer<const SubtitleFormat> select(const QString & format) const;
+  QStringList listFormatNames() const;
+  QSharedPointer<const SubtitleFormat> select(const QString &format) const;
 
-private:
-    void registerFormat(SubtitleFormat *format);
+ private:
+  void registerFormat(SubtitleFormat *format);
 
-    QMap<QString, QSharedPointer<SubtitleFormat>> formats;
+  QMap<QString, QSharedPointer<SubtitleFormat>> formats;
 };
 
-#endif // SUBTITLEFORMATSREGISTRY_H
+#endif  // SUBTITLEFORMATSREGISTRY_H

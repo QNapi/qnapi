@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -17,53 +17,42 @@
 
 #include <QtWidgets>
 
-class QCheckedListWidget : public QListWidget
-{
-    public:
+class QCheckedListWidget : public QListWidget {
+ public:
+  QCheckedListWidget(QWidget* parent = 0) : QListWidget(parent) {
+    setMouseTracking(true);
+  }
 
-        QCheckedListWidget(QWidget * parent = 0) : QListWidget(parent)
-        {
-            setMouseTracking(true);
-        }
+  void setItemCheckState(int i, Qt::CheckState state) {
+    QListWidgetItem* it = item(i);
+    if (it) it->setCheckState(state);
+  }
 
-        void setItemCheckState(int i, Qt::CheckState state)
-        {
-            QListWidgetItem * it = item(i);
-            if(it) it->setCheckState(state);
-        }
+  Qt::CheckState itemCheckState(int i) {
+    QListWidgetItem* it = item(i);
+    return it ? it->checkState() : Qt::Unchecked;
+  }
 
-        Qt::CheckState itemCheckState(int i)
-        {
-            QListWidgetItem * it = item(i);
-            return it ? it->checkState() : Qt::Unchecked;
-        }
+  void selectAll() {
+    for (int i = 0; i < count(); ++i) {
+      item(i)->setCheckState(Qt::Checked);
+    }
+  }
 
-        void selectAll()
-        {
-            for(int i = 0; i < count(); ++i)
-            {
-                item(i)->setCheckState(Qt::Checked);
-            }
-        }
+  void unselectAll() {
+    for (int i = 0; i < count(); ++i) {
+      item(i)->setCheckState(Qt::Unchecked);
+    }
+  }
 
-        void unselectAll()
-        {
-            for(int i = 0; i < count(); ++i)
-            {
-                item(i)->setCheckState(Qt::Unchecked);
-            }
-        }
-
-        void invertSelection()
-        {
-            Qt::CheckState state;
-            for(int i = 0; i < count(); ++i)
-            {
-                state = item(i)->checkState();
-                state = (state == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
-                item(i)->setCheckState(state);
-            }
-        }
+  void invertSelection() {
+    Qt::CheckState state;
+    for (int i = 0; i < count(); ++i) {
+      state = item(i)->checkState();
+      state = (state == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
+      item(i)->setCheckState(state);
+    }
+  }
 };
 
-#endif // __QCHECKEDLISTWIDGET__H__
+#endif  // __QCHECKEDLISTWIDGET__H__

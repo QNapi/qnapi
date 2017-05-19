@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@
 
 #include <QThread>
 
-class QNapiThread : public QThread
-{
-Q_OBJECT
-    public:
-        QNapiThread() : abort(false) {}
-        void requestAbort() { abort = true; }
-    protected:
-        bool abort;
+class QNapiThread : public QThread {
+  Q_OBJECT
+ public:
+  QNapiThread() : abort(false) {}
+  void requestAbort() { abort = true; }
+
+ protected:
+  bool abort;
 };
 
 #endif

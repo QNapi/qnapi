@@ -1,6 +1,6 @@
 /*****************************************************************************
 ** QNapi
-** Copyright (C) 2008-2015 Piotr Krzemiński <pio.krzeminski@gmail.com>
+** Copyright (C) 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
 #ifndef SUBTITLEDOWNLOADENGINE_H
 #define SUBTITLEDOWNLOADENGINE_H
 
-#include <QString>
-#include <QFileInfo>
 #include <QFile>
+#include <QFileInfo>
+#include <QString>
 #include <QUrl>
 
 #include <ctime>
@@ -28,45 +28,42 @@
 
 #include "engines/subtitledownloadenginemetadata.h"
 
-class SubtitleDownloadEngine
-{
-public:
+class SubtitleDownloadEngine {
+ public:
+  virtual ~SubtitleDownloadEngine() {}
 
-    virtual ~SubtitleDownloadEngine() {}
+  void setMoviePath(const QString& path);
+  QString moviePath();
 
-    void setMoviePath(const QString & path);
-    QString moviePath();
+  virtual SubtitleDownloadEngineMetadata meta() const = 0;
+  virtual const char* const* enginePixmapData() const = 0;
 
-    virtual SubtitleDownloadEngineMetadata meta() const = 0;
-    virtual const char * const * enginePixmapData() const = 0;
+  virtual void clearSubtitlesList();
+  virtual QString checksum(QString filename = "") = 0;
+  virtual bool lookForSubtitles(QString lang) = 0;
+  virtual QList<SubtitleInfo> listSubtitles() = 0;
+  virtual bool download(QUuid id) = 0;
+  virtual bool unpack(QUuid id) = 0;
+  virtual void cleanup() = 0;
 
-    virtual void clearSubtitlesList();
-    virtual QString checksum(QString filename = "") = 0;
-    virtual bool lookForSubtitles(QString lang) = 0;
-    virtual QList<SubtitleInfo> listSubtitles() = 0;
-    virtual bool download(QUuid id) = 0;
-    virtual bool unpack(QUuid id) = 0;
-    virtual void cleanup() = 0;
+ protected:
+  QString tmpPath;
 
-protected:
+  QList<SubtitleInfo> subtitlesList;
+  QString movie;
+  QString subtitles;
+  QString subtitlesTmp;
+  QString checkSum;
 
-    QString tmpPath;
+  SubtitleDownloadEngine(const QString& tmpPath);
 
-    QList<SubtitleInfo> subtitlesList;
-    QString movie;
-    QString subtitles;
-    QString subtitlesTmp;
-    QString checkSum;
+  Maybe<SubtitleInfo> resolveById(QUuid id);
+  void updateSubtitleInfo(const SubtitleInfo& si);
 
-    SubtitleDownloadEngine(const QString & tmpPath);
+  QString generateTmpFileName() const;
+  QString generateTmpPath() const;
 
-    Maybe<SubtitleInfo> resolveById(QUuid id);
-    void updateSubtitleInfo(const SubtitleInfo & si);
-
-    QString generateTmpFileName() const;
-    QString generateTmpPath() const;
-
-    friend class QNapi;
+  friend class QNapi;
 };
 
 #endif

@@ -1,7 +1,7 @@
 QNapi ChangeLog:
 ================
 
-2017-05-?? v0.2.3:
+2017-05-19 v0.2.3:
  * mozliwosc wyboru jezyka interfejsu uzytkownika (angielski/polski/włoski) - (thx Fincer, luigino)
  * przebudowany podsystem konfiguracji aplikacji
  * podzial aplikacji na biblioteke (libqnapi) i interfejs uzytkownika (gui)

@@ -48,7 +48,7 @@ void ConfigWriter::writeGeneralConfig(const GeneralConfig& generalConfig,
   settings.setValue("qnapi/7z_path", generalConfig.p7zipPath());
   settings.setValue("qnapi/tmp_path", generalConfig.tmpPath());
   settings.setValue("qnapi/language", generalConfig.language());
-  settings.setValue("qnapi/backup_language", generalConfig.backupLanguage());
+  settings.setValue("qnapi/language_backup", generalConfig.backupLanguage());
   settings.setValue("qnapi/no_backup", generalConfig.noBackup());
   settings.setValue("qnapi/quiet_batch", generalConfig.quietBatch());
   settings.setValue("qnapi/search_policy", generalConfig.searchPolicy());

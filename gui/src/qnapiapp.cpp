@@ -200,7 +200,7 @@ bool QNapiApp::showOpenDialog(QString engine) {
     fileList = openDialog->selectedFiles();
 
     if (!fileList.isEmpty()) {
-      QString dialogPath = openDialog->directory().absolutePath();
+      QString dialogPath = QFileInfo(fileList.first()).absolutePath();
       auto newConfig = LibQNapi::loadConfig().setLastOpenedDir(dialogPath);
       LibQNapi::writeConfig(newConfig);
     }

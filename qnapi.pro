@@ -22,7 +22,9 @@ unix {
         doc/qnapi-scan.schemas
     man.path = $${INSTALL_PREFIX}/share/man/man1/
     man.files = doc/man/qnapi.1.gz
-    man_pl.path = $${INSTALL_PREFIX}/share/man/pl/man1/
+    man_it.path = $${INSTALL_PREFIX}/share/man/it/man1/
+    man_it.files = doc/man/it/qnapi.1.gz
+    man_pl.path = $${INSTALL_PREFIX}/share/man/it/man1/
     man_pl.files = doc/man/pl/qnapi.1.gz
     icons16.files = gui/res/icons/16x16/apps/qnapi.png
     icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/
@@ -38,7 +40,7 @@ unix {
 
     desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/qnapi.desktop
-    INSTALLS += target doc man man_pl desktop
+    INSTALLS += target doc man man_it man_pl desktop
 }
 
 macx {

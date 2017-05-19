@@ -24,7 +24,7 @@ unix {
     man.files = doc/man/qnapi.1.gz
     man_it.path = $${INSTALL_PREFIX}/share/man/it/man1/
     man_it.files = doc/man/it/qnapi.1.gz
-    man_pl.path = $${INSTALL_PREFIX}/share/man/it/man1/
+    man_pl.path = $${INSTALL_PREFIX}/share/man/pl/man1/
     man_pl.files = doc/man/pl/qnapi.1.gz
     icons16.files = gui/res/icons/16x16/apps/qnapi.png
     icons16.path = $${DATADIR}/icons/hicolor/16x16/apps/

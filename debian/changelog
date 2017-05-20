@@ -1,5 +1,12 @@
+qnapi (0.2.3-1) xenial; urgency=medium
+
+  * Update to 0.2.3 upstream release
+
+ -- Piotr Krzemiński <pio.krzeminski@gmail.com>  Wed, 05 Nov 2016 16:56:00 +0100
+
 qnapi (0.2.2-1) xenial; urgency=medium
 
   * Initial release
 
  -- Piotr Krzemiński <pio.krzeminski@gmail.com>  Wed, 05 Nov 2016 16:56:00 +0100
+

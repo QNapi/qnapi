@@ -3,11 +3,11 @@ Upstream-Name: qnapi
 Source: https://qnapi.github.io
  
 Files: *
-Copyright: 2008-2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+Copyright: 2008-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 License: GPL-2.0+
 
 Files: debian/*
-Copyright: 2016 Piotr Krzemiński <pio.krzeminski@gmail.com>
+Copyright: 2016-2017 Piotr Krzemiński <pio.krzeminski@gmail.com>
 License: GPL-2.0+
 
 License: GPL-2.0+

@@ -1,17 +1,8 @@
 TEMPLATE = app
 
-CONFIG += warn_on \
-    thread \
-    qt \
-    resources \
-    silent \
-    c++11
+CONFIG += warn_on qt resources silent c++11
 
-QT += network \
-    gui \
-    widgets \
-    core \
-    xml
+QT += core network xml gui widgets
 
 SOURCES += src/main.cpp \
     src/forms/frmprogress.cpp \
@@ -53,7 +44,8 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapiopendialog.h \
     src/qnapiapp.h \
     src/qnapicli.h \
-    src/qnapi.h
+    src/qnapi.h \
+    src/qnapicommand.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

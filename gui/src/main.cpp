@@ -25,6 +25,9 @@
 #include "qnapiapp.h"
 #include "qnapicli.h"
 
+#include <QVariant>
+#include "qnapicommand.h"
+
 QStringList parseArgs(int argc, char **argv);
 void regSignal();
 void sigHandler(int);

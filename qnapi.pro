@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS = libqnapi gui
+SUBDIRS = libqnapi cli gui
 
 TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
 

@@ -20,13 +20,11 @@ namespace CommandArgsParser {
 using namespace QNapiCliCommand;
 
 Result parse(const QStringList& args, const QNapiConfig& config) {
-  // TODO: implement real command parsing
-
-  if (args.contains("-h")) {
+  if (args.contains("-h") || args.contains("--help")) {
     return Result{config, QVariant::fromValue(ShowHelp())};
   }
 
-  if (args.contains("-hl")) {
+  if (args.contains("-hl") || args.contains("--help-languages")) {
     return Result{config, QVariant::fromValue(ShowHelpLanguages())};
   }
 

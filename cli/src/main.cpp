@@ -16,6 +16,7 @@
 #include "commandargsparser.h"
 #include "libqnapi.h"
 #include "qnapiclicommand.h"
+#include "subtitlelanguage.h"
 
 #include <QCoreApplication>
 #include <QTranslator>
@@ -23,36 +24,136 @@
 
 #include <iostream>
 
-void processCommand(QVariant cliCommand, const QNapiConfig &config);
-void printHelp();
-void printHelpLanguages();
+#define Q_DECLARE_NAMESPACE_TR(context)                                      \
+  inline QString tr(const char *sourceText,                                  \
+                    const char *disambiguation = Q_NULLPTR, int n = -1) {    \
+    return QCoreApplication::translate(#context, sourceText, disambiguation, \
+                                       n);                                   \
+  }
 
-int main(int argc, char **argv) {
-  LibQNapi::init(argv[0]);
-  const QNapiConfig config = LibQNapi::loadConfig();
+namespace Main {
+
+Q_DECLARE_NAMESPACE_TR(Main)
+
+void installTranslation(QCoreApplication &app, QTranslator *translator,
+                        const QNapiConfig &config) {
   QString uiLanguage = LibQNapi::uiLanguage(config.generalConfig());
-  QCoreApplication cliApp(argc, argv);
-  QTranslator qnapiTranslator;
-  qnapiTranslator.load("qnapi_" + uiLanguage, ":/translations");
-  cliApp.installTranslator(&qnapiTranslator);
-  auto parseResult = CommandArgsParser::parse(cliApp.arguments(), config);
-  processCommand(parseResult.command, parseResult.refinedConfig);
-  return 0;
+  translator->load("qnapi_" + uiLanguage, ":/translations");
+  app.installTranslator(translator);
+}
+
+void printLine(const QString &line = "") {
+  std::cout << line.toStdString() << std::endl;
+}
+
+void printHeader() {
+  printLine(tr("QNapi %1, %2")
+                .arg(LibQNapi::displayableVersion())
+                .arg(LibQNapi::webpageUrl()));
+  printLine(tr("Qt version: %1").arg(qVersion()));
+  printLine();
+}
+
+void printHelp() {
+  QString formats =
+      LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
+  QString binaryFileName =
+      QFileInfo(LibQNapi::appExecutableFilePath).fileName();
+
+  printLine(
+      tr("QNapi is distributed under the GNU General Public License v2."));
+  printLine();
+  printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
+  printLine(tr("Available options:"));
+  printLine(
+      tr("   -q, --quiet                Download subtitles quietly without "
+         "showing"));
+  printLine(
+      tr("                              any messages or windows (implies -d)"));
+  printLine();
+  printLine(
+      tr("   -s, --show-list            Show a list of subtitles (works only "
+         "with -c)"));
+  printLine(
+      tr("   -d, --dont-show-list       Do not show a list of subtitles (works "
+         "only with -c)"));
+  printLine();
+  printLine(tr("   -l, --lang [code]          Preferred subtitles language"));
+  printLine(tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
+  printLine(tr("   -f, --format [format]      Select target subtitles file "
+               "format (%1)")
+                .arg(formats));
+  printLine(tr(
+      "   -e, --extension [ext]      Select target subtitles file extension"));
+  printLine();
+  printLine(tr("   -h, --help                 Show help text"));
+  printLine(tr(
+      "   -hl,--help-languages       List of available subtitles languages"));
+  printLine();
+}
+
+void printHelpLanguages(const QNapiConfig &config) {
+  printLine(
+      tr("List of languages recognized by QNapi, including corresponding"));
+  printLine(tr("two-letter language codes:"));
+  printLine();
+
+  SubtitleLanguage L, LB;
+  QStringList langs = L.listLanguages();
+
+  foreach (QString lang, langs) {
+    L.setLanguage(lang);
+    printLine(QString(" %1 - %2").arg(L.toTwoLetter()).arg(lang));
+  }
+
+  L.setLanguage(config.generalConfig().language());
+  LB.setLanguage(config.generalConfig().backupLanguage());
+
+  printLine();
+  printLine(tr("Current default subtitles language: %1 (%2)")
+                .arg(L.toFullName())
+                .arg(L.toTwoLetter()));
+
+  if (LB.toFullName().isEmpty()) {
+    printLine(tr("No alternative subtitles language has been set"));
+  } else {
+    printLine(tr("Current alternative subtitles language: %1 (%2)")
+                  .arg(LB.toFullName())
+                  .arg(LB.toTwoLetter()));
+  }
 }
 
 void processCommand(QVariant cliCommand, const QNapiConfig &config) {
+  printHeader();
   using namespace QNapiCliCommand;
   if (cliCommand.canConvert<DownloadSubtitles>()) {
     QStringList movieFilePaths =
         cliCommand.value<DownloadSubtitles>().movieFilePaths;
     CliSubtitlesDownloader::downloadSubtitlesFor(movieFilePaths, config);
   } else if (cliCommand.canConvert<ShowHelpLanguages>()) {
-    printHelpLanguages();
+    printHelpLanguages(config);
   } else {
     printHelp();
   }
 }
 
-void printHelp() { std::cout << "help text" << std::endl; }
+}  // namespace Main
 
-void printHelpLanguages() { std::cout << "help languages text" << std::endl; }
+int main(int argc, char **argv) {
+  LibQNapi::init(argv[0]);
+
+  const QNapiConfig config = LibQNapi::loadConfig();
+
+  QCoreApplication cliApp(argc, argv);
+
+  QTranslator qnapiTranslator;
+  Main::installTranslation(cliApp, &qnapiTranslator, config);
+
+  QStringList tailArgs =
+      cliApp.arguments().mid(1, cliApp.arguments().size() - 1);
+
+  auto parseResult = CommandArgsParser::parse(tailArgs, config);
+  Main::processCommand(parseResult.command, parseResult.refinedConfig);
+
+  return 0;
+}

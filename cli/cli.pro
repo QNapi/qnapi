@@ -11,7 +11,8 @@ SOURCES += src/main.cpp \
     
 HEADERS += src/qnapiclicommand.h \
     src/commandargsparser.h \
-    src/clisubtitlesdownloader.h
+    src/clisubtitlesdownloader.h \
+    src/namespace_tr.h
 
 RESOURCES += res/resources.qrc
 

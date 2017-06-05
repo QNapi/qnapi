@@ -12,16 +12,16 @@
 **
 *****************************************************************************/
 
-#include "clisubtitlesdownloader.h"
+#ifndef NAMESPACE_TR_H
+#define NAMESPACE_TR_H
 
-#include <iostream>
+#include <QCoreApplication>
 
-namespace CliSubtitlesDownloader {
-void downloadSubtitlesFor(const QStringList& movieFilePaths,
-                          const QNapiConfig& config) {
-  std::cout << "downloading subtitles for "
-            << movieFilePaths.join(";").toStdString() << std::endl;
+#define Q_DECLARE_NAMESPACE_TR(context)                                      \
+  inline QString tr(const char *sourceText,                                  \
+                    const char *disambiguation = Q_NULLPTR, int n = -1) {    \
+    return QCoreApplication::translate(#context, sourceText, disambiguation, \
+                                       n);                                   \
+  }
 
-  std::cout << "config: " << std::endl << config.toString().toStdString();
-}
-};  // namespace CliSubtitlesDownloader
+#endif  // NAMESPACE_TR_H

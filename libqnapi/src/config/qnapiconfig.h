@@ -34,6 +34,7 @@ class QNapiConfig {
   QString lastOpenedDir_;
 
  public:
+  QNapiConfig(){};
   QNapiConfig(const bool& firstrun, const QString& version,
               const GeneralConfig& generalConfig,
               const QList<QPair<QString, bool>>& enabledEngines,

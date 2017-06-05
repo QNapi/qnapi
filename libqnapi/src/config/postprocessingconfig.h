@@ -39,6 +39,7 @@ class PostProcessingConfig {
   QStringList removeLinesWords_;
 
  public:
+  PostProcessingConfig() {}
   PostProcessingConfig(const bool& enabled,
                        const EncodingChangeMethod& encodingChangeMethod,
                        const QString& encodingFrom,

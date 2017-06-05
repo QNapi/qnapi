@@ -15,18 +15,25 @@
 #ifndef COMMANDARGSPARSER_H
 #define COMMANDARGSPARSER_H
 
-#include <Maybe.h>
+#include <Either.h>
+
 #include "config/qnapiconfig.h"
+#include "namespace_tr.h"
 
 namespace CommandArgsParser {
 
-struct Result {
+Q_DECLARE_NAMESPACE_TR(CommandArgsParser)
+
+struct ParsedCommand {
   QNapiConfig refinedConfig;
   QVariant command;
 };
 
-Result parse(const QStringList& args, const QNapiConfig& config);
+Either<QString, ParsedCommand> parse(const QStringList& args,
+                                     const QNapiConfig& config);
 
 }  // namespace CommandArgsParser
+
+Q_DECLARE_METATYPE(CommandArgsParser::ParsedCommand)
 
 #endif  // COMMANDARGSPARSER_H

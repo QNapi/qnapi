@@ -15,6 +15,7 @@
 #include "clisubtitlesdownloader.h"
 #include "commandargsparser.h"
 #include "libqnapi.h"
+#include "namespace_tr.h"
 #include "qnapiclicommand.h"
 #include "subtitlelanguage.h"
 
@@ -23,13 +24,6 @@
 #include <QVariant>
 
 #include <iostream>
-
-#define Q_DECLARE_NAMESPACE_TR(context)                                      \
-  inline QString tr(const char *sourceText,                                  \
-                    const char *disambiguation = Q_NULLPTR, int n = -1) {    \
-    return QCoreApplication::translate(#context, sourceText, disambiguation, \
-                                       n);                                   \
-  }
 
 namespace Main {
 
@@ -47,10 +41,10 @@ void printLine(const QString &line = "") {
 }
 
 void printHeader() {
-  printLine(tr("QNapi %1, %2")
+  printLine(tr("QNapi %1 (Qt version %2), %3")
                 .arg(LibQNapi::displayableVersion())
+                .arg(qVersion())
                 .arg(LibQNapi::webpageUrl()));
-  printLine(tr("Qt version: %1").arg(qVersion()));
   printLine();
 }
 
@@ -124,7 +118,10 @@ void printHelpLanguages(const QNapiConfig &config) {
 }
 
 void processCommand(QVariant cliCommand, const QNapiConfig &config) {
-  printHeader();
+  if (!config.generalConfig().quietBatch()) {
+    printHeader();
+  }
+
   using namespace QNapiCliCommand;
   if (cliCommand.canConvert<DownloadSubtitles>()) {
     QStringList movieFilePaths =
@@ -153,7 +150,15 @@ int main(int argc, char **argv) {
       cliApp.arguments().mid(1, cliApp.arguments().size() - 1);
 
   auto parseResult = CommandArgsParser::parse(tailArgs, config);
-  Main::processCommand(parseResult.command, parseResult.refinedConfig);
+
+  if (parseResult.is<CommandArgsParser::ParsedCommand>()) {
+    auto parsedCommand = parseResult.as<CommandArgsParser::ParsedCommand>();
+    Main::processCommand(parsedCommand.command, parsedCommand.refinedConfig);
+  } else {
+    Main::printHeader();
+    Main::printLine(Main::tr("Command line argument parsing error:"));
+    Main::printLine(parseResult.as<QString>());
+  }
 
   return 0;
 }

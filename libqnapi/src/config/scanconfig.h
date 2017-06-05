@@ -26,6 +26,7 @@ class ScanConfig {
   QString skipFilters_;
 
  public:
+  ScanConfig() {}
   ScanConfig(const QString& lastDir, const bool& skipIfSubtitlesExist,
              const QStringList& filters, const QString& skipFilters)
       : lastDir_(lastDir),

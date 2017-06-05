@@ -37,11 +37,13 @@ int configChecks(const Console& c, const QNapiConfig& config) {
   return 0;
 }
 
-int downloadForMovie(const Console& c, const QString& movieFilePath,
-                     const QNapiConfig& config, QNapi& napi) {
+int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
+                     int total, const QNapiConfig& config, QNapi& napi) {
   QString movieFileName = QFileInfo(movieFilePath).fileName();
-  c.printLineHighlihted(
-      tr("Downloading subtitles for '%1'").arg(movieFileName));
+  c.printLineHighlihted(tr("Downloading subtitles for '%1' [%2/%3]")
+                            .arg(movieFileName)
+                            .arg(i)
+                            .arg(total));
 
   napi.setMoviePath(movieFilePath);
 
@@ -72,9 +74,17 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
 
   QNapi napi(config);
 
-  foreach (QString movieFilePath, movieFilePaths) {
-    int result = downloadForMovie(c, movieFilePath, config, napi);
+  int total = movieFilePaths.size();
+  for (int i = 1; i <= total; ++i) {
+    QString movieFilePath = movieFilePaths[i - 1];
+
+    int result = downloadForMovie(c, movieFilePath, i, total, config, napi);
     if (result != 0) {
+      if (i < total) {
+        c.printLineOrdinary(tr("Processing of remaining %1 file(s) was ignored "
+                               "due to critical error.")
+                                .arg(total - i));
+      }
       return result;
     }
   }

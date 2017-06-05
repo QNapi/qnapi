@@ -21,8 +21,7 @@ SOURCES += src/main.cpp \
     src/qcumber/qsingleapplication.cpp \
     src/qnapiopendialog.cpp \
     src/qnapiapp.cpp \
-    src/qnapicli.cpp \
-    src/qnapi.cpp
+    src/qnapicli.cpp 
 
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
@@ -44,7 +43,6 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapiopendialog.h \
     src/qnapiapp.h \
     src/qnapicli.h \
-    src/qnapi.h \
     src/qnapicommand.h
 
 FORMS += ui/frmprogress.ui \

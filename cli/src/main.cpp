@@ -21,9 +21,11 @@
 #include "subtitlelanguage.h"
 
 #include <QCoreApplication>
+#include <QDir>
 #include <QTranslator>
 #include <QVariant>
 
+#include <signal.h>
 #include <iostream>
 
 namespace Main {
@@ -135,6 +137,44 @@ int processCommand(QVariant cliCommand, const QNapiConfig &config) {
   }
 }
 
+void sigHandler(int sig) {
+  Q_UNUSED(sig);
+
+  std::cout << std::endl
+            << tr("QNapi: deleting temporary files...").toStdString()
+            << std::endl;
+
+  const QNapiConfig config = LibQNapi::loadConfig();
+  QString tmpPath = config.generalConfig().tmpPath();
+  QDir tmpDir(tmpPath);
+
+  QStringList filters;
+  filters << "QNapi-*-rc";
+  filters << "QNapi.*.tmp";
+
+  QFileInfoList files = tmpDir.entryInfoList(filters);
+
+  foreach (QFileInfo file, files) { QFile::remove(file.filePath()); }
+
+  std::cout << tr("QNapi: finished.").toStdString() << std::endl;
+
+  exit(666);
+}
+
+void regSignal() {
+#ifdef Q_OS_WIN
+  signal(SIGTERM, sigHandler);
+  signal(SIGINT, sigHandler);
+#else
+  struct sigaction sa;
+  memset(&sa, 0, sizeof(struct sigaction));
+  sigemptyset(&sa.sa_mask);
+  sa.sa_handler = sigHandler;
+  sigaction(SIGTERM, &sa, 0);
+  sigaction(SIGINT, &sa, 0);
+#endif
+}
+
 }  // namespace Main
 
 int main(int argc, char **argv) {
@@ -143,6 +183,8 @@ int main(int argc, char **argv) {
   const QNapiConfig config = LibQNapi::loadConfig();
 
   QCoreApplication cliApp(argc, argv);
+
+  Main::regSignal();
 
   QTranslator qnapiTranslator;
   Main::installTranslation(cliApp, &qnapiTranslator, config);

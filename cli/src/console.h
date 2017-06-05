@@ -22,7 +22,10 @@ class Console {
 
  public:
   Console(bool isQuiet = false);
-  void printLine(const QString &line = "") const;
+  void printLine(const QString& line = "") const;
+  void printLineHighlihted(const QString& line) const;
+  void printLineOrdinary(const QString& line) const;
+  void printLineError(const QString& line) const;
 };
 
 #endif  // CONSOLE_H

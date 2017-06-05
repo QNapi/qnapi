@@ -13,6 +13,7 @@
 *****************************************************************************/
 
 #include "clisubtitlesdownloader.h"
+#include "qnapi.h"
 
 #include <QFileInfo>
 #include <iostream>
@@ -36,6 +37,28 @@ int configChecks(const Console& c, const QNapiConfig& config) {
   return 0;
 }
 
+int downloadForMovie(const Console& c, const QString& movieFilePath,
+                     const QNapiConfig& config, QNapi& napi) {
+  QString movieFileName = QFileInfo(movieFilePath).fileName();
+  c.printLineHighlihted(
+      tr("Downloading subtitles for '%1'").arg(movieFileName));
+
+  napi.setMoviePath(movieFilePath);
+
+  if (!napi.checkWritePermissions()) {
+    c.printLineError(tr("No permission to write to the directory '%1'!")
+                         .arg(QFileInfo(movieFilePath).path()));
+    return 5;
+  }
+
+  napi.clearSubtitlesList();
+
+  c.printLineOrdinary(tr("Calculating checksums..."));
+  napi.checksum();
+
+  return 0;
+}
+
 int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
                          const QNapiConfig& config) {
   int ccErr = configChecks(c, config);
@@ -43,9 +66,19 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
     return ccErr;
   }
 
-  std::cout << "downloading subtitles for "
-            << movieFilePaths.join(";").toStdString() << std::endl;
+  c.printLine("------- CONFIG --------");
+  c.printLine(config.toString());
+  c.printLine("------- CONFIG --------");
 
-  std::cout << "config: " << std::endl << config.toString().toStdString();
+  QNapi napi(config);
+
+  foreach (QString movieFilePath, movieFilePaths) {
+    int result = downloadForMovie(c, movieFilePath, config, napi);
+    if (result != 0) {
+      return result;
+    }
+  }
+
+  return 0;
 }
 };  // namespace CliSubtitlesDownloader

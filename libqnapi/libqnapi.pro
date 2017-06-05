@@ -50,7 +50,8 @@ SOURCES += src/config/configreader.cpp \
     src/utils/encodingutils.cpp \
     src/utils/p7zipdecoder.cpp \
     src/utils/synchttp.cpp \
-    src/utils/syncxmlrpc.cpp
+    src/utils/syncxmlrpc.cpp \
+    src/qnapi.cpp
 
 
 HEADERS += src/config/configreader.h \
@@ -87,7 +88,8 @@ HEADERS += src/config/configreader.h \
     src/utils/p7zipdecoder.h \
     src/utils/synchttp.h \
     src/utils/syncxmlrpc.h \
-    src/version.h
+    src/version.h \
+    src/qnapi.h
 
 unix:!macx {
     PKGCONFIG += libmediainfo

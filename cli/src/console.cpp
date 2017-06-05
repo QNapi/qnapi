@@ -18,7 +18,19 @@
 
 Console::Console(bool isQuiet) : isQuiet(isQuiet) {}
 
-void Console::printLine(const QString &line) const {
+void Console::printLine(const QString& line) const {
   if (isQuiet) return;
   std::cout << line.toStdString() << std::endl;
+}
+
+void Console::printLineHighlihted(const QString& line) const {
+  printLine(" * " + line);
+}
+
+void Console::printLineOrdinary(const QString& line) const {
+  printLine("   " + line);
+}
+
+void Console::printLineError(const QString& line) const {
+  printLine("!! " + line);
 }

@@ -23,6 +23,11 @@ void Console::printLine(const QString& line) const {
   std::cout << line.toStdString() << std::endl;
 }
 
+void Console::print(const QString& line) const {
+  if (isQuiet) return;
+  std::cout << line.toStdString();
+}
+
 void Console::printLineHighlihted(const QString& line) const {
   printLine(" * " + line);
 }
@@ -31,6 +36,30 @@ void Console::printLineOrdinary(const QString& line) const {
   printLine("   " + line);
 }
 
+void Console::printOrdinary(const QString& line) const { print("   " + line); }
+
 void Console::printLineError(const QString& line) const {
   printLine("!! " + line);
+}
+
+int Console::inputNumber(const QString& message, int min, int max) const {
+  bool ok = false;
+  int number = 0;
+
+  while (!ok) {
+    printOrdinary(message);
+    char line[16];
+    std::cin.getline(line, 16);
+    number = QString(line).toInt(&ok);
+    if (!ok) {
+      printLineError(tr("You must enter a number!"));
+      std::cin.clear();
+    } else if (number < min || number > max) {
+      ok = false;
+      printLineError(
+          tr("You must enter a number between %1 and %2").arg(min).arg(max));
+    }
+  }
+
+  return number;
 }

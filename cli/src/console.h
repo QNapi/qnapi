@@ -15,17 +15,24 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+#include <QCoreApplication>
 #include <QString>
 
 class Console {
+  Q_DECLARE_TR_FUNCTIONS(Console)
+
   bool isQuiet;
 
  public:
   Console(bool isQuiet = false);
   void printLine(const QString& line = "") const;
+  void print(const QString& line) const;
   void printLineHighlihted(const QString& line) const;
   void printLineOrdinary(const QString& line) const;
+  void printOrdinary(const QString& line) const;
   void printLineError(const QString& line) const;
+
+  int inputNumber(const QString& message, int min, int max) const;
 };
 
 #endif  // CONSOLE_H

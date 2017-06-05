@@ -37,6 +37,129 @@ int configChecks(const Console& c, const QNapiConfig& config) {
   return 0;
 }
 
+bool findSubtitles(const Console& c, const QNapiConfig& config, QNapi& napi) {
+  bool found = false;
+  c.printLineOrdinary(tr("Calculating checksums..."));
+  napi.checksum();
+
+  SearchPolicy sp = config.generalConfig().searchPolicy();
+  QString lang = config.generalConfig().language();
+  QString langBackup = config.generalConfig().backupLanguage();
+
+  if (sp == SP_SEARCH_ALL_WITH_BACKUP_LANG) {
+    foreach (QString e, napi.listLoadedEngines()) {
+      c.printLineOrdinary(
+          tr("Searching for subtitles [%1] (%2)...").arg(lang, e));
+      found = napi.lookForSubtitles(lang, e) || found;
+      c.printLineOrdinary(
+          tr("Searching for subtitles in alternative language [%1] (%2)...")
+              .arg(langBackup, e));
+      found = napi.lookForSubtitles(langBackup, e) || found;
+    }
+  } else {
+    foreach (QString e, napi.listLoadedEngines()) {
+      c.printLineOrdinary(
+          tr("Searching for subtitles [%1] (%2)...").arg(lang, e));
+      found = napi.lookForSubtitles(lang, e) || found;
+
+      if (sp == SP_BREAK_IF_FOUND && found) break;
+    }
+
+    if (!found && !langBackup.isEmpty()) {
+      foreach (QString e, napi.listLoadedEngines()) {
+        c.printLineOrdinary(
+            tr("Searching for subtitles in alternative language [%1] (%2)...")
+                .arg(langBackup, e));
+        found = napi.lookForSubtitles(langBackup, e) || found;
+
+        if (sp == SP_BREAK_IF_FOUND && found) break;
+      }
+    }
+  }
+
+  return found;
+}
+
+void printSubtitlesList(const Console& c, QNapi& napi) {
+  c.printLineOrdinary(tr("0)\tDo not download subtitles for this video"));
+  c.printLineOrdinary(tr("Found subtitles:"));
+
+  int i = 1;
+
+  foreach (SubtitleInfo s, napi.listSubtitles()) {
+    QString resolution = "";
+
+    if (s.resolution == SUBTITLE_GOOD)
+      resolution = tr(" (good)");
+    else if (s.resolution == SUBTITLE_BAD)
+      resolution = tr(" (bad)");
+
+    c.printLineOrdinary(QString("%1)\t%2 (%3) (%4) (%5)%6")
+                            .arg(i++)
+                            .arg(s.name)
+                            .arg(s.format)
+                            .arg(s.lang)
+                            .arg(s.engine)
+                            .arg(resolution));
+  }
+}
+
+Maybe<int> selectSubtitles(const Console& c, const QNapiConfig& config,
+                           QNapi& napi) {
+  bool showList = false;
+  bool napiShowList = napi.needToShowList();
+
+  if (!config.generalConfig().quietBatch() &&
+      config.generalConfig().downloadPolicy() != DP_NEVER_SHOW_LIST) {
+    showList = napiShowList;
+  } else if (config.generalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST) {
+    showList = true;
+  }
+
+  if (!showList) {
+    return just(napi.bestIdx());
+  } else {
+    QList<SubtitleInfo> subtitlesList = napi.listSubtitles();
+
+    printSubtitlesList(c, napi);
+    int selIdx = c.inputNumber(tr("Select subtitles to download: "), 0,
+                               subtitlesList.size());
+    if (selIdx == 0) {
+      return nothing();
+    } else {
+      return just(selIdx - 1);
+    }
+  }
+}
+
+int finishSubtitles(int selIdx, const Console& c, QNapi& napi) {
+  c.printLineOrdinary(tr("Downloading subtitles..."));
+  if (!napi.download(selIdx)) {
+    c.printLineError(tr("Unable to download subtitles!"));
+    return 7;
+  }
+
+  c.printLineOrdinary(tr("Unpacking subtitles..."));
+  if (!napi.unpack(selIdx)) {
+    c.printLineError(tr("Failed to unpack subtitles!"));
+    return 8;
+  }
+
+  if (napi.ppEnabled()) {
+    c.printLineOrdinary(tr("Post-processing subtitles file..."));
+    napi.postProcessSubtitles();
+  }
+
+  c.printLineOrdinary(tr("Adjusting subtitles..."));
+  if (!napi.matchSubtitles()) {
+    c.printLineError(tr("Could not adjust subtitles!"));
+    return 9;
+  }
+
+  napi.cleanup();
+  return 0;
+}
+
 int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
                      int total, const QNapiConfig& config, QNapi& napi) {
   QString movieFileName = QFileInfo(movieFilePath).fileName();
@@ -55,8 +178,20 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
 
   napi.clearSubtitlesList();
 
-  c.printLineOrdinary(tr("Calculating checksums..."));
-  napi.checksum();
+  bool found = findSubtitles(c, config, napi);
+
+  if (!found) {
+    c.printLineError("Subtitles not found!");
+    return 6;
+  }
+
+  Maybe<int> selIdx = selectSubtitles(c, config, napi);
+
+  if (selIdx) {
+    return finishSubtitles(selIdx.value(), c, napi);
+  }
+
+  napi.cleanup();
 
   return 0;
 }
@@ -67,10 +202,6 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
   if (ccErr != 0) {
     return ccErr;
   }
-
-  c.printLine("------- CONFIG --------");
-  c.printLine(config.toString());
-  c.printLine("------- CONFIG --------");
 
   QNapi napi(config);
 

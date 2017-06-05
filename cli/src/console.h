@@ -12,21 +12,17 @@
 **
 *****************************************************************************/
 
-#ifndef CLISUBTITLESDOWNLOADER_H
-#define CLISUBTITLESDOWNLOADER_H
+#ifndef CONSOLE_H
+#define CONSOLE_H
 
-#include "config/qnapiconfig.h"
-#include "console.h"
-#include "namespace_tr.h"
+#include <QString>
 
-#include <QStringList>
+class Console {
+  bool isQuiet;
 
-namespace CliSubtitlesDownloader {
+ public:
+  Console(bool isQuiet = false);
+  void printLine(const QString &line = "") const;
+};
 
-Q_DECLARE_NAMESPACE_TR(CliSubtitlesDownloader)
-
-int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
-                         const QNapiConfig& config);
-};  // namespace CliSubtitlesDownloader
-
-#endif  // CLISUBTITLESDOWNLOADER_H
+#endif  // CONSOLE_H

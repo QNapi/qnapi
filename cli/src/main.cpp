@@ -14,6 +14,7 @@
 
 #include "clisubtitlesdownloader.h"
 #include "commandargsparser.h"
+#include "console.h"
 #include "libqnapi.h"
 #include "namespace_tr.h"
 #include "qnapiclicommand.h"
@@ -36,101 +37,101 @@ void installTranslation(QCoreApplication &app, QTranslator *translator,
   app.installTranslator(translator);
 }
 
-void printLine(const QString &line = "") {
-  std::cout << line.toStdString() << std::endl;
+void printHeader(const Console &c) {
+  c.printLine(tr("QNapi %1 (Qt version %2), %3")
+                  .arg(LibQNapi::displayableVersion())
+                  .arg(qVersion())
+                  .arg(LibQNapi::webpageUrl()));
+  c.printLine();
 }
 
-void printHeader() {
-  printLine(tr("QNapi %1 (Qt version %2), %3")
-                .arg(LibQNapi::displayableVersion())
-                .arg(qVersion())
-                .arg(LibQNapi::webpageUrl()));
-  printLine();
-}
-
-void printHelp() {
+void printHelp(const Console &c) {
   QString formats =
       LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
   QString binaryFileName =
       QFileInfo(LibQNapi::appExecutableFilePath).fileName();
 
-  printLine(
+  c.printLine(
       tr("QNapi is distributed under the GNU General Public License v2."));
-  printLine();
-  printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
-  printLine(tr("Available options:"));
-  printLine(
+  c.printLine();
+  c.printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
+  c.printLine(tr("Available options:"));
+  c.printLine(
       tr("   -q, --quiet                Download subtitles quietly without "
          "showing"));
-  printLine(
+  c.printLine(
       tr("                              any messages or windows (implies -d)"));
-  printLine();
-  printLine(
+  c.printLine();
+  c.printLine(
       tr("   -s, --show-list            Show a list of subtitles (works only "
          "with -c)"));
-  printLine(
+  c.printLine(
       tr("   -d, --dont-show-list       Do not show a list of subtitles (works "
          "only with -c)"));
-  printLine();
-  printLine(tr("   -l, --lang [code]          Preferred subtitles language"));
-  printLine(tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
-  printLine(tr("   -f, --format [format]      Select target subtitles file "
-               "format (%1)")
-                .arg(formats));
-  printLine(tr(
+  c.printLine();
+  c.printLine(tr("   -l, --lang [code]          Preferred subtitles language"));
+  c.printLine(
+      tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
+  c.printLine(tr("   -f, --format [format]      Select target subtitles file "
+                 "format (%1)")
+                  .arg(formats));
+  c.printLine(tr(
       "   -e, --extension [ext]      Select target subtitles file extension"));
-  printLine();
-  printLine(tr("   -h, --help                 Show help text"));
-  printLine(tr(
+  c.printLine();
+  c.printLine(tr("   -h, --help                 Show help text"));
+  c.printLine(tr(
       "   -hl,--help-languages       List of available subtitles languages"));
-  printLine();
+  c.printLine();
 }
 
-void printHelpLanguages(const QNapiConfig &config) {
-  printLine(
+void printHelpLanguages(const Console &c, const QNapiConfig &config) {
+  c.printLine(
       tr("List of languages recognized by QNapi, including corresponding"));
-  printLine(tr("two-letter language codes:"));
-  printLine();
+  c.printLine(tr("two-letter language codes:"));
+  c.printLine();
 
   SubtitleLanguage L, LB;
   QStringList langs = L.listLanguages();
 
   foreach (QString lang, langs) {
     L.setLanguage(lang);
-    printLine(QString(" %1 - %2").arg(L.toTwoLetter()).arg(lang));
+    c.printLine(QString(" %1 - %2").arg(L.toTwoLetter()).arg(lang));
   }
 
   L.setLanguage(config.generalConfig().language());
   LB.setLanguage(config.generalConfig().backupLanguage());
 
-  printLine();
-  printLine(tr("Current default subtitles language: %1 (%2)")
-                .arg(L.toFullName())
-                .arg(L.toTwoLetter()));
+  c.printLine();
+  c.printLine(tr("Current default subtitles language: %1 (%2)")
+                  .arg(L.toFullName())
+                  .arg(L.toTwoLetter()));
 
   if (LB.toFullName().isEmpty()) {
-    printLine(tr("No alternative subtitles language has been set"));
+    c.printLine(tr("No alternative subtitles language has been set"));
   } else {
-    printLine(tr("Current alternative subtitles language: %1 (%2)")
-                  .arg(LB.toFullName())
-                  .arg(LB.toTwoLetter()));
+    c.printLine(tr("Current alternative subtitles language: %1 (%2)")
+                    .arg(LB.toFullName())
+                    .arg(LB.toTwoLetter()));
   }
 }
 
-void processCommand(QVariant cliCommand, const QNapiConfig &config) {
-  if (!config.generalConfig().quietBatch()) {
-    printHeader();
-  }
+int processCommand(QVariant cliCommand, const QNapiConfig &config) {
+  const Console c(config.generalConfig().quietBatch());
+
+  printHeader(c);
 
   using namespace QNapiCliCommand;
   if (cliCommand.canConvert<DownloadSubtitles>()) {
     QStringList movieFilePaths =
         cliCommand.value<DownloadSubtitles>().movieFilePaths;
-    CliSubtitlesDownloader::downloadSubtitlesFor(movieFilePaths, config);
+    return CliSubtitlesDownloader::downloadSubtitlesFor(c, movieFilePaths,
+                                                        config);
   } else if (cliCommand.canConvert<ShowHelpLanguages>()) {
-    printHelpLanguages(config);
+    printHelpLanguages(Console(), config);
+    return 0;
   } else {
-    printHelp();
+    printHelp(Console());
+    return 0;
   }
 }
 
@@ -153,12 +154,14 @@ int main(int argc, char **argv) {
 
   if (parseResult.is<CommandArgsParser::ParsedCommand>()) {
     auto parsedCommand = parseResult.as<CommandArgsParser::ParsedCommand>();
-    Main::processCommand(parsedCommand.command, parsedCommand.refinedConfig);
-  } else {
-    Main::printHeader();
-    Main::printLine(Main::tr("Command line argument parsing error:"));
-    Main::printLine(parseResult.as<QString>());
-  }
+    return Main::processCommand(parsedCommand.command,
+                                parsedCommand.refinedConfig);
 
-  return 0;
+  } else {
+    const Console c;
+    Main::printHeader(c);
+    c.printLine(Main::tr("Command line argument parsing error:"));
+    c.printLine(parseResult.as<QString>());
+    return -1;
+  }
 }

@@ -7,12 +7,14 @@ QT -= gui
 
 SOURCES += src/main.cpp \
     src/commandargsparser.cpp \
-    src/clisubtitlesdownloader.cpp
+    src/clisubtitlesdownloader.cpp \
+    src/console.cpp
     
 HEADERS += src/qnapiclicommand.h \
     src/commandargsparser.h \
     src/clisubtitlesdownloader.h \
-    src/namespace_tr.h
+    src/namespace_tr.h \
+    src/console.h
 
 RESOURCES += res/resources.qrc
 

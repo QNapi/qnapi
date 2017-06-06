@@ -33,6 +33,7 @@ unix {
 }
 
 macx {
+    QT_CONFIG -= no-pkg-config
     CONFIG -= app_bundle
     LIBS += -framework CoreFoundation
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7

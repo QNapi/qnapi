@@ -20,21 +20,32 @@
 
 namespace CliSubtitlesDownloader {
 
+enum ExitCode {
+  EC_OK = 0,
+  EC_P7ZIP_UNAVAILABLE = 2,
+  EC_CANNOT_WRITE_TMP_DIR = 3,
+  EC_NO_WRITE_PERMISSIONS = 5,
+  EC_SUBTITLES_NOT_FOUND = 6,
+  EC_COULD_NOT_DOWNLOAD = 7,
+  EC_COULD_NOT_UNARCHIVE = 8,
+  EC_COULD_NOT_MATCH = 9
+};
+
 int configChecks(const Console& c, const QNapiConfig& config) {
   QString p7zipPath = config.generalConfig().p7zipPath();
   if (!QFileInfo(p7zipPath).isExecutable()) {
     c.printLine(tr("Invalid path to p7zip executable: %1").arg(p7zipPath));
-    return 2;
+    return EC_P7ZIP_UNAVAILABLE;
   }
 
   QString tmpPath = config.generalConfig().tmpPath();
   QFileInfo tmp(tmpPath);
   if (!tmp.isDir() || !tmp.isWritable()) {
     c.printLine(tr("Can't write to temporary directory: %1").arg(tmpPath));
-    return 3;
+    return EC_CANNOT_WRITE_TMP_DIR;
   }
 
-  return 0;
+  return EC_OK;
 }
 
 bool findSubtitles(const Console& c, const QNapiConfig& config, QNapi& napi) {
@@ -136,13 +147,13 @@ int finishSubtitles(int selIdx, const Console& c, QNapi& napi) {
   c.printLineOrdinary(tr("Downloading subtitles..."));
   if (!napi.download(selIdx)) {
     c.printLineError(tr("Unable to download subtitles!"));
-    return 7;
+    return EC_COULD_NOT_DOWNLOAD;
   }
 
   c.printLineOrdinary(tr("Unpacking subtitles..."));
   if (!napi.unpack(selIdx)) {
     c.printLineError(tr("Failed to unpack subtitles!"));
-    return 8;
+    return EC_COULD_NOT_UNARCHIVE;
   }
 
   if (napi.ppEnabled()) {
@@ -153,7 +164,7 @@ int finishSubtitles(int selIdx, const Console& c, QNapi& napi) {
   c.printLineOrdinary(tr("Adjusting subtitles..."));
   if (!napi.matchSubtitles()) {
     c.printLineError(tr("Could not adjust subtitles!"));
-    return 9;
+    return EC_COULD_NOT_MATCH;
   }
 
   napi.cleanup();
@@ -173,7 +184,7 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
   if (!napi.checkWritePermissions()) {
     c.printLineError(tr("No permission to write to the directory '%1'!")
                          .arg(QFileInfo(movieFilePath).path()));
-    return 5;
+    return EC_NO_WRITE_PERMISSIONS;
   }
 
   napi.clearSubtitlesList();
@@ -181,8 +192,8 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
   bool found = findSubtitles(c, config, napi);
 
   if (!found) {
-    c.printLineError(tr("Subtitles not found!"));
-    return 6;
+    c.printLineWarning(tr("Subtitles not found!"));
+    return EC_SUBTITLES_NOT_FOUND;
   }
 
   Maybe<int> selIdx = selectSubtitles(c, config, napi);
@@ -193,7 +204,7 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
 
   napi.cleanup();
 
-  return 0;
+  return EC_OK;
 }
 
 int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
@@ -210,7 +221,7 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
     QString movieFilePath = movieFilePaths[i - 1];
 
     int result = downloadForMovie(c, movieFilePath, i, total, config, napi);
-    if (result != 0) {
+    if (result == EC_P7ZIP_UNAVAILABLE || result == EC_CANNOT_WRITE_TMP_DIR) {
       if (i < total) {
         c.printLineOrdinary(
             tr("Processing of remaining %n file(s) was ignored "
@@ -221,6 +232,6 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
     }
   }
 
-  return 0;
+  return EC_OK;
 }
 };  // namespace CliSubtitlesDownloader

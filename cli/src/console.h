@@ -31,6 +31,7 @@ class Console {
   void printLineOrdinary(const QString& line) const;
   void printOrdinary(const QString& line) const;
   void printLineError(const QString& line) const;
+  void printLineWarning(const QString& line) const;
 
   int inputNumber(const QString& message, int min, int max) const;
 };

@@ -120,11 +120,12 @@ Maybe<int> selectSubtitles(const Console& c, const QNapiConfig& config,
   bool showList = false;
   bool napiShowList = napi.needToShowList();
 
-  if (!config.generalConfig().quietBatch() &&
-      config.generalConfig().downloadPolicy() != DP_NEVER_SHOW_LIST) {
-    showList = napiShowList;
+  if(config.generalConfig().quietBatch() || config.generalConfig().downloadPolicy() == DP_NEVER_SHOW_LIST) {
+    showList = false;
   } else if (config.generalConfig().downloadPolicy() == DP_ALWAYS_SHOW_LIST) {
     showList = true;
+  } else {
+    showList = napiShowList;
   }
 
   if (!showList) {

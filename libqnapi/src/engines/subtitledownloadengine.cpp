@@ -15,10 +15,13 @@
 #include "engines/subtitledownloadengine.h"
 #include <QDir>
 #include <QFlags>
+#include <QLoggingCategory>
 #include "subconvert/subtitleformatsregistry.h"
 
 SubtitleDownloadEngine::SubtitleDownloadEngine(const QString& tmpPath)
-    : tmpPath(tmpPath) {}
+    : tmpPath(tmpPath) {
+  QLoggingCategory::setFilterRules("qt.network.ssl.warning=false");
+}
 
 void SubtitleDownloadEngine::setMoviePath(const QString& path) { movie = path; }
 

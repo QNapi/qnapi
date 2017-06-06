@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-CONFIG += warn_on qt resources silent c++11
+CONFIG += warn_on qt resources silent c++11 console
 
 QT += core network xml
 QT -= gui

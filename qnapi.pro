@@ -89,7 +89,10 @@ win32 {
     libmediainfodlls.files += deps/libmediainfo/bin/MediaInfo.dll
     libmediainfodlls.path = $${INSTALL_PREFIX}
 
-    deploywin.commands = windeployqt --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2 win32/out/qnapi.exe
+    DEPLOYWIN_FLAGS = --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2
+    deploywin.commands += windeployqt $${DEPLOYWIN_FLAGS}
+    !no_cli:deploywin.commands += win32/out/qnapic.exe
+    !no_gui:deploywin.commands += win32/out/qnapi.exe
 
     platform.files = $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms

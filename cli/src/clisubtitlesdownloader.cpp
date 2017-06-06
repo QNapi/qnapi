@@ -30,7 +30,7 @@ int configChecks(const Console& c, const QNapiConfig& config) {
   QString tmpPath = config.generalConfig().tmpPath();
   QFileInfo tmp(tmpPath);
   if (!tmp.isDir() || !tmp.isWritable()) {
-    c.printLine(tr("Invalid path to temporary directory: %1").arg(tmpPath));
+    c.printLine(tr("Can't write to temporary directory: %1").arg(tmpPath));
     return 3;
   }
 
@@ -181,7 +181,7 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
   bool found = findSubtitles(c, config, napi);
 
   if (!found) {
-    c.printLineError("Subtitles not found!");
+    c.printLineError(tr("Subtitles not found!"));
     return 6;
   }
 
@@ -212,9 +212,10 @@ int downloadSubtitlesFor(const Console& c, const QStringList& movieFilePaths,
     int result = downloadForMovie(c, movieFilePath, i, total, config, napi);
     if (result != 0) {
       if (i < total) {
-        c.printLineOrdinary(tr("Processing of remaining %1 file(s) was ignored "
-                               "due to critical error.")
-                                .arg(total - i));
+        c.printLineOrdinary(
+            tr("Processing of remaining %n file(s) was ignored "
+               "due to critical error.",
+               "", total - i));
       }
       return result;
     }

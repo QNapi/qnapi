@@ -6,12 +6,12 @@
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="26"/>
         <source>Invalid path to p7zip executable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sciezka do programu p7zip jest nieprawidlowa: %1</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="33"/>
-        <source>Invalid path to temporary directory: %1</source>
-        <translation type="unfinished"></translation>
+        <source>Can&apos;t write to temporary directory: %1</source>
+        <translation>Nie mozna pisac do katalogu tymczasowego: %1</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="42"/>
@@ -33,12 +33,12 @@
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="84"/>
         <source>0)	Do not download subtitles for this video</source>
-        <translation type="unfinished"></translation>
+        <translation>0)	Nie pobieraj napisow dla tego filmu</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="85"/>
         <source>Found subtitles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Znaleziono napisy:</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="93"/>
@@ -53,32 +53,32 @@
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="125"/>
         <source>Select subtitles to download: </source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz napisy do pobrania: </translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="136"/>
         <source>Downloading subtitles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pobieranie napisow...</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="138"/>
         <source>Unable to download subtitles!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udalo sie pobrac napisow!</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="142"/>
         <source>Unpacking subtitles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpakowywanie napisow...</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="144"/>
         <source>Failed to unpack subtitles!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udalo sie rozpakowac napisow!</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="149"/>
         <source>Post-processing subtitles file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Przetwarzanie napisow...</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="153"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="166"/>
         <source>Downloading subtitles for &apos;%1&apos; [%2/%3]</source>
-        <translation type="unfinished"></translation>
+        <translation>Pobieranie napisow dla &apos;%1&apos; [%2/%3]</translation>
     </message>
     <message>
         <location filename="../cli/src/clisubtitlesdownloader.cpp" line="174"/>
@@ -101,9 +101,18 @@
         <translation>Brak uprawnień zapisu do katalogu &apos;%1&apos;!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="215"/>
-        <source>Processing of remaining %1 file(s) was ignored due to critical error.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="184"/>
+        <source>Subtitles not found!</source>
+        <translation>Nie znaleziono napisow!</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="216"/>
+        <source>Processing of remaining %n file(s) was ignored due to critical error.</source>
+        <translation>
+            <numerusform>Pobieranie pozostalego 1 pliku przerwane z powodu bledu.</numerusform>
+            <numerusform>Pobieranie pozostalych %n plikow przerwane z powodu bledu.</numerusform>
+            <numerusform>Pobieranie pozostalych %n plikow przerwane z powodu bledu.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -111,7 +120,7 @@
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="29"/>
         <source>You need to pass language code after %1 argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz podac kod jezyka po argumencie %1</translation>
     </message>
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="35"/>
@@ -121,7 +130,7 @@
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="95"/>
         <source>You need to pass subtitles format code after %1 argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz format napisow po argumencie %1</translation>
     </message>
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="101"/>
@@ -131,17 +140,17 @@
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="109"/>
         <source>You need to pass subtitles extension after %1 argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz podac rozszerzenie napisow po argumencie %1</translation>
     </message>
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="115"/>
         <source>Invalid target subtitles extension passed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Podano niepoprawne rozszerzenie napisow: %1</translation>
     </message>
     <message>
         <location filename="../cli/src/commandargsparser.cpp" line="121"/>
         <source>Invalid command line argument passed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Podano niepoprawny argument wiersza polecen: %1</translation>
     </message>
 </context>
 <context>

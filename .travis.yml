@@ -87,7 +87,7 @@ before_install:
 
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq libmediainfo-dev; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install pkgconfig mediainfo; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install mediainfo; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then npm install -g appdmg; fi
   - if [[ "$QT_BASE" = "51" && "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get install -qq qt51base; source /opt/qt51/bin/qt51-env.sh; fi
   - if [[ "$QT_BASE" = "52" && "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get install -qq qt52base; source /opt/qt52/bin/qt52-env.sh; fi

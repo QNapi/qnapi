@@ -28,9 +28,6 @@ include(../libqnapi/libqnapi.pri)
 unix {
     TARGET = qnapic
     DESTDIR = ../
-}
-
-unix:!macx {
     CONFIG += link_pkgconfig
     PKGCONFIG += libmediainfo
 }
@@ -38,8 +35,6 @@ unix:!macx {
 macx {
     CONFIG -= app_bundle
     LIBS += -framework CoreFoundation
-    DESTDIR = ../macx/
-
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
 }

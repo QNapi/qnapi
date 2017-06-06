@@ -4,13 +4,30 @@ CONFIG += ordered
 
 SUBDIRS = libqnapi cli gui
 
+no_cli:message(will skip building qnapic cli application)
+no_cli:SUBDIRS -= cli
+
+no_gui:message(will skip building qnapi gui application)
+no_gui:SUBDIRS -= gui
+
 TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
 
 unix {
     INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share
-    target.files += qnapi
-    target.path = $${INSTALL_PREFIX}/bin
+
+    !no_cli {
+        cli_target.files = qnapic
+        cli_target.path = $${INSTALL_PREFIX}/bin
+        INSTALLS += cli_target
+    }
+
+    !macx:!no_gui {
+        gui_target.files = qnapi
+        gui_target.path = $${INSTALL_PREFIX}/bin
+        INSTALLS += gui_target
+    }
+
     doc.path = $${INSTALL_PREFIX}/share/doc/qnapi
     doc.files = doc/ChangeLog \
         doc/LICENSE \
@@ -40,10 +57,10 @@ unix {
 
     desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/qnapi.desktop
-    INSTALLS += target doc man man_it man_pl desktop
+    INSTALLS += doc man man_it man_pl desktop
 }
 
-macx {
+macx:!no_gui {
     macdeploy.commands = macdeployqt macx/QNapi.app
     appdmg.depends = macdeploy
     appdmg.commands = appdmg macx/appdmg.json macx/QNapi.dmg

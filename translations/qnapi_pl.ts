@@ -2,111 +2,224 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="pl_PL">
 <context>
+    <name>CliMain</name>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="36"/>
+        <source>QNapi %1 (Qt version %2), %3</source>
+        <translation>QNapi %1 (wersja Qt %2), %3</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="50"/>
+        <source>QNapi is distributed under the GNU General Public License v2.</source>
+        <translation>QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="52"/>
+        <source>Syntax: %1 [options] [list of files]</source>
+        <translation>Skladnia: %1 [opcje] [lista plikow]</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="53"/>
+        <source>Available options:</source>
+        <translation>Dostepne opcje:</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="55"/>
+        <source>   -q, --quiet                Download subtitles quietly without showing</source>
+        <translation>   -q, --quiet                Pobierz napisy nie wypisujac zadnych komunikatow</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="58"/>
+        <source>                              any messages or windows (implies -d)</source>
+        <translation>                              ani nie pokazujac zadnych okien (implikuje -d)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="61"/>
+        <source>   -s, --show-list            Show a list of subtitles (works only with -c)</source>
+        <translation>   -s, --show-list            Pokazuj liste napisow (dziala tylko z -c)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="64"/>
+        <source>   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)</source>
+        <translation>   -d, --dont-show-list       Nie pokazuj listy napisow (dziala tylko z -c)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="67"/>
+        <source>   -l, --lang [code]          Preferred subtitles language</source>
+        <translation>   -l, --lang [jezyk]         Preferowany jezyk napisow</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="69"/>
+        <source>   -lb,--lang-backup [code]   Alternative subtitles language</source>
+        <translation>   -lb,--lang-backup [jezyk]  Zapasowy jezyk napisow</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="70"/>
+        <source>   -f, --format [format]      Select target subtitles file format (%1)</source>
+        <translation>   -f, --format [format]      Format napisow (%1)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="73"/>
+        <source>   -e, --extension [ext]      Select target subtitles file extension</source>
+        <translation>   -e, --extension [ext]      Rozszerzenie pliku z napisami</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="76"/>
+        <source>   -h, --help                 Show help text</source>
+        <translation>   -h, --help                 Pokaz tekst pomocy</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="77"/>
+        <source>   -hl,--help-languages       List of available subtitles languages</source>
+        <translation>   -hl,--help-languages       Lista jezykow, w jakich mozna pobierac napisy</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="84"/>
+        <source>List of languages recognized by QNapi, including corresponding</source>
+        <translation>Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="85"/>
+        <source>two-letter language codes:</source>
+        <translation>im dwuliterowych kodow:</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="100"/>
+        <source>Current default subtitles language: %1 (%2)</source>
+        <translation>Aktualnie ustawiony preferowany jezyk pobierania napisow: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="105"/>
+        <source>No alternative subtitles language has been set</source>
+        <translation>Brak ustawionego zapasowego jezyka napisow</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="107"/>
+        <source>Current alternative subtitles language: %1 (%2)</source>
+        <translation>Aktualnie ustawiony zapasowy jezyk napisow: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="137"/>
+        <source>QNapi: deleting temporary files...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="152"/>
+        <source>QNapi: finished.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cli/src/main.cpp" line="48"/>
+        <source>Command line argument parsing error:</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>CliSubtitlesDownloader</name>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="26"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="37"/>
         <source>Invalid path to p7zip executable: %1</source>
         <translation>Sciezka do programu p7zip jest nieprawidlowa: %1</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="33"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="44"/>
         <source>Can&apos;t write to temporary directory: %1</source>
         <translation>Nie mozna pisac do katalogu tymczasowego: %1</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="42"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="53"/>
         <source>Calculating checksums...</source>
         <translation>Obliczanie sum kontrolnych...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="52"/>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="62"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="63"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="73"/>
         <source>Searching for subtitles [%1] (%2)...</source>
         <translation>Szukanie napisów [%1] (%2)...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="55"/>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="71"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="66"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="82"/>
         <source>Searching for subtitles in alternative language [%1] (%2)...</source>
         <translation>Szukanie napisów w języku zapasowym [%1] (%2)...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="84"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="95"/>
         <source>0)	Do not download subtitles for this video</source>
         <translation>0)	Nie pobieraj napisow dla tego filmu</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="85"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="96"/>
         <source>Found subtitles:</source>
         <translation>Znaleziono napisy:</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="93"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="104"/>
         <source> (good)</source>
         <translation> (dobre)</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="95"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="106"/>
         <source> (bad)</source>
         <translation> (zle)</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="125"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="137"/>
         <source>Select subtitles to download: </source>
         <translation>Wybierz napisy do pobrania: </translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="136"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="148"/>
         <source>Downloading subtitles...</source>
         <translation>Pobieranie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="138"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="150"/>
         <source>Unable to download subtitles!</source>
         <translation>Nie udalo sie pobrac napisow!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="142"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="154"/>
         <source>Unpacking subtitles...</source>
         <translation>Rozpakowywanie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="144"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="156"/>
         <source>Failed to unpack subtitles!</source>
         <translation>Nie udalo sie rozpakowac napisow!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="149"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="161"/>
         <source>Post-processing subtitles file...</source>
         <translation>Przetwarzanie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="153"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="165"/>
         <source>Adjusting subtitles...</source>
         <translation>Dopasowywanie napisów...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="155"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="167"/>
         <source>Could not adjust subtitles!</source>
         <translation>Nie udało się dopasować napisów!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="166"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="178"/>
         <source>Downloading subtitles for &apos;%1&apos; [%2/%3]</source>
         <translation>Pobieranie napisow dla &apos;%1&apos; [%2/%3]</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="174"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="186"/>
         <source>No permission to write to the directory &apos;%1&apos;!</source>
         <translation>Brak uprawnień zapisu do katalogu &apos;%1&apos;!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="184"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="196"/>
         <source>Subtitles not found!</source>
         <translation>Nie znaleziono napisow!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="216"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="228"/>
         <source>Processing of remaining %n file(s) was ignored due to critical error.</source>
         <translation>
             <numerusform>Pobieranie pozostalego 1 pliku przerwane z powodu bledu.</numerusform>
@@ -156,12 +269,12 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../cli/src/console.cpp" line="55"/>
+        <location filename="../cli/src/console.cpp" line="59"/>
         <source>You must enter a number!</source>
         <translation>Wpisz liczbe!</translation>
     </message>
     <message>
-        <location filename="../cli/src/console.cpp" line="60"/>
+        <location filename="../cli/src/console.cpp" line="64"/>
         <source>You must enter a number between %1 and %2</source>
         <translation>Wprowadz liczbe miedzy %1 a %2</translation>
     </message>
@@ -227,120 +340,6 @@
         <location filename="../deps/libmaia/maiaObject.cpp" line="288"/>
         <source>parse error: invalid xml-rpc. not conforming to spec.</source>
         <translation>błąd parsowania: niepoprawny xml-rpc. niezgodny ze specyfikacją.</translation>
-    </message>
-</context>
-<context>
-    <name>Main</name>
-    <message>
-        <location filename="../cli/src/main.cpp" line="43"/>
-        <source>QNapi %1 (Qt version %2), %3</source>
-        <translation>QNapi %1 (wersja Qt %2), %3</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="57"/>
-        <source>QNapi is distributed under the GNU General Public License v2.</source>
-        <translation>QNapi rozprowadzany jest na warunkach licencji GNU General Public License v2.</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="59"/>
-        <source>Syntax: %1 [options] [list of files]</source>
-        <translation>Skladnia: %1 [opcje] [lista plikow]</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="60"/>
-        <source>Available options:</source>
-        <translation>Dostepne opcje:</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="62"/>
-        <source>   -q, --quiet                Download subtitles quietly without showing</source>
-        <translation>   -q, --quiet                Pobierz napisy nie wypisujac zadnych komunikatow</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="65"/>
-        <source>                              any messages or windows (implies -d)</source>
-        <translation>                              ani nie pokazujac zadnych okien (implikuje -d)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="68"/>
-        <source>   -s, --show-list            Show a list of subtitles (works only with -c)</source>
-        <translation>   -s, --show-list            Pokazuj liste napisow (dziala tylko z -c)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="71"/>
-        <source>   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)</source>
-        <translation>   -d, --dont-show-list       Nie pokazuj listy napisow (dziala tylko z -c)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="74"/>
-        <source>   -l, --lang [code]          Preferred subtitles language</source>
-        <translation>   -l, --lang [jezyk]         Preferowany jezyk napisow</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="76"/>
-        <source>   -lb,--lang-backup [code]   Alternative subtitles language</source>
-        <translation>   -lb,--lang-backup [jezyk]  Zapasowy jezyk napisow</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="77"/>
-        <source>   -f, --format [format]      Select target subtitles file format (%1)</source>
-        <translation>   -f, --format [format]      Format napisow (%1)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="80"/>
-        <source>   -e, --extension [ext]      Select target subtitles file extension</source>
-        <translation>   -e, --extension [ext]      Rozszerzenie pliku z napisami</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="83"/>
-        <source>   -h, --help                 Show help text</source>
-        <translation>   -h, --help                 Pokaz tekst pomocy</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="84"/>
-        <source>   -hl,--help-languages       List of available subtitles languages</source>
-        <translation>   -hl,--help-languages       Lista jezykow, w jakich mozna pobierac napisy</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="91"/>
-        <source>List of languages recognized by QNapi, including corresponding</source>
-        <translation>Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="92"/>
-        <source>two-letter language codes:</source>
-        <translation>im dwuliterowych kodow:</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="107"/>
-        <source>Current default subtitles language: %1 (%2)</source>
-        <translation>Aktualnie ustawiony preferowany jezyk pobierania napisow: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="112"/>
-        <source>No alternative subtitles language has been set</source>
-        <translation>Brak ustawionego zapasowego jezyka napisow</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="114"/>
-        <source>Current alternative subtitles language: %1 (%2)</source>
-        <translation>Aktualnie ustawiony zapasowy jezyk napisow: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="144"/>
-        <source>QNapi: deleting temporary files...</source>
-        <translation>QNapi: usuwanie plikow tymczasowych...</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="159"/>
-        <source>QNapi: finished.</source>
-        <translation>QNapi: zakonczono.</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/main.cpp" line="205"/>
-        <source>Command line argument parsing error:</source>
-        <translatorcomment>Blad podczas analizowania argumentu wiersza polecen:</translatorcomment>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -682,22 +681,22 @@
         <translation>Silnik pobierania napisów z serwisu &lt;b&gt;www.opensubtitles.org&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="87"/>
+        <location filename="../gui/src/main.cpp" line="85"/>
         <source>First Run</source>
         <translation>Pierwsze uruchomienie</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="88"/>
+        <location filename="../gui/src/main.cpp" line="86"/>
         <source>This is the first launch of the program QNapi. Do you want to configure it now?</source>
         <translation>To jest pierwsze uruchomienie programu QNapi. Czy chcesz przeprowadzić konfigurację teraz?</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="224"/>
+        <location filename="../gui/src/guimain.cpp" line="43"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: usuwanie plików tymczasowych...</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="239"/>
+        <location filename="../gui/src/guimain.cpp" line="58"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: zakończono.</translation>
     </message>

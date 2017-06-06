@@ -89,7 +89,8 @@ HEADERS += src/config/configreader.h \
     src/utils/synchttp.h \
     src/utils/syncxmlrpc.h \
     src/version.h \
-    src/qnapi.h
+    src/qnapi.h \
+    src/namespace_tr.h
 
 unix:!macx {
     PKGCONFIG += libmediainfo

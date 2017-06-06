@@ -12,7 +12,6 @@
 **
 *****************************************************************************/
 
-#include <signal.h>
 #include <QApplication>
 #include <QFileInfo>
 #include <QLibraryInfo>
@@ -21,6 +20,7 @@
 #include <QSystemTrayIcon>
 #include <QTextCodec>
 #include <QTranslator>
+#include "guimain.h"
 #include "libqnapi.h"
 #include "qnapiapp.h"
 #include "qnapicli.h"
@@ -29,8 +29,6 @@
 #include "qnapicommand.h"
 
 QStringList parseArgs(int argc, char **argv);
-void regSignal();
-void sigHandler(int);
 
 int main(int argc, char **argv) {
   LibQNapi::init(argv[0]);
@@ -43,7 +41,7 @@ int main(int argc, char **argv) {
 
   QStringList parsedFilePaths = parseArgs(argc, argv);
 
-  regSignal();
+  GuiMain::regSignal();
 
   bool quietBatch = config.generalConfig().quietBatch();
 #ifdef Q_OS_MAC
@@ -201,42 +199,4 @@ QStringList parseArgs(int argc, char **argv) {
     if (QFileInfo(p).isFile()) parsedFilePaths << p;
   }
   return parsedFilePaths;
-}
-
-void regSignal() {
-#ifdef Q_OS_WIN
-  signal(SIGTERM, sigHandler);
-  signal(SIGINT, sigHandler);
-#else
-  struct sigaction sa;
-  memset(&sa, 0, sizeof(struct sigaction));
-  sigemptyset(&sa.sa_mask);
-  sa.sa_handler = sigHandler;
-  sigaction(SIGTERM, &sa, 0);
-  sigaction(SIGINT, &sa, 0);
-#endif
-}
-
-void sigHandler(int sig) {
-  Q_UNUSED(sig);
-
-  std::cout << std::endl
-            << QObject::tr("QNapi: deleting temporary files...").toStdString()
-            << std::endl;
-
-  const QNapiConfig config = LibQNapi::loadConfig();
-  QString tmpPath = config.generalConfig().tmpPath();
-  QDir tmpDir(tmpPath);
-
-  QStringList filters;
-  filters << "QNapi-*-rc";
-  filters << "QNapi.*.tmp";
-
-  QFileInfoList files = tmpDir.entryInfoList(filters);
-
-  foreach (QFileInfo file, files) { QFile::remove(file.filePath()); }
-
-  std::cout << QObject::tr("QNapi: finished.").toStdString() << std::endl;
-
-  exit(666);
 }

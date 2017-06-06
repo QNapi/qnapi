@@ -38,6 +38,22 @@ Either<QString, SubtitleLanguage> handleLangArgument(const QStringList& args,
   }
 }
 
+Maybe<QString> extractFilePath(const QString& arg) {
+  if (QFileInfo(arg).isFile()) {
+    return just(arg);
+  }
+
+  if (arg.startsWith("file://")) {
+    QString withRemovedPrefix = arg;
+    withRemovedPrefix.remove(0, 7);
+    if (QFileInfo(withRemovedPrefix).isFile()) {
+      return just(withRemovedPrefix);
+    }
+  }
+
+  return nothing();
+}
+
 Either<QString, ParsedCommand> parse(const QStringList& args,
                                      const QNapiConfig& config) {
   if (args.contains("-h") || args.contains("--help")) {
@@ -55,9 +71,7 @@ Either<QString, ParsedCommand> parse(const QStringList& args,
   for (int i = 0; i < args.size(); ++i) {
     QString arg = args[i];
 
-    if (QFileInfo(arg).exists()) {
-      filePaths << arg;
-    } else if (arg == "-q" || arg == "--quiet") {
+    if (arg == "-q" || arg == "--quiet") {
       refinedConfig = refinedConfig.setGeneralConfig(
           refinedConfig.generalConfig().setQuietBatch(true));
     } else if (arg == "-s" || arg == "--show-list") {
@@ -118,7 +132,12 @@ Either<QString, ParsedCommand> parse(const QStringList& args,
             refinedConfig.postProcessingConfig().setSubExtension(ext));
       }
     } else {
-      return some(tr("Invalid command line argument passed: %1").arg(arg));
+      auto maybePath = extractFilePath(arg);
+      if (maybePath) {
+        filePaths << maybePath.value();
+      } else {
+        return some(tr("Invalid command line argument passed: %1").arg(arg));
+      }
     }
   }
 

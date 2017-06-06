@@ -12,14 +12,14 @@
 **
 *****************************************************************************/
 
-#ifndef QNAPICOMMAND_H
-#define QNAPICOMMAND_H
+#ifndef QNAPIGUICOMMAND_H
+#define QNAPIGUICOMMAND_H
 
 #include <QMetaType>
 #include <QStringList>
 #include <QVariant>
 
-namespace QNapiCommand {
+namespace QNapiGuiCommand {
 
 struct DownloadSubtitles {
   QStringList movieFilePaths;
@@ -29,9 +29,10 @@ struct ScanDirectory {
   QString directory;
 };
 
-struct ConvertSubtitles {
-  QString subtitlesPath;
-};
+// not implemented yet
+// struct ConvertSubtitles {
+//  QString subtitlesPath;
+//};
 
 struct ShowOptions {};
 
@@ -39,13 +40,14 @@ struct ShowHelp {};
 
 struct ShowHelpLanguages {};
 
-}  // namespace QNapiCommand
+}  // namespace QNapiGuiCommand
 
-Q_DECLARE_METATYPE(QNapiCommand::DownloadSubtitles)
-Q_DECLARE_METATYPE(QNapiCommand::ScanDirectory)
-Q_DECLARE_METATYPE(QNapiCommand::ConvertSubtitles)
-Q_DECLARE_METATYPE(QNapiCommand::ShowOptions)
-Q_DECLARE_METATYPE(QNapiCommand::ShowHelp)
-Q_DECLARE_METATYPE(QNapiCommand::ShowHelpLanguages)
+Q_DECLARE_METATYPE(QNapiGuiCommand::DownloadSubtitles)
+Q_DECLARE_METATYPE(QNapiGuiCommand::ScanDirectory)
+// not implemented yet
+// Q_DECLARE_METATYPE(QNapiGuiCommand::ConvertSubtitles)
+Q_DECLARE_METATYPE(QNapiGuiCommand::ShowOptions)
+Q_DECLARE_METATYPE(QNapiGuiCommand::ShowHelp)
+Q_DECLARE_METATYPE(QNapiGuiCommand::ShowHelpLanguages)
 
-#endif  // QNAPICOMMAND_H
+#endif  // QNAPIGUICOMMAND_H

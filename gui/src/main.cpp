@@ -26,7 +26,7 @@
 #include "qnapicli.h"
 
 #include <QVariant>
-#include "qnapicommand.h"
+#include "qnapiguicommand.h"
 
 QStringList parseArgs(int argc, char **argv);
 

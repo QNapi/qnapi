@@ -22,7 +22,8 @@ SOURCES += src/main.cpp \
     src/qnapiopendialog.cpp \
     src/qnapiapp.cpp \
     src/qnapicli.cpp \ 
-    src/guimain.cpp
+    src/guimain.cpp \
+    src/commandargsparser.cpp
 
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
@@ -44,8 +45,9 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapiopendialog.h \
     src/qnapiapp.h \
     src/qnapicli.h \
-    src/qnapicommand.h \
-    src/guimain.h
+    src/guimain.h \
+    src/commandargsparser.h \
+    src/qnapiguicommand.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \

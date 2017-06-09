@@ -28,6 +28,8 @@ class CliArgParser {
     QString errorMessage;
   };
 
+  struct NothingParsed {};
+
   struct ParsedModifier {
     const QNapiConfig refinedConfig;
   };
@@ -43,6 +45,7 @@ class CliArgParser {
 };
 
 Q_DECLARE_METATYPE(CliArgParser::ParseError)
+Q_DECLARE_METATYPE(CliArgParser::NothingParsed)
 Q_DECLARE_METATYPE(CliArgParser::ParsedModifier)
 Q_DECLARE_METATYPE(CliArgParser::ParsedCommand)
 Q_DECLARE_METATYPE(Maybe<CliArgParser::ParsedCommand>)

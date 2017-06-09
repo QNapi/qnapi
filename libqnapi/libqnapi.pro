@@ -53,7 +53,8 @@ SOURCES += src/config/configreader.cpp \
     src/utils/syncxmlrpc.cpp \
     src/qnapi.cpp \
     src/parser/cliargparser.cpp \
-    src/parser/cliargparsersexecutor.cpp
+    src/parser/cliargparsersexecutor.cpp \
+    src/parser/showhelpargparser.cpp
 
 
 HEADERS += src/config/configreader.h \
@@ -94,7 +95,9 @@ HEADERS += src/config/configreader.h \
     src/qnapi.h \
     src/namespace_tr.h \
     src/parser/cliargparser.h \
-    src/parser/cliargparsersexecutor.h
+    src/parser/cliargparsersexecutor.h \
+    src/qnapicommand.h \
+    src/parser/showhelpargparser.h
 
 unix:!macx {
     PKGCONFIG += libmediainfo

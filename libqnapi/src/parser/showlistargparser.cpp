@@ -12,17 +12,18 @@
 **
 *****************************************************************************/
 
-#ifndef QUIETBATCHARGPARSER_H
-#define QUIETBATCHARGPARSER_H
+#include "showlistargparser.h"
+#include "qnapicommand.h"
 
-#include "parser/cliargparser.h"
+ShowListArgParser::ShowListArgParser() {}
 
-class QuietBatchArgParser : public CliArgParser {
- public:
-  QuietBatchArgParser();
-
-  virtual QVariant parse(const QStringList& args,
-                         const QNapiConfig& config) const;
-};
-
-#endif  // QUIETBATCHARGPARSER_H
+QVariant ShowListArgParser::parse(const QStringList& args,
+                                  const QNapiConfig& config) const {
+  if (args.contains("-s") || args.contains("--show-list")) {
+    return QVariant::fromValue(ParsedModifier{
+        config.setGeneralConfig(config.generalConfig().setDownloadPolicy(
+            DownloadPolicy::DP_ALWAYS_SHOW_LIST))});
+  } else {
+    return QVariant::fromValue(NothingParsed());
+  }
+}

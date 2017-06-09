@@ -12,17 +12,17 @@
 **
 *****************************************************************************/
 
-#ifndef QUIETBATCHARGPARSER_H
-#define QUIETBATCHARGPARSER_H
+#include "dontshowlistargparser.h"
 
-#include "parser/cliargparser.h"
+DontShowListArgParser::DontShowListArgParser() {}
 
-class QuietBatchArgParser : public CliArgParser {
- public:
-  QuietBatchArgParser();
-
-  virtual QVariant parse(const QStringList& args,
-                         const QNapiConfig& config) const;
-};
-
-#endif  // QUIETBATCHARGPARSER_H
+QVariant DontShowListArgParser::parse(const QStringList& args,
+                                      const QNapiConfig& config) const {
+  if (args.contains("-d") || args.contains("--dont-show-list")) {
+    return QVariant::fromValue(ParsedModifier{
+        config.setGeneralConfig(config.generalConfig().setDownloadPolicy(
+            DownloadPolicy::DP_NEVER_SHOW_LIST))});
+  } else {
+    return QVariant::fromValue(NothingParsed());
+  }
+}

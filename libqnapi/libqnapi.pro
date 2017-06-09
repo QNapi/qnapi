@@ -56,7 +56,9 @@ SOURCES += src/config/configreader.cpp \
     src/parser/cliargparsersexecutor.cpp \
     src/parser/showhelpargparser.cpp \
     src/parser/showhelplanguagesargparser.cpp \
-    src/parser/quietbatchargparser.cpp
+    src/parser/quietbatchargparser.cpp \
+    src/parser/showlistargparser.cpp \
+    src/parser/dontshowlistargparser.cpp
 
 
 HEADERS += src/config/configreader.h \
@@ -101,7 +103,9 @@ HEADERS += src/config/configreader.h \
     src/qnapicommand.h \
     src/parser/showhelpargparser.h \
     src/parser/showhelplanguagesargparser.h \
-    src/parser/quietbatchargparser.h
+    src/parser/quietbatchargparser.h \
+    src/parser/showlistargparser.h \
+    src/parser/dontshowlistargparser.h
 
 unix:!macx {
     PKGCONFIG += libmediainfo

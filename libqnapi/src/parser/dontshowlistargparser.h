@@ -12,17 +12,17 @@
 **
 *****************************************************************************/
 
-#ifndef QUIETBATCHARGPARSER_H
-#define QUIETBATCHARGPARSER_H
+#ifndef DONTSHOWLISTARGPARSER_H
+#define DONTSHOWLISTARGPARSER_H
 
 #include "parser/cliargparser.h"
 
-class QuietBatchArgParser : public CliArgParser {
+class DontShowListArgParser : public CliArgParser {
  public:
-  QuietBatchArgParser();
+  DontShowListArgParser();
 
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const;
 };
 
-#endif  // QUIETBATCHARGPARSER_H
+#endif  // DONTSHOWLISTARGPARSER_H

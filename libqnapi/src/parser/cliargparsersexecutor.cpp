@@ -33,8 +33,6 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
     } else if (result.canConvert<CliArgParser::ParsedModifier>()) {
       refinedConfig =
           result.value<CliArgParser::ParsedModifier>().refinedConfig;
-    } else {
-      return some(tr("General parsing error."));
     }
   }
 

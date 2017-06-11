@@ -30,7 +30,7 @@ QVariant FormatArgParser::parse(const QStringList& args,
   if (idx == args.size() - 1) {
     return QVariant::fromValue(ParseError{
         tr("You need to pass subtitles format code after %1 argument")
-            .arg(args[idx - 1])});
+            .arg(args[idx])});
   }
 
   QString format = args[idx + 1];

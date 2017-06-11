@@ -19,7 +19,7 @@ ShowHelpLanguagesArgParser::ShowHelpLanguagesArgParser() {}
 
 QVariant ShowHelpLanguagesArgParser::parse(const QStringList& args,
                                            const QNapiConfig& config) const {
-  if (args.contains("-h") || args.contains("--help")) {
+  if (args.contains("-hl") || args.contains("--help-languages")) {
     return QVariant::fromValue(ParsedCommand{
         config, QVariant::fromValue(QNapiCommand::ShowHelpLanguages())});
   } else {

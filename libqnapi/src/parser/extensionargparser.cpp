@@ -30,7 +30,7 @@ QVariant ExtensionArgParser::parse(const QStringList& args,
   if (idx == args.size() - 1) {
     return QVariant::fromValue(
         ParseError{tr("You need to pass subtitles extension after %1 argument")
-                       .arg(args[idx - 1])});
+                       .arg(args[idx])});
   }
 
   QString ext = args[idx + 1];

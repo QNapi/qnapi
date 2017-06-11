@@ -28,9 +28,8 @@ QVariant LangArgParser::parse(const QStringList& args,
   }
 
   if (idx == args.size() - 1) {
-    return QVariant::fromValue(
-        ParseError{tr("You need to pass language code after %1 argument")
-                       .arg(args[idx - 1])});
+    return QVariant::fromValue(ParseError{
+        tr("You need to pass language code after %1 argument").arg(args[idx])});
   }
 
   QString nextArg = args[idx + 1];

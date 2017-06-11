@@ -6,13 +6,11 @@ QT += core network xml
 QT -= gui
 
 SOURCES += src/main.cpp \
-    src/commandargsparser.cpp \
     src/clisubtitlesdownloader.cpp \
     src/console.cpp \
     src/climain.cpp
     
-HEADERS += src/qnapiclicommand.h \
-    src/commandargsparser.h \
+HEADERS += \
     src/clisubtitlesdownloader.h \
     src/console.h \
     src/climain.h

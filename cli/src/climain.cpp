@@ -15,7 +15,7 @@
 #include "climain.h"
 #include "clisubtitlesdownloader.h"
 #include "libqnapi.h"
-#include "qnapiclicommand.h"
+#include "qnapicommand.h"
 #include "subtitlelanguage.h"
 
 #include <signal.h>
@@ -115,7 +115,7 @@ int processCommand(QVariant cliCommand, const QNapiConfig &config) {
 
   printHeader(c);
 
-  using namespace QNapiCliCommand;
+  using namespace QNapiCommand;
   if (cliCommand.canConvert<DownloadSubtitles>()) {
     QStringList movieFilePaths =
         cliCommand.value<DownloadSubtitles>().movieFilePaths;

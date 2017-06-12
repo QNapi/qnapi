@@ -12,27 +12,17 @@
 **
 *****************************************************************************/
 
-#ifndef COMMANDARGSPARSER_H
-#define COMMANDARGSPARSER_H
+#ifndef RUNCLIAPPARGPARSER_H
+#define RUNCLIAPPARGPARSER_H
 
-#include <Either.h>
+#include "parser/cliargparser.h"
 
-#include "config/qnapiconfig.h"
-#include "namespace_tr.h"
-namespace CommandArgsParser {
+class RunCLIAppArgParser : public CliArgParser {
+ public:
+  RunCLIAppArgParser();
 
-Q_DECLARE_NAMESPACE_TR(CommandArgsParser)
-
-struct ParsedCommand {
-  QNapiConfig refinedConfig;
-  QVariant command;
+  virtual QVariant parse(const QStringList& args,
+                         const QNapiConfig& config) const;
 };
 
-Either<QString, ParsedCommand> parse(const QStringList& args,
-                                     const QNapiConfig& config);
-
-}  // namespace CommandArgsParser
-
-Q_DECLARE_METATYPE(CommandArgsParser::ParsedCommand)
-
-#endif  // COMMANDARGSPARSER_H
+#endif  // RUNCLIAPPARGPARSER_H

@@ -12,16 +12,21 @@
 **
 *****************************************************************************/
 
-#include "commandargsparser.h"
-#include "qnapiguicommand.h"
+#include "runcliappargparser.h"
+#include "qnapicommand.h"
 
-namespace CommandArgsParser {
+RunCLIAppArgParser::RunCLIAppArgParser() {}
 
-using namespace QNapiGuiCommand;
-
-Either<QString, ParsedCommand> parse(const QStringList& args,
-                                     const QNapiConfig& config) {
-  return some(QString("???"));
+QVariant RunCLIAppArgParser::parse(const QStringList& args,
+                                   const QNapiConfig& config) const {
+  if (args.contains("-c") || args.contains("--console")) {
+    QStringList argsRemovedCLISwitch = args;
+    argsRemovedCLISwitch.removeAll("-c");
+    argsRemovedCLISwitch.removeAll("--console");
+    return QVariant::fromValue(ParsedCommand{
+        config,
+        QVariant::fromValue(QNapiCommand::RunCLIApp{argsRemovedCLISwitch})});
+  } else {
+    return QVariant::fromValue(NothingParsed());
+  }
 }
-
-}  // namespace CommandArgsParser

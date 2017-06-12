@@ -21,6 +21,10 @@
 
 namespace QNapiCommand {
 
+struct RunCLIApp {
+  QStringList arguments;
+};
+
 struct DownloadSubtitles {
   QStringList movieFilePaths;
 };
@@ -42,6 +46,7 @@ struct ShowHelpLanguages {};
 
 }  // namespace QNapiCommand
 
+Q_DECLARE_METATYPE(QNapiCommand::RunCLIApp)
 Q_DECLARE_METATYPE(QNapiCommand::DownloadSubtitles)
 Q_DECLARE_METATYPE(QNapiCommand::ScanDirectory)
 // not implemented yet

@@ -50,12 +50,6 @@ class GetThread : public QNapiThread {
  public:
   void setSpecificEngine(Maybe<QString> engine) { specificEngine = engine; }
 
-  void setLanguages(QString language, QString languageBackup,
-                    bool languageBackupPassed) {
-    lang = language;
-    langBackup = languageBackup;
-    langBackupPassed = languageBackupPassed;
-  }
   void setConfig(const QNapiConfig &configuration) { config = configuration; }
 
   void run();
@@ -63,8 +57,6 @@ class GetThread : public QNapiThread {
   QStringList queue;
   Maybe<QString> specificEngine;
   QList<SubtitleInfo> subStatusList;
-  QString lang, langBackup;
-  bool langBackupPassed;
   int napiSuccess, napiFail;
   QString criticalMessage;
   QMutex waitForDlg;
@@ -84,12 +76,6 @@ class frmProgress : public QWidget {
   }
 
   void setBatchMode(bool value) { batchMode = value; }
-  void setBatchLanguages(QString lang, QString langBackup,
-                         bool langBackupPassed) {
-    getThread.setLanguages(lang, langBackup, langBackupPassed);
-  }
-  void setTargetFormatOverride(QString value) { targetFormatOverride = value; }
-  void setTargetExtOverride(QString value) { targetExtOverride = value; }
   bool isBatchMode() { return batchMode; }
 
  signals:
@@ -99,7 +85,7 @@ class frmProgress : public QWidget {
   void receiveRequest(const QString &request);
   void enqueueFile(const QString &file);
   void enqueueFiles(const QStringList &fileList);
-  bool download();
+  bool download(const QNapiConfig &config);
   void updateProgress(int current, int all, float stageProgress);
   void selectSubtitles(QString fileName, SubtitleInfoList subtitles);
   void downloadFinished();
@@ -113,7 +99,6 @@ class frmProgress : public QWidget {
   GetThread getThread;
   frmListSubtitles frmSelect;
   frmSummary summary;
-  QString targetFormatOverride, targetExtOverride;
 
   bool batchMode, showSummary, closeRequested;
   QMutex mutex;

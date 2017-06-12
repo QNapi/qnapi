@@ -42,7 +42,7 @@
 class QNapiApp : public QSingleApplication {
   Q_OBJECT
  public:
-  QNapiApp(int &argc, char **argv, bool useGui, const QString &appName);
+  QNapiApp(int &argc, char **argv, const QString &appName);
   ~QNapiApp();
 
   void createTrayIcon();
@@ -52,8 +52,8 @@ class QNapiApp : public QSingleApplication {
 
  public slots:
 
-  bool showOpenDialog(QString engine = "");
-  bool showScanDialog(QString init_dir = "");
+  bool showOpenDialog(const QNapiConfig &config, QString engine = "");
+  bool showScanDialog(const QNapiConfig &config, QString init_dir = "");
   void showConvertDialog();
   void showCreateAccount(const QString &engineName) const;
   void showOSUploadDialog() const;

@@ -53,7 +53,7 @@ frmProgress::frmProgress(QWidget *parent, Qt::WindowFlags f)
 
 void frmProgress::receiveRequest(const QString &request) {
   enqueueFile(request);
-  if (!getThread.isRunning()) download();
+  if (!getThread.isRunning()) download(LibQNapi::loadConfig());
   raise();
   activateWindow();
 }
@@ -74,24 +74,12 @@ void frmProgress::enqueueFiles(const QStringList &fileList) {
   }
 }
 
-bool frmProgress::download() {
+bool frmProgress::download(const QNapiConfig &config) {
   if (summary.isVisible()) {
     summary.close();
   }
 
-  auto config = LibQNapi::loadConfig();
-  auto config1 = config;
-  if (!targetFormatOverride.isEmpty()) {
-    config1 = config1.setPostProcessingConfig(
-        config1.postProcessingConfig().setSubFormat(targetFormatOverride));
-  }
-  auto config2 = config1;
-  if (!targetExtOverride.isEmpty()) {
-    config2 = config2.setPostProcessingConfig(
-        config2.postProcessingConfig().setSubExtension(targetExtOverride));
-  }
-
-  QNapi napi(config2);
+  QNapi napi(config);
 
   // TODO: perform these checks earlier
   if (!napi.checkP7ZipPath()) {
@@ -125,7 +113,7 @@ bool frmProgress::download() {
   closeRequested = false;
   ui.pbCancel->setEnabled(true);
 
-  getThread.setConfig(config2);
+  getThread.setConfig(config);
   getThread.start();
   return true;
 }
@@ -236,8 +224,7 @@ void frmProgress::dropEvent(QDropEvent *event) {
   }
 }
 
-GetThread::GetThread()
-    : langBackupPassed(false), config(LibQNapi::loadConfig()) {
+GetThread::GetThread() : config(LibQNapi::loadConfig()) {
   connect(this, SIGNAL(criticalError(const QString &)), this,
           SLOT(setCriticalMessage(const QString &)));
 }
@@ -266,9 +253,8 @@ void GetThread::run() {
 
   emit progressChange(0, queue.size(), 0.0f);
 
-  QString language = !lang.isEmpty() ? lang : config.generalConfig().language();
-  QString languageBackup =
-      langBackupPassed ? langBackup : config.generalConfig().backupLanguage();
+  QString language = config.generalConfig().language();
+  QString languageBackup = config.generalConfig().backupLanguage();
 
   for (int i = 0; i < queue.size(); i++) {
     ABORT_POINT

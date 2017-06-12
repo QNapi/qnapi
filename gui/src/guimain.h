@@ -15,11 +15,24 @@
 #ifndef GUIMAIN_H
 #define GUIMAIN_H
 
+#include "config/qnapiconfig.h"
 #include "namespace_tr.h"
+#include "qnapiapp.h"
+
+#include <QCoreApplication>
+#include <QTranslator>
 
 namespace GuiMain {
 Q_DECLARE_NAMESPACE_TR(GuiMain)
 
+int processCommand(QNapiApp &app, QVariant cliCommand,
+                   const QNapiConfig &config);
+void showArgParserError(const QString &errorMessage);
+
+bool isCLIAvailable();
+int runCLI(const QStringList &args);
+void installTranslation(QCoreApplication &app, QTranslator *qtTranslator,
+                        QTranslator *translator, const QNapiConfig &config);
 void regSignal();
 void sigHandler(int);
 }  // namespace GuiMain

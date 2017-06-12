@@ -36,8 +36,7 @@ class QCUMBER_EXPORT QSingleApplication : public QApplication {
 
   enum MessagingPolicy { Ignore, Events, Signals };
 
-  QSingleApplication(int& argc, char** argv, bool useGui,
-                     const QString& appName);
+  QSingleApplication(int& argc, char** argv, const QString& appName);
   virtual ~QSingleApplication();
 
   bool isInstanceAllowed() const;

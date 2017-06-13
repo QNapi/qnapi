@@ -39,6 +39,12 @@ int processCommand(QNapiApp &app, QVariant cliCommand,
     app.showSettings();
     return 0;
 
+  } else if (cliCommand.canConvert<ScanDirectory>()) {
+    app.setQuitOnLastWindowClosed(true);
+    app.progress()->setBatchMode(true);
+    app.showScanDialog(config, cliCommand.value<ScanDirectory>().directory);
+    return app.exec();
+
   } else if (cliCommand.canConvert<DownloadSubtitles>()) {
     QStringList movieFilePaths =
         cliCommand.value<DownloadSubtitles>().movieFilePaths;

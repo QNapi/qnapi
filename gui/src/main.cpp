@@ -31,6 +31,7 @@
 #include "parser/langargparser.h"
 #include "parser/quietbatchargparser.h"
 #include "parser/runcliappargparser.h"
+#include "parser/scandirectoryargparser.h"
 #include "parser/showhelpargparser.h"
 #include "parser/showhelplanguagesargparser.h"
 #include "parser/showlistargparser.h"
@@ -61,6 +62,7 @@ int main(int argc, char **argv) {
       QSharedPointer<CliArgParser>(new FormatArgParser()),
       QSharedPointer<CliArgParser>(new ExtensionArgParser()),
       QSharedPointer<CliArgParser>(new ShowOptionsArgParser()),
+      QSharedPointer<CliArgParser>(new ScanDirectoryArgParser()),
       QSharedPointer<CliArgParser>(new DownloadSubtitlesArgParser())};
 
   QStringList tailArgs = app.arguments().mid(1, app.arguments().size() - 1);

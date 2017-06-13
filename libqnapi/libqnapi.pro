@@ -65,7 +65,8 @@ SOURCES += src/config/configreader.cpp \
     src/parser/extensionargparser.cpp \
     src/parser/downloadsubtitlesargparser.cpp \
     src/parser/showoptionsargparser.cpp \
-    src/parser/runcliappargparser.cpp
+    src/parser/runcliappargparser.cpp \
+    src/parser/scandirectoryargparser.cpp
 
 
 HEADERS += src/config/configreader.h \
@@ -119,7 +120,8 @@ HEADERS += src/config/configreader.h \
     src/parser/extensionargparser.h \
     src/parser/downloadsubtitlesargparser.h \
     src/parser/showoptionsargparser.h \
-    src/parser/runcliappargparser.h
+    src/parser/runcliappargparser.h \
+    src/parser/scandirectoryargparser.h
 
 unix:!macx {
     PKGCONFIG += libmediainfo

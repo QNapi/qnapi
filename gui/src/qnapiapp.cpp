@@ -14,6 +14,7 @@
 
 #include "qnapiapp.h"
 
+#include <iostream>
 #include "libqnapi.h"
 
 QNapiApp::QNapiApp(int &argc, char **argv, const QString &appName)
@@ -259,8 +260,8 @@ void QNapiApp::showConvertDialog() {
 
   f_convert->exec();
 
-  delete f_scan;
-  f_scan = 0;
+  delete f_convert;
+  f_convert = 0;
 }
 
 void QNapiApp::showCreateAccount(const QString &engineName) const {

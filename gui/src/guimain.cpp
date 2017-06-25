@@ -109,9 +109,10 @@ bool isCLIAvailable() { return cliExecutablePath(); }
 int runCLI(const QStringList &args) {
   auto maybeCliExecutablePath = cliExecutablePath();
   if (!maybeCliExecutablePath) {
-    QMessageBox::critical(0, tr("QNapi - no CLI executable"),
-                          tr("Can't run QNapi in CLI mode, because CLI "
-                             "executable '%1' is not available.")
+    QMessageBox::critical(0, tr("QNapi - CLI executable not found"),
+                          tr("You have requested to run QNapi in command-line "
+                             "mode, but unfortunately command-line binary '%1' "
+                             "could not be found.")
                               .arg(cliExecutableName),
                           QMessageBox::Close);
     return 1;

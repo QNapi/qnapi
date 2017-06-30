@@ -39,9 +39,19 @@ class CliArgParser {
     QVariant command;
   };
 
+  struct HelpInfo {
+    QString shortSwitch;
+    QString longSwitch;
+    QString argName;
+    QString description;
+  };
+
   virtual ~CliArgParser();
+
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const = 0;
+
+  virtual Maybe<HelpInfo> helpInfo() const { return nothing(); }
 };
 
 Q_DECLARE_METATYPE(CliArgParser::ParseError)
@@ -49,5 +59,7 @@ Q_DECLARE_METATYPE(CliArgParser::NothingParsed)
 Q_DECLARE_METATYPE(CliArgParser::ParsedModifier)
 Q_DECLARE_METATYPE(CliArgParser::ParsedCommand)
 Q_DECLARE_METATYPE(Maybe<CliArgParser::ParsedCommand>)
+Q_DECLARE_METATYPE(CliArgParser::HelpInfo)
+Q_DECLARE_METATYPE(Maybe<CliArgParser::HelpInfo>)
 
 #endif  // CLIARGPARSER_H

@@ -43,3 +43,8 @@ QVariant ExtensionArgParser::parse(const QStringList& args,
         config.postProcessingConfig().setSubExtension(ext))});
   }
 }
+
+Maybe<CliArgParser::HelpInfo> ExtensionArgParser::helpInfo() const {
+  return just(HelpInfo{"-e", "--extension", tr("ext"),
+                       tr("Select target subtitles file extension")});
+}

@@ -15,14 +15,19 @@
 #ifndef QUIETBATCHARGPARSER_H
 #define QUIETBATCHARGPARSER_H
 
+#include <QCoreApplication>
 #include "parser/cliargparser.h"
 
 class QuietBatchArgParser : public CliArgParser {
+  Q_DECLARE_TR_FUNCTIONS()
+
  public:
   QuietBatchArgParser();
 
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const;
+
+  virtual Maybe<HelpInfo> helpInfo() const;
 };
 
 #endif  // QUIETBATCHARGPARSER_H

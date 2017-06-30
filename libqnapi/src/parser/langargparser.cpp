@@ -44,3 +44,8 @@ QVariant LangArgParser::parse(const QStringList& args,
         config.generalConfig().setLanguage(twoLetterLang))});
   }
 }
+
+Maybe<CliArgParser::HelpInfo> LangArgParser::helpInfo() const {
+  return just(
+      HelpInfo{"-l", "--lang", tr("code"), tr("Preferred subtitles language")});
+}

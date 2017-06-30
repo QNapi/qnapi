@@ -26,3 +26,9 @@ QVariant QuietBatchArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> QuietBatchArgParser::helpInfo() const {
+  return just(
+      HelpInfo{"-q", "--quiet", "",
+               tr("Download subtitles silently without showing any messages")});
+}

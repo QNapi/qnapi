@@ -15,14 +15,19 @@
 #ifndef SHOWHELPARGPARSER_H
 #define SHOWHELPARGPARSER_H
 
+#include <QCoreApplication>
 #include "parser/cliargparser.h"
 
 class ShowHelpArgParser : public CliArgParser {
+  Q_DECLARE_TR_FUNCTIONS()
+
  public:
   ShowHelpArgParser();
 
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const;
+
+  virtual Maybe<HelpInfo> helpInfo() const;
 };
 
 #endif  // SHOWHELPARGPARSER_H

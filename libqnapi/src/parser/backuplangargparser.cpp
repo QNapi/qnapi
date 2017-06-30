@@ -45,3 +45,8 @@ QVariant BackupLangArgParser::parse(const QStringList& args,
         config.generalConfig().setBackupLanguage(twoLetterLang))});
   }
 }
+
+Maybe<CliArgParser::HelpInfo> BackupLangArgParser::helpInfo() const {
+  return just(HelpInfo{"-lb", "--lang-backup", tr("code"),
+                       tr("Alternative subtitles language")});
+}

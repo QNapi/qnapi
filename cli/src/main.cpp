@@ -77,7 +77,11 @@ int main(int argc, char **argv) {
                                      parsedCommand.refinedConfig);
     } else {
       CliMain::printHeader(c);
-      CliMain::printHelp(c);
+
+      auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
+      auto helpLines = CliArgParsersExecutor::collectHelpLines(helpInfos);
+
+      CliMain::printHelp(c, helpLines);
       return 0;
     }
   } else {

@@ -43,3 +43,9 @@ QVariant FormatArgParser::parse(const QStringList& args,
         config.postProcessingConfig().setSubFormat(format))});
   }
 }
+
+Maybe<CliArgParser::HelpInfo> FormatArgParser::helpInfo() const {
+  return just(HelpInfo{
+      "-f", "--format", tr("format"),
+      tr("Select target subtitles file format (one of mDVD, MPL2, SRT, TMP)")});
+}

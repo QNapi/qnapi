@@ -33,6 +33,12 @@ Q_DECLARE_NAMESPACE_TR(CliArgParsersExecutor)
 Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
     const QList<QSharedPointer<CliArgParser>> &parsers, const QStringList &args,
     const QNapiConfig &config);
+
+QList<CliArgParser::HelpInfo> collectHelpInfos(
+    const QList<QSharedPointer<CliArgParser>> &parsers);
+
+QStringList collectHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos);
+
 }  // namespace CliArgParsersExecutor
 
 #endif  // CLIARGPARSERSEXECUTOR_H

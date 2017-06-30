@@ -27,3 +27,8 @@ QVariant ShowListArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> ShowListArgParser::helpInfo() const {
+  return just(HelpInfo{"-s", "--show-list", "",
+                       tr("Always show a list of available subtitles")});
+}

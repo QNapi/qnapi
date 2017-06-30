@@ -26,3 +26,8 @@ QVariant ShowHelpLanguagesArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> ShowHelpLanguagesArgParser::helpInfo() const {
+  return just(HelpInfo{"-hl", "--help-languages", "",
+                       tr("List of available subtitles languages")});
+}

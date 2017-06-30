@@ -26,3 +26,7 @@ QVariant ShowHelpArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> ShowHelpArgParser::helpInfo() const {
+  return just(HelpInfo{"-h", "--help", "", tr("Show help text")});
+}

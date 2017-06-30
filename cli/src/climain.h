@@ -26,7 +26,7 @@ Q_DECLARE_NAMESPACE_TR(CliMain)
 void installTranslation(QCoreApplication &app, QTranslator *translator,
                         const QNapiConfig &config);
 void printHeader(const Console &c);
-void printHelp(const Console &c);
+void printHelp(const Console &c, const QStringList argsHelpLines);
 void printHelpLanguages(const Console &c, const QNapiConfig &config);
 int processCommand(QVariant cliCommand, const QNapiConfig &config);
 void sigHandler(int sig);

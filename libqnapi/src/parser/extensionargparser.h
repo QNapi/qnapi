@@ -26,6 +26,8 @@ class ExtensionArgParser : public CliArgParser {
 
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const;
+
+  virtual Maybe<HelpInfo> helpInfo() const;
 };
 
 #endif  // EXTENSIONARGPARSER_H

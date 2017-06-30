@@ -40,4 +40,56 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
   return some(n);
 }
 
+QList<CliArgParser::HelpInfo> collectHelpInfos(
+    const QList<QSharedPointer<CliArgParser>> &parsers) {
+  QList<CliArgParser::HelpInfo> helpInfos;
+
+  foreach (auto cliArgParser, parsers) {
+    if (cliArgParser->helpInfo()) {
+      helpInfos << cliArgParser->helpInfo().value();
+    }
+  }
+
+  return helpInfos;
+}
+
+QStringList collectHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos) {
+  QStringList helpLines;
+  int switchesBlockSize = 30;
+  int descBlockSize = 50;
+
+  foreach (auto helpInfo, helpInfos) {
+    QString optSwitches = "   " + helpInfo.shortSwitch + ",";
+    if (helpInfo.shortSwitch.size() == 2) optSwitches += " ";
+    optSwitches += helpInfo.longSwitch;
+    if (!helpInfo.argName.isEmpty()) {
+      optSwitches += QString(" [%1]").arg(helpInfo.argName);
+    }
+    if (optSwitches.length() < switchesBlockSize) {
+      optSwitches += QString(switchesBlockSize - optSwitches.length(), ' ');
+    }
+
+    QString notConsumedDescription = helpInfo.description.trimmed();
+    while (!notConsumedDescription.isEmpty()) {
+      QString helpPart;
+
+      if (notConsumedDescription.size() <= descBlockSize) {
+        helpPart = notConsumedDescription;
+        notConsumedDescription = "";
+      } else {
+        int lastSpace =
+            notConsumedDescription.left(1 + descBlockSize).lastIndexOf(' ');
+        helpPart = notConsumedDescription.left(lastSpace);
+        notConsumedDescription =
+            notConsumedDescription.mid(lastSpace).trimmed();
+      }
+
+      helpLines << optSwitches + helpPart;
+      optSwitches = QString(switchesBlockSize, ' ');
+    }
+  }
+
+  return helpLines;
+}
+
 }  // namespace CliArgParsersExecutor

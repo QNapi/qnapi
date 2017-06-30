@@ -26,3 +26,8 @@ QVariant DontShowListArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> DontShowListArgParser::helpInfo() const {
+  return just(HelpInfo{"-d", "--dont-show-list", "",
+                       tr("Never show a list of available subtitles")});
+}

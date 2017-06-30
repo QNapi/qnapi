@@ -15,14 +15,19 @@
 #ifndef SHOWLISTARGPARSER_H
 #define SHOWLISTARGPARSER_H
 
+#include <QCoreApplication>
 #include "parser/cliargparser.h"
 
 class ShowListArgParser : public CliArgParser {
+  Q_DECLARE_TR_FUNCTIONS()
+
  public:
   ShowListArgParser();
 
   virtual QVariant parse(const QStringList& args,
                          const QNapiConfig& config) const;
+
+  virtual Maybe<HelpInfo> helpInfo() const;
 };
 
 #endif  // SHOWLISTARGPARSER_H

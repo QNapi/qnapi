@@ -40,7 +40,7 @@ void printHeader(const Console &c) {
   c.printLine();
 }
 
-void printHelp(const Console &c) {
+void printHelp(const Console &c, const QStringList argsHelpLines) {
   QString formats =
       LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
   QString binaryFileName =
@@ -51,6 +51,13 @@ void printHelp(const Console &c) {
   c.printLine();
   c.printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
   c.printLine(tr("Available options:"));
+
+  c.printLine("-------------------");
+
+  foreach (auto line, argsHelpLines) { c.printLine(line); }
+
+  c.printLine("-------------------");
+
   c.printLine(
       tr("   -q, --quiet                Download subtitles quietly without "
          "showing"));
@@ -125,7 +132,7 @@ int processCommand(QVariant cliCommand, const QNapiConfig &config) {
     printHelpLanguages(Console(), config);
     return 0;
   } else {
-    printHelp(Console());
+    printHelp(Console(), QStringList());
     return 0;
   }
 }

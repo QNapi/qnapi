@@ -53,7 +53,7 @@ QList<CliArgParser::HelpInfo> collectHelpInfos(
   return helpInfos;
 }
 
-QStringList collectHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos) {
+QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos) {
   QStringList helpLines;
   int switchesBlockSize = 30;
   int descBlockSize = 50;

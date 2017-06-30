@@ -37,7 +37,7 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
 QList<CliArgParser::HelpInfo> collectHelpInfos(
     const QList<QSharedPointer<CliArgParser>> &parsers);
 
-QStringList collectHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos);
+QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos);
 
 }  // namespace CliArgParsersExecutor
 

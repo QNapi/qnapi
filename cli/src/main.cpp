@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
       CliMain::printHeader(c);
 
       auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
-      auto helpLines = CliArgParsersExecutor::collectHelpLines(helpInfos);
+      auto helpLines = CliArgParsersExecutor::formatHelpLines(helpInfos);
 
       CliMain::printHelp(c, helpLines);
       return 0;

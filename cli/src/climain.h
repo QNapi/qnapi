@@ -16,8 +16,8 @@
 #define CLIMAIN_H
 
 #include "config/qnapiconfig.h"
-#include "console.h"
 #include "namespace_tr.h"
+#include "utils/console.h"
 
 namespace CliMain {
 

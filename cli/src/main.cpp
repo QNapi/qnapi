@@ -15,7 +15,6 @@
 #include "Either.h"
 #include "Maybe.h"
 #include "climain.h"
-#include "console.h"
 #include "libqnapi.h"
 #include "parser/backuplangargparser.h"
 #include "parser/cliargparser.h"
@@ -30,6 +29,7 @@
 #include "parser/showhelplanguagesargparser.h"
 #include "parser/showlistargparser.h"
 #include "qnapicommand.h"
+#include "utils/console.h"
 
 #include <QCoreApplication>
 #include <QSharedPointer>

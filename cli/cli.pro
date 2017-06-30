@@ -7,12 +7,10 @@ QT -= gui
 
 SOURCES += src/main.cpp \
     src/clisubtitlesdownloader.cpp \
-    src/console.cpp \
     src/climain.cpp
     
 HEADERS += \
     src/clisubtitlesdownloader.h \
-    src/console.h \
     src/climain.h
 
 RESOURCES += res/resources.qrc

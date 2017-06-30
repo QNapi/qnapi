@@ -47,6 +47,7 @@ SOURCES += src/config/configreader.cpp \
     src/subtitlelanguage.cpp \
     src/subtitlematcher.cpp \
     src/subtitlepostprocessor.cpp \
+    src/utils/console.cpp \
     src/utils/encodingutils.cpp \
     src/utils/p7zipdecoder.cpp \
     src/utils/synchttp.cpp \
@@ -99,6 +100,7 @@ HEADERS += src/config/configreader.h \
     src/subtitlelanguage.h \
     src/subtitlematcher.h \
     src/subtitlepostprocessor.h \
+    src/utils/console.h \
     src/utils/encodingutils.h \
     src/utils/p7zipdecoder.h \
     src/utils/synchttp.h \

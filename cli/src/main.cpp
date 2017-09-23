@@ -73,15 +73,11 @@ int main(int argc, char **argv) {
 
     if (parsedMaybeCommand) {
       auto parsedCommand = parsedMaybeCommand.value();
-      return CliMain::processCommand(parsedCommand.command,
-                                     parsedCommand.refinedConfig);
+      return CliMain::processCommand(
+          parsedCommand.command, parsedCommand.refinedConfig, cliArgParsers);
     } else {
       CliMain::printHeader(c);
-
-      auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
-      auto helpLines = CliArgParsersExecutor::formatHelpLines(helpInfos);
-
-      CliMain::printHelp(c, helpLines);
+      CliMain::printHelp(c, cliArgParsers);
       return 0;
     }
   } else {

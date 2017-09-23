@@ -17,6 +17,8 @@
 
 #include "config/qnapiconfig.h"
 #include "namespace_tr.h"
+#include "parser/cliargparser.h"
+#include "parser/cliargparsersexecutor.h"
 #include "utils/console.h"
 
 namespace CliMain {
@@ -26,9 +28,11 @@ Q_DECLARE_NAMESPACE_TR(CliMain)
 void installTranslation(QCoreApplication &app, QTranslator *translator,
                         const QNapiConfig &config);
 void printHeader(const Console &c);
-void printHelp(const Console &c, const QStringList argsHelpLines);
+void printHelp(const Console &c,
+               const QList<QSharedPointer<CliArgParser>> &cliArgParsers);
 void printHelpLanguages(const Console &c, const QNapiConfig &config);
-int processCommand(QVariant cliCommand, const QNapiConfig &config);
+int processCommand(QVariant cliCommand, const QNapiConfig &config,
+                   const QList<QSharedPointer<CliArgParser>> &cliArgParsers);
 void sigHandler(int sig);
 void regSignal();
 

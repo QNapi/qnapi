@@ -40,7 +40,8 @@ void printHeader(const Console &c) {
   c.printLine();
 }
 
-void printHelp(const Console &c, const QStringList argsHelpLines) {
+void printHelp(const Console &c,
+               const QList<QSharedPointer<CliArgParser>> &cliArgParsers) {
   QString formats =
       LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
   QString binaryFileName =
@@ -52,38 +53,10 @@ void printHelp(const Console &c, const QStringList argsHelpLines) {
   c.printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
   c.printLine(tr("Available options:"));
 
-  c.printLine("-------------------");
+  auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
+  auto helpLines = CliArgParsersExecutor::formatHelpLines(helpInfos);
 
-  foreach (auto line, argsHelpLines) { c.printLine(line); }
-
-  c.printLine("-------------------");
-
-  c.printLine(
-      tr("   -q, --quiet                Download subtitles quietly without "
-         "showing"));
-  c.printLine(
-      tr("                              any messages or windows (implies -d)"));
-  c.printLine();
-  c.printLine(
-      tr("   -s, --show-list            Show a list of subtitles (works only "
-         "with -c)"));
-  c.printLine(
-      tr("   -d, --dont-show-list       Do not show a list of subtitles (works "
-         "only with -c)"));
-  c.printLine();
-  c.printLine(tr("   -l, --lang [code]          Preferred subtitles language"));
-  c.printLine(
-      tr("   -lb,--lang-backup [code]   Alternative subtitles language"));
-  c.printLine(tr("   -f, --format [format]      Select target subtitles file "
-                 "format (%1)")
-                  .arg(formats));
-  c.printLine(tr(
-      "   -e, --extension [ext]      Select target subtitles file extension"));
-  c.printLine();
-  c.printLine(tr("   -h, --help                 Show help text"));
-  c.printLine(tr(
-      "   -hl,--help-languages       List of available subtitles languages"));
-  c.printLine();
+  foreach (auto helpLine, helpLines) { c.printLine(helpLine); }
 }
 
 void printHelpLanguages(const Console &c, const QNapiConfig &config) {
@@ -117,7 +90,8 @@ void printHelpLanguages(const Console &c, const QNapiConfig &config) {
   }
 }
 
-int processCommand(QVariant cliCommand, const QNapiConfig &config) {
+int processCommand(QVariant cliCommand, const QNapiConfig &config,
+                   const QList<QSharedPointer<CliArgParser>> &cliArgParsers) {
   const Console c(config.generalConfig().quietBatch());
 
   printHeader(c);
@@ -129,10 +103,10 @@ int processCommand(QVariant cliCommand, const QNapiConfig &config) {
     return CliSubtitlesDownloader::downloadSubtitlesFor(c, movieFilePaths,
                                                         config);
   } else if (cliCommand.canConvert<ShowHelpLanguages>()) {
-    printHelpLanguages(Console(), config);
+    printHelpLanguages(c, config);
     return 0;
   } else {
-    printHelp(Console(), QStringList());
+    printHelp(c, cliArgParsers);
     return 0;
   }
 }

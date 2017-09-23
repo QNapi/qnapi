@@ -36,8 +36,8 @@ QVariant FormatArgParser::parse(const QStringList& args,
   QString format = args[idx + 1];
 
   if (LibQNapi::subtitleFormatsRegistry()->select(format).isNull()) {
-    return QVariant::fromValue(
-        ParseError{tr("Invalid language code passed: %1").arg(format)});
+    return QVariant::fromValue(ParseError{
+        tr("Invalid target subtitles format passed: %1").arg(format)});
   } else {
     return QVariant::fromValue(ParsedModifier{config.setPostProcessingConfig(
         config.postProcessingConfig().setSubFormat(format))});

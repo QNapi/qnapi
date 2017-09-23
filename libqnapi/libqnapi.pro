@@ -107,7 +107,7 @@ HEADERS += src/config/configreader.h \
     src/utils/syncxmlrpc.h \
     src/version.h \
     src/qnapi.h \
-    src/namespace_tr.h \
+    src/tr.h \
     src/parser/cliargparser.h \
     src/parser/cliargparsersexecutor.h \
     src/qnapicommand.h \

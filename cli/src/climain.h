@@ -16,9 +16,9 @@
 #define CLIMAIN_H
 
 #include "config/qnapiconfig.h"
-#include "namespace_tr.h"
 #include "parser/cliargparser.h"
 #include "parser/cliargparsersexecutor.h"
+#include "tr.h"
 #include "utils/console.h"
 
 namespace CliMain {

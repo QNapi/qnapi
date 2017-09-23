@@ -16,7 +16,7 @@
 #define CLIARGPARSERSEXECUTOR_H
 
 #include "config/qnapiconfig.h"
-#include "namespace_tr.h"
+#include "tr.h"
 #include "parser/cliargparser.h"
 
 #include <QList>

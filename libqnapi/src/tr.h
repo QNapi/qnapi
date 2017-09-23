@@ -24,4 +24,12 @@
                                        n);                                   \
   }
 
+#define Q_DECLARE_CLASS_TR(context)                                          \
+  inline QString tr(const char *sourceText,                                  \
+                    const char *disambiguation = Q_NULLPTR, int n = -1)      \
+      const {                                                                \
+    return QCoreApplication::translate(#context, sourceText, disambiguation, \
+                                       n);                                   \
+  }
+
 #endif  // NAMESPACE_TR_H

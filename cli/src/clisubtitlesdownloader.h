@@ -16,7 +16,7 @@
 #define CLISUBTITLESDOWNLOADER_H
 
 #include "config/qnapiconfig.h"
-#include "namespace_tr.h"
+#include "tr.h"
 #include "utils/console.h"
 
 #include <QStringList>

@@ -32,52 +32,52 @@
         <translation>QNapi %1 (versione Qt %2), %3</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="51"/>
+        <location filename="../cli/src/climain.cpp" line="49"/>
         <source>QNapi is distributed under the GNU General Public License v2.</source>
         <translation>QNapi è distribuito sotto la GNU General Public License v2.</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="53"/>
+        <location filename="../cli/src/climain.cpp" line="51"/>
         <source>Syntax: %1 [options] [list of files]</source>
         <translation>Sintassi: %1 [opzioni] [lista file]</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="54"/>
+        <location filename="../cli/src/climain.cpp" line="52"/>
         <source>Available options:</source>
         <translation>Opzioni disponibili:</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="64"/>
+        <location filename="../cli/src/climain.cpp" line="62"/>
         <source>List of languages recognized by QNapi, including corresponding</source>
         <translation>Lista delle lingue riconosciute da QNapi, inclusi i corrispondenti</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="65"/>
+        <location filename="../cli/src/climain.cpp" line="63"/>
         <source>two-letter language codes:</source>
         <translation>codici lingua a due lettere:</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="80"/>
+        <location filename="../cli/src/climain.cpp" line="78"/>
         <source>Current default subtitles language: %1 (%2)</source>
         <translation>Lingua sottotitoli predefinita corrente: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="85"/>
+        <location filename="../cli/src/climain.cpp" line="83"/>
         <source>No alternative subtitles language has been set</source>
         <translation>Non è stata impostata alcuna lingua sottotitoli alternativa</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="87"/>
+        <location filename="../cli/src/climain.cpp" line="85"/>
         <source>Current alternative subtitles language: %1 (%2)</source>
         <translation>Lingua sottotitoli alternativa corrente: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="118"/>
+        <location filename="../cli/src/climain.cpp" line="116"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: eliminazione file temporanei...</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="133"/>
+        <location filename="../cli/src/climain.cpp" line="131"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: operazione conclusa.</translation>
     </message>

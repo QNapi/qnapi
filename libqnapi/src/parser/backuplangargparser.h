@@ -17,9 +17,10 @@
 
 #include <QCoreApplication>
 #include "parser/cliargparser.h"
+#include "tr.h"
 
 class BackupLangArgParser : public CliArgParser {
-  Q_DECLARE_TR_FUNCTIONS()
+  Q_DECLARE_CLASS_TR(BackupLangArgParser)
 
  public:
   BackupLangArgParser();

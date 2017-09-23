@@ -42,8 +42,6 @@ void printHeader(const Console &c) {
 
 void printHelp(const Console &c,
                const QList<QSharedPointer<CliArgParser>> &cliArgParsers) {
-  QString formats =
-      LibQNapi::subtitleFormatsRegistry()->listFormatNames().join(",");
   QString binaryFileName =
       QFileInfo(LibQNapi::appExecutableFilePath).fileName();
 

@@ -17,6 +17,7 @@
 #include "libqnapi.h"
 #include "qnapicommand.h"
 #include "subtitlelanguage.h"
+#include "utils/helphelper.h"
 
 #include <signal.h>
 #include <QDir>
@@ -42,17 +43,7 @@ void printHeader(const Console &c) {
 
 void printHelp(const Console &c,
                const QList<QSharedPointer<CliArgParser>> &cliArgParsers) {
-  QString binaryFileName =
-      QFileInfo(LibQNapi::appExecutableFilePath).fileName();
-
-  c.printLine(
-      tr("QNapi is distributed under the GNU General Public License v2."));
-  c.printLine();
-  c.printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
-  c.printLine(tr("Available options:"));
-
-  auto helpLines = CliArgParsersExecutor::formatHelpLines(cliArgParsers);
-
+  auto helpLines = HelpHelper::formatHelpLinesText(cliArgParsers);
   foreach (auto helpLine, helpLines) { c.printLine(helpLine); }
 }
 

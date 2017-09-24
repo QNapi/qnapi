@@ -35,8 +35,8 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
     const QNapiConfig &config);
 
 QStringList formatHelpLines(const QList<QSharedPointer<CliArgParser>> &parsers,
-                            int switchesBlockSize = 30, int descBlockSize = 50,
-                            int preSwitchSpaceSize = 2);
+                            int switchesBlockSize, int descBlockSize,
+                            int preSwitchSpaceSize);
 
 }  // namespace CliArgParsersExecutor
 

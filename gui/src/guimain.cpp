@@ -13,10 +13,6 @@
 *****************************************************************************/
 
 #include "guimain.h"
-#include "config/qnapiconfig.h"
-#include "libqnapi.h"
-#include "qnapicommand.h"
-
 #include <signal.h>
 #include <QDir>
 #include <QFileInfo>
@@ -24,6 +20,10 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <iostream>
+#include "config/qnapiconfig.h"
+#include "libqnapi.h"
+#include "qnapicommand.h"
+#include "utils/helphelper.h"
 
 namespace GuiMain {
 
@@ -37,22 +37,12 @@ int processCommand(QNapiApp &app, QVariant cliCommand,
     return GuiMain::runCLI(cliArgs);
 
   } else if (cliCommand.canConvert<ShowHelp>()) {
-    QString binaryFileName =
-        QFileInfo(LibQNapi::appExecutableFilePath).fileName();
-
-    QStringList helpLines;
-
-    helpLines << tr(
-        "QNapi is distributed under the GNU General Public License v2.");
-    helpLines << "";
-
-    helpLines << tr("Syntax: %1 [options] [list of files]").arg(binaryFileName);
-    helpLines << tr("Available options:");
-
-    helpLines << CliArgParsersExecutor::formatHelpLines(cliArgParsers, 30, 64);
+    auto helpLines = HelpHelper::formatHelpLinesText(cliArgParsers, 30, 64);
 
     showHelpText(helpLines.join("\n"));
 
+    return 0;
+  } else if (cliCommand.canConvert<ShowHelpLanguages>()) {
     return 0;
   } else if (cliCommand.canConvert<ShowOptions>()) {
     app.showSettings();

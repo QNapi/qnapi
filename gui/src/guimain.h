@@ -17,7 +17,6 @@
 
 #include "config/qnapiconfig.h"
 #include "parser/cliargparser.h"
-#include "parser/cliargparsersexecutor.h"
 #include "qnapiapp.h"
 #include "tr.h"
 

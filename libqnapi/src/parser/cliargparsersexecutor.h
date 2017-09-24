@@ -34,12 +34,9 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
     const QList<QSharedPointer<CliArgParser>> &parsers, const QStringList &args,
     const QNapiConfig &config);
 
-QList<CliArgParser::HelpInfo> collectHelpInfos(
-    const QList<QSharedPointer<CliArgParser>> &parsers);
-
-QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos,
+QStringList formatHelpLines(const QList<QSharedPointer<CliArgParser>> &parsers,
                             int switchesBlockSize = 30, int descBlockSize = 50,
-                            int preSwitchSpaceSize = 3);
+                            int preSwitchSpaceSize = 2);
 
 }  // namespace CliArgParsersExecutor
 

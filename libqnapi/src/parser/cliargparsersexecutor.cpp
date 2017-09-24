@@ -40,53 +40,46 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
   return some(n);
 }
 
-QList<CliArgParser::HelpInfo> collectHelpInfos(
-    const QList<QSharedPointer<CliArgParser>> &parsers) {
-  QList<CliArgParser::HelpInfo> helpInfos;
-
-  foreach (auto cliArgParser, parsers) {
-    if (cliArgParser->helpInfo()) {
-      helpInfos << cliArgParser->helpInfo().value();
-    }
-  }
-
-  return helpInfos;
-}
-
-QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos,
+QStringList formatHelpLines(const QList<QSharedPointer<CliArgParser>> &parsers,
                             int switchesBlockSize, int descBlockSize,
                             int preSwitchSpaceSize) {
   QString preSwitchSpace(preSwitchSpaceSize, ' ');
   QStringList helpLines;
 
-  foreach (auto helpInfo, helpInfos) {
-    QString optSwitches = preSwitchSpace + helpInfo.shortSwitch + ",";
-    if (helpInfo.shortSwitch.size() == 2) optSwitches += " ";
-    optSwitches += helpInfo.longSwitch;
-    if (!helpInfo.argName.isEmpty()) {
-      optSwitches += QString(" [%1]").arg(helpInfo.argName);
-    }
-    if (optSwitches.length() < switchesBlockSize) {
-      optSwitches += QString(switchesBlockSize - optSwitches.length(), ' ');
-    }
+  foreach (auto parser, parsers) {
+    auto maybeHelpInfo = parser->helpInfo();
 
-    QString notConsumedDescription = helpInfo.description.trimmed();
-    while (!notConsumedDescription.isEmpty()) {
-      QString helpPart;
+    if (maybeHelpInfo) {
+      auto helpInfo = maybeHelpInfo.value();
 
-      if (notConsumedDescription.size() <= descBlockSize) {
-        helpPart = notConsumedDescription;
-        notConsumedDescription = "";
-      } else {
-        int lastSpace =
-            notConsumedDescription.left(1 + descBlockSize).lastIndexOf(' ');
-        helpPart = notConsumedDescription.left(lastSpace);
-        notConsumedDescription =
-            notConsumedDescription.mid(lastSpace).trimmed();
+      QString optSwitches = preSwitchSpace + helpInfo.shortSwitch + ",";
+      if (helpInfo.shortSwitch.size() == 2) optSwitches += " ";
+      optSwitches += helpInfo.longSwitch;
+      if (!helpInfo.argName.isEmpty()) {
+        optSwitches += QString(" [%1]").arg(helpInfo.argName);
+      }
+      if (optSwitches.length() < switchesBlockSize) {
+        optSwitches += QString(switchesBlockSize - optSwitches.length(), ' ');
       }
 
-      helpLines << optSwitches + helpPart;
-      optSwitches = QString(switchesBlockSize, ' ');
+      QString notConsumedDescription = helpInfo.description.trimmed();
+      while (!notConsumedDescription.isEmpty()) {
+        QString helpPart;
+
+        if (notConsumedDescription.size() <= descBlockSize) {
+          helpPart = notConsumedDescription;
+          notConsumedDescription = "";
+        } else {
+          int lastSpace =
+              notConsumedDescription.left(1 + descBlockSize).lastIndexOf(' ');
+          helpPart = notConsumedDescription.left(lastSpace);
+          notConsumedDescription =
+              notConsumedDescription.mid(lastSpace).trimmed();
+        }
+
+        helpLines << optSwitches + helpPart;
+        optSwitches = QString(switchesBlockSize, ' ');
+      }
     }
   }
 

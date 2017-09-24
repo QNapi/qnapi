@@ -51,8 +51,7 @@ void printHelp(const Console &c,
   c.printLine(tr("Syntax: %1 [options] [list of files]").arg(binaryFileName));
   c.printLine(tr("Available options:"));
 
-  auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
-  auto helpLines = CliArgParsersExecutor::formatHelpLines(helpInfos);
+  auto helpLines = CliArgParsersExecutor::formatHelpLines(cliArgParsers);
 
   foreach (auto helpLine, helpLines) { c.printLine(helpLine); }
 }

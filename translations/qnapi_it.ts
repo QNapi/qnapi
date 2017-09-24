@@ -27,57 +27,42 @@
 <context>
     <name>CliMain</name>
     <message>
-        <location filename="../cli/src/climain.cpp" line="36"/>
+        <location filename="../cli/src/climain.cpp" line="37"/>
         <source>QNapi %1 (Qt version %2), %3</source>
         <translation>QNapi %1 (versione Qt %2), %3</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="49"/>
-        <source>QNapi is distributed under the GNU General Public License v2.</source>
-        <translation>QNapi è distribuito sotto la GNU General Public License v2.</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/climain.cpp" line="51"/>
-        <source>Syntax: %1 [options] [list of files]</source>
-        <translation>Sintassi: %1 [opzioni] [lista file]</translation>
-    </message>
-    <message>
         <location filename="../cli/src/climain.cpp" line="52"/>
-        <source>Available options:</source>
-        <translation>Opzioni disponibili:</translation>
-    </message>
-    <message>
-        <location filename="../cli/src/climain.cpp" line="62"/>
         <source>List of languages recognized by QNapi, including corresponding</source>
         <translation>Lista delle lingue riconosciute da QNapi, inclusi i corrispondenti</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="63"/>
+        <location filename="../cli/src/climain.cpp" line="53"/>
         <source>two-letter language codes:</source>
         <translation>codici lingua a due lettere:</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="78"/>
+        <location filename="../cli/src/climain.cpp" line="68"/>
         <source>Current default subtitles language: %1 (%2)</source>
         <translation>Lingua sottotitoli predefinita corrente: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="83"/>
+        <location filename="../cli/src/climain.cpp" line="73"/>
         <source>No alternative subtitles language has been set</source>
         <translation>Non è stata impostata alcuna lingua sottotitoli alternativa</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="85"/>
+        <location filename="../cli/src/climain.cpp" line="75"/>
         <source>Current alternative subtitles language: %1 (%2)</source>
         <translation>Lingua sottotitoli alternativa corrente: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="116"/>
+        <location filename="../cli/src/climain.cpp" line="106"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: eliminazione file temporanei...</translation>
     </message>
     <message>
-        <location filename="../cli/src/climain.cpp" line="131"/>
+        <location filename="../cli/src/climain.cpp" line="121"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: operazione conclusa.</translation>
     </message>
@@ -325,19 +310,37 @@
 <context>
     <name>GuiMain</name>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="93"/>
+        <location filename="../gui/src/guimain.cpp" line="94"/>
         <source>QNapi - command line argument parsing error</source>
         <translation>QNapi - errore di analisi dell&apos;argomento della riga di comando</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="134"/>
+        <location filename="../gui/src/guimain.cpp" line="135"/>
         <source>QNapi - CLI executable not found</source>
         <translation>QNapi - versione per riga di comando non trovata</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="135"/>
+        <location filename="../gui/src/guimain.cpp" line="136"/>
         <source>You have requested to run QNapi in command-line mode, but unfortunately command-line binary &apos;%1&apos; could not be found.</source>
         <translation>Ha richiesto l&apos;avvio dell&apos;applicazione della riga di comando, ma il binario &apos;%1&apos; non è stato trovato.</translation>
+    </message>
+</context>
+<context>
+    <name>HelpHelper</name>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="29"/>
+        <source>QNapi is distributed under the GNU General Public License v2.</source>
+        <translation>QNapi è distribuito sotto la GNU General Public License v2.</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="33"/>
+        <source>Syntax: %1 [options] [list of files]</source>
+        <translation>Sintassi: %1 [opzioni] [lista file]</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="34"/>
+        <source>Available options:</source>
+        <translation>Opzioni disponibili:</translation>
     </message>
 </context>
 <context>
@@ -670,12 +673,12 @@
         <translation>Questa è la prima esecuzione del programma QNapi. Vuoi configurarlo adesso?</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="177"/>
+        <location filename="../gui/src/guimain.cpp" line="178"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: eliminazione file temporanei...</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="192"/>
+        <location filename="../gui/src/guimain.cpp" line="193"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: operazione conclusa.</translation>
     </message>

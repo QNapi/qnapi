@@ -28,12 +28,34 @@
 namespace GuiMain {
 
 int processCommand(QNapiApp &app, QVariant cliCommand,
-                   const QNapiConfig &config) {
+                   const QNapiConfig &config,
+                   const QList<QSharedPointer<CliArgParser>> &cliArgParsers) {
   using namespace QNapiCommand;
 
   if (cliCommand.canConvert<RunCLIApp>()) {
     QStringList cliArgs = cliCommand.value<RunCLIApp>().arguments;
     return GuiMain::runCLI(cliArgs);
+
+  } else if (cliCommand.canConvert<ShowHelp>()) {
+    auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
+    auto helpLines =
+        CliArgParsersExecutor::formatHelpLines(helpInfos, 30, 70, 0);
+
+    const QString helpText = helpLines.join("\n");
+
+    QMessageBox helpDialog(QMessageBox::Information, "QNapi", helpText,
+                           QMessageBox::Close);
+
+    QSpacerItem *horizontalSpacer =
+        new QSpacerItem(640, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout *layout = (QGridLayout *)helpDialog.layout();
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1,
+                    layout->columnCount());
+
+    helpDialog.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+    helpDialog.exec();
+
+    return 0;
 
   } else if (cliCommand.canConvert<ShowOptions>()) {
     app.showSettings();

@@ -53,13 +53,14 @@ QList<CliArgParser::HelpInfo> collectHelpInfos(
   return helpInfos;
 }
 
-QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos) {
+QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos,
+                            int switchesBlockSize, int descBlockSize,
+                            int preSwitchSpaceSize) {
+  QString preSwitchSpace(preSwitchSpaceSize, ' ');
   QStringList helpLines;
-  int switchesBlockSize = 30;
-  int descBlockSize = 50;
 
   foreach (auto helpInfo, helpInfos) {
-    QString optSwitches = "   " + helpInfo.shortSwitch + ",";
+    QString optSwitches = preSwitchSpace + helpInfo.shortSwitch + ",";
     if (helpInfo.shortSwitch.size() == 2) optSwitches += " ";
     optSwitches += helpInfo.longSwitch;
     if (!helpInfo.argName.isEmpty()) {

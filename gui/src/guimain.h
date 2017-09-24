@@ -16,8 +16,10 @@
 #define GUIMAIN_H
 
 #include "config/qnapiconfig.h"
-#include "tr.h"
+#include "parser/cliargparser.h"
+#include "parser/cliargparsersexecutor.h"
 #include "qnapiapp.h"
+#include "tr.h"
 
 #include <QCoreApplication>
 #include <QTranslator>
@@ -26,7 +28,8 @@ namespace GuiMain {
 Q_DECLARE_NAMESPACE_TR(GuiMain)
 
 int processCommand(QNapiApp &app, QVariant cliCommand,
-                   const QNapiConfig &config);
+                   const QNapiConfig &config,
+                   const QList<QSharedPointer<CliArgParser>> &cliArgParsers);
 void showArgParserError(const QString &errorMessage);
 
 bool isCLIAvailable();

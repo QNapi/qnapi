@@ -16,8 +16,8 @@
 #define CLIARGPARSERSEXECUTOR_H
 
 #include "config/qnapiconfig.h"
-#include "tr.h"
 #include "parser/cliargparser.h"
+#include "tr.h"
 
 #include <QList>
 #include <QMetaType>
@@ -37,7 +37,9 @@ Either<QString, Maybe<CliArgParser::ParsedCommand>> executeParsers(
 QList<CliArgParser::HelpInfo> collectHelpInfos(
     const QList<QSharedPointer<CliArgParser>> &parsers);
 
-QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos);
+QStringList formatHelpLines(const QList<CliArgParser::HelpInfo> &helpInfos,
+                            int switchesBlockSize = 30, int descBlockSize = 50,
+                            int preSwitchSpaceSize = 3);
 
 }  // namespace CliArgParsersExecutor
 

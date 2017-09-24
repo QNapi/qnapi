@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   QTranslator qtTranslator, qnapiTranslator;
   GuiMain::installTranslation(app, &qtTranslator, &qnapiTranslator, config);
 
-  QList<QSharedPointer<CliArgParser>> argParsers = {
+  QList<QSharedPointer<CliArgParser>> cliArgParsers = {
       QSharedPointer<CliArgParser>(new ShowHelpArgParser()),
       QSharedPointer<CliArgParser>(new ShowHelpLanguagesArgParser()),
       QSharedPointer<CliArgParser>(new RunCLIAppArgParser()),
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
   QStringList tailArgs = app.arguments().mid(1, app.arguments().size() - 1);
 
   auto parseResult =
-      CliArgParsersExecutor::executeParsers(argParsers, tailArgs, config);
+      CliArgParsersExecutor::executeParsers(cliArgParsers, tailArgs, config);
 
   if (parseResult.is<Maybe<CliArgParser::ParsedCommand>>()) {
     auto parsedMaybeCommand =
@@ -77,7 +77,8 @@ int main(int argc, char **argv) {
     if (parsedMaybeCommand) {
       auto parsedCommand = parsedMaybeCommand.value();
       return GuiMain::processCommand(app, parsedCommand.command,
-                                     parsedCommand.refinedConfig);
+                                     parsedCommand.refinedConfig,
+                                     cliArgParsers);
     } else {
       if (app.isInstanceAllowed()) {
         if (config.firstrun()) {

@@ -326,17 +326,17 @@
 <context>
     <name>GuiMain</name>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="71"/>
+        <location filename="../gui/src/guimain.cpp" line="93"/>
         <source>QNapi - command line argument parsing error</source>
         <translation>QNapi - błąd parsowania argumentu wiersza poleceń</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="112"/>
+        <location filename="../gui/src/guimain.cpp" line="134"/>
         <source>QNapi - CLI executable not found</source>
         <translation>QNapi - nie znaleziono wersji dla wiersza poleceń</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="113"/>
+        <location filename="../gui/src/guimain.cpp" line="135"/>
         <source>You have requested to run QNapi in command-line mode, but unfortunately command-line binary &apos;%1&apos; could not be found.</source>
         <translation>Zażądano uruchomienia QNapi w trybie wiersza poleceń, jednak nie znaleziono &apos;%1&apos;.</translation>
     </message>
@@ -471,22 +471,22 @@
         <translation>Silnik pobierania napisów z serwisu &lt;b&gt;www.opensubtitles.org&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="85"/>
+        <location filename="../gui/src/main.cpp" line="86"/>
         <source>First Run</source>
         <translation>Pierwsze uruchomienie</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="86"/>
+        <location filename="../gui/src/main.cpp" line="87"/>
         <source>This is the first launch of the program QNapi. Do you want to configure it now?</source>
         <translation>To jest pierwsze uruchomienie programu QNapi. Czy chcesz przeprowadzić konfigurację teraz?</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="155"/>
+        <location filename="../gui/src/guimain.cpp" line="177"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: usuwanie plików tymczasowych...</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="170"/>
+        <location filename="../gui/src/guimain.cpp" line="192"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: zakończono.</translation>
     </message>
@@ -692,6 +692,14 @@
         <location filename="../libqnapi/src/parser/quietbatchargparser.cpp" line="33"/>
         <source>Download subtitles silently without showing any messages</source>
         <translation>Pobierz napisy nie wypisujac zadnych komunikatow (implikuje -d)</translation>
+    </message>
+</context>
+<context>
+    <name>RunCLIAppArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/runcliappargparser.cpp" line="37"/>
+        <source>Run in command-line mode (requires separate CLI binary)</source>
+        <translation>Uruchom w trybie wiersza poleceń (wymaga osobnego pliku wykonywalnego)</translation>
     </message>
 </context>
 <context>

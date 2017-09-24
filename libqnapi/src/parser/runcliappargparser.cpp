@@ -30,3 +30,9 @@ QVariant RunCLIAppArgParser::parse(const QStringList& args,
     return QVariant::fromValue(NothingParsed());
   }
 }
+
+Maybe<CliArgParser::HelpInfo> RunCLIAppArgParser::helpInfo() const {
+  return just(
+      HelpInfo{"-c", "--console", "",
+               tr("Run in command-line mode (requires separate CLI binary)")});
+}

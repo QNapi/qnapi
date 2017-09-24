@@ -30,6 +30,7 @@ Q_DECLARE_NAMESPACE_TR(GuiMain)
 int processCommand(QNapiApp &app, QVariant cliCommand,
                    const QNapiConfig &config,
                    const QList<QSharedPointer<CliArgParser>> &cliArgParsers);
+void showHelpText(const QString &helpText);
 void showArgParserError(const QString &errorMessage);
 
 bool isCLIAvailable();

@@ -39,21 +39,9 @@ int processCommand(QNapiApp &app, QVariant cliCommand,
   } else if (cliCommand.canConvert<ShowHelp>()) {
     auto helpInfos = CliArgParsersExecutor::collectHelpInfos(cliArgParsers);
     auto helpLines =
-        CliArgParsersExecutor::formatHelpLines(helpInfos, 30, 70, 0);
+        CliArgParsersExecutor::formatHelpLines(helpInfos, 30, 64, 0);
 
-    const QString helpText = helpLines.join("\n");
-
-    QMessageBox helpDialog(QMessageBox::Information, "QNapi", helpText,
-                           QMessageBox::Close);
-
-    QSpacerItem *horizontalSpacer =
-        new QSpacerItem(640, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QGridLayout *layout = (QGridLayout *)helpDialog.layout();
-    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1,
-                    layout->columnCount());
-
-    helpDialog.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    helpDialog.exec();
+    showHelpText(helpLines.join("\n"));
 
     return 0;
 
@@ -87,6 +75,20 @@ int processCommand(QNapiApp &app, QVariant cliCommand,
   }
 
   return 1;
+}
+
+void showHelpText(const QString &helpText) {
+  QMessageBox helpDialog(QMessageBox::Information, "QNapi", helpText,
+                         QMessageBox::Close);
+
+  QSpacerItem *horizontalSpacer =
+      new QSpacerItem(720, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  QGridLayout *layout = (QGridLayout *)helpDialog.layout();
+  layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1,
+                  layout->columnCount());
+
+  helpDialog.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+  helpDialog.exec();
 }
 
 void showArgParserError(const QString &errorMessage) {

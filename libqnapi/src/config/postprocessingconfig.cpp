@@ -27,7 +27,7 @@ QString PostProcessingConfig::toString() const {
                   << "subFormat: " << subFormat() << endl
                   << "subExtension: " << subExtension() << endl
                   << "skipConvertAds: " << skipConvertAds() << endl
-                  << "removeWordsEnabled: " << removeWordsEnabled() << endl
+                  << "removeLines: " << removeLines() << endl
                   << "removeWords: " << removeWords().join("; ") << endl;
   return s;
 }

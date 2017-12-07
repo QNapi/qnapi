@@ -19,6 +19,7 @@
 #include <QSettings>
 #include <QSharedPointer>
 #include <QString>
+#include <QVariant>
 
 #include <config/engineconfig.h>
 #include <config/qnapiconfig.h>
@@ -38,6 +39,8 @@ class ConfigReader {
   const QNapiConfig readConfig(const QSettings& settings) const;
 
  private:
+  static QVariant firstValid(std::initializer_list<QVariant> list);
+
   const GeneralConfig readGeneralConfig(const QSettings& settings) const;
   const QList<QPair<QString, bool>> readEnabledEngines(
       const QSettings& settings) const;

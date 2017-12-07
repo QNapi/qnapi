@@ -27,7 +27,7 @@ SubtitlePostProcessor::SubtitlePostProcessor(
 void SubtitlePostProcessor::perform(const QString& movieFilePath,
                                     const QString& subtitleFilePath) const {
   if (ppConfig.removeLines()) {
-    ppRemoveLinesContainingWords(subtitleFilePath, ppConfig.removeWords());
+    ppRemoveLinesContainingWords(subtitleFilePath, ppConfig.removeLinesWords());
   }
 
   switch (ppConfig.encodingChangeMethod()) {

@@ -36,7 +36,7 @@ class PostProcessingConfig {
   QString subExtension_;
   bool skipConvertAds_;
   bool removeLines_;
-  QStringList removeWords_;
+  QStringList removeLinesWords_;
 
  public:
   PostProcessingConfig(const bool& enabled,
@@ -47,7 +47,7 @@ class PostProcessingConfig {
                        const QString& subFormat, const QString& subExtension,
                        const bool& skipConvertAds,
                        const bool& removeLines,
-                       const QStringList& removeWords)
+                       const QStringList& removeLinesWords)
       : enabled_(enabled),
         encodingChangeMethod_(encodingChangeMethod),
         encodingFrom_(encodingFrom),
@@ -58,7 +58,7 @@ class PostProcessingConfig {
         subExtension_(subExtension),
         skipConvertAds_(skipConvertAds),
         removeLines_(removeLines),
-        removeWords_(removeWords) {}
+        removeLinesWords_(removeLinesWords) {}
 
   bool enabled() const { return enabled_; }
   EncodingChangeMethod encodingChangeMethod() const {
@@ -72,81 +72,81 @@ class PostProcessingConfig {
   QString subExtension() const { return subExtension_; }
   bool skipConvertAds() const { return skipConvertAds_; }
   bool removeLines() const { return removeLines_; }
-  QStringList removeWords() const { return removeWords_; }
+  QStringList removeLinesWords() const { return removeLinesWords_; }
 
   const PostProcessingConfig setEnabled(const bool& enabled) const {
     return PostProcessingConfig(
         enabled, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setEncodingChangeMethod(
       const EncodingChangeMethod& encodingChangeMethod) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setEncodingFrom(
       const QString& encodingFrom) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setEncodingAutoDetectFrom(
       const bool& encodingAutoDetectFrom) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setEncodingTo(const QString& encodingTo) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setShowAllEncodings(
       const bool& showAllEncodings) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setSubFormat(const QString& subFormat) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat, subExtension_,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setSubExtension(
       const QString& subExtension) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension,
-        skipConvertAds_, removeLines_, removeWords_);
+        skipConvertAds_, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setSkipConvertAds(
       const bool& skipConvertAds) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds, removeLines_, removeWords_);
+        skipConvertAds, removeLines_, removeLinesWords_);
   }
   const PostProcessingConfig setRemoveLines(
       const bool& removeLines) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines, removeWords_);
+        skipConvertAds_, removeLines, removeLinesWords_);
   }
-  const PostProcessingConfig setRemoveWords(
-      const QStringList& removeWords) const {
+  const PostProcessingConfig setRemoveLinesWords(
+      const QStringList& removeLinesWords) const {
     return PostProcessingConfig(
         enabled_, encodingChangeMethod_, encodingFrom_, encodingAutoDetectFrom_,
         encodingTo_, showAllEncodings_, subFormat_, subExtension_,
-        skipConvertAds_, removeLines_, removeWords);
+        skipConvertAds_, removeLines_, removeLinesWords);
   }
 
   QString toString() const;

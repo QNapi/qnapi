@@ -380,7 +380,7 @@ void frmOptions::writeConfig() {
           .setEncodingTo(ui.cbEncTo->currentText())
           .setShowAllEncodings(ui.cbShowAllEncodings->isChecked())
           .setRemoveLines(ui.cbRemoveLines->isChecked())
-          .setRemoveWords(ui.teRemoveWords->toPlainText().split("\n"))
+          .setRemoveLinesWords(ui.teRemoveLinesWords->toPlainText().split("\n"))
           .setSubFormat(targetSubFormat)
           .setSubExtension(targetSubExt)
           .setSkipConvertAds(ui.cbSkipConvertAds->isChecked());
@@ -457,8 +457,8 @@ void frmOptions::readConfig(const QNapiConfig &config) {
       config.postProcessingConfig().showAllEncodings());
   ui.cbRemoveLines->setChecked(
       config.postProcessingConfig().removeLines());
-  ui.teRemoveWords->setText(
-      config.postProcessingConfig().removeWords().join("\n"));
+  ui.teRemoveLinesWords->setText(
+      config.postProcessingConfig().removeLinesWords().join("\n"));
 
   ui.cbSubFormat->setCurrentIndex(0);
   ui.cbSubExtension->setCurrentIndex(0);

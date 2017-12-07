@@ -105,7 +105,7 @@ void ConfigWriter::writePostProcessingConfig(
   settings.setValue("qnapi/skip_convert_ads",
                     postProcessingConfig.skipConvertAds());
   settings.setValue("qnapi/remove_lines", postProcessingConfig.removeLines());
-  settings.setValue("qnapi/remove_words", postProcessingConfig.removeWords());
+  settings.setValue("qnapi/remove_lines_words", postProcessingConfig.removeLinesWords());
 }
 
 void ConfigWriter::writeScanConfig(const ScanConfig& scanConfig,

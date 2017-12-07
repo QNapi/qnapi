@@ -654,7 +654,7 @@
            </layout>
           </item>
           <item row="5" column="0" colspan="4">
-           <widget class="QTextEdit" name="teRemoveWords">
+           <widget class="QTextEdit" name="teRemoveLinesWords">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -763,7 +763,7 @@ p, li { white-space: pre-wrap; }
          </layout>
          <zorder>cbAutoDetectEncoding</zorder>
          <zorder>cbRemoveLines</zorder>
-         <zorder>teRemoveWords</zorder>
+         <zorder>teRemoveLinesWords</zorder>
          <zorder>lbSubFormat</zorder>
          <zorder>cbSubFormat</zorder>
          <zorder>lbSubExtension</zorder>
@@ -844,7 +844,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>cbEncTo</tabstop>
   <tabstop>cbShowAllEncodings</tabstop>
   <tabstop>cbRemoveLines</tabstop>
-  <tabstop>teRemoveWords</tabstop>
+  <tabstop>teRemoveLinesWords</tabstop>
   <tabstop>cbSubFormat</tabstop>
   <tabstop>cbSubExtension</tabstop>
   <tabstop>cbSkipConvertAds</tabstop>
@@ -892,7 +892,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>cbRemoveLines</sender>
    <signal>toggled(bool)</signal>
-   <receiver>teRemoveWords</receiver>
+   <receiver>teRemoveLinesWords</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

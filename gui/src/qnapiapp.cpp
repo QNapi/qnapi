@@ -163,7 +163,7 @@ void QNapiApp::createTrayIcon() {
   trayIcon = new QSystemTrayIcon(0);
   trayIcon->setContextMenu(trayIconMenu);
 
-  trayIcon->setIcon(QIcon(":/icon/qnapi.png"));
+  trayIcon->setIcon(QIcon::fromTheme("qnapi-panel", QIcon(":/icon/qnapi.png")));
 
   connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
           SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));

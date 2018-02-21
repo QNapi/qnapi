@@ -57,11 +57,7 @@ matrix:
       env:
         - QT_BASE=55
         - MAKE_DMG=1
-    - os: osx
-      compiler: clang
-      env:
-        - QT_BASE=57
-    - os: osx
+   - os: osx
       compiler: clang
       env:
         - QT_BASE=510
@@ -99,7 +95,6 @@ install:
   - if [[ "$QT_BASE" = "58" && "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get install -qq qt58base; source /opt/qt58/bin/qt58-env.sh; fi
   - if [[ "$QT_BASE" = "59" && "$TRAVIS_OS_NAME" = "linux" ]]; then sudo apt-get install -qq qt59base; source /opt/qt59/bin/qt59-env.sh; fi
   - if [[ "$QT_BASE" = "55" && "$TRAVIS_OS_NAME" = "osx" ]]; then brew install qt@5.5; brew link --force qt@5.5; fi
-  - if [[ "$QT_BASE" = "57" && "$TRAVIS_OS_NAME" = "osx" ]]; then brew install qt@5.7; brew link --force qt@5.7; fi
   - if [[ "$QT_BASE" = "510" && "$TRAVIS_OS_NAME" = "osx" ]]; then brew install qt; brew link --force qt; fi
     
 

@@ -80,8 +80,8 @@ macx {
     DESTDIR = ../macx/
 
     LIBS += -framework CoreFoundation
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
+    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.8
     ICON = ../macx/qnapi.icns
     QMAKE_INFO_PLIST = ../macx/Info.plist
     7ZIP_BINARY.files = ../macx/content/7za

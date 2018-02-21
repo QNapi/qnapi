@@ -133,8 +133,8 @@ unix:!macx {
 
 macx {
     INCLUDEPATH += ../deps/libmediainfo/include
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
+    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.8
 }
 
 win32 {

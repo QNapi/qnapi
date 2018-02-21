@@ -70,6 +70,8 @@ QNapiApp::~QNapiApp() {
   if (quitAction) delete quitAction;
 
   if (napiSubMenu) delete napiSubMenu;
+  if (osSubMenu) delete osSubMenu;
+  if (napisy24SubMenu) delete napisy24SubMenu;
   if (trayIconMenu) delete trayIconMenu;
   if (trayIcon) delete trayIcon;
 }

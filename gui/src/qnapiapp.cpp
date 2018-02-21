@@ -44,6 +44,7 @@ QNapiApp::QNapiApp(int &argc, char **argv, const QString &appName)
 
   napiSubMenu = 0;
   osSubMenu = 0;
+  napisy24SubMenu = 0;
   trayIconMenu = 0;
   trayIcon = 0;
 }

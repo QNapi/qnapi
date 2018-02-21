@@ -311,17 +311,42 @@
 <context>
     <name>GuiMain</name>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="94"/>
+        <location filename="../gui/src/guimain.cpp" line="97"/>
+        <source>List of languages recognized by QNapi, including corresponding</source>
+        <translation>Oto lista rozpoznawanych przez QNapi jezykow i odpowiadajacym</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="99"/>
+        <source>two-letter language codes:</source>
+        <translation>im dwuliterowych kodow:</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="114"/>
+        <source>Current default subtitles language: %1 (%2)</source>
+        <translation>Aktualnie ustawiony preferowany jezyk pobierania napisow: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="119"/>
+        <source>No alternative subtitles language has been set</source>
+        <translation>Brak ustawionego zapasowego jezyka napisow</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="121"/>
+        <source>Current alternative subtitles language: %1 (%2)</source>
+        <translation>Aktualnie ustawiony zapasowy jezyk napisow: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="130"/>
         <source>QNapi - command line argument parsing error</source>
         <translation>QNapi - błąd parsowania argumentu wiersza poleceń</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="135"/>
+        <location filename="../gui/src/guimain.cpp" line="171"/>
         <source>QNapi - CLI executable not found</source>
         <translation>QNapi - nie znaleziono wersji dla wiersza poleceń</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="136"/>
+        <location filename="../gui/src/guimain.cpp" line="172"/>
         <source>You have requested to run QNapi in command-line mode, but unfortunately command-line binary &apos;%1&apos; could not be found.</source>
         <translation>Zażądano uruchomienia QNapi w trybie wiersza poleceń, jednak nie znaleziono &apos;%1&apos;.</translation>
     </message>
@@ -378,67 +403,67 @@
 <context>
     <name>QNapiApp</name>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="89"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="100"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="108"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="119"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="92"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="103"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="111"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="122"/>
         <source>Download subtitles</source>
         <translation>Pobierz napisy</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="93"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="96"/>
         <source>Scan directories</source>
         <translation>Skanuj katalogi</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="97"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="100"/>
         <source>Convert subtitles</source>
         <translation>Konwertuj napisy</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="104"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="115"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="123"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="107"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="118"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="126"/>
         <source>Create an account</source>
         <translation>Załóż konto</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="112"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="115"/>
         <source>Upload subtitles</source>
         <translation>Wyślij napisy</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="127"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="130"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="130"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="133"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="133"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="136"/>
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="137"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="140"/>
         <source>NapiProjekt</source>
         <translation>NapiProjekt</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="142"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="145"/>
         <source>OpenSubtitles</source>
         <translation>OpenSubtitles</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="148"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="151"/>
         <source>Napisy24</source>
         <translation>Napisy24</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="192"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="195"/>
         <source>Select one or more video files to download subtitles for</source>
         <translation>Wybierz jeden lub więcej plików z filmami</translation>
     </message>
@@ -484,12 +509,12 @@
         <translation>To jest pierwsze uruchomienie programu QNapi. Czy chcesz przeprowadzić konfigurację teraz?</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="178"/>
+        <location filename="../gui/src/guimain.cpp" line="214"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: usuwanie plików tymczasowych...</translation>
     </message>
     <message>
-        <location filename="../gui/src/guimain.cpp" line="193"/>
+        <location filename="../gui/src/guimain.cpp" line="229"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: zakończono.</translation>
     </message>

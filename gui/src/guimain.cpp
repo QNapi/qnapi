@@ -43,6 +43,8 @@ int processCommand(QNapiApp &app, QVariant cliCommand,
 
     return 0;
   } else if (cliCommand.canConvert<ShowHelpLanguages>()) {
+    showHelpLanguages(config);
+
     return 0;
   } else if (cliCommand.canConvert<ShowOptions>()) {
     app.showSettings();
@@ -88,6 +90,40 @@ void showHelpText(const QString &helpText) {
 
   helpDialog.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
   helpDialog.exec();
+}
+
+void showHelpLanguages(const QNapiConfig &config) {
+  QStringList helpLanguagesLines;
+  helpLanguagesLines << tr(
+      "List of languages recognized by QNapi, including corresponding");
+  helpLanguagesLines << tr("two-letter language codes:");
+  helpLanguagesLines << "";
+
+  SubtitleLanguage L, LB;
+  QStringList langs = L.listLanguages();
+
+  foreach (QString lang, langs) {
+    L.setLanguage(lang);
+    helpLanguagesLines << QString(" %1 - %2").arg(L.toTwoLetter()).arg(lang);
+  }
+
+  L.setLanguage(config.generalConfig().language());
+  LB.setLanguage(config.generalConfig().backupLanguage());
+
+  helpLanguagesLines << "";
+  helpLanguagesLines << tr("Current default subtitles language: %1 (%2)")
+                            .arg(L.toFullName())
+                            .arg(L.toTwoLetter());
+
+  if (LB.toFullName().isEmpty()) {
+    helpLanguagesLines << tr("No alternative subtitles language has been set");
+  } else {
+    helpLanguagesLines << tr("Current alternative subtitles language: %1 (%2)")
+                              .arg(LB.toFullName())
+                              .arg(LB.toTwoLetter());
+  }
+
+  showHelpText(helpLanguagesLines.join("\n"));
 }
 
 void showArgParserError(const QString &errorMessage) {

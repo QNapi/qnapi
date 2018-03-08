@@ -5,6 +5,7 @@ debug
 release
 Makefile*
 qnapi
+qnapic
 *.a
 win32/out/*
 win32/*.exe

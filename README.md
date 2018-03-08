@@ -46,6 +46,10 @@ To compile the application, you have to execute two following commands in `qnapi
 
 This will produce `Makefile`.
 
+> By appending `CONFIG+=no_cli` or `CONFIG+=no_gui` to qmake invocation you can disable building
+> command-line or graphical interface binaries.
+
+
 `$ make` (or `mingw32-make` on Windows)
 
 This will compile the sources and build executable binary (or app bundle on OSX).

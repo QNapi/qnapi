@@ -38,4 +38,6 @@ class SubtitleLanguage {
   void fill_tables();
 };
 
+Q_DECLARE_METATYPE(SubtitleLanguage)
+
 #endif

@@ -14,10 +14,11 @@
 
 #include "qnapiapp.h"
 
+#include <iostream>
 #include "libqnapi.h"
 
-QNapiApp::QNapiApp(int &argc, char **argv, bool useGui, const QString &appName)
-    : QSingleApplication(argc, argv, useGui, appName),
+QNapiApp::QNapiApp(int &argc, char **argv, const QString &appName)
+    : QSingleApplication(argc, argv, appName),
       creationDT(QDateTime::currentDateTime()),
       enginesRegistry(LibQNapi::subtitleDownloadEngineRegistry()) {
   setAttribute(Qt::AA_UseHighDpiPixmaps, true);
@@ -43,6 +44,7 @@ QNapiApp::QNapiApp(int &argc, char **argv, bool useGui, const QString &appName)
 
   napiSubMenu = 0;
   osSubMenu = 0;
+  napisy24SubMenu = 0;
   trayIconMenu = 0;
   trayIcon = 0;
 }
@@ -68,6 +70,8 @@ QNapiApp::~QNapiApp() {
   if (quitAction) delete quitAction;
 
   if (napiSubMenu) delete napiSubMenu;
+  if (osSubMenu) delete osSubMenu;
+  if (napisy24SubMenu) delete napisy24SubMenu;
   if (trayIconMenu) delete trayIconMenu;
   if (trayIcon) delete trayIcon;
 }
@@ -86,17 +90,19 @@ frmProgress *QNapiApp::progress() {
 
 void QNapiApp::createTrayIcon() {
   getAction = new QAction(tr("Download subtitles"), 0);
-  connect(getAction, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
+  connect(getAction, &QAction::triggered,
+          [this] { showOpenDialog(LibQNapi::loadConfig()); });
 
   scanAction = new QAction(tr("Scan directories"), 0);
-  connect(scanAction, SIGNAL(triggered()), this, SLOT(showScanDialog()));
+  connect(scanAction, &QAction::triggered,
+          [this] { showScanDialog(LibQNapi::loadConfig()); });
 
   convertAction = new QAction(tr("Convert subtitles"), 0);
   connect(convertAction, SIGNAL(triggered()), this, SLOT(showConvertDialog()));
 
   napiGetAction = new QAction(tr("Download subtitles"), 0);
   connect(napiGetAction, &QAction::triggered,
-          [this] { showOpenDialog("NapiProjekt"); });
+          [this] { showOpenDialog(LibQNapi::loadConfig(), "NapiProjekt"); });
 
   napiCreateUserAction = new QAction(tr("Create an account"), 0);
   connect(napiCreateUserAction, &QAction::triggered,
@@ -104,7 +110,7 @@ void QNapiApp::createTrayIcon() {
 
   osGetAction = new QAction(tr("Download subtitles"), 0);
   connect(osGetAction, &QAction::triggered,
-          [this] { showOpenDialog("OpenSubtitles"); });
+          [this] { showOpenDialog(LibQNapi::loadConfig(), "OpenSubtitles"); });
 
   osAddAction = new QAction(tr("Upload subtitles"), 0);
   connect(osAddAction, SIGNAL(triggered()), this, SLOT(showOSUploadDialog()));
@@ -115,7 +121,7 @@ void QNapiApp::createTrayIcon() {
 
   napisy24GetAction = new QAction(tr("Download subtitles"), 0);
   connect(napisy24GetAction, &QAction::triggered,
-          [this] { showOpenDialog("Napisy24"); });
+          [this] { showOpenDialog(LibQNapi::loadConfig(), "Napisy24"); });
 
   napisy24CreateUserAction = new QAction(tr("Create an account"), 0);
   connect(napisy24CreateUserAction, &QAction::triggered,
@@ -175,11 +181,11 @@ void QNapiApp::showTrayMessage(QString title, QString msg) {
   trayIcon->showMessage(title, msg);
 }
 
-bool QNapiApp::showOpenDialog(QString engine) {
+bool QNapiApp::showOpenDialog(const QNapiConfig &config, QString engine) {
   QStringList fileList;
 
   if (!openDialog) {
-    QString initDir = LibQNapi::loadConfig().lastOpenedDir();
+    QString initDir = config.lastOpenedDir();
 
     if (!QFileInfo(initDir).isDir()) {
       initDir = QDir::homePath();
@@ -201,8 +207,7 @@ bool QNapiApp::showOpenDialog(QString engine) {
 
     if (!fileList.isEmpty()) {
       QString dialogPath = QFileInfo(fileList.first()).absolutePath();
-      auto newConfig = LibQNapi::loadConfig().setLastOpenedDir(dialogPath);
-      LibQNapi::writeConfig(newConfig);
+      LibQNapi::writeConfig(config.setLastOpenedDir(dialogPath));
     }
   }
 
@@ -217,7 +222,7 @@ bool QNapiApp::showOpenDialog(QString engine) {
     }
 
     progress()->enqueueFiles(fileList);
-    progress()->download();
+    progress()->download(config);
   } else if (progress()->isBatchMode()) {
     return false;
   }
@@ -225,7 +230,7 @@ bool QNapiApp::showOpenDialog(QString engine) {
   return true;
 }
 
-bool QNapiApp::showScanDialog(QString init_dir) {
+bool QNapiApp::showScanDialog(const QNapiConfig &config, QString init_dir) {
   if (!f_scan) f_scan = new frmScan();
 
   if (f_scan->isVisible()) {
@@ -240,7 +245,7 @@ bool QNapiApp::showScanDialog(QString init_dir) {
   if (f_scan->exec() == QDialog::Accepted) {
     result = true;
     progress()->enqueueFiles(f_scan->getSelectedFiles());
-    progress()->download();
+    progress()->download(config);
   }
 
   delete f_scan;
@@ -258,8 +263,8 @@ void QNapiApp::showConvertDialog() {
 
   f_convert->exec();
 
-  delete f_scan;
-  f_scan = 0;
+  delete f_convert;
+  f_convert = 0;
 }
 
 void QNapiApp::showCreateAccount(const QString &engineName) const {
@@ -311,7 +316,7 @@ void QNapiApp::tryQuit() {
 void QNapiApp::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
   if (reason == QSystemTrayIcon::Trigger)
 #ifndef Q_OS_MAC
-    showOpenDialog()
+    showOpenDialog(LibQNapi::loadConfig())
 #endif
         ;
 }

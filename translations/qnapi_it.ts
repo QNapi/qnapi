@@ -2,58 +2,393 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="it_IT">
 <context>
-    <name>GetThread</name>
+    <name>BackupLangArgParser</name>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="313"/>
-        <source>Checking permissions of the video directory...</source>
-        <translation>Controllo permessi della cartella video...</translation>
+        <location filename="../libqnapi/src/parser/backuplangargparser.cpp" line="32"/>
+        <source>You need to pass backup language code after %1 argument</source>
+        <translation>È necessario passare il codice della lingua di backup dopo l&apos;argomento %1</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="317"/>
-        <source>No permission to write to the directory &apos;%1&apos;!</source>
-        <translation>Mancano i permessi per scrivere nella cartella &apos;%1&apos;!</translation>
+        <location filename="../libqnapi/src/parser/backuplangargparser.cpp" line="42"/>
+        <source>Invalid backup language code passed: %1</source>
+        <translation>Codice lingua non valido: %1</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="324"/>
-        <source>Calculating checksum of the file...</source>
-        <translation>Calcolo checksum del file...</translation>
+        <location filename="../libqnapi/src/parser/backuplangargparser.cpp" line="50"/>
+        <source>code</source>
+        <translation>codice</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="339"/>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="355"/>
+        <location filename="../libqnapi/src/parser/backuplangargparser.cpp" line="51"/>
+        <source>Alternative subtitles language</source>
+        <translation>Lingua sottotitoli alternativa</translation>
+    </message>
+</context>
+<context>
+    <name>CliMain</name>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="37"/>
+        <source>QNapi %1 (Qt version %2), %3</source>
+        <translation>QNapi %1 (versione Qt %2), %3</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="52"/>
+        <source>List of languages recognized by QNapi, including corresponding</source>
+        <translation>Lista delle lingue riconosciute da QNapi, inclusi i corrispondenti</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="53"/>
+        <source>two-letter language codes:</source>
+        <translation>codici lingua a due lettere:</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="68"/>
+        <source>Current default subtitles language: %1 (%2)</source>
+        <translation>Lingua sottotitoli predefinita corrente: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="73"/>
+        <source>No alternative subtitles language has been set</source>
+        <translation>Non è stata impostata alcuna lingua sottotitoli alternativa</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="75"/>
+        <source>Current alternative subtitles language: %1 (%2)</source>
+        <translation>Lingua sottotitoli alternativa corrente: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="106"/>
+        <source>QNapi: deleting temporary files...</source>
+        <translation>QNapi: eliminazione file temporanei...</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/climain.cpp" line="121"/>
+        <source>QNapi: finished.</source>
+        <translation>QNapi: operazione conclusa.</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/main.cpp" line="85"/>
+        <source>Command line argument parsing error:</source>
+        <translation>Errore di analisi dell&apos;argomento della riga di comando:</translation>
+    </message>
+</context>
+<context>
+    <name>CliSubtitlesDownloader</name>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="37"/>
+        <source>Invalid path to p7zip executable: %1</source>
+        <translation>Il percorso al programma p7zip è errato: %1</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="44"/>
+        <source>Can&apos;t write to temporary directory: %1</source>
+        <translation>Impossibile scrivere nella cartella temporanea: %1</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="53"/>
+        <source>Calculating checksums...</source>
+        <translation>Calcolo checksum...</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="63"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="73"/>
         <source>Searching for subtitles [%1] (%2)...</source>
         <translation>Ricerca sottotitoli [%1] (%2)...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="344"/>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="369"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="66"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="82"/>
         <source>Searching for subtitles in alternative language [%1] (%2)...</source>
         <translation>Ricerca sottotitoli in lingua alternativa [%1] (%2)...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="412"/>
-        <source>Downloading subtitles file...</source>
-        <translation>Scaricamento file sottotitoli...</translation>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="95"/>
+        <source>0)	Do not download subtitles for this video</source>
+        <translation>0)	Non scaricare sottotitoli per questo video</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="426"/>
-        <source>Unpacking subtitles file...</source>
-        <translation>Scompattamento file sottotitoli...</translation>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="96"/>
+        <source>Found subtitles:</source>
+        <translation>Trovati sottotitoli:</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="438"/>
-        <source>Post-processing subtitles...</source>
-        <translation>Post-elaborazione sottotitoli...</translation>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="104"/>
+        <source> (good)</source>
+        <translation> (buona qualità)</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="443"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="106"/>
+        <source> (bad)</source>
+        <translation> (cattiva qualità)</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="137"/>
+        <source>Select subtitles to download: </source>
+        <translation>Selezionare sottotitoli da scaricare: </translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="148"/>
+        <source>Downloading subtitles...</source>
+        <translation>Scaricamento sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="150"/>
+        <source>Unable to download subtitles!</source>
+        <translation>Impossibile scaricare sottotitoli!</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="154"/>
+        <source>Unpacking subtitles...</source>
+        <translation>Scompattamento sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="156"/>
+        <source>Failed to unpack subtitles!</source>
+        <translation>Impossibile scompattare i sottotitoli!</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="161"/>
+        <source>Post-processing subtitles file...</source>
+        <translation>Post-elaborazione file sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="165"/>
         <source>Adjusting subtitles...</source>
         <translation>Adattamento sottotitoli...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="452"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="167"/>
         <source>Could not adjust subtitles!</source>
         <translation>Impossibile adattare i sottotitoli!</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="178"/>
+        <source>Downloading subtitles for &apos;%1&apos; [%2/%3]</source>
+        <translation>Scaricamento sottotitoli per &apos;%1&apos; [%2/%3]</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="186"/>
+        <source>No permission to write to the directory &apos;%1&apos;!</source>
+        <translation>Mancano i permessi per scrivere nella cartella &apos;%1&apos;!</translation>
+    </message>
+    <message>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="196"/>
+        <source>Subtitles not found!</source>
+        <translation>Sottotitoli non trovati!</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="228"/>
+        <source>Processing of remaining %n file(s) was ignored due to critical error.</source>
+        <translation>
+            <numerusform>L&apos;elaborazione di un file rimanente è stato ignorato a causa di un errore critico.</numerusform>
+            <numerusform>L&apos;elaborazione di %n file rimanenti è stata ignorata a causa di un errore critico.</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>Console</name>
+    <message>
+        <location filename="../libqnapi/src/utils/console.cpp" line="59"/>
+        <source>You must enter a number!</source>
+        <translation>È necessario inserire un numero!</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/utils/console.cpp" line="64"/>
+        <source>You must enter a number between %1 and %2</source>
+        <translation>Inserisci un numero compreso tra %1 e %2</translation>
+    </message>
+</context>
+<context>
+    <name>DontShowListArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/dontshowlistargparser.cpp" line="32"/>
+        <source>Never show a list of available subtitles</source>
+        <translation>Non mostrare una lista di sottotitoli</translation>
+    </message>
+</context>
+<context>
+    <name>ExtensionArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/extensionargparser.cpp" line="32"/>
+        <source>You need to pass subtitles extension after %1 argument</source>
+        <translation>È necessario passare l&apos;estensione dei sottotitoli dopo l&apos;argomento %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/extensionargparser.cpp" line="40"/>
+        <source>Invalid target subtitles extension passed: %1</source>
+        <translation>L&apos;estensione del sottotitolo non valida è passata: %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/extensionargparser.cpp" line="48"/>
+        <source>ext</source>
+        <translation>ext</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/extensionargparser.cpp" line="49"/>
+        <source>Select target subtitles file extension</source>
+        <translation>Selezione estensione file sottotitoli destinazione</translation>
+    </message>
+</context>
+<context>
+    <name>FormatArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/formatargparser.cpp" line="32"/>
+        <source>You need to pass subtitles format code after %1 argument</source>
+        <translation>È necessario passare il codice di formato del sottotitolo dopo l&apos;argomento %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/formatargparser.cpp" line="40"/>
+        <source>Invalid target subtitles format passed: %1</source>
+        <translation>Formato sottotitoli destinazione non valido: %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/formatargparser.cpp" line="49"/>
+        <source>format</source>
+        <translation>formato</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/formatargparser.cpp" line="50"/>
+        <source>Select target subtitles file format (one of mDVD, MPL2, SRT, TMP)</source>
+        <translation>Seleziona formato file sottotitoli destinazione (mDVD, MPL2, SRT, TMP)</translation>
+    </message>
+</context>
+<context>
+    <name>GetThread</name>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="268"/>
+        <source>Checking permissions of the video directory...</source>
+        <translation>Controllo permessi della cartella video...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="271"/>
+        <source>No permission to write to the directory &apos;%1&apos;!</source>
+        <translation>Mancano i permessi per scrivere nella cartella &apos;%1&apos;!</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="279"/>
+        <source>Calculating checksum of the file...</source>
+        <translation>Calcolo checksum del file...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="292"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="308"/>
+        <source>Searching for subtitles [%1] (%2)...</source>
+        <translation>Ricerca sottotitoli [%1] (%2)...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="298"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="322"/>
+        <source>Searching for subtitles in alternative language [%1] (%2)...</source>
+        <translation>Ricerca sottotitoli in lingua alternativa [%1] (%2)...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="360"/>
+        <source>Downloading subtitles file...</source>
+        <translation>Scaricamento file sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="373"/>
+        <source>Unpacking subtitles file...</source>
+        <translation>Scompattamento file sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="383"/>
+        <source>Post-processing subtitles...</source>
+        <translation>Post-elaborazione sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="388"/>
+        <source>Adjusting subtitles...</source>
+        <translation>Adattamento sottotitoli...</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="396"/>
+        <source>Could not adjust subtitles!</source>
+        <translation>Impossibile adattare i sottotitoli!</translation>
+    </message>
+</context>
+<context>
+    <name>GuiMain</name>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="97"/>
+        <source>List of languages recognized by QNapi, including corresponding</source>
+        <translation>Lista delle lingue riconosciute da QNapi, inclusi i corrispondenti</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="99"/>
+        <source>two-letter language codes:</source>
+        <translation>codici lingua a due lettere:</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="114"/>
+        <source>Current default subtitles language: %1 (%2)</source>
+        <translation>Lingua sottotitoli predefinita corrente: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="119"/>
+        <source>No alternative subtitles language has been set</source>
+        <translation>Non è stata impostata alcuna lingua sottotitoli alternativa</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="121"/>
+        <source>Current alternative subtitles language: %1 (%2)</source>
+        <translation>Lingua sottotitoli alternativa corrente: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="130"/>
+        <source>QNapi - command line argument parsing error</source>
+        <translation>QNapi - errore di analisi dell&apos;argomento della riga di comando</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="171"/>
+        <source>QNapi - CLI executable not found</source>
+        <translation>QNapi - versione per riga di comando non trovata</translation>
+    </message>
+    <message>
+        <location filename="../gui/src/guimain.cpp" line="172"/>
+        <source>You have requested to run QNapi in command-line mode, but unfortunately command-line binary &apos;%1&apos; could not be found.</source>
+        <translation>Ha richiesto l&apos;avvio dell&apos;applicazione della riga di comando, ma il binario &apos;%1&apos; non è stato trovato.</translation>
+    </message>
+</context>
+<context>
+    <name>HelpHelper</name>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="29"/>
+        <source>QNapi is distributed under the GNU General Public License v2.</source>
+        <translation>QNapi è distribuito sotto la GNU General Public License v2.</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="33"/>
+        <source>Syntax: %1 [options] [list of files]</source>
+        <translation>Sintassi: %1 [opzioni] [lista file]</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/utils/helphelper.cpp" line="34"/>
+        <source>Available options:</source>
+        <translation>Opzioni disponibili:</translation>
+    </message>
+</context>
+<context>
+    <name>LangArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/langargparser.cpp" line="32"/>
+        <source>You need to pass language code after %1 argument</source>
+        <translation>È necessario passare il codice di lingua dopo l&apos;argomento %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/langargparser.cpp" line="41"/>
+        <source>Invalid language code passed: %1</source>
+        <translation>Codice lingua non valido: %1</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/langargparser.cpp" line="50"/>
+        <source>code</source>
+        <translation>codice</translation>
+    </message>
+    <message>
+        <location filename="../libqnapi/src/parser/langargparser.cpp" line="50"/>
+        <source>Preferred subtitles language</source>
+        <translation>Lingua sottotitoli preferita</translation>
     </message>
 </context>
 <context>
@@ -67,10 +402,10 @@
 <context>
     <name>QNapiApp</name>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="93"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="102"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="108"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="117"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="92"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="103"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="111"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="122"/>
         <source>Download subtitles</source>
         <translation>Scarica sottotitoli</translation>
     </message>
@@ -80,307 +415,67 @@
         <translation>Scansiona cartelle</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="99"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="100"/>
         <source>Convert subtitles</source>
         <translation>Converti sottotitoli</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="105"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="114"/>
-        <location filename="../gui/src/qnapiapp.cpp" line="120"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="107"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="118"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="126"/>
         <source>Create an account</source>
         <translation>Crea un account</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="111"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="115"/>
         <source>Upload subtitles</source>
         <translation>Invia sottotitoli</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="123"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="130"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="126"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="133"/>
         <source>About</source>
         <translation>Informazioni</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="129"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="136"/>
         <source>Quit</source>
         <translation>Esci</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="133"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="140"/>
         <source>NapiProjekt</source>
         <translation>NapiProjekt</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="138"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="145"/>
         <source>OpenSubtitles</source>
         <translation>OpenSubtitles</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="144"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="151"/>
         <source>Napisy24</source>
         <translation>Napisy24</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiapp.cpp" line="192"/>
+        <location filename="../gui/src/qnapiapp.cpp" line="195"/>
         <source>Select one or more video files to download subtitles for</source>
         <translation>Scegli uno o più video file per cui scaricare sottotitoli</translation>
     </message>
 </context>
 <context>
-    <name>QNapiCli</name>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="127"/>
-        <source>Invalid language code: %1</source>
-        <translation>Codice lingua non valido: %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="150"/>
-        <source>Invalid target subtitles format: %1</source>
-        <translation>Formato sottotitoli destinazione non valido: %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="220"/>
-        <source>File not found!</source>
-        <translation>File non trovato!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="236"/>
-        <source>Path to the program p7zip is incorrect! Check your settings.</source>
-        <translation>Il percorso al programma p7zip è errato! Controllare le impostazioni.</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="242"/>
-        <source>Can not write to the temporary directory! Check your settings.</source>
-        <translation>Impossibile scrivere nella cartella temporanea! Controllare le impostazioni.</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="254"/>
-        <source> * Downloading subtitles for &apos;%1&apos;</source>
-        <translation> * Scaricamento sottotitoli per &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="260"/>
-        <source>   No permission to write to the directory &apos;%1&apos;!</source>
-        <translation>   Mancano i permessi per scrivere nella cartella &apos;%1&apos;!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="266"/>
-        <source>   Calculating checksums...</source>
-        <translation>   Calcolo checksum...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="276"/>
-        <location filename="../gui/src/qnapicli.cpp" line="286"/>
-        <source>   Searching for subtitles [%1] (%2)...</source>
-        <translation>   Ricerca sottotitoli [%1] (%2)...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="278"/>
-        <location filename="../gui/src/qnapicli.cpp" line="296"/>
-        <source>   Searching for subtitles in alternative language [%1] (%2)...</source>
-        <translation>   Ricerca sottotitoli in lingua alternativa [%1] (%2)...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="308"/>
-        <source>   Subtitles not found!</source>
-        <translation>   Sottotitoli non trovati!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="327"/>
-        <source>   0)	Do not download subtitles for this video</source>
-        <translation>   0)	Non scaricare sottotitoli per questo video</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="328"/>
-        <source>   Found subtitles:</source>
-        <translation>   Trovati sottotitoli:</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="340"/>
-        <source> (good)</source>
-        <translation> (buona qualità)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="342"/>
-        <source> (bad)</source>
-        <translation> (cattiva qualità)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="355"/>
-        <source>   Select subtitles to download: </source>
-        <translation>   Selezionare sottotitoli da scaricare:</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="363"/>
-        <source>   You must enter a number!</source>
-        <translation>   È necessario inserire un numero!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="369"/>
-        <source>   Enter a number from the list!</source>
-        <translation>   Inserire un numero dalla lista!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="382"/>
-        <source>   Downloading subtitles...</source>
-        <translation>   Scaricamento sottotitoli...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="385"/>
-        <source>   Unable to download subtitles!</source>
-        <translation>   Impossibile scaricare sottotitoli!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="389"/>
-        <source>   Unpacking subtitles...</source>
-        <translation>   Scompattamento sottotitoli...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="392"/>
-        <source>   Failed to unpack subtitles!</source>
-        <translation>   Impossibile scompattare i sottotitoli!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="398"/>
-        <source>   Post-processing subtitles file...</source>
-        <translation>   Post-elaborazione file sottotitoli...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="402"/>
-        <source>   Adjusting subtitles...</source>
-        <translation>   Adattamento sottotitoli...</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="405"/>
-        <source>   Could not adjust subtitles!</source>
-        <translation>   Impossibile adattare i sottotitoli!</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="417"/>
-        <source>QNapi %1, %2</source>
-        <translation>QNapi %1, %2</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="420"/>
-        <source>Qt version: %1</source>
-        <translation>Versione Qt: %1</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="428"/>
-        <source>QNapi is distributed under the GNU General Public License v2.</source>
-        <translation>QNapi è distribuito sotto la GNU General Public License v2.</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="430"/>
-        <source>Syntax: %1 [options] [list of files]</source>
-        <translation>Sintassi: %1 [opzioni] [lista file]</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="431"/>
-        <source>Available options:</source>
-        <translation>Opzioni disponibili:</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="432"/>
-        <source>   -c, --console              Download subtitles with console</source>
-        <translation>   -c, --console              Scarica sottotitoli da console</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="433"/>
-        <source>   -q, --quiet                Download subtitles quietly without showing</source>
-        <translation>   -q, --quiet                Scarica sottotitoli in silenzio senza mostrare</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="434"/>
-        <source>                              any messages or windows (implies -d)</source>
-        <translation>                              alcun messaggio o finestra (sottintende -d)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="436"/>
-        <source>   -s, --show-list            Show a list of subtitles (works only with -c)</source>
-        <translation>   -s, --show-list            Mostra una lista di sottotitoli (funziona solo con -c)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="437"/>
-        <source>   -d, --dont-show-list       Do not show a list of subtitles (works only with -c)</source>
-        <translation>   -d, --dont-show-list       Non mostrare una lista di sottotitoli (funziona solo con -c)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="439"/>
-        <source>   -l, --lang [code]          Preferred subtitles language</source>
-        <translation>   -l, --lang [codice]        Lingua sottotitoli preferita</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="440"/>
-        <source>   -lb,--lang-backup [code]   Alternative subtitles language</source>
-        <translation>   -lb,--lang-backup [codice] Lingua sottotitoli alternativa</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="441"/>
-        <source>   -f, --format [format]      Select target subtitles file format (%1)</source>
-        <translation>   -f, --format [formato]     Seleziona formato file sottotitoli destinazione (%1)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="442"/>
-        <source>   -e, --extension [ext]      Select target subtitles file extension</source>
-        <translation>   -e, --extension [est]      Selezione estensione file sottotitoli destinazione</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="444"/>
-        <source>   -o, --options              Show program options (only GUI)</source>
-        <translation>   -o, --options              Mostra opzioni programma (solo GUI)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="445"/>
-        <source>   -h, --help                 Show help text</source>
-        <translation>   -h, --help                 Mostra testo di aiuto</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="446"/>
-        <source>   -hl,--help-languages       List of available subtitles languages</source>
-        <translation>   -hl,--help-languages       Lista delle lingue sottotitoli disponibili</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="452"/>
-        <source>List of languages recognized by QNapi, including corresponding</source>
-        <translation>Lista delle lingue riconosciute da QNapi, inclusi i corrispondenti</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="453"/>
-        <source>two-letter language codes:</source>
-        <translation>codici lingua a due lettere:</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="469"/>
-        <source>Current default subtitles language: %1 (%2)</source>
-        <translation>Lingua sottotitoli predefinita corrente: %1 (%2)</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="473"/>
-        <source>No alternative subtitles language has been set</source>
-        <translation>Non è stata impostata alcuna lingua sottotitoli alternativa</translation>
-    </message>
-    <message>
-        <location filename="../gui/src/qnapicli.cpp" line="475"/>
-        <source>Current alternative subtitles language: %1 (%2)</source>
-        <translation>Lingua sottotitoli alternativa corrente: %1 (%2)</translation>
-    </message>
-</context>
-<context>
     <name>QNapiOpenDialog</name>
     <message>
-        <location filename="../gui/src/qnapiopendialog.cpp" line="30"/>
+        <location filename="../gui/src/qnapiopendialog.cpp" line="26"/>
         <source>Video files (%1);;All files (*.*)</source>
         <translation>File video (%1);;Tutti i file (*.*)</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapiopendialog.cpp" line="34"/>
+        <location filename="../gui/src/qnapiopendialog.cpp" line="29"/>
         <source>Subtitles files (%1);;All files (*.*)</source>
         <translation>File sottotitoli (%1);;Tutti i file(*.*)</translation>
     </message>
@@ -388,7 +483,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../libqnapi/src/engines/napiprojektdownloadengine.cpp" line="59"/>
+        <location filename="../libqnapi/src/engines/napiprojektdownloadengine.cpp" line="63"/>
         <source>&lt;b&gt;www.napiprojekt.pl&lt;/b&gt; subtitles download engine</source>
         <translation>Motore scaricamento sottotitoli &lt;b&gt;www.napiprojekt.pl&lt;/b&gt;</translation>
     </message>
@@ -398,230 +493,270 @@
         <translation>Motore scaricamento sottotitoli &lt;b&gt;www.napisy24.pl&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/engines/opensubtitlesdownloadengine.cpp" line="29"/>
+        <location filename="../libqnapi/src/engines/opensubtitlesdownloadengine.cpp" line="27"/>
         <source>&lt;b&gt;www.opensubtitles.org&lt;/b&gt; subtitles download engine</source>
         <translation>Motore scaricamento sottotitoli &lt;b&gt;www.opensubtitles.org&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subconvert/subtitleconverter.cpp" line="173"/>
+        <location filename="../libqnapi/src/subconvert/subtitleconverter.cpp" line="157"/>
         <source>Subtitles downloaded and processed by QNapi|</source>
         <translation>Sottotitoli scaricati e processati da QNapi |</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="83"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="63"/>
         <source>Albanian</source>
         <translation>Albanese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="87"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="67"/>
         <source>English</source>
         <translation>Inglese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="91"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="71"/>
         <source>Arabic</source>
         <translation>Arabo</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="95"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="75"/>
         <source>Bulgarian</source>
         <translation>Bulgaro</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="99"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="79"/>
         <source>Chinese</source>
         <translation>Cinese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="103"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="83"/>
         <source>Croatian</source>
         <translation>Croato</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="107"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="87"/>
         <source>Czech</source>
         <translation>Ceco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="111"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="91"/>
         <source>Danish</source>
         <translation>Danese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="115"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="95"/>
         <source>Estonian</source>
         <translation>Estone</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="119"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="99"/>
         <source>Finnish</source>
         <translation>Finlandese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="123"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="103"/>
         <source>French</source>
         <translation>Francese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="127"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="107"/>
         <source>Galician</source>
         <translation>Gallego</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="131"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="111"/>
         <source>Greek</source>
         <translation>Greco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="135"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="115"/>
         <source>Hebrew</source>
         <translation>Ebraico</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="139"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="119"/>
         <source>Spanish</source>
         <translation>Spagnolo</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="143"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="123"/>
         <source>Dutch</source>
         <translation>Olandese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="147"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="127"/>
         <source>Indonesian</source>
         <translation>Indonesiano</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="151"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="131"/>
         <source>Japanese</source>
         <translation>Giapponese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="155"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="135"/>
         <source>Korean</source>
         <translation>Coreano</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="159"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="139"/>
         <source>Macedonian</source>
         <translation>Macedone</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="163"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="143"/>
         <source>German</source>
         <translation>Tedesco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="167"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="147"/>
         <source>Norwegian</source>
         <translation>Norvegese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="171"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="151"/>
         <source>Occitan</source>
         <translation>Occitano</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="175"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="155"/>
         <source>Persian (farsi)</source>
         <translation>Persiano (farsi)</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="179"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="159"/>
         <source>Polish</source>
         <translation>Polacco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="183"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="163"/>
         <source>Portuguese</source>
         <translation>Portoghese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="187"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="167"/>
         <source>Portuguese-BR</source>
         <translation>Portoghese-BR</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="191"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="171"/>
         <source>Russian</source>
         <translation>Russo</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="195"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="175"/>
         <source>Romanian</source>
         <translation>Romeno</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="199"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="179"/>
         <source>Serbian</source>
         <translation>Serbo</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="203"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="183"/>
         <source>Slovenian</source>
         <translation>Sloveno</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="207"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="187"/>
         <source>Swedish</source>
         <translation>Svedese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="211"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="191"/>
         <source>Slovak</source>
         <translation>Slovacco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="215"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="195"/>
         <source>Turkish</source>
         <translation>Turco</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="219"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="199"/>
         <source>Vietnamese</source>
         <translation>Vietnamita</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="223"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="203"/>
         <source>Hungarian</source>
         <translation>Ungherese</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="227"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="207"/>
         <source>Italian</source>
         <translation>Italiano</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="88"/>
+        <location filename="../gui/src/main.cpp" line="86"/>
         <source>First Run</source>
         <translation>Prima esecuzione</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="89"/>
+        <location filename="../gui/src/main.cpp" line="87"/>
         <source>This is the first launch of the program QNapi. Do you want to configure it now?</source>
         <translation>Questa è la prima esecuzione del programma QNapi. Vuoi configurarlo adesso?</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="253"/>
+        <location filename="../gui/src/guimain.cpp" line="214"/>
         <source>QNapi: deleting temporary files...</source>
         <translation>QNapi: eliminazione file temporanei...</translation>
     </message>
     <message>
-        <location filename="../gui/src/main.cpp" line="270"/>
+        <location filename="../gui/src/guimain.cpp" line="229"/>
         <source>QNapi: finished.</source>
         <translation>QNapi: operazione conclusa.</translation>
     </message>
     <message>
-        <location filename="../gui/src/qnapi.cpp" line="115"/>
+        <location filename="../libqnapi/src/qnapi.cpp" line="89"/>
         <source>No subtitles found!</source>
         <translation>Nessun sottotitolo trovato!</translation>
     </message>
 </context>
 <context>
+    <name>QuietBatchArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/quietbatchargparser.cpp" line="33"/>
+        <source>Download subtitles silently without showing any messages</source>
+        <translation>Scarica sottotitoli in silenzio senza mostrare alcun messaggio o finestra (sottintende -d)</translation>
+    </message>
+</context>
+<context>
+    <name>RunCLIAppArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/runcliappargparser.cpp" line="37"/>
+        <source>Run in command-line mode (requires separate CLI binary)</source>
+        <translation>Esegui in modalità riga di comando (richiede binario separato)</translation>
+    </message>
+</context>
+<context>
+    <name>ShowHelpArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/showhelpargparser.cpp" line="31"/>
+        <source>Show help text</source>
+        <translation>Mostra testo di aiuto</translation>
+    </message>
+</context>
+<context>
+    <name>ShowHelpLanguagesArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/showhelplanguagesargparser.cpp" line="32"/>
+        <source>List of available subtitles languages</source>
+        <translation>Lista delle lingue sottotitoli disponibili</translation>
+    </message>
+</context>
+<context>
+    <name>ShowListArgParser</name>
+    <message>
+        <location filename="../libqnapi/src/parser/showlistargparser.cpp" line="33"/>
+        <source>Always show a list of available subtitles</source>
+        <translation>Mostra una lista di sottotitoli</translation>
+    </message>
+</context>
+<context>
     <name>SubtitleMatcher</name>
     <message>
-        <location filename="../libqnapi/src/subtitlematcher.cpp" line="106"/>
+        <location filename="../libqnapi/src/subtitlematcher.cpp" line="100"/>
         <source>_copy</source>
         <translation>_copia</translation>
     </message>
@@ -634,37 +769,32 @@
         <translation>QNapi - Informazioni</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="74"/>
+        <location filename="../gui/ui/frmabout.ui" line="64"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;QNapi is a program for automatic downloading and matching subtitles for movies. &lt;/p&gt;&lt;p&gt;The program is distributed under the GNU General Public License version second or later.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://qnapi.github.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qnapi.github.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;I thank all those who in any way supported the development of the project.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;QNapi è un programma per lo scaricamento e l&apos;abbinamento automatico di sottotitoli di film. &lt;/p&gt;&lt;p&gt;Il programma è distribuito sotto la GNU General Public License seconda versione o successiva.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://qnapi.github.io&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qnapi.github.io&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Ringrazio tutti coloro che hanno supportato lo sviluppo del progetto in qualunque forma.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="105"/>
+        <location filename="../gui/ui/frmabout.ui" line="95"/>
         <source>Qt version: x.y.z</source>
         <translation>Versione Qt: x.y.z</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="128"/>
+        <location filename="../gui/ui/frmabout.ui" line="118"/>
         <source>The program uses www.napiprojekt.pl subtitle database</source>
         <translation>Questo programma usa il database sottotitoli www.napiprojekt.pl</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="157"/>
+        <location filename="../gui/ui/frmabout.ui" line="147"/>
         <source>The program uses www.opensubtitles.org subtitle database</source>
         <translation>Questo programma usa il database sottotitoli www.opensubtitles.org</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="183"/>
+        <location filename="../gui/ui/frmabout.ui" line="173"/>
         <source>The program uses www.napisy24.pl subtitle database</source>
         <translation>Questo programma usa il database sottotitoli www.napisy24.pl</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmabout.ui" line="200"/>
-        <source>Close</source>
-        <translation>Chiudi</translation>
-    </message>
-    <message>
-        <location filename="../gui/ui/frmabout.ui" line="241"/>
+        <location filename="../gui/ui/frmabout.ui" line="224"/>
         <source>QNapi version</source>
         <translation>Versione QNapi</translation>
     </message>
@@ -821,44 +951,44 @@
         <translation>Converti</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="82"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="79"/>
         <source>Choose a subtitles file</source>
         <translation>Scegliere un file sottotitoli</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="103"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="96"/>
         <source>incorrect</source>
         <translation>errato</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="148"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="141"/>
         <source>Default (%1)</source>
         <translation>Predefinita (%1)</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="180"/>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="206"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="170"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="192"/>
         <source>Select a video file</source>
         <translation>Selezionare un file video</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="274"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="244"/>
         <source>Subtitles converted</source>
         <translation>Sottotitoli convertiti</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="275"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="245"/>
         <source>Changed subtitles format from &apos;%1&apos; to &apos;%2&apos;</source>
         <translatorcomment>convertito?</translatorcomment>
         <translation>Formato sottotitoli cambiato da &apos;%1&apos; a &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="280"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="248"/>
         <source>Could not change subtitle format!</source>
         <translation>Impossibile cambiare formato sottotitoli!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmconvert.cpp" line="281"/>
+        <location filename="../gui/src/forms/frmconvert.cpp" line="249"/>
         <source>An error occured while converting subtitles!</source>
         <translation>Si è verificato un errore durante la conversione dei sottotitoli!</translation>
     </message>
@@ -896,17 +1026,17 @@
         <translation>I sottotitoli &lt;b&gt;probabilmente non corrispondenti&lt;/b&gt; al video sono evidenziati in rosso.</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="38"/>
+        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="35"/>
         <source>Select the subtitles which you want to download for video file&lt;br&gt;&lt;br&gt;&lt;b&gt;%1&lt;/b&gt;</source>
         <translation>Seleziona i sottotitoli che vuoi scaricare per il file video&lt;br&gt;&lt;br&gt;&lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="93"/>
+        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="88"/>
         <source>No subtitle selected</source>
         <translation>Nessun sottotitolo selezionato</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="94"/>
+        <location filename="../gui/src/forms/frmlistsubtitles.cpp" line="89"/>
         <source>You need to select a subtitle from the list!</source>
         <translation>È necessario selezionare un sottotitolo dalla lista!</translation>
     </message>
@@ -1050,7 +1180,7 @@
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="94"/>
         <source>Subtitles file permissions: </source>
-        <translation>Permessi file sottotitoli:</translation>
+        <translation>Permessi file sottotitoli: </translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="163"/>
@@ -1074,7 +1204,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="230"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="411"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="405"/>
         <source>Auto-detected based on system language (%1)</source>
         <translation>Autorilevamento in base alla lingua di sistema (%1)</translation>
     </message>
@@ -1144,7 +1274,7 @@
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="384"/>
         <source>Move down  </source>
-        <translation>Sposta in giù</translation>
+        <translation>Sposta in giù  </translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="398"/>
@@ -1229,7 +1359,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="713"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="274"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="257"/>
         <source>Default</source>
         <translation>Predefinita</translation>
     </message>
@@ -1264,17 +1394,17 @@
         <translation>Salva</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="123"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="129"/>
         <source>Specify the path for 7z executable</source>
         <translation>Specificare il percorso per l&apos;eseguibile 7z</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="128"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="134"/>
         <source>Invalid path</source>
         <translation>Percorso non valido</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="129"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="135"/>
         <source>Defined path to 7z executable is invalid. If you can not locate 7z executable, try installing p7zip-full package.</source>
         <translation>Il percorso all&apos;eseguibile 7z definito non è valido. Se non si riesce a trovare l&apos;eseguibile 7z, provare a installare il pacchetto completo p7zip.</translation>
     </message>
@@ -1284,22 +1414,22 @@
         <translation>Specificare cartella temporanea</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="191"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="183"/>
         <source>Warning</source>
         <translation>Avviso</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="192"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="184"/>
         <source>At least one subtitles engine must remain active!</source>
         <translation>Almeno uno dei motori sottotitoli deve rimanere attivo!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="266"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="251"/>
         <source>%1 subtitles engine info</source>
         <translation>Info motore sottotitoli %1</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="281"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="263"/>
         <source>Default (%1)</source>
         <translation>Predefinita (%1)</translation>
     </message>
@@ -1322,62 +1452,62 @@
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="110"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="86"/>
         <source>Can not find p7zip!</source>
         <translation>Impossibile trovare p7zip!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="111"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="87"/>
         <source>The path to the program p7zip is incorrect!</source>
         <translation>Il percorso al programma p7zip è errato!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="117"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="93"/>
         <source>Invalid temporary directory!</source>
         <translation>Cartella temporanea non valida!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="118"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="94"/>
         <source>Unable to write to the temporary directory! Check your settings.</source>
         <translation>Impossibile scrivere nella cartella temporanea! Controllare le impostazioni.</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="124"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="100"/>
         <source>No files!</source>
         <translation>Nessun file!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="125"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="101"/>
         <source>Can&apos;t download subtitles as no movie files specified!</source>
         <translation>Impossibile scaricare sottotitoli dato che nessun file film è stato specificato!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="159"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="133"/>
         <source>QNapi - downloading subtitles (%1/%2)</source>
         <translation>QNapi - scaricamento sottotitoli (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="160"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="136"/>
         <source>QNapi - downloading subtitles...</source>
         <translation>QNapi - scaricamento sottotitoli...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="200"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="170"/>
         <source>Critical error!</source>
         <translation>Errore critico!</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="221"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="187"/>
         <source>QNapi</source>
         <translation>QNapi</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="222"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="188"/>
         <source>Do you want to cancel subtitles downloading?</source>
         <translation>Si desidera annullare lo scaricamento dei sottotitoli?</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="228"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="193"/>
         <source>Finishing the tasks...</source>
         <translation>Conclusione operazioni in corso...</translation>
     </message>
@@ -1396,7 +1526,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmscan.ui" line="63"/>
-        <location filename="../gui/src/forms/frmscan.cpp" line="184"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="167"/>
         <source>Scan</source>
         <translation>Scansiona</translation>
     </message>
@@ -1452,7 +1582,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmscan.ui" line="214"/>
-        <location filename="../gui/src/forms/frmscan.cpp" line="135"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="123"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
@@ -1467,32 +1597,32 @@
         <translation>Segui collegamenti simbolici</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="110"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="103"/>
         <source>Select the folder to scan</source>
         <translation>Seleziona la cartella da scansionare</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="136"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="124"/>
         <source>Scanning directories...</source>
         <translation>Scansione cartelle...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="154"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="141"/>
         <source>Interrupting directory scanning...</source>
         <translation>Arresto scansione cartelle...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="177"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="161"/>
         <source>Scanning directory &lt;b&gt;%1&lt;/b&gt;...</source>
         <translation>Scansione cartella &lt;b&gt;%1&lt;/b&gt;...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="186"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="170"/>
         <source>Select the videos you wish to download subtitles for.</source>
         <translation>Seleziona i video per cui si desidera scaricare sottotitoli.</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmscan.cpp" line="187"/>
+        <location filename="../gui/src/forms/frmscan.cpp" line="171"/>
         <source>No video files found.</source>
         <translation>Nessun file video trovato.</translation>
     </message>
@@ -1520,24 +1650,24 @@
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmsummary.cpp" line="77"/>
+        <location filename="../gui/src/forms/frmsummary.cpp" line="75"/>
         <source>Subtitles downloaded for %1 %2</source>
         <translation>Scaricati sottotitoli per %1 %2</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmsummary.cpp" line="78"/>
+        <location filename="../gui/src/forms/frmsummary.cpp" line="77"/>
         <location filename="../gui/src/forms/frmsummary.cpp" line="80"/>
         <source>files</source>
         <translation>file</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmsummary.cpp" line="78"/>
+        <location filename="../gui/src/forms/frmsummary.cpp" line="77"/>
         <location filename="../gui/src/forms/frmsummary.cpp" line="80"/>
         <source>file</source>
         <translation>file</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmsummary.cpp" line="79"/>
+        <location filename="../gui/src/forms/frmsummary.cpp" line="78"/>
         <source>Could not download subtitles for %1 %2</source>
         <translation>Impossibile scaricare sottotitoli per %1 %2</translation>
     </message>

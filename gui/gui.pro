@@ -1,17 +1,8 @@
 TEMPLATE = app
 
-CONFIG += warn_on \
-    thread \
-    qt \
-    resources \
-    silent \
-    c++11
+CONFIG += warn_on qt resources silent c++11
 
-QT += network \
-    gui \
-    widgets \
-    core \
-    xml
+QT += core network xml gui widgets
 
 SOURCES += src/main.cpp \
     src/forms/frmprogress.cpp \
@@ -30,8 +21,7 @@ SOURCES += src/main.cpp \
     src/qcumber/qsingleapplication.cpp \
     src/qnapiopendialog.cpp \
     src/qnapiapp.cpp \
-    src/qnapicli.cpp \
-    src/qnapi.cpp
+    src/guimain.cpp
 
 HEADERS += src/forms/frmprogress.h \
     src/forms/frmlistsubtitles.h \
@@ -52,8 +42,7 @@ HEADERS += src/forms/frmprogress.h \
     src/qnapithread.h \
     src/qnapiopendialog.h \
     src/qnapiapp.h \
-    src/qnapicli.h \
-    src/qnapi.h
+    src/guimain.h
 
 FORMS += ui/frmprogress.ui \
     ui/frmlistsubtitles.ui \
@@ -87,13 +76,12 @@ macx {
     SOURCES += src/utils/infoplistdockicon.cpp
     HEADERS += src/utils/infoplistdockicon.h
 
-    LIBS += -framework CoreFoundation
-
     TARGET = QNapi
     DESTDIR = ../macx/
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.7
+    LIBS += -framework CoreFoundation
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
+    QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.8
     ICON = ../macx/qnapi.icns
     QMAKE_INFO_PLIST = ../macx/Info.plist
     7ZIP_BINARY.files = ../macx/content/7za
@@ -105,14 +93,10 @@ macx {
 
 win32 {
     CONFIG += nostrip
-
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
-
     RC_FILE = ../win32/qnapi.rc
-
     TARGET = qnapi
-
     target.path = ../win32/out
     INSTALLS += target
 }

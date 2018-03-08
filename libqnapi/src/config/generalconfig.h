@@ -44,6 +44,7 @@ class GeneralConfig {
   QString changePermissionsTo_;
 
  public:
+  GeneralConfig() {}
   GeneralConfig(const QString& uiLanguage, const QString& p7zipPath,
                 const QString& tmpPath, const QString& language,
                 const QString& backupLanguage, const bool& noBackup,

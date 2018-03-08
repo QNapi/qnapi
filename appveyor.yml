@@ -14,6 +14,12 @@ environment:
     DEPLOY: 0
   - QT5: C:\Qt\5.8\mingw53_32
     MINGW: C:\Qt\Tools\mingw530_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.9\mingw53_32
+    MINGW: C:\Qt\Tools\mingw530_32
+    DEPLOY: 0
+  - QT5: C:\Qt\5.10.0\mingw53_32
+    MINGW: C:\Qt\Tools\mingw530_32
     DEPLOY: 1
 
 matrix:
@@ -22,9 +28,8 @@ matrix:
 install:
   - appveyor-retry cinst nsis -y -version 2.51
   - appveyor-retry cinst 7zip.commandline -y -x86
-  - appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/archive/1/18/20140806212030!NsProcess.zip" -FileName NsProcess.zip
-  - 7z e -o"C:\Program Files (x86)\NSIS\Include" NsProcess.zip Include\*.nsh
-  - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" NsProcess.zip Plugin\*.dll
+  - 7z e -o"C:\Program Files (x86)\NSIS\Include" deps\ns-process\NsProcess.zip Include\*.nsh
+  - 7z e -o"C:\Program Files (x86)\NSIS\Plugins" deps\ns-process\NsProcess.zip Plugin\*.dll
   - git submodule update --init --recursive
 
 before_build:

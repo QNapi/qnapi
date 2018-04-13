@@ -12,21 +12,10 @@ no_gui:SUBDIRS -= gui
 
 TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
 
+include(qnapi.pri)
+
 unix {
-    INSTALL_PREFIX = /usr
     DATADIR=$${INSTALL_PREFIX}/share
-
-    !no_cli {
-        cli_target.files = qnapic
-        cli_target.path = $${INSTALL_PREFIX}/bin
-        INSTALLS += cli_target
-    }
-
-    !macx:!no_gui {
-        gui_target.files = qnapi
-        gui_target.path = $${INSTALL_PREFIX}/bin
-        INSTALLS += gui_target
-    }
 
     doc.path = $${INSTALL_PREFIX}/share/doc/qnapi
     doc.files = doc/ChangeLog \
@@ -69,8 +58,6 @@ macx:!no_gui {
 }
 
 win32 {
-    INSTALL_PREFIX = win32/out
-
     QMAKE_STRIP = echo
 
     p7zip.files = win32/content/7za.exe
@@ -91,8 +78,8 @@ win32 {
 
     DEPLOYWIN_FLAGS = --no-translations --no-quick-import --no-system-d3d-compiler --no-angle --no-webkit --no-webkit2
     deploywin.commands += windeployqt $${DEPLOYWIN_FLAGS}
-    !no_cli:deploywin.commands += win32/out/qnapic.exe
-    !no_gui:deploywin.commands += win32/out/qnapi.exe
+    !no_cli:deploywin.commands += $${INSTALL_PREFIX}/qnapic.exe
+    !no_gui:deploywin.commands += $${INSTALL_PREFIX}/qnapi.exe
 
     platform.files = $$[QT_INSTALL_PLUGINS]/platforms/qwindows.dll
     platform.path = $${INSTALL_PREFIX}/platforms

@@ -20,11 +20,12 @@ RCC_DIR = tmp
 OBJECTS_DIR = tmp
 INCLUDEPATH = src
 
+include(../qnapi.pri)
 include(../libqnapi/libqnapi.pri)
 
 unix {
     TARGET = qnapic
-    DESTDIR = ../
+    DESTDIR = $${OUTDIR}
     CONFIG += link_pkgconfig
     PKGCONFIG += libmediainfo
 }
@@ -37,11 +38,16 @@ macx {
     QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.8
 }
 
-win32 {
-    CONFIG += nostrip
-    RC_FILE = ../win32/qnapi.rc
-    TARGET = qnapic
-    target.path = ../win32/out
+!win32 {
+    target.path = $${INSTALL_PREFIX}/bin
     INSTALLS += target
 }
 
+win32 {
+    CONFIG += nostrip
+    RC_FILE = $${OUTDIR}/qnapi.rc
+    TARGET = qnapic
+
+    target.path = $${INSTALL_PREFIX}
+    INSTALLS += target
+}

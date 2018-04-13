@@ -63,6 +63,7 @@ RCC_DIR = tmp
 OBJECTS_DIR = tmp
 INCLUDEPATH = src
 
+include(../qnapi.pri)
 include(../libqnapi/libqnapi.pri)
 
 unix:!macx {
@@ -77,31 +78,37 @@ macx {
     HEADERS += src/utils/infoplistdockicon.h
 
     TARGET = QNapi
-    DESTDIR = ../macx/
+    DESTDIR = $${OUTDIR}
 
     LIBS += -framework CoreFoundation
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
     QMAKE_CXXFLAGS_X86_64 = -mmacosx-version-min=10.8
-    ICON = ../macx/qnapi.icns
-    QMAKE_INFO_PLIST = ../macx/Info.plist
-    7ZIP_BINARY.files = ../macx/content/7za
+    ICON = $${OUTDIR}/qnapi.icns
+    QMAKE_INFO_PLIST = $${OUTDIR}/Info.plist
+    7ZIP_BINARY.files = $${OUTDIR}/content/7za
     7ZIP_BINARY.path = Contents/Resources
     LIBMEDIAINFO.files = ../deps/libmediainfo/lib/libmediainfo.0.dylib
     LIBMEDIAINFO.path = Contents/MacOS
     QMAKE_BUNDLE_DATA += 7ZIP_BINARY LIBMEDIAINFO
 }
 
+!win32 {
+    SOURCES += src/qcumber/qinterprocesschannel.cpp
+    HEADERS += src/qcumber/qinterprocesschannel.h
+
+    !macx {
+        target.path = $${INSTALL_PREFIX}/bin
+        INSTALLS += target
+    }
+}
+
 win32 {
     CONFIG += nostrip
     SOURCES += src/qcumber/qinterprocesschannel_win32.cpp
     HEADERS += src/qcumber/qinterprocesschannel_win32.h
-    RC_FILE = ../win32/qnapi.rc
+    RC_FILE = $${OUTDIR}/qnapi.rc
     TARGET = qnapi
-    target.path = ../win32/out
-    INSTALLS += target
-}
 
-!win32 { 
-    SOURCES += src/qcumber/qinterprocesschannel.cpp
-    HEADERS += src/qcumber/qinterprocesschannel.h
+    target.path = $${INSTALL_PREFIX}
+    INSTALLS += target
 }

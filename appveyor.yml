@@ -18,7 +18,7 @@ environment:
   - QT5: C:\Qt\5.9\mingw53_32
     MINGW: C:\Qt\Tools\mingw530_32
     DEPLOY: 0
-  - QT5: C:\Qt\5.10.0\mingw53_32
+  - QT5: C:\Qt\5.10.1\mingw53_32
     MINGW: C:\Qt\Tools\mingw530_32
     DEPLOY: 1
 

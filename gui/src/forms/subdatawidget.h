@@ -16,6 +16,7 @@
 #define SUBDATAWIDGET_H
 
 #include <QWidget>
+#include <QIcon>
 #include "ui_subDataWidget.h"
 
 class subDataWidget : public QWidget {

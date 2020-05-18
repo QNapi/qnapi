@@ -10,7 +10,7 @@ no_cli:SUBDIRS -= cli
 no_gui:message(will skip building qnapi gui application)
 no_gui:SUBDIRS -= gui
 
-TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
+TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts translations/qnapi_si.ts
 
 include(qnapi.pri)
 

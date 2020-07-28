@@ -75,6 +75,8 @@ const GeneralConfig ConfigReader::readGeneralConfig(
       settings.value("qnapi/language", preferredLangCode).toString(),
       settings.value("qnapi/language_backup", backupLangCode).toString(),
       settings.value("qnapi/no_backup", false).toBool(),
+      static_cast<LangCodeType>(
+          settings.value("qnapi/lang_code_in_file_name", LCT_NONE).toInt()),
       settings.value("qnapi/quiet_batch", false).toBool(),
       static_cast<SearchPolicy>(
           settings.value("qnapi/search_policy", SP_BREAK_IF_FOUND).toInt()),

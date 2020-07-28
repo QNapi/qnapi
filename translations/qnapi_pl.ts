@@ -1234,22 +1234,22 @@
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="280"/>
         <source>Add language code to subtitle file name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodawaj kod języka do nazwy pliku napisów:</translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="288"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie</translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="293"/>
         <source>Two-letter</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwuliterowy</translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="298"/>
         <source>Three-letter</source>
-        <translation type="unfinished"></translation>
+        <translation>Trzyliterowy</translation>
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="307"/>

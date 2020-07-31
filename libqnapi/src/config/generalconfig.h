@@ -73,7 +73,7 @@ class GeneralConfig {
    * @deprecated Since X.X.X. Will be removed in X.X.X.
    *             Use constructor that accepts #LangCodeType.
    */
-  Q_DECL_DEPRECATED_X("use constructor that accepts LangCodeType")
+  Q_DECL_DEPRECATED
   GeneralConfig(const QString& uiLanguage, const QString& p7zipPath,
                 const QString& tmpPath, const QString& language,
                 const QString& backupLanguage, const bool& noBackup,

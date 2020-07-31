@@ -67,7 +67,7 @@ class QNapi {
    * @deprecated Since X.X.X. Will be removed in X.X.X.
    *             Use selectSubtitlesByIdx(i) + download().
    */
-  Q_DECL_DEPRECATED_X("use selectSubtitlesByIdx(i) + download()")
+  Q_DECL_DEPRECATED
   bool download(int i) { return selectSubtitlesByIdx(i), download(); }
 
   /* TODO: Fill in versions. */
@@ -75,7 +75,7 @@ class QNapi {
    * @deprecated Since X.X.X. Will be removed in X.X.X.
    *             Use unpack().
    */
-  Q_DECL_DEPRECATED_X("use unpack()")
+  Q_DECL_DEPRECATED
   bool unpack(int) { return unpack(); };
 
   void cleanup();

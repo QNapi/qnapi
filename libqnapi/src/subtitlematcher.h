@@ -36,7 +36,7 @@ class SubtitleMatcher : public QObject {
    * @deprecated Since X.X.X. Will be removed in X.X.X.
    *             Use constructor that accepts #LangCodeType.
    */
-  Q_DECL_DEPRECATED_X("use constructor that accepts LangCodeType")
+  Q_DECL_DEPRECATED
   SubtitleMatcher(bool _noBackup, bool _isPostProcessingEnabled,
                   QString _ppSubFormat, QString _ppSubExtension,
                   bool _changePermissions, QString _changePermissionsTo,

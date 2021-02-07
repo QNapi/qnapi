@@ -67,7 +67,7 @@ QString OpenSubtitlesDownloadEngine::checksum(QString filename) {
        i < 65536 / sizeof(tmp) && file.read((char*)&tmp, sizeof(tmp));
        i++, hash += tmp)
     ;
-  file.seek(qMax(0, (int)((qint64)fileSize - 65536)));
+  file.seek(qMax((qint64)0, (qint64)fileSize - 65536));
   for (tmp = 0, i = 0;
        i < 65536 / sizeof(tmp) && file.read((char*)&tmp, sizeof(tmp));
        i++, hash += tmp)
@@ -84,7 +84,7 @@ bool OpenSubtitlesDownloadEngine::lookForSubtitles(QString lang) {
   QVariantMap paramsMap;
   paramsMap["sublanguageid"] = SubtitleLanguage(lang).toTriLetter();
   paramsMap["moviehash"] = checkSum;
-  paramsMap["moviebytesize"] = (int)fileSize;
+  paramsMap["moviebytesize"] = QString::number(fileSize);
 
   QVariantList requestList;
   requestList << paramsMap;

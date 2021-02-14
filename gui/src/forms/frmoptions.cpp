@@ -347,6 +347,9 @@ void frmOptions::writeConfig() {
               ui.cbLangBackup->itemData(ui.cbLangBackup->currentIndex())
                   .toString())
           .setNoBackup(ui.cbNoBackup->isChecked())
+          .setLangCodeInFileName(
+              static_cast<LangCodeType>(
+                  ui.cbLangCodeInFileName->currentIndex()))
           .setQuietBatch(ui.cbQuietBatch->isChecked())
           .setSearchPolicy(
               static_cast<SearchPolicy>(ui.cbSearchPolicy->currentIndex()))
@@ -419,6 +422,8 @@ void frmOptions::readConfig(const QNapiConfig &config) {
   ui.cbLangBackup->setCurrentIndex(ui.cbLangBackup->findData(
       SubtitleLanguage(config.generalConfig().backupLanguage()).toTwoLetter()));
   ui.cbNoBackup->setChecked(config.generalConfig().noBackup());
+  ui.cbLangCodeInFileName->setCurrentIndex(
+      config.generalConfig().langCodeInFileName());
   ui.cbQuietBatch->setChecked(config.generalConfig().quietBatch());
 
   ui.twEngines->clear();

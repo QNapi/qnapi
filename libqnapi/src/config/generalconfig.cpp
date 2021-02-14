@@ -23,6 +23,7 @@ QString GeneralConfig::toString() const {
                   << "language: " << language() << endl
                   << "backupLanguage: " << backupLanguage() << endl
                   << "noBackup: " << noBackup() << endl
+                  << "langCodeInFileName: " << langCodeInFileName() << endl
                   << "quietBatch: " << quietBatch() << endl
                   << "searchPolicy: " << searchPolicy() << endl
                   << "downloadPolicy: " << downloadPolicy() << endl

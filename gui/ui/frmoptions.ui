@@ -28,7 +28,7 @@
        <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="10" column="0" colspan="3">
+       <item row="11" column="0" colspan="3">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -41,7 +41,7 @@
          </property>
         </spacer>
        </item>
-       <item row="7" column="0" colspan="3">
+       <item row="8" column="0" colspan="3">
         <widget class="QCheckBox" name="cbQuietBatch">
          <property name="toolTip">
           <string>Do not show any windows while retrieving subtitles in command-line</string>
@@ -88,14 +88,14 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0" colspan="2">
+       <item row="9" column="0" colspan="2">
         <widget class="QCheckBox" name="cbChangePermissions">
          <property name="text">
           <string>Subtitles file permissions: </string>
          </property>
         </widget>
        </item>
-       <item row="8" column="2">
+       <item row="9" column="2">
         <layout class="QHBoxLayout" name="_2">
          <property name="spacing">
           <number>6</number>
@@ -157,7 +157,7 @@
          </item>
         </layout>
        </item>
-       <item row="9" column="0" colspan="3">
+       <item row="10" column="0" colspan="3">
         <widget class="QCheckBox" name="cbShowDockIcon">
          <property name="text">
           <string>Show icon in the system tray (requires application restart)</string>
@@ -272,6 +272,32 @@
          <property name="text">
           <string>UI Language change will be applied on next application launch</string>
          </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QLabel" name="lbLangCodeInFileName">
+         <property name="text">
+          <string>Add language code to subtitle file name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="cbLangCodeInFileName">
+         <item>
+          <property name="text">
+           <string>No</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Two-letter</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Three-letter</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

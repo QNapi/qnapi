@@ -50,6 +50,8 @@ void ConfigWriter::writeGeneralConfig(const GeneralConfig& generalConfig,
   settings.setValue("qnapi/language", generalConfig.language());
   settings.setValue("qnapi/language_backup", generalConfig.backupLanguage());
   settings.setValue("qnapi/no_backup", generalConfig.noBackup());
+  settings.setValue("qnapi/lang_code_in_file_name",
+                    generalConfig.langCodeInFileName());
   settings.setValue("qnapi/quiet_batch", generalConfig.quietBatch());
   settings.setValue("qnapi/search_policy", generalConfig.searchPolicy());
   settings.setValue("qnapi/download_policy", generalConfig.downloadPolicy());

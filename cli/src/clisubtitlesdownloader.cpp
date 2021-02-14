@@ -115,8 +115,7 @@ void printSubtitlesList(const Console& c, QNapi& napi) {
   }
 }
 
-Maybe<int> selectSubtitles(const Console& c, const QNapiConfig& config,
-                           QNapi& napi) {
+bool selectSubtitles(const Console& c, const QNapiConfig& config, QNapi& napi) {
   bool showList = false;
   bool napiShowList = napi.needToShowList();
 
@@ -129,30 +128,29 @@ Maybe<int> selectSubtitles(const Console& c, const QNapiConfig& config,
   }
 
   if (!showList) {
-    return just(napi.bestIdx());
+    napi.selectSubtitlesByIdx(napi.bestIdx());
   } else {
     QList<SubtitleInfo> subtitlesList = napi.listSubtitles();
 
     printSubtitlesList(c, napi);
     int selIdx = c.inputNumber(tr("Select subtitles to download: "), 0,
                                subtitlesList.size());
-    if (selIdx == 0) {
-      return nothing();
-    } else {
-      return just(selIdx - 1);
-    }
+    if (selIdx == 0) return false;
+    napi.selectSubtitlesByIdx(selIdx - 1);
   }
+
+  return true;
 }
 
-int finishSubtitles(int selIdx, const Console& c, QNapi& napi) {
+int finishSubtitles(const Console& c, QNapi& napi) {
   c.printLineOrdinary(tr("Downloading subtitles..."));
-  if (!napi.download(selIdx)) {
+  if (!napi.download()) {
     c.printLineError(tr("Unable to download subtitles!"));
     return EC_COULD_NOT_DOWNLOAD;
   }
 
   c.printLineOrdinary(tr("Unpacking subtitles..."));
-  if (!napi.unpack(selIdx)) {
+  if (!napi.unpack()) {
     c.printLineError(tr("Failed to unpack subtitles!"));
     return EC_COULD_NOT_UNARCHIVE;
   }
@@ -197,10 +195,8 @@ int downloadForMovie(const Console& c, const QString& movieFilePath, int i,
     return EC_SUBTITLES_NOT_FOUND;
   }
 
-  Maybe<int> selIdx = selectSubtitles(c, config, napi);
-
-  if (selIdx) {
-    return finishSubtitles(selIdx.value(), c, napi);
+  if (selectSubtitles(c, config, napi)) {
+    return finishSubtitles(c, napi);
   }
 
   napi.cleanup();

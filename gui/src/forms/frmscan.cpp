@@ -236,7 +236,11 @@ void frmScan::accept() {
   QDialog::accept();
 }
 
-ScanFilesThread::ScanFilesThread() : staticConfig(LibQNapi::staticConfig()) {}
+ScanFilesThread::ScanFilesThread()
+    : subExtensionFilters(LibQNapi::staticConfig()->subtitleExtensionsFilter()
+          .split(" ")),
+      subLangFilter("^()|(\\.[a-z][a-z][a-z]?)$",
+          QRegularExpression::CaseInsensitiveOption) {}
 
 void ScanFilesThread::run() {
   abort = false;
@@ -264,6 +268,14 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
 
   emit folderChange(myPath);
 
+  QStringList subtitlesBaseNames;
+  if (skipIfSubtitlesExists) {
+    for (const auto &s : QDir(myPath).entryInfoList(subExtensionFilters,
+        QDir::Files | QDir::Hidden)) {
+      subtitlesBaseNames << s.completeBaseName();
+    }
+  }
+
   QFileInfoList list = QDir(myPath).entryInfoList(scanFilters, filters);
 
   for (QFileInfoList::iterator p = list.begin(); p != list.end(); p++) {
@@ -276,9 +288,10 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
 
       bool subtitleFileFound = false;
       if (skipIfSubtitlesExists) {
-        foreach (QString subExt, staticConfig->subtitleExtensions()) {
-          if (QFile::exists((*p).absolutePath() + "/" +
-                            (*p).completeBaseName() + "." + subExt)) {
+        QString baseName = (*p).completeBaseName();
+        for (const auto &subBaseName : subtitlesBaseNames) {
+          if (subBaseName.startsWith(baseName, Qt::CaseInsensitive) &&
+              subLangFilter.match(subBaseName, baseName.length()).hasMatch()) {
             subtitleFileFound = true;
             break;
           }

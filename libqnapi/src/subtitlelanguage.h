@@ -17,6 +17,15 @@
 
 #include <QObject>
 #include <QStringList>
+#include <array>
+
+/** Language code types. */
+enum LangCodeType {
+  LCT_NONE = 0,       ///< No language code.
+  LCT_TWO_LETTER = 1, ///< Two-letter language code.
+  LCT_TRI_LETTER = 2, ///< Three-letter language code.
+  LCT_END,            ///< End marker.
+};
 
 class SubtitleLanguage {
  public:
@@ -24,15 +33,17 @@ class SubtitleLanguage {
 
   void setLanguage(QString source);
 
-  QString toTwoLetter();
-  QString toTriLetter();
-  QString toFullName();
+  QString toString(LangCodeType langCodeType = LCT_NONE) const;
 
-  QStringList listLanguages();
-  QStringList listLanguageTwoLetterCodes();
+  QString toTwoLetter() const { return toString(LCT_TWO_LETTER); }
+  QString toTriLetter() const { return toString(LCT_TRI_LETTER); }
+  QString toFullName() const { return toString(LCT_NONE); }
+
+  QStringList listLanguages(LangCodeType langCodeType = LCT_NONE) const;
+  QStringList listLanguageTwoLetterCodes() const { return listLanguages(LCT_TWO_LETTER); }
 
  private:
-  QStringList codes2l, codes3l, names;
+  std::array<QStringList, LCT_END> strings;
   int idx;
 
   void fill_tables();

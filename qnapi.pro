@@ -46,7 +46,9 @@ unix {
 
     desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/qnapi.desktop
-    INSTALLS += doc man man_it man_pl desktop
+    metainfo.path = $${INSTALL_PREFIX}/share/metainfo
+    metainfo.files = doc/qnapi.appdata.xml
+    INSTALLS += doc man man_it man_pl desktop metainfo
 }
 
 macx:!no_gui {

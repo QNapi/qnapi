@@ -10,7 +10,7 @@ no_cli:SUBDIRS -= cli
 no_gui:message(will skip building qnapi gui application)
 no_gui:SUBDIRS -= gui
 
-TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts
+TRANSLATIONS += translations/qnapi_it.ts translations/qnapi_pl.ts translations/qnapi_si.ts
 
 include(qnapi.pri)
 
@@ -46,7 +46,9 @@ unix {
 
     desktop.path = $${INSTALL_PREFIX}/share/applications
     desktop.files = doc/qnapi.desktop
-    INSTALLS += doc man man_it man_pl desktop
+    metainfo.path = $${INSTALL_PREFIX}/share/metainfo
+    metainfo.files = doc/qnapi.appdata.xml
+    INSTALLS += doc man man_it man_pl desktop metainfo
 }
 
 macx:!no_gui {

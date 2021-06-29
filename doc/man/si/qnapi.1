@@ -1,0 +1,35 @@
+.TH "qnapi" 1
+.SH NAME
+qnapi \- aplikacija za prenos podnapisov
+
+.SH SYNOPSIS
+\fBqnapi\fP [ukaz] [seznam datotek]
+.SH DESCRIPTION
+\fBqnapi\fP je aplikacija za samodejni prenos podnapisov s spletnih strani napiprojekt.pl, napisy24.pl in opensubtitles.com.
+
+\fBqnapi\fP works in two modes: GUI and CLI. You can download subtitles just by providing paths to the movie files as program arguments or use graphical interface and perform such an action there.
+.SH ARGUMENTS
+
+ -c, \-\-console         Prenesi podnapise preko konzole
+ -q, \-\-quiet           Prenesi v ozadju, brez izpisovanja sporočil (vključuje tudi -d)
+
+ -s, \-\-show\-list         Prikaži seznam podnapisov (deluje le z -c)
+ -d, \-\-dont\-show\-list    Ne prikaži seznama podnapisov
+                         (deluje le z -c)
+
+ -l, \-\-lang [code]          Prvi jezik za podnapise
+ -lb,\-\-lang\-backup [code]   Dodatni jeziki za podnapise
+ -f, \-\-format [format]      Določi format podnapisov
+                            (mDVD,MPL2,SRT,TMP)
+ -e, \-\-extension [ext]      Določi datotečno končnico podnapisov
+ -o, \-\-options            Prikaži nastavitve (le GUI)
+ -h, \-\-help               Prikaži celotno pomoč
+ -hl,\-\-help\-languages    Prikaži podprte jezike podnapisov
+
+.SH AUTHOR
+Vse pravice pridržane (C) 2008-2017 Piotr Krzeminski <pio.krzeminski@gmail.com>
+http://qnapi.github.io
+.SH LICENSE
+QNapi je izdan pod licenco GNU General Public License v2 ali novejšo.
+.SH ISSUES
+Napake v delovanju lahko prijavite preko GitHub-a: https://github.com/QNapi/qnapi/issues

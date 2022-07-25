@@ -19,6 +19,7 @@
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -150,7 +151,7 @@ void frmConvert::checkFPSNeeded() {
     QFileInfo srcSubFI(ui.leSrcSubFile->text());
 
     QString movieFilePathBase =
-        srcSubFI.absolutePath() + "/" + srcSubFI.completeBaseName();
+        srcSubFI.absoluteDir().filePath(srcSubFI.completeBaseName());
 
     foreach (QString movieExt, staticConfig->movieExtensions()) {
       QString movieFilePath = movieFilePathBase + "." + movieExt;
@@ -216,8 +217,8 @@ void frmConvert::generateTargetFileName() {
       extension = ui.cbTargetExtension->currentText();
     }
 
-    QString defaultTargetPath = srcSubFI.absolutePath() + "/" +
-                                srcSubFI.completeBaseName() + "." + extension;
+    QString defaultTargetPath = srcSubFI.absoluteDir()
+        .filePath(srcSubFI.completeBaseName() + "." + extension);
     ui.leTargetFileName->setText(defaultTargetPath);
   }
 }

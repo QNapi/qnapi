@@ -16,6 +16,7 @@
 #include "libqnapi.h"
 #include "movieinfo/movieinfoprovider.h"
 #include "qnapiopendialog.h"
+#include "utils/pathutils.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget>
@@ -148,21 +149,35 @@ void frmConvert::checkFPSNeeded() {
   ui.pbMovieFPSSelect->setEnabled(fpsNeeded);
 
   if (fpsNeeded) {
-    QFileInfo srcSubFI(ui.leSrcSubFile->text());
+    QString srcSubAbsoluteFilePath =
+        QFileInfo(ui.leSrcSubFile->text()).absoluteFilePath();
 
-    QString movieFilePathBase =
-        srcSubFI.absoluteDir().filePath(srcSubFI.completeBaseName());
+    QString movieFilePathBase = ChangeFilePath()
+        .removeExtension().apply(srcSubAbsoluteFilePath);
 
-    foreach (QString movieExt, staticConfig->movieExtensions()) {
-      QString movieFilePath = movieFilePathBase + "." + movieExt;
-      if (QFileInfo(movieFilePath).exists()) {
-        Maybe<QString> maybeFPS = determineMovieFPS(movieFilePath);
-        if (maybeFPS) {
-          ui.cbMovieFPS->setCurrentText(maybeFPS.value());
-          ui.cbFPSTo->setCurrentText(maybeFPS.value());
+    auto determineFPSFromPathBase = [this, &movieFilePathBase] () {
+      foreach (QString movieExt, staticConfig->movieExtensions()) {
+        QString movieFilePath = movieFilePathBase + "." + movieExt;
+        if (QFileInfo(movieFilePath).exists()) {
+          Maybe<QString> maybeFPS = determineMovieFPS(movieFilePath);
+          if (maybeFPS) {
+            ui.cbMovieFPS->setCurrentText(maybeFPS.value());
+            ui.cbFPSTo->setCurrentText(maybeFPS.value());
+          }
+          return true;
         }
-        break;
       }
+      return false;
+    };
+
+    if (determineFPSFromPathBase()) return;
+
+    // try removing language code from file name
+    QString movieFilePathBaseWithoutLang = ChangeFilePath()
+        .removeExtension().removeLanguageCode().apply(srcSubAbsoluteFilePath);
+    if (movieFilePathBase != movieFilePathBaseWithoutLang) {
+      movieFilePathBase = movieFilePathBaseWithoutLang;
+      determineFPSFromPathBase();
     }
   }
 }

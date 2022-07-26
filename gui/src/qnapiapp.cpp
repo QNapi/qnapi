@@ -47,6 +47,14 @@ QNapiApp::QNapiApp(int &argc, char **argv, const QString &appName)
   napisy24SubMenu = 0;
   trayIconMenu = 0;
   trayIcon = 0;
+
+  connect(
+      this, &QNapiApp::downloadFile,
+      this, [this] (const QString &path) { progress()->receiveRequest(path); });
+
+  connect( // ### Qt 5.7 use QOverload
+      this, static_cast<void (QNapiApp::*)(const QString&)>(&QNapiApp::request),
+      this, &QNapiApp::downloadFile);
 }
 
 QNapiApp::~QNapiApp() {
@@ -80,10 +88,6 @@ frmProgress *QNapiApp::progress() {
   if (!f_progress) {
     f_progress = new frmProgress();
     if (!f_progress) abort();
-    connect(this, SIGNAL(request(QString)), f_progress,
-            SLOT(receiveRequest(QString)));
-    connect(this, SIGNAL(downloadFile(const QString &)), f_progress,
-            SLOT(receiveRequest(const QString &)));
   }
   return f_progress;
 }

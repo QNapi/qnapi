@@ -52,9 +52,8 @@ class ScanFilesThread : public QNapiThread {
  private:
   bool doScan(const QString &path, QDir::Filters filters);
 
-  QSharedPointer<const StaticConfig> staticConfig;
   QString searchPath;
-  QStringList scanFilters, skipFilters;
+  QStringList scanFilters, skipFilters, subExtensionFilters;
   bool skipIfSubtitlesExists, followSymLinks;
   QSet<QString> visited;
 };

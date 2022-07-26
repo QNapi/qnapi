@@ -355,11 +355,12 @@ void GetThread::run() {
       subStatusList << SubtitleInfo::fromFailed(queue[i]);
       continue;
     }
+    napi.selectSubtitlesByIdx(selIdx);
 
     emit progressChange(i, queue.size(), 0.5);
     emit actionChange(tr("Downloading subtitles file..."));
 
-    if (!napi.download(selIdx)) {
+    if (!napi.download()) {
       ABORT_POINT
 
       ++napiFail;
@@ -372,7 +373,7 @@ void GetThread::run() {
     emit progressChange(i, queue.size(), 0.65f);
     emit actionChange(tr("Unpacking subtitles file..."));
 
-    if (!napi.unpack(selIdx)) {
+    if (!napi.unpack()) {
       ++napiFail;
       subStatusList << SubtitleInfo::fromFailed(queue[i]);
       continue;
@@ -398,7 +399,7 @@ void GetThread::run() {
     }
 
     ++napiSuccess;
-    subStatusList << napi.listSubtitles().at(selIdx);
+    subStatusList << napi.getSelectedSubtitles();
 
     napi.cleanup();
 

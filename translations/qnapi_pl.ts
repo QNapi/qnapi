@@ -122,62 +122,62 @@
         <translation> (zle)</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="137"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="136"/>
         <source>Select subtitles to download: </source>
         <translation>Wybierz napisy do pobrania: </translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="148"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="146"/>
         <source>Downloading subtitles...</source>
         <translation>Pobieranie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="150"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="148"/>
         <source>Unable to download subtitles!</source>
         <translation>Nie udalo sie pobrac napisow!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="154"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="152"/>
         <source>Unpacking subtitles...</source>
         <translation>Rozpakowywanie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="156"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="154"/>
         <source>Failed to unpack subtitles!</source>
         <translation>Nie udalo sie rozpakowac napisow!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="161"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="159"/>
         <source>Post-processing subtitles file...</source>
         <translation>Przetwarzanie napisow...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="165"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="163"/>
         <source>Adjusting subtitles...</source>
         <translation>Dopasowywanie napisów...</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="167"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="165"/>
         <source>Could not adjust subtitles!</source>
         <translation>Nie udało się dopasować napisów!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="178"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="176"/>
         <source>Downloading subtitles for &apos;%1&apos; [%2/%3]</source>
         <translation>Pobieranie napisow dla &apos;%1&apos; [%2/%3]</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="186"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="184"/>
         <source>No permission to write to the directory &apos;%1&apos;!</source>
         <translation>Brak uprawnień zapisu do katalogu &apos;%1&apos;!</translation>
     </message>
     <message>
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="196"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="194"/>
         <source>Subtitles not found!</source>
         <translation>Nie znaleziono napisow!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="228"/>
+        <location filename="../cli/src/clisubtitlesdownloader.cpp" line="224"/>
         <source>Processing of remaining %n file(s) was ignored due to critical error.</source>
         <translation>
             <numerusform>Pobieranie pozostalego 1 pliku przerwane z powodu bledu.</numerusform>
@@ -283,27 +283,27 @@
         <translation>Szukanie napisów w języku zapasowym [%1] (%2)...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="360"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="361"/>
         <source>Downloading subtitles file...</source>
         <translation>Pobieranie napisów dla pliku...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="373"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="374"/>
         <source>Unpacking subtitles file...</source>
         <translation>Rozpakowywanie napisów...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="383"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="384"/>
         <source>Post-processing subtitles...</source>
         <translation>Przetwarzanie napisów...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="388"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="389"/>
         <source>Adjusting subtitles...</source>
         <translation>Dopasowywanie napisów...</translation>
     </message>
     <message>
-        <location filename="../gui/src/forms/frmprogress.cpp" line="396"/>
+        <location filename="../gui/src/forms/frmprogress.cpp" line="397"/>
         <source>Could not adjust subtitles!</source>
         <translation>Nie udało się dopasować napisów!</translation>
     </message>
@@ -519,7 +519,7 @@
         <translation>QNapi: zakończono.</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/qnapi.cpp" line="89"/>
+        <location filename="../libqnapi/src/qnapi.cpp" line="90"/>
         <source>No subtitles found!</source>
         <translation>Nie znaleziono napisów!</translation>
     </message>
@@ -529,187 +529,187 @@
         <translation>Napisy pobrane i przetworzone programem QNapi|</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="63"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="57"/>
         <source>Albanian</source>
         <translation>Albański</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="67"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="61"/>
         <source>English</source>
         <translation>Angielski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="71"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="65"/>
         <source>Arabic</source>
         <translation>Arabski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="75"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="69"/>
         <source>Bulgarian</source>
         <translation>Bułgarski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="79"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="73"/>
         <source>Chinese</source>
         <translation>Chiński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="83"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="77"/>
         <source>Croatian</source>
         <translation>Chorwacki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="87"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="81"/>
         <source>Czech</source>
         <translation>Czeski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="91"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="85"/>
         <source>Danish</source>
         <translation>Duński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="95"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="89"/>
         <source>Estonian</source>
         <translation>Estoński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="99"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="93"/>
         <source>Finnish</source>
         <translation>Fiński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="103"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="97"/>
         <source>French</source>
         <translation>Francuski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="107"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="101"/>
         <source>Galician</source>
         <translation>Galicyjski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="111"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="105"/>
         <source>Greek</source>
         <translation>Grecki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="115"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="109"/>
         <source>Hebrew</source>
         <translation>Hebrajski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="119"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="113"/>
         <source>Spanish</source>
         <translation>Hiszpanski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="123"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="117"/>
         <source>Dutch</source>
         <translation>Holenderski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="127"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="121"/>
         <source>Indonesian</source>
         <translation>Indonezyjski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="131"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="125"/>
         <source>Japanese</source>
         <translation>Japoński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="135"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="129"/>
         <source>Korean</source>
         <translation>Koreański</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="139"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="133"/>
         <source>Macedonian</source>
         <translation>Macedoński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="143"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="137"/>
         <source>German</source>
         <translation>Niemiecki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="147"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="141"/>
         <source>Norwegian</source>
         <translation>Norweski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="151"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="145"/>
         <source>Occitan</source>
         <translation>Oksytański</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="155"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="149"/>
         <source>Persian (farsi)</source>
         <translation>Perski (farsi)</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="159"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="153"/>
         <source>Polish</source>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="163"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="157"/>
         <source>Portuguese</source>
         <translation>Portugalski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="167"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="161"/>
         <source>Portuguese-BR</source>
         <translation>Portugalski-BR</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="171"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="165"/>
         <source>Russian</source>
         <translation>Rosyjski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="175"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="169"/>
         <source>Romanian</source>
         <translation>Rumuński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="179"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="173"/>
         <source>Serbian</source>
         <translation>Serbski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="183"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="177"/>
         <source>Slovenian</source>
         <translation>Słoweński</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="187"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="181"/>
         <source>Swedish</source>
         <translation>Szwedzki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="191"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="185"/>
         <source>Slovak</source>
         <translation>Słowacki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="195"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="189"/>
         <source>Turkish</source>
         <translation>Turecki</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="199"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="193"/>
         <source>Vietnamese</source>
         <translation>Wietnamski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="203"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="197"/>
         <source>Hungarian</source>
         <translation>Węgierski</translation>
     </message>
     <message>
-        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="207"/>
+        <location filename="../libqnapi/src/subtitlelanguage.cpp" line="201"/>
         <source>Italian</source>
         <translation>Włoski</translation>
     </message>
@@ -757,7 +757,7 @@
 <context>
     <name>SubtitleMatcher</name>
     <message>
-        <location filename="../libqnapi/src/subtitlematcher.cpp" line="100"/>
+        <location filename="../libqnapi/src/subtitlematcher.cpp" line="132"/>
         <source>_copy</source>
         <translation>_kopia</translation>
     </message>
@@ -1204,7 +1204,7 @@
     </message>
     <message>
         <location filename="../gui/ui/frmoptions.ui" line="230"/>
-        <location filename="../gui/src/forms/frmoptions.cpp" line="405"/>
+        <location filename="../gui/src/forms/frmoptions.cpp" line="408"/>
         <source>Auto-detected based on system language (%1)</source>
         <translation>Wykryty automatycznie z ustawień systemu (%1)</translation>
     </message>
@@ -1232,164 +1232,184 @@
         <translation>Zmiana języka nastąpi przy następnym uruchomieniu aplikacji</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="281"/>
+        <location filename="../gui/ui/frmoptions.ui" line="280"/>
+        <source>Add language code to subtitle file name:</source>
+        <translation>Dodawaj kod języka do nazwy pliku napisów:</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/frmoptions.ui" line="288"/>
+        <source>No</source>
+        <translation>Nie</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/frmoptions.ui" line="293"/>
+        <source>Two-letter</source>
+        <translation>Dwuliterowy</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/frmoptions.ui" line="298"/>
+        <source>Three-letter</source>
+        <translation>Trzyliterowy</translation>
+    </message>
+    <message>
+        <location filename="../gui/ui/frmoptions.ui" line="307"/>
         <source>Subtitles download engines</source>
         <translation>Moduły pobierania napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="287"/>
+        <location filename="../gui/ui/frmoptions.ui" line="313"/>
         <source>Available engines to download subtitles from:</source>
         <translation>Dostępne moduły pobierania napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="300"/>
+        <location filename="../gui/ui/frmoptions.ui" line="326"/>
         <source>Subtitles download policy:</source>
         <translation>Polityka pobierania napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="314"/>
+        <location filename="../gui/ui/frmoptions.ui" line="340"/>
         <source>Always show a list of available subtitles</source>
         <translation>Zawsze pokazuj listę dostępnych napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="319"/>
+        <location filename="../gui/ui/frmoptions.ui" line="345"/>
         <source>Show a list of available subtitles only if needed</source>
         <translation>Pokazuj listę dostępnych napisów tylko wtedy, gdy potrzeba</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="324"/>
+        <location filename="../gui/ui/frmoptions.ui" line="350"/>
         <source>Always obtain first matching subtitles and never show a list</source>
         <translation>Zawsze pobieraj pierwsze pasujące napisy i nigdy nie pokazuj listy</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="357"/>
+        <location filename="../gui/ui/frmoptions.ui" line="383"/>
         <source>Move up</source>
         <translation>Przesuń do góry</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="374"/>
+        <location filename="../gui/ui/frmoptions.ui" line="400"/>
         <source>Subtitles search policy:</source>
         <translation>Wyszukiwanie napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="384"/>
+        <location filename="../gui/ui/frmoptions.ui" line="410"/>
         <source>Move down  </source>
         <translation>Przesuń na dół  </translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="398"/>
+        <location filename="../gui/ui/frmoptions.ui" line="424"/>
         <source>Information</source>
         <translation>Informacje</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="412"/>
+        <location filename="../gui/ui/frmoptions.ui" line="438"/>
         <source>Configure</source>
         <translation>Konfiguruj</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="427"/>
+        <location filename="../gui/ui/frmoptions.ui" line="453"/>
         <source>Stop the search after finding a matching subtitles (faster)</source>
         <translation>Przerwij wyszukiwanie po znalezieniu pasujących napisów (szybciej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="432"/>
+        <location filename="../gui/ui/frmoptions.ui" line="458"/>
         <source>Search all available subtitles (slower)</source>
         <translation>Wyszukaj wszystkie dostępne napisy (wolniej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="437"/>
+        <location filename="../gui/ui/frmoptions.ui" line="463"/>
         <source>Find all subtitles, also in alternative language (slowest)</source>
         <translation>Wyszukaj wszystkie napisy, także w zapasowym języku (najwolniej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="446"/>
+        <location filename="../gui/ui/frmoptions.ui" line="472"/>
         <source>Subtitles post-processing</source>
         <translation>Przetwarzanie napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="452"/>
+        <location filename="../gui/ui/frmoptions.ui" line="478"/>
         <source>Enable post-processing for downloaded subtitles</source>
         <translation>Włącz przetwarzanie pobranych napisów</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="466"/>
+        <location filename="../gui/ui/frmoptions.ui" line="492"/>
         <source>Character encoding:</source>
         <translation>Kodowanie znaków:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="480"/>
-        <location filename="../gui/ui/frmoptions.ui" line="691"/>
+        <location filename="../gui/ui/frmoptions.ui" line="506"/>
+        <location filename="../gui/ui/frmoptions.ui" line="717"/>
         <source>Keep the original</source>
         <translation>Pozostaw oryginalne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="485"/>
+        <location filename="../gui/ui/frmoptions.ui" line="511"/>
         <source>Convert (settings below)</source>
         <translation>Konwertuj (ustawienia poniżej)</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="490"/>
+        <location filename="../gui/ui/frmoptions.ui" line="516"/>
         <source>Replace diacritic characters with their ASCII equivalents</source>
         <translation>Zamień znaki diakrytyczne na ich odpowiedniki ASCII</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="527"/>
+        <location filename="../gui/ui/frmoptions.ui" line="553"/>
         <source>From:</source>
         <translation>Z:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="580"/>
+        <location filename="../gui/ui/frmoptions.ui" line="606"/>
         <source>To:</source>
         <translation>Na:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="650"/>
+        <location filename="../gui/ui/frmoptions.ui" line="676"/>
         <source>Show all available character encodings</source>
         <translation>Pokaż wszystkie dostępne kodowania znaków</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="677"/>
+        <location filename="../gui/ui/frmoptions.ui" line="703"/>
         <source>Subtitles format:</source>
         <translation>Format napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="699"/>
+        <location filename="../gui/ui/frmoptions.ui" line="725"/>
         <source>Subtitles extension:</source>
         <translation>Rozszerzenie napisów:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="713"/>
+        <location filename="../gui/ui/frmoptions.ui" line="739"/>
         <location filename="../gui/src/forms/frmoptions.cpp" line="257"/>
         <source>Default</source>
         <translation>Domyślne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="739"/>
+        <location filename="../gui/ui/frmoptions.ui" line="765"/>
         <source>Do not add information about QNapi while converting between formats</source>
         <translation>Nie dodawaj informacji o QNapi przy konwersji pomiędzy formatami</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="749"/>
+        <location filename="../gui/ui/frmoptions.ui" line="775"/>
         <source>Attempt to automatically detect encoding</source>
         <translation>Próbuj automatycznie wykrywać kodowanie źródłowe</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="759"/>
+        <location filename="../gui/ui/frmoptions.ui" line="785"/>
         <source>Remove subtitles lines that contain the following words:</source>
         <translation>Usuń z pliku z napisami linie, które zawierają następujące słowa:</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="783"/>
+        <location filename="../gui/ui/frmoptions.ui" line="809"/>
         <source>Restore defaults</source>
         <translation>Przywróć domyślne</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="803"/>
+        <location filename="../gui/ui/frmoptions.ui" line="829"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../gui/ui/frmoptions.ui" line="810"/>
+        <location filename="../gui/ui/frmoptions.ui" line="836"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>

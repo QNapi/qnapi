@@ -49,10 +49,34 @@ class QNapi {
   bool needToShowList();
   int bestIdx();
 
-  bool download(int i);
-  bool unpack(int i);
+  void selectSubtitlesByIdx(int i);
+
+  /**
+   * Get subtitles selected to be processed.
+   * @return The subtitles.
+   */
+  const SubtitleInfo& getSelectedSubtitles() const { return currentSubtitles; }
+
+  bool download();
+  bool unpack();
   bool matchSubtitles();
   void postProcessSubtitles() const;
+
+  /* TODO: Fill in versions. */
+  /**
+   * @deprecated Since X.X.X. Will be removed in X.X.X.
+   *             Use selectSubtitlesByIdx(i) + download().
+   */
+  Q_DECL_DEPRECATED
+  bool download(int i) { return selectSubtitlesByIdx(i), download(); }
+
+  /* TODO: Fill in versions. */
+  /**
+   * @deprecated Since X.X.X. Will be removed in X.X.X.
+   *             Use unpack().
+   */
+  Q_DECL_DEPRECATED
+  bool unpack(int) { return unpack(); };
 
   void cleanup();
   QString error();
@@ -66,6 +90,7 @@ class QNapi {
   QString errorMsg;
   QList<QSharedPointer<SubtitleDownloadEngine>> enginesList;
   QList<SubtitleInfo> subtitlesList;
+  SubtitleInfo currentSubtitles; ///< Subtitles selected to be processed.
   QSharedPointer<SubtitleDownloadEngine> currentEngine;
 
   // najlepszy indeks napisow

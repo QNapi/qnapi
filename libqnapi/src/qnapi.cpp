@@ -61,6 +61,7 @@ void QNapi::clearSubtitlesList() {
   foreach (QSharedPointer<SubtitleDownloadEngine> e, enginesList) {
     e->clearSubtitlesList();
   }
+  currentSubtitles = SubtitleInfo();
 }
 
 void QNapi::checksum() {
@@ -143,15 +144,21 @@ bool QNapi::needToShowList() {
 
 int QNapi::bestIdx() { return theBestIdx; }
 
-bool QNapi::download(int i) {
-  SubtitleInfo s = subtitlesList[i];
-  currentEngine = engineByName(s.engine);
-  if (!currentEngine) return false;
-  return currentEngine->download(s.id);
+/**
+ * Select subtitles to be processed.
+ * @param i Index into the list of subtitles.
+ */
+void QNapi::selectSubtitlesByIdx(int i) {
+  currentSubtitles = subtitlesList.at(i);
 }
 
-bool QNapi::unpack(int i) {
-  return currentEngine ? currentEngine->unpack(subtitlesList[i].id) : false;
+bool QNapi::download() {
+  currentEngine = engineByName(currentSubtitles.engine);
+  return currentEngine && currentEngine->download(currentSubtitles.id);
+}
+
+bool QNapi::unpack() {
+  return currentEngine && currentEngine->unpack(currentSubtitles.id);
 }
 
 bool QNapi::matchSubtitles() {
@@ -159,7 +166,8 @@ bool QNapi::matchSubtitles() {
     QSharedPointer<const SubtitleMatcher> matcher =
         LibQNapi::subtitleMatcher(config);
     return matcher->matchSubtitles(currentEngine->subtitlesTmp,
-                                   currentEngine->movie);
+                                   currentEngine->movie,
+                                   currentSubtitles.lang);
   }
 
   return false;

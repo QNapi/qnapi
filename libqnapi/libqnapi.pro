@@ -50,6 +50,7 @@ SOURCES += src/config/configreader.cpp \
     src/utils/console.cpp \
     src/utils/encodingutils.cpp \
     src/utils/p7zipdecoder.cpp \
+    src/utils/pathutils.cpp \
     src/utils/synchttp.cpp \
     src/utils/syncxmlrpc.cpp \
     src/qnapi.cpp \
@@ -103,6 +104,7 @@ HEADERS += src/config/configreader.h \
     src/subtitlepostprocessor.h \
     src/utils/console.h \
     src/utils/encodingutils.h \
+    src/utils/pathutils.h \
     src/utils/p7zipdecoder.h \
     src/utils/synchttp.h \
     src/utils/syncxmlrpc.h \

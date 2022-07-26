@@ -14,6 +14,7 @@
 
 #include "frmscan.h"
 #include "libqnapi.h"
+#include "utils/pathutils.h"
 
 frmScan::frmScan(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f), scanConfig(LibQNapi::loadConfig().scanConfig()) {
@@ -236,7 +237,9 @@ void frmScan::accept() {
   QDialog::accept();
 }
 
-ScanFilesThread::ScanFilesThread() : staticConfig(LibQNapi::staticConfig()) {}
+ScanFilesThread::ScanFilesThread()
+    : subExtensionFilters(LibQNapi::staticConfig()->subtitleExtensionsFilter()
+          .split(" ")) {}
 
 void ScanFilesThread::run() {
   abort = false;
@@ -264,6 +267,22 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
 
   emit folderChange(myPath);
 
+  QStringList subtitlesBaseNames;
+  if (skipIfSubtitlesExists) {
+    for (const auto &s : QDir(myPath).entryInfoList(subExtensionFilters,
+        QDir::Files | QDir::Hidden)) {
+
+      QString completeBaseName = s.completeBaseName();
+      subtitlesBaseNames << completeBaseName;
+
+      QString completeBaseNameWithoutLang = ChangeFilePath()
+          .removeLanguageCode().removeExtension().apply(s.fileName());
+      if (completeBaseName != completeBaseNameWithoutLang) {
+        subtitlesBaseNames << completeBaseNameWithoutLang;
+      }
+    }
+  }
+
   QFileInfoList list = QDir(myPath).entryInfoList(scanFilters, filters);
 
   for (QFileInfoList::iterator p = list.begin(); p != list.end(); p++) {
@@ -276,9 +295,9 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
 
       bool subtitleFileFound = false;
       if (skipIfSubtitlesExists) {
-        foreach (QString subExt, staticConfig->subtitleExtensions()) {
-          if (QFile::exists((*p).absolutePath() + "/" +
-                            (*p).completeBaseName() + "." + subExt)) {
+        QString baseName = (*p).completeBaseName();
+        for (const auto &subBaseName : subtitlesBaseNames) {
+          if (subBaseName.compare(baseName, Qt::CaseInsensitive) == 0) {
             subtitleFileFound = true;
             break;
           }

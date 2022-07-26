@@ -24,185 +24,179 @@ void SubtitleLanguage::setLanguage(QString source) {
   idx = -1;
 
   if (source.length() == 2) {
-    idx = codes2l.indexOf(source.toLower());
+    idx = strings[LCT_TWO_LETTER].indexOf(source.toLower());
   } else if (source.length() == 3) {
-    idx = codes3l.indexOf(source.toLower());
+    idx = strings[LCT_TRI_LETTER].indexOf(source.toLower());
   } else {
-    idx = names.indexOf(source);
+    idx = strings[LCT_NONE].indexOf(source);
   }
 }
 
-QString SubtitleLanguage::toTwoLetter() {
+/**
+ * Convert selected language to a string.
+ *
+ * @param langCodeType Type of language code or #LCT_NONE to get full name of
+ *                     the langage.
+ * @return Language string or empty string if selected language coundn't be
+ *         recognized or wasn't selected at all.
+ *
+ * @see #SubtitleLanguage::setLanguage
+ */
+QString SubtitleLanguage::toString(LangCodeType langCodeType) const {
   if (idx > -1) {
-    return codes2l.at(idx);
+    return strings.at(langCodeType).at(idx);
   }
   return "";
 }
 
-QString SubtitleLanguage::toTriLetter() {
-  if (idx > -1) {
-    return codes3l.at(idx);
-  }
-  return "";
-}
-
-QString SubtitleLanguage::toFullName() {
-  if (idx > -1) {
-    return names.at(idx);
-  }
-  return "";
-}
-
-QStringList SubtitleLanguage::listLanguages() { return names; }
-
-QStringList SubtitleLanguage::listLanguageTwoLetterCodes() { return codes2l; }
+QStringList SubtitleLanguage::listLanguages(LangCodeType langCodeType) const { return strings.at(langCodeType); }
 
 void SubtitleLanguage::fill_tables() {
-  codes2l << "sq";
-  codes3l << "alb";
-  names << QObject::tr("Albanian");
+  strings[LCT_TWO_LETTER] << "sq";
+  strings[LCT_TRI_LETTER] << "alb";
+  strings[LCT_NONE] << QObject::tr("Albanian");
 
-  codes2l << "en";
-  codes3l << "eng";
-  names << QObject::tr("English");
+  strings[LCT_TWO_LETTER] << "en";
+  strings[LCT_TRI_LETTER] << "eng";
+  strings[LCT_NONE] << QObject::tr("English");
 
-  codes2l << "ar";
-  codes3l << "ara";
-  names << QObject::tr("Arabic");
+  strings[LCT_TWO_LETTER] << "ar";
+  strings[LCT_TRI_LETTER] << "ara";
+  strings[LCT_NONE] << QObject::tr("Arabic");
 
-  codes2l << "bg";
-  codes3l << "bul";
-  names << QObject::tr("Bulgarian");
+  strings[LCT_TWO_LETTER] << "bg";
+  strings[LCT_TRI_LETTER] << "bul";
+  strings[LCT_NONE] << QObject::tr("Bulgarian");
 
-  codes2l << "zh";
-  codes3l << "chi";
-  names << QObject::tr("Chinese");
+  strings[LCT_TWO_LETTER] << "zh";
+  strings[LCT_TRI_LETTER] << "chi";
+  strings[LCT_NONE] << QObject::tr("Chinese");
 
-  codes2l << "hr";
-  codes3l << "hrv";
-  names << QObject::tr("Croatian");
+  strings[LCT_TWO_LETTER] << "hr";
+  strings[LCT_TRI_LETTER] << "hrv";
+  strings[LCT_NONE] << QObject::tr("Croatian");
 
-  codes2l << "cs";
-  codes3l << "cze";
-  names << QObject::tr("Czech");
+  strings[LCT_TWO_LETTER] << "cs";
+  strings[LCT_TRI_LETTER] << "cze";
+  strings[LCT_NONE] << QObject::tr("Czech");
 
-  codes2l << "da";
-  codes3l << "dan";
-  names << QObject::tr("Danish");
+  strings[LCT_TWO_LETTER] << "da";
+  strings[LCT_TRI_LETTER] << "dan";
+  strings[LCT_NONE] << QObject::tr("Danish");
 
-  codes2l << "et";
-  codes3l << "est";
-  names << QObject::tr("Estonian");
+  strings[LCT_TWO_LETTER] << "et";
+  strings[LCT_TRI_LETTER] << "est";
+  strings[LCT_NONE] << QObject::tr("Estonian");
 
-  codes2l << "fi";
-  codes3l << "fin";
-  names << QObject::tr("Finnish");
+  strings[LCT_TWO_LETTER] << "fi";
+  strings[LCT_TRI_LETTER] << "fin";
+  strings[LCT_NONE] << QObject::tr("Finnish");
 
-  codes2l << "fr";
-  codes3l << "fre";
-  names << QObject::tr("French");
+  strings[LCT_TWO_LETTER] << "fr";
+  strings[LCT_TRI_LETTER] << "fre";
+  strings[LCT_NONE] << QObject::tr("French");
 
-  codes2l << "gl";
-  codes3l << "glg";
-  names << QObject::tr("Galician");
+  strings[LCT_TWO_LETTER] << "gl";
+  strings[LCT_TRI_LETTER] << "glg";
+  strings[LCT_NONE] << QObject::tr("Galician");
 
-  codes2l << "el";
-  codes3l << "ell";
-  names << QObject::tr("Greek");
+  strings[LCT_TWO_LETTER] << "el";
+  strings[LCT_TRI_LETTER] << "ell";
+  strings[LCT_NONE] << QObject::tr("Greek");
 
-  codes2l << "he";
-  codes3l << "heb";
-  names << QObject::tr("Hebrew");
+  strings[LCT_TWO_LETTER] << "he";
+  strings[LCT_TRI_LETTER] << "heb";
+  strings[LCT_NONE] << QObject::tr("Hebrew");
 
-  codes2l << "es";
-  codes3l << "spa";
-  names << QObject::tr("Spanish");
+  strings[LCT_TWO_LETTER] << "es";
+  strings[LCT_TRI_LETTER] << "spa";
+  strings[LCT_NONE] << QObject::tr("Spanish");
 
-  codes2l << "nl";
-  codes3l << "dut";
-  names << QObject::tr("Dutch");
+  strings[LCT_TWO_LETTER] << "nl";
+  strings[LCT_TRI_LETTER] << "dut";
+  strings[LCT_NONE] << QObject::tr("Dutch");
 
-  codes2l << "id";
-  codes3l << "ind";
-  names << QObject::tr("Indonesian");
+  strings[LCT_TWO_LETTER] << "id";
+  strings[LCT_TRI_LETTER] << "ind";
+  strings[LCT_NONE] << QObject::tr("Indonesian");
 
-  codes2l << "ja";
-  codes3l << "jpn";
-  names << QObject::tr("Japanese");
+  strings[LCT_TWO_LETTER] << "ja";
+  strings[LCT_TRI_LETTER] << "jpn";
+  strings[LCT_NONE] << QObject::tr("Japanese");
 
-  codes2l << "ko";
-  codes3l << "kor";
-  names << QObject::tr("Korean");
+  strings[LCT_TWO_LETTER] << "ko";
+  strings[LCT_TRI_LETTER] << "kor";
+  strings[LCT_NONE] << QObject::tr("Korean");
 
-  codes2l << "mk";
-  codes3l << "mac";
-  names << QObject::tr("Macedonian");
+  strings[LCT_TWO_LETTER] << "mk";
+  strings[LCT_TRI_LETTER] << "mac";
+  strings[LCT_NONE] << QObject::tr("Macedonian");
 
-  codes2l << "de";
-  codes3l << "ger";
-  names << QObject::tr("German");
+  strings[LCT_TWO_LETTER] << "de";
+  strings[LCT_TRI_LETTER] << "ger";
+  strings[LCT_NONE] << QObject::tr("German");
 
-  codes2l << "no";
-  codes3l << "nor";
-  names << QObject::tr("Norwegian");
+  strings[LCT_TWO_LETTER] << "no";
+  strings[LCT_TRI_LETTER] << "nor";
+  strings[LCT_NONE] << QObject::tr("Norwegian");
 
-  codes2l << "oc";
-  codes3l << "oci";
-  names << QObject::tr("Occitan");
+  strings[LCT_TWO_LETTER] << "oc";
+  strings[LCT_TRI_LETTER] << "oci";
+  strings[LCT_NONE] << QObject::tr("Occitan");
 
-  codes2l << "fa";
-  codes3l << "per";
-  names << QObject::tr("Persian (farsi)");
+  strings[LCT_TWO_LETTER] << "fa";
+  strings[LCT_TRI_LETTER] << "per";
+  strings[LCT_NONE] << QObject::tr("Persian (farsi)");
 
-  codes2l << "pl";
-  codes3l << "pol";
-  names << QObject::tr("Polish");
+  strings[LCT_TWO_LETTER] << "pl";
+  strings[LCT_TRI_LETTER] << "pol";
+  strings[LCT_NONE] << QObject::tr("Polish");
 
-  codes2l << "pt";
-  codes3l << "por";
-  names << QObject::tr("Portuguese");
+  strings[LCT_TWO_LETTER] << "pt";
+  strings[LCT_TRI_LETTER] << "por";
+  strings[LCT_NONE] << QObject::tr("Portuguese");
 
-  codes2l << "pb";
-  codes3l << "pob";
-  names << QObject::tr("Portuguese-BR");
+  strings[LCT_TWO_LETTER] << "pb";
+  strings[LCT_TRI_LETTER] << "pob";
+  strings[LCT_NONE] << QObject::tr("Portuguese-BR");
 
-  codes2l << "ru";
-  codes3l << "rus";
-  names << QObject::tr("Russian");
+  strings[LCT_TWO_LETTER] << "ru";
+  strings[LCT_TRI_LETTER] << "rus";
+  strings[LCT_NONE] << QObject::tr("Russian");
 
-  codes2l << "ro";
-  codes3l << "rum";
-  names << QObject::tr("Romanian");
+  strings[LCT_TWO_LETTER] << "ro";
+  strings[LCT_TRI_LETTER] << "rum";
+  strings[LCT_NONE] << QObject::tr("Romanian");
 
-  codes2l << "sr";
-  codes3l << "scc";
-  names << QObject::tr("Serbian");
+  strings[LCT_TWO_LETTER] << "sr";
+  strings[LCT_TRI_LETTER] << "scc";
+  strings[LCT_NONE] << QObject::tr("Serbian");
 
-  codes2l << "sl";
-  codes3l << "slv";
-  names << QObject::tr("Slovenian");
+  strings[LCT_TWO_LETTER] << "sl";
+  strings[LCT_TRI_LETTER] << "slv";
+  strings[LCT_NONE] << QObject::tr("Slovenian");
 
-  codes2l << "sv";
-  codes3l << "swe";
-  names << QObject::tr("Swedish");
+  strings[LCT_TWO_LETTER] << "sv";
+  strings[LCT_TRI_LETTER] << "swe";
+  strings[LCT_NONE] << QObject::tr("Swedish");
 
-  codes2l << "sk";
-  codes3l << "slo";
-  names << QObject::tr("Slovak");
+  strings[LCT_TWO_LETTER] << "sk";
+  strings[LCT_TRI_LETTER] << "slo";
+  strings[LCT_NONE] << QObject::tr("Slovak");
 
-  codes2l << "tr";
-  codes3l << "tur";
-  names << QObject::tr("Turkish");
+  strings[LCT_TWO_LETTER] << "tr";
+  strings[LCT_TRI_LETTER] << "tur";
+  strings[LCT_NONE] << QObject::tr("Turkish");
 
-  codes2l << "vi";
-  codes3l << "vie";
-  names << QObject::tr("Vietnamese");
+  strings[LCT_TWO_LETTER] << "vi";
+  strings[LCT_TRI_LETTER] << "vie";
+  strings[LCT_NONE] << QObject::tr("Vietnamese");
 
-  codes2l << "hu";
-  codes3l << "hun";
-  names << QObject::tr("Hungarian");
+  strings[LCT_TWO_LETTER] << "hu";
+  strings[LCT_TRI_LETTER] << "hun";
+  strings[LCT_NONE] << QObject::tr("Hungarian");
 
-  codes2l << "it";
-  codes3l << "ita";
-  names << QObject::tr("Italian");
+  strings[LCT_TWO_LETTER] << "it";
+  strings[LCT_TRI_LETTER] << "ita";
+  strings[LCT_NONE] << QObject::tr("Italian");
 }

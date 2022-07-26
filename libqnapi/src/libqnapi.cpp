@@ -119,6 +119,7 @@ QSharedPointer<const SubtitleMatcher> LibQNapi::subtitleMatcher(
     const QNapiConfig& config) {
   return QSharedPointer<const SubtitleMatcher>(
       new SubtitleMatcher(config.generalConfig().noBackup(),
+                          config.generalConfig().langCodeInFileName(),
                           config.postProcessingConfig().enabled(),
                           config.postProcessingConfig().subFormat(),
                           config.postProcessingConfig().subExtension(),

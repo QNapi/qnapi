@@ -54,7 +54,6 @@ class ScanFilesThread : public QNapiThread {
 
   QString searchPath;
   QStringList scanFilters, skipFilters, subExtensionFilters;
-  QRegularExpression subLangFilter;
   bool skipIfSubtitlesExists, followSymLinks;
   QSet<QString> visited;
 };

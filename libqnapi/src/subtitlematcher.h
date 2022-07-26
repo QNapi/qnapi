@@ -52,14 +52,8 @@ class SubtitleMatcher : public QObject {
 
  private:
   QString selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const;
-  QString constructSubtitlePath(QString targetMovieFilePath,
-                                QString targetExtension,
-                                QString subtitlesLanguage,
-                                QString baseSuffix = "") const;
   bool isWritablePath(QString path) const;
-  void removeOrCopy(QString targetMoviefilePath,
-                    QString targetSubtitlesFilePath,
-                    QString subtitlesLanguage) const;
+  void removeOrCopy(QString targetSubtitlesFilePath) const;
   bool dryCopy(QString srcFilePath, QString dstFilePath) const;
   void fixFilePermissions(QString targetSubtitlesFilePath,
                           QString changePermissionsTo) const;

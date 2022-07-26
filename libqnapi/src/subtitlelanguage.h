@@ -33,6 +33,8 @@ class SubtitleLanguage {
 
   void setLanguage(QString source);
 
+  bool isValid() const { return idx >= 0; }
+
   QString toString(LangCodeType langCodeType = LCT_NONE) const;
 
   QString toTwoLetter() const { return toString(LCT_TWO_LETTER); }

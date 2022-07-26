@@ -14,6 +14,7 @@
 
 #include "frmscan.h"
 #include "libqnapi.h"
+#include "utils/pathutils.h"
 
 frmScan::frmScan(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f), scanConfig(LibQNapi::loadConfig().scanConfig()) {
@@ -238,9 +239,7 @@ void frmScan::accept() {
 
 ScanFilesThread::ScanFilesThread()
     : subExtensionFilters(LibQNapi::staticConfig()->subtitleExtensionsFilter()
-          .split(" ")),
-      subLangFilter("^()|(\\.[a-z][a-z][a-z]?)$",
-          QRegularExpression::CaseInsensitiveOption) {}
+          .split(" ")) {}
 
 void ScanFilesThread::run() {
   abort = false;
@@ -272,7 +271,15 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
   if (skipIfSubtitlesExists) {
     for (const auto &s : QDir(myPath).entryInfoList(subExtensionFilters,
         QDir::Files | QDir::Hidden)) {
-      subtitlesBaseNames << s.completeBaseName();
+
+      QString completeBaseName = s.completeBaseName();
+      subtitlesBaseNames << completeBaseName;
+
+      QString completeBaseNameWithoutLang = ChangeFilePath()
+          .removeLanguageCode().removeExtension().apply(s.fileName());
+      if (completeBaseName != completeBaseNameWithoutLang) {
+        subtitlesBaseNames << completeBaseNameWithoutLang;
+      }
     }
   }
 
@@ -290,8 +297,7 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
       if (skipIfSubtitlesExists) {
         QString baseName = (*p).completeBaseName();
         for (const auto &subBaseName : subtitlesBaseNames) {
-          if (subBaseName.startsWith(baseName, Qt::CaseInsensitive) &&
-              subLangFilter.match(subBaseName, baseName.length()).hasMatch()) {
+          if (subBaseName.compare(baseName, Qt::CaseInsensitive) == 0) {
             subtitleFileFound = true;
             break;
           }

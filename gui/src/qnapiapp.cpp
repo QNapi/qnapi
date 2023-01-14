@@ -125,7 +125,7 @@ void QNapiApp::createTrayIcon() {
 
   napisy24CreateUserAction = new QAction(tr("Create an account"), 0);
   connect(napisy24CreateUserAction, &QAction::triggered,
-          [this] { showCreateAccount("OpenSNapisy24ubtitles"); });
+          [this] { showCreateAccount("Napisy24"); });
 
   settingsAction = new QAction(tr("Settings"), 0);
   connect(settingsAction, SIGNAL(triggered()), this, SLOT(showSettings()));

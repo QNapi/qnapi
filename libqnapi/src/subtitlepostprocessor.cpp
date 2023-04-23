@@ -26,6 +26,8 @@ SubtitlePostProcessor::SubtitlePostProcessor(
 
 void SubtitlePostProcessor::perform(const QString& movieFilePath,
                                     const QString& subtitleFilePath) const {
+  if (!QFileInfo(subtitleFilePath).exists()) return;
+
   if (ppConfig.removeLines()) {
     ppRemoveLinesContainingWords(subtitleFilePath, ppConfig.removeLinesWords());
   }
@@ -35,11 +37,9 @@ void SubtitlePostProcessor::perform(const QString& movieFilePath,
       ppReplaceDiacriticsWithASCII(subtitleFilePath);
       break;
     case ECM_CHANGE:
-      if (!ppConfig.encodingAutoDetectFrom() ||
-          !ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingTo())) {
-        ppChangeSubtitlesEncoding(subtitleFilePath, ppConfig.encodingFrom(),
-                                  ppConfig.encodingTo());
-      }
+      ppChangeSubtitlesEncoding(subtitleFilePath,
+                                ppDetermineEncodingFrom(subtitleFilePath),
+                                ppConfig.encodingTo());
       break;
     case ECM_ORIGINAL:
       // Nie ruszaj pobranych napisów!
@@ -55,8 +55,6 @@ void SubtitlePostProcessor::perform(const QString& movieFilePath,
 
 bool SubtitlePostProcessor::ppReplaceDiacriticsWithASCII(
     const QString& subtitleFilePath) const {
-  if (!QFileInfo(subtitleFilePath).exists()) return false;
-
   QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
 
   if (from.isEmpty()) return false;
@@ -84,6 +82,11 @@ bool SubtitlePostProcessor::ppReplaceDiacriticsWithASCII(
 bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
     const QString& subtitleFilePath, const QString& from,
     const QString& to) const {
+  if (QString::compare(from, ppConfig.encodingTo(), Qt::CaseInsensitive) == 0) {
+    // The same encoding, conversion isn't required.
+    return false;
+  }
+
   QFile f(subtitleFilePath);
   if (!f.open(QIODevice::ReadOnly)) return false;
 
@@ -109,21 +112,20 @@ bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
   return true;
 }
 
-bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
-    const QString& subtitleFilePath, const QString& to) const {
-  if (!QFileInfo(subtitleFilePath).exists()) return false;
-
-  QString from = encodingUtils.detectFileEncoding(subtitleFilePath);
-
-  if (from.isEmpty()) return false;
-
-  return ppChangeSubtitlesEncoding(from, to);
+QString SubtitlePostProcessor::ppDetermineEncodingFrom(
+    const QString& subtitleFilePath) const {
+  if (ppConfig.encodingAutoDetectFrom()) {
+    QString autodetectedFrom =
+        encodingUtils.detectFileEncoding(subtitleFilePath);
+    if (!autodetectedFrom.isEmpty()) {
+      return autodetectedFrom;
+    }
+  }
+  return ppConfig.encodingFrom();
 }
 
 bool SubtitlePostProcessor::ppRemoveLinesContainingWords(
     const QString& subtitleFilePath, QStringList wordList) const {
-  if (!QFileInfo(subtitleFilePath).exists()) return false;
-
   wordList = wordList.filter(QRegExp("^(.+)$"));
 
   QString fromCodec = encodingUtils.detectFileEncoding(subtitleFilePath);

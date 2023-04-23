@@ -35,8 +35,7 @@ class SubtitlePostProcessor {
   bool ppReplaceDiacriticsWithASCII(const QString& subtitleFilePath) const;
   bool ppChangeSubtitlesEncoding(const QString& subtitleFilePath,
                                  const QString& from, const QString& to) const;
-  bool ppChangeSubtitlesEncoding(const QString& subtitleFilePath,
-                                 const QString& to) const;
+  QString ppDetermineEncodingFrom(const QString& subtitleFilePath) const;
   bool ppRemoveLinesContainingWords(const QString& subtitleFilePath,
                                     QStringList wordList) const;
 

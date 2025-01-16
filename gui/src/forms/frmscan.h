@@ -57,6 +57,7 @@ class ScanFilesThread : public QNapiThread {
   QStringList scanFilters, skipFilters;
   bool skipIfSubtitlesExists, followSymLinks;
   QSet<QString> visited;
+  QString langCode;
 };
 
 class frmScan : public QDialog {

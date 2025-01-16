@@ -30,7 +30,8 @@ SubtitleMatcher::SubtitleMatcher(
       subtitleFormatsRegistry(subtitleFormatsRegistry) {}
 
 bool SubtitleMatcher::matchSubtitles(QString subtitlesTmpFilePath,
-                                     QString targetMovieFilePath) const {
+                                     QString targetMovieFilePath,
+                                     QString language) const {
   QFileInfo subtitlesTmpFileInfo(subtitlesTmpFilePath);
 
   if (!subtitlesTmpFileInfo.exists()) return false;
@@ -38,12 +39,11 @@ bool SubtitleMatcher::matchSubtitles(QString subtitlesTmpFilePath,
   QString targetExtension = selectTargetExtension(subtitlesTmpFileInfo);
 
   QString targetSubtitlesFilePath =
-      constructSubtitlePath(targetMovieFilePath, targetExtension);
+      constructSubtitlePath(targetMovieFilePath, targetExtension, language);
 
   if (!isWritablePath(targetSubtitlesFilePath)) return false;
 
   removeOrCopy(targetMovieFilePath, targetSubtitlesFilePath);
-
   bool result = false;
 
 #ifdef Q_OS_WIN
@@ -79,10 +79,10 @@ QString SubtitleMatcher::selectTargetExtension(
 
 QString SubtitleMatcher::constructSubtitlePath(QString targetMovieFilePath,
                                                QString targetExtension,
-                                               QString baseSuffix) const {
+                                               QString language) const {
   QFileInfo targetMovieFileInfo(targetMovieFilePath);
   return targetMovieFileInfo.path() + QDir::separator() +
-         targetMovieFileInfo.completeBaseName() + baseSuffix + "." +
+         targetMovieFileInfo.completeBaseName() + "." + language + "." +
          targetExtension;
 }
 

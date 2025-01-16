@@ -387,7 +387,7 @@ void GetThread::run() {
     emit progressChange(i, queue.size(), 0.9f);
     emit actionChange(tr("Adjusting subtitles..."));
 
-    if (!napi.matchSubtitles()) {
+    if (!napi.matchSubtitles(selIdx)) {
       ABORT_POINT
 
       ++napiFail;

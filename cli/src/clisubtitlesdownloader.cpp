@@ -163,7 +163,7 @@ int finishSubtitles(int selIdx, const Console& c, QNapi& napi) {
   }
 
   c.printLineOrdinary(tr("Adjusting subtitles..."));
-  if (!napi.matchSubtitles()) {
+  if (!napi.matchSubtitles(selIdx)) {
     c.printLineError(tr("Could not adjust subtitles!"));
     return EC_COULD_NOT_MATCH;
   }

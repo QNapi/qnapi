@@ -51,7 +51,7 @@ class QNapi {
 
   bool download(int i);
   bool unpack(int i);
-  bool matchSubtitles();
+  bool matchSubtitles(int i);
   void postProcessSubtitles() const;
 
   void cleanup();

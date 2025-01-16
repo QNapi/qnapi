@@ -154,12 +154,14 @@ bool QNapi::unpack(int i) {
   return currentEngine ? currentEngine->unpack(subtitlesList[i].id) : false;
 }
 
-bool QNapi::matchSubtitles() {
+bool QNapi::matchSubtitles(int i) {
   if (currentEngine) {
     QSharedPointer<const SubtitleMatcher> matcher =
         LibQNapi::subtitleMatcher(config);
+    QString lang = subtitlesList[i].lang;
     return matcher->matchSubtitles(currentEngine->subtitlesTmp,
-                                   currentEngine->movie);
+                                   currentEngine->movie,
+                                   lang);
   }
 
   return false;

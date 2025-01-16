@@ -30,7 +30,8 @@ class SubtitleMatcher : public QObject {
                       &subtitleFormatsRegistry);
 
   bool matchSubtitles(QString subtitlesTmpFilePath,
-                      QString targetMovieFilePath) const;
+                      QString targetMovieFilePath,
+                      QString language) const;
 
  private:
   QString selectTargetExtension(QFileInfo subtitlesTmpFileInfo) const;

@@ -236,7 +236,10 @@ void frmScan::accept() {
   QDialog::accept();
 }
 
-ScanFilesThread::ScanFilesThread() : staticConfig(LibQNapi::staticConfig()) {}
+ScanFilesThread::ScanFilesThread() : staticConfig(LibQNapi::staticConfig()) {
+    const QNapiConfig config = LibQNapi::loadConfig();
+    langCode = config.generalConfig().language();
+}
 
 void ScanFilesThread::run() {
   abort = false;
@@ -278,7 +281,8 @@ bool ScanFilesThread::doScan(const QString &path, QDir::Filters filters) {
       if (skipIfSubtitlesExists) {
         foreach (QString subExt, staticConfig->subtitleExtensions()) {
           if (QFile::exists((*p).absolutePath() + "/" +
-                            (*p).completeBaseName() + "." + subExt)) {
+                            (*p).completeBaseName() +
+                            "." + langCode + "." + subExt)) {
             subtitleFileFound = true;
             break;
           }

@@ -65,10 +65,19 @@ bool SubtitlePostProcessor::ppReplaceDiacriticsWithASCII(
   if (!f.open(QIODevice::ReadOnly)) return false;
 
   QByteArray fileContent = f.readAll();
-
-  QString contentStr =
-      QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
   f.close();
+
+  // Fix: Proper UTF-16 handling
+  QTextCodec* fromCodec;
+  if (from.startsWith("UTF-16", Qt::CaseInsensitive)) {
+    fromCodec = QTextCodec::codecForName("UTF-16");
+  } else {
+    fromCodec = QTextCodec::codecForName(qPrintable(from));
+  }
+  
+  if (!fromCodec) return false;
+
+  QString contentStr = fromCodec->toUnicode(fileContent);
 
   fileContent.clear();
   fileContent.append(encodingUtils.replaceDiacriticsWithASCII(contentStr));
@@ -88,20 +97,29 @@ bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
   if (!f.open(QIODevice::ReadOnly)) return false;
 
   QByteArray fileContent = f.readAll();
-
-  QString contentStr =
-      QTextCodec::codecForName(qPrintable(from))->toUnicode(fileContent);
   f.close();
+
+  // Fix: Proper UTF-16 handling
+  QTextCodec* fromCodec;
+  if (from.startsWith("UTF-16", Qt::CaseInsensitive)) {
+    fromCodec = QTextCodec::codecForName("UTF-16");
+  } else {
+    fromCodec = QTextCodec::codecForName(qPrintable(from));
+  }
+  
+  if (!fromCodec) return false;
+
+  QString contentStr = fromCodec->toUnicode(fileContent);
 
   if (to.compare("UTF-8", Qt::CaseInsensitive) != 0) {
     fileContent = QTextCodec::codecForName(qPrintable(to))
                       ->fromUnicode(contentStr.constData(), contentStr.size());
   } else {
     fileContent.clear();
-    fileContent.append(contentStr);
+    fileContent.append(contentStr.toUtf8());
   }
 
-  if (!f.open(QIODevice::WriteOnly)) return false;
+  if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
 
   f.write(fileContent);
   f.close();
@@ -117,7 +135,7 @@ bool SubtitlePostProcessor::ppChangeSubtitlesEncoding(
 
   if (from.isEmpty()) return false;
 
-  return ppChangeSubtitlesEncoding(from, to);
+  return ppChangeSubtitlesEncoding(subtitleFilePath, from, to);
 }
 
 bool SubtitlePostProcessor::ppRemoveLinesContainingWords(
@@ -130,45 +148,53 @@ bool SubtitlePostProcessor::ppRemoveLinesContainingWords(
 
   if (fromCodec.isEmpty()) fromCodec = ppConfig.encodingFrom();
 
+  // Fix: Read as QString instead of QByteArray to preserve encoding
   QFile f(subtitleFilePath);
   if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) return false;
 
-  QList<QByteArray> lines = f.readAll().split('\n');
-  QList<QByteArray> out;
+  QTextStream in(&f);
+  if (fromCodec.startsWith("UTF-16", Qt::CaseInsensitive)) {
+    in.setCodec("UTF-16");
+    in.setAutoDetectUnicode(true);
+  } else {
+    in.setCodec(qPrintable(fromCodec));
+  }
 
-  foreach (QByteArray line, lines) {
-    int i;
-    while ((i = line.indexOf('\r')) >= 0) line.remove(i, 1);
+  QStringList lines;
+  while (!in.atEnd()) {
+    lines << in.readLine();
+  }
+  f.close();
 
-    QTextStream ts(line);
-    ts.setCodec(qPrintable(fromCodec));
-    QString encLine = ts.readAll();
-
-    if (encLine.isEmpty()) {
-      out << line;
-      continue;
-    }
-
+  // Filter lines
+  QStringList filtered;
+  foreach (QString line, lines) {
     bool found = false;
     foreach (QString word, wordList) {
-      if (encLine.contains(word, Qt::CaseInsensitive)) {
+      if (line.contains(word, Qt::CaseInsensitive)) {
         found = true;
         break;
       }
     }
-    if (found) continue;
-
-    out << line;
+    if (!found) {
+      filtered << line;
+    }
   }
 
-  f.close();
-
+  // Write back with same encoding
   if (!f.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
     return false;
 
-  foreach (QByteArray line, out) {
-    f.write(line);
-    f.write("\n", 1);
+  QTextStream out(&f);
+  if (fromCodec.startsWith("UTF-16", Qt::CaseInsensitive)) {
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+  } else {
+    out.setCodec(qPrintable(fromCodec));
+  }
+
+  foreach (QString line, filtered) {
+    out << line << "\n";
   }
   f.close();
 
